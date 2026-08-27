@@ -50,6 +50,11 @@ canvas, then eight layer groups in **fixed paint order**, bottom to top:
 `.is-highlighted` is a modifier on any feature named in `highlight`.
 `.mp-pin`, `.mp-arrow` and `.mp-callout` are claimed but not yet emitted.
 
+`.mp-bg` and the `.mp-borders` group ship with `fill="none"`. That is structural,
+not stylistic: SVG's default fill is black, so a full-canvas rectangle or a line
+path with no theme applied would render as a black square and a filled blob.
+Presentation attributes have zero specificity, so any theme rule overrides them.
+
 Every layer group carries `mp-layer` alongside its own class, and **every one is
 emitted even when empty**. That is deliberate: inserting a layer later would
 restack everything beneath it and break themes already in the wild. Empty slots
@@ -73,8 +78,20 @@ layer. This matters the moment a theme makes borders translucent or dashed,
 where doubled lines render visibly wrong.
 
 The group carries `fill="none"` as a presentation attribute, because a line path
-with the SVG default fill renders as a filled blob. Presentation attributes lose
-to any CSS rule, so a theme can still override it.
+with the SVG default fill renders as a filled blob.
+
+### A note on non-browser renderers
+
+Browsers follow the spec: presentation attributes have zero specificity, so
+`.mp-bg { fill: … }` in a theme overrides the built-in `fill="none"`. Verified
+in Chromium.
+
+Some non-browser renderers get this backwards and let the attribute win —
+ImageMagick's built-in MSVG renderer is one. A map themed with a `<style>` block
+will show an unpainted background there. This is the same class of problem as
+design tools that ignore `<style>` entirely, and it is what the planned
+`inlineStyles` render option exists to solve, by flattening computed values onto
+presentation attributes before writing the file.
 
 ### Accessibility
 

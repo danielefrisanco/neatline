@@ -17,7 +17,29 @@ describe("document shape", () => {
   });
 
   it("covers the whole canvas with the background", () => {
-    expect(map.svg).toContain('<rect class="mp-bg" x="0" y="0" width="1000" height="1000"/>');
+    expect(map.svg).toContain(
+      '<rect class="mp-bg" x="0" y="0" width="1000" height="1000" fill="none"/>',
+    );
+  });
+
+  // Regression: the background rect shipped without a fill, and SVG's default
+  // fill is black — so a full-canvas rect painted over the entire document and
+  // an unthemed map rendered as a solid black square.
+  it("does not paint the canvas black when no theme is applied", () => {
+    const background = /<rect class="mp-bg"[^>]*>/.exec(map.svg)?.[0];
+    expect(background).toBeDefined();
+    expect(background).toContain('fill="none"');
+  });
+
+  // Nothing in a geometry-only document may rely on an inherited paint that
+  // the caller has not chosen. Land silhouettes are the deliberate exception:
+  // black shapes are what an unstyled map is meant to look like.
+  it("declares a fill anywhere the default would be wrong", () => {
+    for (const tag of map.svg.matchAll(/<(rect|g)\b[^>]*>/g)) {
+      const element = tag[0];
+      if (!element.includes("mp-bg") && !element.includes("mp-borders")) continue;
+      expect(element).toContain('fill="none"');
+    }
   });
 
   it("carries the root class", () => {

@@ -294,7 +294,12 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     },
     [
       el("title", {}, [text(description)]),
-      el("rect", { class: BACKGROUND_CLASS, x: 0, y: 0, width, height }),
+      // `fill="none"` is structural, not stylistic. SVG's default fill is
+      // black, so a full-canvas rectangle with no theme applied would paint
+      // the entire map over — the document would render as a black square.
+      // Presentation attributes lose to any CSS rule, so a theme's
+      // `.mp-bg { fill: … }` still wins.
+      el("rect", { class: BACKGROUND_CLASS, x: 0, y: 0, width, height, fill: "none" }),
       // Every slot is emitted, in order, empty or not. Inserting one later
       // would restack the layers underneath it and break themes in the wild.
       ...LAYERS.map((spec) =>

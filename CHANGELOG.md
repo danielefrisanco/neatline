@@ -68,6 +68,13 @@ policy the class taxonomy is public API.
 
 ### Fixed
 
+- **The background rectangle painted the whole map black.** `.mp-bg` shipped
+  without a `fill`, and SVG's default fill is black, so a full-canvas rect
+  covered the document before any layer drew — an unthemed map rendered as a
+  solid black square. It now carries `fill="none"`, which is structural rather
+  than stylistic, and which any theme rule overrides. Regression-tested, and
+  the geometry-only render verified against a real renderer rather than by
+  reading the markup
 - The neighbours layer sits **above the background and below the land**. The
   plan placed it above the water, which was wrong — lakes and rivers are drawn
   on top of the land they sit in, so context would have covered its own subject

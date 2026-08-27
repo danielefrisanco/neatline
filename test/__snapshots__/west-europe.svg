@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp" role="img" aria-label="Map of Western Europe">
   <title>Map of Western Europe</title>
-  <rect class="mp-bg" x="0" y="0" width="1000" height="1000"/>
+  <rect class="mp-bg" x="0" y="0" width="1000" height="1000" fill="none"/>
   <g class="mp-layer mp-neighbours"/>
   <g class="mp-layer mp-land">
     <path class="mp-country" data-iso="FR" data-name="France" d="M551.1,424.4L564.3,435L604.3,441.2L591.6,470.6L589.3,500.7L581.8,508.2L568.7,504.8L570,515.4L549.7,539.6L549.6,558.6L563.4,551.7L573.9,569.9L573.1,581.8L582.4,597.3L572.4,610.5L581.3,642.7L597.9,647.4L595.2,665.8L568.3,690.6L507.5,680.2L462.7,693.7L458.8,719L422.5,723.6L388.3,703.2L376.6,711.7L320.9,689.1L309.9,671.8L327.6,647.8L339.2,564.5L312.8,518.2L293.7,495.2L252.4,474.7L253.1,443.9L289.8,438.5L335.2,453.3L330.2,405.2L354.6,425.1L419.5,395.6L428.9,361.4L452.3,353.6L455.8,368.4L468.1,369.4L480.3,386.4L499.1,406.4L513,403L537.1,421.9L543.2,425.5ZM637.7,708.8L656.6,691.4L664.3,727.2L656,760.4L641.1,752.7L632.3,724.7Z">
