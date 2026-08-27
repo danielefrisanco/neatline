@@ -66,19 +66,28 @@ describe("framing", () => {
     expect(cayenne[0]).toBeLessThan(0);
   });
 
-  // For now the outlying pieces are dropped from the output too, so a map of
-  // France is continental France. Guyane is still France — representing
-  // overseas territories properly (insets, or an explicit opt-in) is planned
-  // work, not a decision that they do not belong.
-  it("draws continental France, with no stray geometry off-canvas", async () => {
+  // Framing and drawing are separate questions. The camera is fitted to each
+  // country's core, so a map of France frames the mainland — but Guyane is
+  // still France and is still in the document. It simply falls outside the
+  // viewport, which is what a paper atlas does, and means nothing can go
+  // missing from a map that is showing it.
+  it("frames continental France while still carrying Guyane", async () => {
     const map = await mapper({ region: ["FR"], detail: "110m", size: [1000, 1000] });
     expect(map.svg.match(/class="mp-country"/g)).toHaveLength(1);
-    expect(map.svg).toContain('data-iso="FR"');
 
-    const coordinates = /d="([^"]+)"/.exec(map.svg)![1]!;
-    const numbers = coordinates.match(/-?\d+(?:\.\d+)?/g)!.map(Number);
-    expect(Math.min(...numbers)).toBeGreaterThanOrEqual(0);
-    expect(Math.max(...numbers)).toBeLessThanOrEqual(1000);
+    // Paris is comfortably inside the canvas: the camera ignored Guyane.
+    const paris = map.project([2.35, 48.86])!;
+    expect(paris[0]).toBeGreaterThan(100);
+    expect(paris[0]).toBeLessThan(900);
+
+    // Cayenne is off-canvas rather than absent.
+    const cayenne = map.project([-52.3, 4.9])!;
+    expect(cayenne[0]).toBeLessThan(0);
+
+    const numbers = /d="([^"]+)"/
+      .exec(map.svg)![1]!.match(/-?\d+(?:\.\d+)?/g)!
+      .map(Number);
+    expect(Math.min(...numbers)).toBeLessThan(0);
   });
 
   it("does not clip a genuinely dispersed region", async () => {

@@ -78,6 +78,23 @@ const GALLERY: ReadonlyArray<readonly [string, MapperOptions]> = [
       size: [900, 900],
     },
   ],
+  // The raised-landmass look editorial maps use. No data, no markup, no defs —
+  // `filter: drop-shadow()` is a CSS declaration, so a theme can simply say it.
+  [
+    "west-europe-relief",
+    {
+      region: "west-europe",
+      projection: "conic-conformal",
+      theme: `.mp { --sea: #9FBACB; --land: #F3ECDC; --edge: #C0B49A; --ink: #57503F; }
+.mp .mp-bg { fill: var(--sea); }
+.mp .mp-land { filter: drop-shadow(4px 5px 4px rgba(40,30,15,.45)); }
+.mp .mp-country { fill: var(--land); stroke: var(--edge); stroke-width: 0.7; }
+.mp .mp-border { fill: none; stroke: var(--ink); stroke-width: 0.9; }
+.mp .mp-water[data-kind="lake"] { fill: var(--sea); }
+.mp .mp-place { fill: var(--ink); }`,
+      title: "Western Europe in relief",
+    },
+  ],
   [
     "italy-brand-tokens",
     {

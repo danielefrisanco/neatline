@@ -194,6 +194,33 @@ element as presentation attributes. It is not a CSS engine. It handles class sel
 which is what the bundled themes use and what the authoring convention asks for.
 Selectors beyond that are skipped rather than half-applied.
 
+### Framing, and why nothing goes missing
+
+A country's geometry includes everything it governs: France reaches to French
+Guiana, the United States to Alaska and Hawaii. Fitting a camera to that frames
+an ocean.
+
+So the camera is fitted to each country's **core** — anchored on its largest
+piece and scaled by that core's own extent — and then **everything is drawn**.
+Guyane is still in a map of France; it simply falls outside the viewport, the
+way a paper atlas handles it. Continental France, the lower 48 and mainland
+Portugal frame correctly, while Sicily, Sardinia, Indonesia's archipelago and
+New Zealand's two islands all stay whole, and a world map shows every last one
+of them.
+
+### Relief without data
+
+The raised-landmass look editorial maps use is one CSS declaration:
+
+```css
+.mp .mp-land { filter: drop-shadow(4px 5px 4px rgba(40, 30, 15, .45)); }
+```
+
+No elevation model, no raster, no markup. Worth separating from *terrain*, which
+is a data problem — glaciers, salt flats and depth bands are real vectors, but
+land contour lines would have to be derived from an elevation model.
+See `west-europe-relief.svg` in the gallery.
+
 ### Cities
 
 Settlements are ranked 1–3: capitals and the largest cities, then everything

@@ -36,13 +36,29 @@ Phase 4 — data pipeline. Maps now carry water and cities.
   but not Bern is wrong — but the bands are otherwise population, so Hamburg,
   Lyon and Turin appear where a capitals-only rule would have missed them
 - **`placeRank`** — how far down the ranking to draw. Default 2
-- Three new gallery renders: `west-europe-cities`, `france-rivers`,
-  `europe-no-water`
+- Four new gallery renders: `west-europe-cities`, `france-rivers`,
+  `europe-no-water`, and `west-europe-relief` — the raised-landmass look, which
+  needs no data and no markup at all: `filter: drop-shadow(...)` is a CSS
+  declaration, so a theme can simply say it. `filter` is carried through the
+  `inlineStyles` pass with the other paint properties
 - `--place` token; `--water` is now live rather than reserved
 
 ### Fixed
 
-- **Framing is now judged one country at a time.** It was judged across the
+- **Framing and drawing are now separate questions**, which they should always
+  have been. The camera is fitted to each country's core; everything is then
+  drawn into it. What falls outside the frame is invisible rather than deleted —
+  what a paper atlas does, and the only arrangement where nothing can go missing
+  from a map that is showing it. Previously the outlying pieces were removed
+  from the output, which meant a world map had no Alaska and no French Guiana
+- **Sicily and Sardinia were being clipped off Italy**, along with several
+  Japanese islands. Two mistakes: the core's scale was measured from the
+  distance to its centroid — near zero for any country with one dominant
+  landmass — instead of from the core's own extent; and distances were measured
+  from the country's centroid, which for France sits in the Atlantic because
+  French Guiana drags it there, putting mainland France 7° from its own centre.
+  The core is now anchored on the largest piece and scaled by its extent
+- **Framing is judged one country at a time.** It was judged across the
   whole region, which broke at 50m: France carries dozens of polygons there,
   enough of them overseas that the outlier threshold stretched until it caught
   nothing, and a map of France framed the Atlantic from Guadeloupe to Réunion.
