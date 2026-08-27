@@ -36,8 +36,12 @@ export interface World {
   /**
    * The boundaries shared between the named countries, each drawn once.
    * Coastlines are excluded — the land layer already draws that silhouette.
+   *
+   * With `focus`, only that country's own share of them, which is what an
+   * extruded map needs: a border has to be drawn once per country, at each
+   * country's own height, or it floats between the two.
    */
-  borders(ids: readonly string[]): unknown | null;
+  borders(ids: readonly string[], focus?: string): unknown | null;
   water(kind: WaterKind): unknown;
 }
 
@@ -121,8 +125,9 @@ export async function loadWorld(detail: Detail): Promise<World> {
     countries: Object.freeze(countries),
     places: Object.freeze(places),
 
-    borders(ids: readonly string[]): unknown | null {
+    borders(ids: readonly string[], focus?: string): unknown | null {
       const geometries: unknown[] = [];
+      const focused = focus === undefined ? undefined : rawById.get(focus);
       for (const id of ids) {
         const source = rawById.get(id);
         if (source !== undefined) geometries.push(source);
@@ -132,9 +137,9 @@ export async function loadWorld(detail: Detail): Promise<World> {
       const subset = { type: "GeometryCollection" as const, geometries };
       // `a !== b` selects arcs two different countries share. The same call
       // with `a === b` would give the outer edge, which the land layer draws.
-      const lines = mesh(topology as never, subset as never, (a, b) => a !== b) as {
-        coordinates: readonly unknown[];
-      };
+      const lines = mesh(topology as never, subset as never, (a, b) =>
+        a !== b && (focused === undefined || a === focused || b === focused),
+      ) as { coordinates: readonly unknown[] };
       return lines.coordinates.length === 0 ? null : lines;
     },
 

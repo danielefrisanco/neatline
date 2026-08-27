@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0yl5h1p" role="img" aria-label="Map of Western Europe">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp mp-t-090w3vq" role="img" aria-label="Map of Western Europe">
   <title>Map of Western Europe</title>
   <style>
-    .mp.mp-t-0yl5h1p {
+    .mp.mp-t-090w3vq {
       --bg: #A8C0CC;
       --land: #F2EAD8;
       --land-edge: #C9BFA6;
@@ -9,6 +9,11 @@
       --border-width: 1.4;
       --accent: #8C3B4A;
       --accent-edge: #F2EAD8;
+      --bin-1: #F0E3C6;
+      --bin-2: #DCC79B;
+      --bin-3: #C4A46F;
+      --bin-4: #A87E4C;
+      --bin-5: #84582F;
       --prism-side: #C4B48F;
       --place: #3A342A;
       --ink: #3A342A;
@@ -22,65 +27,100 @@
       --anno-ink: #F2EAD8;
       --furniture-ink: #7A7263;
     }
-    .mp.mp-t-0yl5h1p .mp-bg {
+    .mp.mp-t-090w3vq .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-0yl5h1p .mp-country {
+    .mp.mp-t-090w3vq .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: 0.8;
       stroke-linejoin: round;
     }
-    .mp.mp-t-0yl5h1p .mp-country.is-highlighted {
+    .mp.mp-t-090w3vq .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
       stroke-width: 1;
     }
-    .mp.mp-t-0yl5h1p .mp-border {
+    .mp.mp-t-090w3vq .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: 5 2.5;
       stroke-linecap: round;
     }
-    .mp.mp-t-0yl5h1p .mp-neighbour {
+    .mp.mp-t-090w3vq .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-0yl5h1p .mp-water[data-kind="lake"] {
+    .mp.mp-t-090w3vq .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-0yl5h1p .mp-water[data-kind="river"] {
+    .mp.mp-t-090w3vq .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: 1.1;
     }
-    .mp.mp-t-0yl5h1p .mp-place {
+    .mp.mp-t-090w3vq .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-0yl5h1p .mp-prism-top {
+    .mp.mp-t-090w3vq .mp-country[data-bin="1"] {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-090w3vq .mp-country[data-bin="2"] {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-090w3vq .mp-country[data-bin="3"] {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-090w3vq .mp-country[data-bin="4"] {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-090w3vq .mp-country[data-bin="5"] {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-090w3vq .mp-prism[data-bin="1"] .mp-prism-top {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-090w3vq .mp-prism[data-bin="2"] .mp-prism-top {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-090w3vq .mp-prism[data-bin="3"] .mp-prism-top {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-090w3vq .mp-prism[data-bin="4"] .mp-prism-top {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-090w3vq .mp-prism[data-bin="5"] .mp-prism-top {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-090w3vq .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: 0.5;
     }
-    .mp.mp-t-0yl5h1p .mp-prism-side {
+    .mp.mp-t-090w3vq .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-0yl5h1p .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-090w3vq .mp-prism-edge {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: var(--border-width);
+    }
+    .mp.mp-t-090w3vq .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-0yl5h1p .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-090w3vq .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent);
       filter: brightness(0.7);
     }
-    .mp.mp-t-0yl5h1p .mp-road {
+    .mp.mp-t-090w3vq .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-0yl5h1p .mp-label {
+    .mp.mp-t-090w3vq .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);

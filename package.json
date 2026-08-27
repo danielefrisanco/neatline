@@ -1,6 +1,6 @@
 {
   "name": "mapper",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Generate standalone, CSS-themeable SVG maps from a region and a stylesheet.",
   "license": "MIT",
   "type": "module",

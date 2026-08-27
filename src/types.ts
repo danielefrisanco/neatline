@@ -90,6 +90,17 @@ export interface MapperOptions {
   /** ISO codes to mark with `.is-highlighted`. */
   readonly highlight?: readonly string[];
   /**
+   * Values per country, classified into bands and written out as `data-bin`
+   * so a theme can colour them — a choropleth. Bands are by rank, because map
+   * data is usually skewed enough that equal value intervals show nothing.
+   *
+   * Defaults to whatever `extrude` was given, so one set of numbers can drive
+   * both height and colour.
+   */
+  readonly values?: Readonly<Record<string, number>>;
+  /** How many bands to classify `values` into. @default 5 */
+  readonly bins?: number;
+  /**
    * Raise each country off the map, so height reads as quantity.
    *
    * A number lifts every country by that many user units. `{ values }` lifts

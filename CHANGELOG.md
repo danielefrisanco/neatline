@@ -17,6 +17,39 @@ signature — themes in the wild depend on those names.
 
 Phase 5 — presets and fill modes.
 
+## [0.7.0] — 2026-08-27
+
+Choropleth colour, and three prism fixes.
+
+### Added
+
+- **`values` and `bins`** — classify a value per country into bands, written out
+  as `data-bin` and `data-value` for a theme to colour. The library still never
+  picks a colour. Bands are by **rank**, not by equal value intervals: map data
+  is usually skewed enough that five equal slices of European GDP put Germany
+  alone at the top and everything else at the bottom, which shows nothing
+- `values` defaults to whatever `extrude` was given, so one set of numbers
+  drives height and colour together — or either alone
+- `--bin-1` … `--bin-5` tokens, with a sequential ramp in both bundled themes
+- **`.mp-prism-edge`** — a raised country's own share of the shared borders,
+  lifted onto its surface
+
+### Fixed
+
+- **Corsica painted over Sardinia.** Paint order used each country's lowest
+  projected point, and France's geometry reaches French Guiana, which projects
+  far below the canvas — so France sorted frontmost in Europe. Only geometry the
+  reader can actually see now decides depth
+- **Belgrade appeared on a map of Western Europe.** Places were tied to a drawn
+  country only when Natural Earth recorded an ISO code for them; Serbia has
+  none, so its cities passed through unattributed. Those are now placed by
+  containment
+- **Borders cut through raised prisms.** A mesh line is shared by two countries,
+  so once they stand at different heights there is no single height it can sit
+  at. Each country now carries its own share, lifted to its own surface —
+  briefly they were suppressed entirely, which was the wrong answer
+- Settlement dots ride up with the prism they stand on
+
 ## [0.6.0] — 2026-08-27
 
 Prism maps: height as quantity. Brought forward from v2 — the reserved class
@@ -423,7 +456,8 @@ history stay the same document.
 | `1.0.0` | 7 · Ship | Stable taxonomy, published, documented |
 | `1.1.0` | 8 · Annotations | Pins, arrows, callouts, icons |
 
-[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/danielefrisanco/mapper/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/danielefrisanco/mapper/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/danielefrisanco/mapper/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/danielefrisanco/mapper/compare/v0.3.1...v0.4.0

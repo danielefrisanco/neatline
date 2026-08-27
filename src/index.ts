@@ -1,4 +1,5 @@
 import { geoBounds, geoContains, geoPath } from "d3-geo";
+import { assignBins, DEFAULT_BINS } from "./bins.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
 import { heightsFor, prisms, type PrismInput } from "./prism.js";
@@ -291,6 +292,17 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   // above the map or the tallest prism is cut off by the top edge.
   const extrusion =
     options.extrude === undefined ? null : heightsFor(options.extrude, resolveId);
+
+  // Height and colour usually carry the same number, so extruding by values
+  // bins those same values unless the caller says otherwise. One option, both
+  // encodings — and either can be used alone.
+  const source =
+    options.values ??
+    (typeof options.extrude === "object" ? options.extrude.values : undefined);
+  const bins =
+    source === undefined
+      ? null
+      : assignBins(source, options.bins ?? DEFAULT_BINS, resolveId);
   const headroom =
     extrusion === null
       ? 0
@@ -310,6 +322,7 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     if (!d) continue;
     const isHighlighted = country.id !== "" && highlighted.has(country.id);
     if (isHighlighted && country.name) highlightedNames.push(country.name);
+    const banded = bins?.get(country.id);
     land.push(
       el(
         "path",
@@ -317,6 +330,8 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
           class: isHighlighted ? `mp-country ${HIGHLIGHT_CLASS}` : "mp-country",
           "data-iso": country.id === "" ? undefined : country.id,
           "data-name": country.name === "" ? undefined : country.name,
+          "data-bin": banded?.bin,
+          "data-value": banded?.value,
           d,
         },
         // A per-feature title is a hover tooltip, not an accessibility tree:
@@ -338,8 +353,13 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
         geometry: country.geometry,
         height: extrusion.uniform ?? extrusion.byId.get(country.id) ?? 0,
         highlighted: country.id !== "" && highlighted.has(country.id),
+        bin: bins?.get(country.id)?.bin,
+        value: bins?.get(country.id)?.value,
+        edges: wants("borders")
+          ? world.borders(resolved.borderIds, country.id) ?? undefined
+          : undefined,
       }));
-      content.set("land", prisms(raised, projection));
+      content.set("land", prisms(raised, projection, [width, height]));
     }
   }
 
@@ -411,11 +431,25 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     for (const place of world.places) {
       if (place.rank > maxRank) continue;
       // Tie a settlement to a country that is actually drawn, so a map of
-      // Western Europe does not sprout dots across North Africa.
-      if (place.iso !== null && !drawn.has(place.iso)) continue;
+      // Western Europe does not sprout dots across North Africa. Natural Earth
+      // leaves some countries without an ISO code — Serbia among them — and
+      // those were slipping through unattributed, which is how Belgrade turned
+      // up on a map of Western Europe.
+      if (place.iso !== null) {
+        if (!drawn.has(place.iso)) continue;
+      } else if (
+        !frame.countries.some((c) => geoContains(c.geometry as never, [...place.position]))
+      ) {
+        continue;
+      }
       const point = projection([place.position[0], place.position[1]]);
       if (point === null) continue;
-      const [x, y] = point;
+      const [x, rawY] = point;
+      // A dot belongs on the surface it marks, so it rides up with its prism.
+      const y =
+        extrusion === null
+          ? rawY
+          : rawY - (extrusion.uniform ?? (place.iso === null ? 0 : extrusion.byId.get(place.iso) ?? 0));
       if (x < 0 || x > width || y < 0 || y > height) continue;
       dots.push(
         el(
@@ -437,7 +471,11 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     if (dots.length > 0) content.set("places", dots);
   }
 
-  if (wants("borders")) {
+  // On an extruded map the borders move into the prisms themselves: a mesh
+  // line is shared by two countries, and once they stand at different heights
+  // there is no single height it could sit at. Each country carries its own
+  // share instead, lifted to its own surface.
+  if (wants("borders") && extrusion === null) {
     const borderGeometry =
       resolved.borderIds.length > 0 ? world.borders(resolved.borderIds) : null;
     if (borderGeometry !== null) {

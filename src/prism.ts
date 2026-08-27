@@ -85,11 +85,16 @@ export interface PrismInput {
   readonly geometry: unknown;
   readonly height: number;
   readonly highlighted: boolean;
+  readonly bin?: number | undefined;
+  readonly value?: number | undefined;
+  /** This country's share of the shared borders, drawn at its own height. */
+  readonly edges?: unknown;
 }
 
 export function prisms(
   countries: readonly PrismInput[],
   projection: GeoProjection,
+  canvas: readonly [number, number],
 ): SvgNode[] {
   const drawn: Array<{ depth: number; node: SvgElement }> = [];
 
@@ -99,11 +104,22 @@ export function prisms(
     if (recorder.rings.length === 0) continue;
 
     const lift = Math.max(0, country.height);
+
+    // Depth decides paint order, and only what the reader can see should
+    // decide it. France's geometry reaches French Guiana, which projects far
+    // below the canvas — counting it made France the frontmost country in
+    // Europe, so Corsica painted over Sardinia.
+    const [width, height] = canvas;
+    const onCanvas = recorder.rings.filter((ring) =>
+      ring.some(([x, y]) => x >= 0 && x <= width && y >= 0 && y <= height),
+    );
+    const considered = onCanvas.length > 0 ? onCanvas : recorder.rings;
     let depth = -Infinity;
-    for (const ring of recorder.rings) {
+    for (const ring of considered) {
       for (const point of ring) depth = Math.max(depth, point[1]);
     }
 
+    const draw = geoPath(projection).digits(1);
     const classes = country.highlighted ? "mp-prism is-highlighted" : "mp-prism";
     const children: SvgNode[] = [];
     if (country.name !== "") children.push(el("title", {}, [text(country.name)]));
@@ -117,6 +133,23 @@ export function prisms(
       }),
     );
 
+    // Lifted by a transform rather than by rewriting coordinates: a border is
+    // a line, so there is nothing to sweep — it simply belongs on the surface
+    // it divides.
+    if (country.edges !== undefined) {
+      const d = draw(country.edges as never);
+      if (d) {
+        children.push(
+          el("path", {
+            class: "mp-prism-edge",
+            fill: "none",
+            transform: lift === 0 ? undefined : `translate(0,${-round(lift)})`,
+            d,
+          }),
+        );
+      }
+    }
+
     drawn.push({
       depth,
       node: el(
@@ -126,6 +159,8 @@ export function prisms(
           "data-iso": country.id === "" ? undefined : country.id,
           "data-name": country.name === "" ? undefined : country.name,
           "data-height": round(lift),
+          "data-bin": country.bin,
+          "data-value": country.value,
         },
         children,
       ),

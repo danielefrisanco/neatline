@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0kmqmou" role="img" aria-label="Benelux and France">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1hqpw8n" role="img" aria-label="Benelux and France">
   <title>Benelux and France</title>
   <style>
-    .mp.mp-t-0kmqmou {
+    .mp.mp-t-1hqpw8n {
       --bg: transparent;
       --land: #D8D8D2;
       --land-edge: #FFFFFF;
@@ -9,6 +9,11 @@
       --border-width: 0.75;
       --accent: #C2482F;
       --accent-edge: #FFFFFF;
+      --bin-1: #E6E6E1;
+      --bin-2: #C9CFC6;
+      --bin-3: #A6B4AB;
+      --bin-4: #7E9186;
+      --bin-5: #566B5F;
       --prism-side: #A9A9A2;
       --place: #2B2B29;
       --ink: #2B2B29;
@@ -22,69 +27,104 @@
       --anno-ink: #FFFFFF;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-0kmqmou .mp-bg {
+    .mp.mp-t-1hqpw8n .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-0kmqmou .mp-country {
+    .mp.mp-t-1hqpw8n .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: 0.5;
       stroke-linejoin: round;
     }
-    .mp.mp-t-0kmqmou .mp-country.is-highlighted {
+    .mp.mp-t-1hqpw8n .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-0kmqmou .mp-border {
+    .mp.mp-t-1hqpw8n .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-0kmqmou .mp-neighbour {
+    .mp.mp-t-1hqpw8n .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-0kmqmou .mp-water[data-kind="lake"] {
+    .mp.mp-t-1hqpw8n .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-0kmqmou .mp-water[data-kind="river"] {
+    .mp.mp-t-1hqpw8n .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: 1.1;
     }
-    .mp.mp-t-0kmqmou .mp-place {
+    .mp.mp-t-1hqpw8n .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-0kmqmou .mp-prism-top {
+    .mp.mp-t-1hqpw8n .mp-country[data-bin="1"] {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-1hqpw8n .mp-country[data-bin="2"] {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-1hqpw8n .mp-country[data-bin="3"] {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-1hqpw8n .mp-country[data-bin="4"] {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-1hqpw8n .mp-country[data-bin="5"] {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-1hqpw8n .mp-prism[data-bin="1"] .mp-prism-top {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-1hqpw8n .mp-prism[data-bin="2"] .mp-prism-top {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-1hqpw8n .mp-prism[data-bin="3"] .mp-prism-top {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-1hqpw8n .mp-prism[data-bin="4"] .mp-prism-top {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-1hqpw8n .mp-prism[data-bin="5"] .mp-prism-top {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-1hqpw8n .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: 0.5;
     }
-    .mp.mp-t-0kmqmou .mp-prism-side {
+    .mp.mp-t-1hqpw8n .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-0kmqmou .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-1hqpw8n .mp-prism-edge {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: var(--border-width);
+    }
+    .mp.mp-t-1hqpw8n .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-0kmqmou .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-1hqpw8n .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent);
       filter: brightness(0.7);
     }
-    .mp.mp-t-0kmqmou .mp-road {
+    .mp.mp-t-1hqpw8n .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-0kmqmou .mp-label {
+    .mp.mp-t-1hqpw8n .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
     }
-    .mp.mp-t-0kmqmou {
+    .mp.mp-t-1hqpw8n {
       --bg: #F6F1E7;
       --land: #E3D6BE;
       --land-edge: #F6F1E7;

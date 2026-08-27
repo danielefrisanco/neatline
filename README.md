@@ -229,6 +229,26 @@ is a data problem — glaciers, salt flats and depth bands are real vectors, but
 land contour lines would have to be derived from an elevation model.
 See `west-europe-relief.svg` in the gallery.
 
+### Colour by value
+
+```ts
+await mapper({
+  region: "west-europe",
+  values: { DE: 4460, FR: 3050, IT: 2250, ES: 1620, PT: 290 },
+  bins: 5,
+});
+```
+
+Each country is classified into a band and marked `data-bin="4"`, which the
+theme colours from `--bin-1` … `--bin-5`. The library never picks the colour.
+
+Bands are by **rank**, not equal value intervals — map data is usually skewed
+enough that five equal slices of European GDP put Germany alone in the top band
+and everything else in the bottom one.
+
+`values` defaults to whatever `extrude` was given, so one set of numbers can
+drive height and colour at once.
+
 ### Height as quantity
 
 ```ts
