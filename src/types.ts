@@ -90,6 +90,17 @@ export interface MapperOptions {
   /** ISO codes to mark with `.is-highlighted`. */
   readonly highlight?: readonly string[];
   /**
+   * Raise each country off the map, so height reads as quantity.
+   *
+   * A number lifts every country by that many user units. `{ values }` lifts
+   * each in proportion to its value — raw numbers, GDP or headcount or
+   * anything else, scaled against the largest so the caller never has to think
+   * in SVG units. `height` sets what the largest becomes (default 120).
+   */
+  readonly extrude?:
+    | number
+    | { readonly values: Readonly<Record<string, number>>; readonly height?: number };
+  /**
    * Draw the surrounding countries as context, beneath the region.
    *
    * Never labelled, never highlighted, and excluded from the camera — so

@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp mp-t-10xf0uq" role="img" aria-label="Map of Western Europe">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0u2mrmy" role="img" aria-label="Map of Western Europe">
   <title>Map of Western Europe</title>
   <style>
-    .mp.mp-t-10xf0uq {
+    .mp.mp-t-0u2mrmy {
       --bg: transparent;
       --land: #D8D8D2;
       --land-edge: #FFFFFF;
@@ -9,6 +9,7 @@
       --border-width: 0.75;
       --accent: #C2482F;
       --accent-edge: #FFFFFF;
+      --prism-side: #A9A9A2;
       --place: #2B2B29;
       --ink: #2B2B29;
       --ink-muted: #80807A;
@@ -21,53 +22,69 @@
       --anno-ink: #FFFFFF;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-10xf0uq .mp-bg {
+    .mp.mp-t-0u2mrmy .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-10xf0uq .mp-country {
+    .mp.mp-t-0u2mrmy .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: 0.5;
       stroke-linejoin: round;
     }
-    .mp.mp-t-10xf0uq .mp-country.is-highlighted {
+    .mp.mp-t-0u2mrmy .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-10xf0uq .mp-border {
+    .mp.mp-t-0u2mrmy .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-10xf0uq .mp-neighbour {
+    .mp.mp-t-0u2mrmy .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-10xf0uq .mp-water[data-kind="lake"] {
+    .mp.mp-t-0u2mrmy .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-10xf0uq .mp-water[data-kind="river"] {
+    .mp.mp-t-0u2mrmy .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: 1.1;
     }
-    .mp.mp-t-10xf0uq .mp-place {
+    .mp.mp-t-0u2mrmy .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-10xf0uq .mp-road {
+    .mp.mp-t-0u2mrmy .mp-prism-top {
+      fill: var(--land);
+      stroke: var(--land-edge);
+      stroke-width: 0.5;
+    }
+    .mp.mp-t-0u2mrmy .mp-prism-side {
+      fill: var(--prism-side);
+      stroke: none;
+    }
+    .mp.mp-t-0u2mrmy .mp-prism.is-highlighted .mp-prism-top {
+      fill: var(--accent);
+    }
+    .mp.mp-t-0u2mrmy .mp-prism.is-highlighted .mp-prism-side {
+      fill: var(--accent);
+      filter: brightness(0.7);
+    }
+    .mp.mp-t-0u2mrmy .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-10xf0uq .mp-label {
+    .mp.mp-t-0u2mrmy .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
     }
-    .mp.mp-t-10xf0uq {
+    .mp.mp-t-0u2mrmy {
       --bg: #0E1620;
       --land: #22303F;
       --land-edge: #0E1620;

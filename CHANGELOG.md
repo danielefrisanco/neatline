@@ -17,6 +17,37 @@ signature — themes in the wild depend on those names.
 
 Phase 5 — presets and fill modes.
 
+## [0.6.0] — 2026-08-27
+
+Prism maps: height as quantity. Brought forward from v2 — the reserved class
+names turned out to be most of the design.
+
+### Added
+
+- **`extrude`** — raise each country off the map so height reads as quantity.
+  A number lifts everything uniformly; `{ values }` lifts each country in
+  proportion, taking raw numbers (GDP, headcount, anything) and scaling them
+  against the largest, so the caller never has to think in SVG units.
+  `height` sets what the largest becomes
+- `.mp-prism` wrapping `.mp-prism-side` and `.mp-prism-top`, carrying
+  `data-iso`, `data-name` and `data-height`. `.is-highlighted` works on a prism
+  exactly as it does on a flat country
+- `--prism-side` token; two gallery renders, `europe-gdp-prism` and
+  `italy-raised`
+- `createProjection` takes optional headroom, so an extruded map leaves room
+  above the geometry instead of clipping its tallest prism at the top edge
+
+### Notes
+
+- The solid is built by sweeping the projected outline: the footprint, one quad
+  per edge running up to the raised copy, and the raised copy on top. That works
+  for any polygon — concave, holed or in pieces — with no geometry library. Each
+  quad is wound consistently before being written, because the winding of an
+  edge follows whichever way the outline happens to run, and two quads of
+  opposite winding punch a hole in each other under the nonzero fill rule
+- Countries are drawn back to front by their lowest point, so a nearer prism
+  stands in front of the one behind rather than being cut into by it
+
 ## [0.5.0] — 2026-08-27
 
 Neighbours, built-in filters, and two water fixes. Brought forward from later
@@ -392,7 +423,8 @@ history stay the same document.
 | `1.0.0` | 7 · Ship | Stable taxonomy, published, documented |
 | `1.1.0` | 8 · Annotations | Pins, arrows, callouts, icons |
 
-[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/danielefrisanco/mapper/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/danielefrisanco/mapper/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/danielefrisanco/mapper/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/danielefrisanco/mapper/compare/v0.3.0...v0.3.1

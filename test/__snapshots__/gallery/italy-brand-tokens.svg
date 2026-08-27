@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1dnxoel" role="img" aria-label="Where we operate">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" preserveAspectRatio="xMidYMid meet" class="mp mp-t-158tf8l" role="img" aria-label="Where we operate">
   <title>Where we operate</title>
   <style>
-    .mp.mp-t-1dnxoel {
+    .mp.mp-t-158tf8l {
       --bg: transparent;
       --land: #D8D8D2;
       --land-edge: #FFFFFF;
@@ -9,6 +9,7 @@
       --border-width: 0.75;
       --accent: #C2482F;
       --accent-edge: #FFFFFF;
+      --prism-side: #A9A9A2;
       --place: #2B2B29;
       --ink: #2B2B29;
       --ink-muted: #80807A;
@@ -21,53 +22,69 @@
       --anno-ink: #FFFFFF;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-1dnxoel .mp-bg {
+    .mp.mp-t-158tf8l .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-1dnxoel .mp-country {
+    .mp.mp-t-158tf8l .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: 0.5;
       stroke-linejoin: round;
     }
-    .mp.mp-t-1dnxoel .mp-country.is-highlighted {
+    .mp.mp-t-158tf8l .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-1dnxoel .mp-border {
+    .mp.mp-t-158tf8l .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-1dnxoel .mp-neighbour {
+    .mp.mp-t-158tf8l .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-1dnxoel .mp-water[data-kind="lake"] {
+    .mp.mp-t-158tf8l .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-1dnxoel .mp-water[data-kind="river"] {
+    .mp.mp-t-158tf8l .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: 1.1;
     }
-    .mp.mp-t-1dnxoel .mp-place {
+    .mp.mp-t-158tf8l .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-1dnxoel .mp-road {
+    .mp.mp-t-158tf8l .mp-prism-top {
+      fill: var(--land);
+      stroke: var(--land-edge);
+      stroke-width: 0.5;
+    }
+    .mp.mp-t-158tf8l .mp-prism-side {
+      fill: var(--prism-side);
+      stroke: none;
+    }
+    .mp.mp-t-158tf8l .mp-prism.is-highlighted .mp-prism-top {
+      fill: var(--accent);
+    }
+    .mp.mp-t-158tf8l .mp-prism.is-highlighted .mp-prism-side {
+      fill: var(--accent);
+      filter: brightness(0.7);
+    }
+    .mp.mp-t-158tf8l .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-1dnxoel .mp-label {
+    .mp.mp-t-158tf8l .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
     }
-    .mp.mp-t-1dnxoel {
+    .mp.mp-t-158tf8l {
       --land: #0B5D3B;
       --land-edge: #F4F1E8;
       --bg: #F4F1E8;

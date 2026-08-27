@@ -62,12 +62,14 @@ export function createProjection(
   width: number,
   height: number,
   padding: number,
+  /** Extra room at the top, for anything drawn above the map — an extrusion. */
+  headroom = 0,
 ): GeoProjection {
   const projection = PROJECTIONS[name](frame.bounds);
 
   return projection.fitExtent(
     [
-      [padding, padding],
+      [padding, padding + headroom],
       [width - padding, height - padding],
     ],
     frame.geometry as never,

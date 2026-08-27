@@ -229,6 +229,29 @@ is a data problem — glaciers, salt flats and depth bands are real vectors, but
 land contour lines would have to be derived from an elevation model.
 See `west-europe-relief.svg` in the gallery.
 
+### Height as quantity
+
+```ts
+await mapper({
+  region: "west-europe",
+  extrude: { values: { DE: 4460, FR: 3050, IT: 2250, ES: 1620 }, height: 150 },
+});
+```
+
+Each country is raised in proportion to its value — a prism map. Values are raw
+(GDP here, or headcount, or anything else) and scaled against the largest, so
+you never have to think in SVG units. `extrude: 40` lifts everything uniformly
+instead, and `extrude: { values: { IT: 1 } }` raises a single country off the
+rest.
+
+Each country becomes `.mp-prism` wrapping `.mp-prism-side` and `.mp-prism-top`,
+with `data-height` alongside the usual attributes. `.is-highlighted` works on a
+prism exactly as on a flat country. See `europe-gdp-prism.svg` and
+`italy-raised.svg` in the gallery.
+
+Nothing about this is a raster trick: the solid is built by sweeping the
+projected outline upward, so it stays vector, themeable and diffable.
+
 ### Neighbours
 
 ```ts

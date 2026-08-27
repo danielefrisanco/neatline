@@ -1,6 +1,7 @@
 import { geoBounds, geoContains, geoPath } from "d3-geo";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
+import { heightsFor, prisms, type PrismInput } from "./prism.js";
 import { createProjection } from "./projections.js";
 import { expandPreset, isRegionPreset, presetLabel } from "./regions.js";
 import { referencedFilters } from "./filters.js";
@@ -286,7 +287,16 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     highlighted.add(code2);
   }
 
-  const projection = createProjection(projectionName, frame, width, height, padding);
+  // Extruded countries rise off their footprint, so the camera needs room
+  // above the map or the tallest prism is cut off by the top edge.
+  const extrusion =
+    options.extrude === undefined ? null : heightsFor(options.extrude, resolveId);
+  const headroom =
+    extrusion === null
+      ? 0
+      : (extrusion.uniform ?? Math.max(0, ...extrusion.byId.values(), 0));
+
+  const projection = createProjection(projectionName, frame, width, height, padding, headroom);
   const path = geoPath(projection).digits(1);
 
 
@@ -318,7 +328,20 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   }
   // Highlight names are collected even when the layer is off, so the accessible
   // description stays true to what was asked for.
-  if (wants("land")) content.set("land", land);
+  if (wants("land")) {
+    if (extrusion === null) {
+      content.set("land", land);
+    } else {
+      const raised: PrismInput[] = frame.countries.map((country) => ({
+        id: country.id,
+        name: country.name,
+        geometry: country.geometry,
+        height: extrusion.uniform ?? extrusion.byId.get(country.id) ?? 0,
+        highlighted: country.id !== "" && highlighted.has(country.id),
+      }));
+      content.set("land", prisms(raised, projection));
+    }
+  }
 
   // Context, drawn beneath the region and excluded from the camera, so turning
   // it on can never change the framing — the subject stays exactly where it was.

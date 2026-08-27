@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0y242wn" role="img" aria-label="Map of Western Europe">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0yl5h1p" role="img" aria-label="Map of Western Europe">
   <title>Map of Western Europe</title>
   <style>
-    .mp.mp-t-0y242wn {
+    .mp.mp-t-0yl5h1p {
       --bg: #A8C0CC;
       --land: #F2EAD8;
       --land-edge: #C9BFA6;
@@ -9,6 +9,7 @@
       --border-width: 1.4;
       --accent: #8C3B4A;
       --accent-edge: #F2EAD8;
+      --prism-side: #C4B48F;
       --place: #3A342A;
       --ink: #3A342A;
       --ink-muted: #7A7263;
@@ -21,49 +22,65 @@
       --anno-ink: #F2EAD8;
       --furniture-ink: #7A7263;
     }
-    .mp.mp-t-0y242wn .mp-bg {
+    .mp.mp-t-0yl5h1p .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-0y242wn .mp-country {
+    .mp.mp-t-0yl5h1p .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: 0.8;
       stroke-linejoin: round;
     }
-    .mp.mp-t-0y242wn .mp-country.is-highlighted {
+    .mp.mp-t-0yl5h1p .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
       stroke-width: 1;
     }
-    .mp.mp-t-0y242wn .mp-border {
+    .mp.mp-t-0yl5h1p .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: 5 2.5;
       stroke-linecap: round;
     }
-    .mp.mp-t-0y242wn .mp-neighbour {
+    .mp.mp-t-0yl5h1p .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-0y242wn .mp-water[data-kind="lake"] {
+    .mp.mp-t-0yl5h1p .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-0y242wn .mp-water[data-kind="river"] {
+    .mp.mp-t-0yl5h1p .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: 1.1;
     }
-    .mp.mp-t-0y242wn .mp-place {
+    .mp.mp-t-0yl5h1p .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-0y242wn .mp-road {
+    .mp.mp-t-0yl5h1p .mp-prism-top {
+      fill: var(--land);
+      stroke: var(--land-edge);
+      stroke-width: 0.5;
+    }
+    .mp.mp-t-0yl5h1p .mp-prism-side {
+      fill: var(--prism-side);
+      stroke: none;
+    }
+    .mp.mp-t-0yl5h1p .mp-prism.is-highlighted .mp-prism-top {
+      fill: var(--accent);
+    }
+    .mp.mp-t-0yl5h1p .mp-prism.is-highlighted .mp-prism-side {
+      fill: var(--accent);
+      filter: brightness(0.7);
+    }
+    .mp.mp-t-0yl5h1p .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-0y242wn .mp-label {
+    .mp.mp-t-0yl5h1p .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);

@@ -107,6 +107,38 @@ const GALLERY: ReadonlyArray<readonly [string, MapperOptions]> = [
       title: "Western Europe, with its neighbours",
     },
   ],
+  // Height as quantity — the map most people mean by "3D". Values are raw
+  // (GDP in $bn here) and scaled against the largest.
+  [
+    "europe-gdp-prism",
+    {
+      region: "west-europe",
+      projection: "conic-conformal",
+      theme: "atlas",
+      size: [1000, 900],
+      extrude: {
+        values: {
+          DE: 4460, GB: 3340, FR: 3050, IT: 2250, ES: 1620, NL: 1120,
+          CH: 885, IE: 545, AT: 515, BE: 630, DK: 405, PT: 290, LU: 85,
+        },
+        height: 150,
+      },
+      title: "Western Europe by GDP",
+    },
+  ],
+  // One country lifted off the rest, which is the other thing extrusion is for.
+  [
+    "italy-raised",
+    {
+      region: "west-europe",
+      projection: "conic-conformal",
+      theme: "atlas",
+      size: [900, 900],
+      extrude: { values: { IT: 1 }, height: 60 },
+      highlight: ["IT"],
+      title: "Italy, raised",
+    },
+  ],
   [
     "italy-brand-tokens",
     {
@@ -136,7 +168,11 @@ describe("gallery", () => {
     const map = await mapper({ detail: "110m", ...options });
     const artifact = await map.render();
     const withoutStyle = artifact.replace(/<style>[\s\S]*?<\/style>/, "");
-    expect(withoutStyle).toMatch(/<path class="mp-country"[^>]*fill="#[0-9A-Fa-f]{3,6}"/);
+    // An extruded map draws prisms rather than flat countries, so either
+    // carries the paint — what matters is that something visible does.
+    expect(withoutStyle).toMatch(
+      /<path class="mp-(country|prism-top)"[^>]*fill="#[0-9A-Fa-f]{3,6}"/,
+    );
   });
 
   it("keeps the small stylesheet-only form available", async () => {

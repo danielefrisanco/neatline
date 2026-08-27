@@ -24,6 +24,7 @@ export const TOKENS: readonly TokenSpec[] = Object.freeze([
   { name: "--border-width", status: "live", controls: "Boundary stroke width, in user units" },
   { name: "--accent", status: "live", controls: "Fill for anything highlighted" },
   { name: "--accent-edge", status: "live", controls: "Outline for anything highlighted" },
+  { name: "--prism-side", status: "live", controls: "The extruded wall of a raised country" },
   { name: "--place", status: "live", controls: "Settlement dots" },
   { name: "--ink", status: "live", controls: "Primary text" },
   { name: "--ink-muted", status: "live", controls: "Secondary text" },
