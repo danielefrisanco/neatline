@@ -39,20 +39,31 @@ Phase 3 — theming, palettes and layer control. Maps stop being wireframes.
 - **`layers`** — controls which slots carry content, never whether a slot
   exists. The stack is a fixed contract. The saving is file size, not
   appearance
-- **`inlineStyles`** on `toFile` — resolves the cascade onto presentation
+- **`render(options?)`** on `MapResult` — the document as a portable artifact,
+  without writing a file. `toFile()` is now `render()` plus a write
+- **`inlineStyles`** — resolves the cascade onto presentation
   attributes for Figma and Illustrator, which ignore `<style>`, and for the
   renderers found in 0.2.0 that let an attribute beat a stylesheet. The
   stylesheet still ships alongside, so both paths resolve to the same paint
-- **A gallery of nine committed renders** in `test/__snapshots__/gallery/`,
+- **A gallery of eight committed renders** in `test/__snapshots__/gallery/`,
   across themes, palettes, projections and canvas shapes. 0.2.0 shipped a map
   that rendered as a solid black square while every string assertion passed;
-  snapshots that a person can open are the fix
+  snapshots that a person can open are the fix — and each one is now checked to
+  carry visible paint with its stylesheet stripped out, since the first version
+  of this gallery rendered only where `<style>` was honoured
 - `themes/*.css` and `palettes/*.css` are generated at build time from the
   same strings the library uses, so the published files cannot drift from the
   bundled ones
 
 ### Changed
 
+- **`render()` and `toFile()` flatten the theme by default** (`inlineStyles`
+  now defaults to `true`). A file gets opened by whatever the reader happens to
+  have, and many viewers, thumbnailers and design tools ignore `<style>`
+  entirely — which rendered a themed map as black shapes. `toString()` is
+  unchanged and remains the small, stylesheet-only form for embedding in a page
+- **The default `minimal` theme was too faint to read** against a white page.
+  Land and border contrast raised; still minimal, now legible
 - **Every rule is scoped to a class derived from a hash of the stylesheet**
   (`.mp.mp-t-k3f9a1z`). A `<style>` block inside inline SVG applies to the whole
   host page, so two themed maps would otherwise overwrite each other and a map

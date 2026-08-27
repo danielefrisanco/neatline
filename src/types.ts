@@ -121,8 +121,17 @@ export interface RenderOptions {
   readonly tokens?: Readonly<Record<string, string>>;
   /**
    * Flatten computed values onto presentation attributes.
-   * Figma and Illustrator are inconsistent about honouring `<style>` blocks.
-   * @default false
+   *
+   * On by default, because a file on disk gets opened by whatever the reader
+   * has — a design tool, a file manager thumbnailer, an editor preview — and
+   * many of those ignore `<style>` entirely, rendering a themed map as black
+   * shapes. The stylesheet still ships alongside, so a browser honours the CSS
+   * and everything else honours the attributes.
+   *
+   * Set it to `false` for the smallest possible file when you know the target
+   * understands stylesheets.
+   *
+   * @default true
    */
   readonly inlineStyles?: boolean;
 }
@@ -140,8 +149,23 @@ export interface MapResult {
    * cannot represent.
    */
   project(position: Position): Point | null;
-  /** The complete document — geometry with the theme applied. */
+  /**
+   * The complete document, styled by its stylesheet alone.
+   *
+   * This is the form to embed in a page: the browser applies the `<style>`
+   * block, so it stays small. For a file someone will open in a design tool or
+   * a viewer, use `render()` or `toFile()`.
+   */
   toString(): string;
-  /** Write the complete document to disk. Node only. */
+  /**
+   * The complete document as a portable artifact.
+   *
+   * Flattens the theme onto presentation attributes unless told otherwise, so
+   * the result renders the same whether or not the reader understands
+   * stylesheets. Accepts write-time overrides, so one built map can be produced
+   * several ways without recomputing the geometry.
+   */
+  render(options?: RenderOptions): Promise<string>;
+  /** Write `render()` output to disk. Node only. */
   toFile(path: string, options?: RenderOptions): Promise<void>;
 }

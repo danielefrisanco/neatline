@@ -124,10 +124,27 @@ const map = await mapper({
   tokens: { accent: "#C2482F" } // final say
 });
 
-map.css          // the resolved stylesheet, scoped
-map.svg          // geometry only — pair it with map.css yourself
-map.toString()   // the complete document, <style> included
+map.css              // the resolved stylesheet, scoped
+map.svg              // geometry only — pair it with map.css yourself
+map.toString()       // complete, styled by its <style> block — for embedding
+await map.render()   // complete and portable — renders without CSS support
+await map.toFile(p)  // render(), written to disk
 ```
+
+### Two output forms, for two different readers
+
+`toString()` is styled by its stylesheet alone. That is the right form to embed
+in a page: the browser applies the `<style>` block, and the file stays small.
+
+`render()` and `toFile()` **flatten the theme onto presentation attributes by
+default**, because a file gets opened by whatever the reader happens to have —
+a design tool, a file-manager thumbnailer, an editor preview — and many of those
+ignore `<style>` entirely, which renders a themed map as black shapes. The
+stylesheet still ships inside, so a browser honours the CSS and everything else
+honours the attributes. Both resolve to the same paint.
+
+Pass `inlineStyles: false` for the smallest possible file when you know the
+target understands stylesheets.
 
 **A theme carries structure; a palette carries only colour.** That split is the
 point: both a newsroom and a company want to keep a style and change its
@@ -170,19 +187,10 @@ itself: `.mp.mp-t-k3f9a1z .mp-country`. Deterministic, so the same theme always
 produces the same class and output stays byte-identical; distinct, so two
 themes cannot collide.
 
-### Flattening for design tools
+### How flattening works
 
-```ts
-await map.toFile("out.svg", { inlineStyles: true });
-```
-
-Figma and Illustrator import SVG but ignore `<style>`, so a themed map arrives
-as black shapes. `inlineStyles` resolves the cascade and writes the computed
-paint onto each element as presentation attributes. The stylesheet still ships
-alongside, so a browser honours the CSS and a tool that ignores it honours the
-attributes — both resolve to the same paint.
-
-It is not a CSS engine. It handles class selectors and descendant combinators,
+`inlineStyles` resolves the cascade and writes the computed paint onto each
+element as presentation attributes. It is not a CSS engine. It handles class selectors and descendant combinators,
 which is what the bundled themes use and what the authoring convention asks for.
 Selectors beyond that are skipped rather than half-applied.
 
@@ -211,8 +219,10 @@ one CSS rule, but not emitting its path data is real bytes.
 `test/__snapshots__/gallery/` holds committed renders across themes, palettes,
 projections and canvas shapes. They are snapshots, so a diff fails the build —
 but they are real `.svg` files, so a diff is also something a person can open.
-That matters: Phase 2 shipped a map that rendered as a solid black square while
-every string assertion in the suite passed.
+That matters twice over: Phase 2 shipped a map that rendered as a solid black
+square while every string assertion passed, and Phase 3 first shipped this
+gallery in a form that only renders where `<style>` is honoured. Every file here
+is now checked to carry visible paint with its stylesheet stripped out.
 
 ## License
 

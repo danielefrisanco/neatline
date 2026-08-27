@@ -62,19 +62,28 @@ const GALLERY: ReadonlyArray<readonly [string, MapperOptions]> = [
 describe("gallery", () => {
   it.each(GALLERY)("renders %s", async (name, options) => {
     const map = await mapper({ detail: "110m", ...options });
-    await expect(map.toString()).toMatchFileSnapshot(`./__snapshots__/gallery/${name}.svg`);
+    // `render()`, not `toString()`: these files exist to be opened, and many
+    // viewers ignore <style>. The stylesheet still ships inside them.
+    await expect(await map.render()).toMatchFileSnapshot(
+      `./__snapshots__/gallery/${name}.svg`,
+    );
   });
 
-  it("renders west-europe-inlined for design tools", async () => {
-    const map = await mapper({
-      region: "west-europe",
-      detail: "110m",
-      projection: "conic-conformal",
-      theme: "atlas",
-    });
-    const target = `${import.meta.dirname}/__snapshots__/gallery/west-europe-inlined.svg`;
-    await map.toFile(target, { inlineStyles: true });
-    const { readFile } = await import("node:fs/promises");
-    expect(await readFile(target, "utf8")).toContain('fill="#F2EAD8"');
+  // Every file in the gallery has to survive a reader that ignores stylesheets,
+  // or the gallery cannot do the one job it exists for.
+  it.each(GALLERY)("gives %s paint a viewer can see without css", async (_name, options) => {
+    const map = await mapper({ detail: "110m", ...options });
+    const artifact = await map.render();
+    const withoutStyle = artifact.replace(/<style>[\s\S]*?<\/style>/, "");
+    expect(withoutStyle).toMatch(/<path class="mp-country"[^>]*fill="#[0-9A-Fa-f]{3,6}"/);
+  });
+
+  it("keeps the small stylesheet-only form available", async () => {
+    const map = await mapper({ region: ["FR"], detail: "110m", theme: "atlas" });
+    const small = map.toString();
+    const portable = await map.render();
+    expect(small).not.toContain('fill="#F2EAD8"');
+    expect(portable).toContain('fill="#F2EAD8"');
+    expect(small.length).toBeLessThan(portable.length);
   });
 });

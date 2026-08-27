@@ -346,6 +346,33 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     return serialize(final);
   }
 
+  /**
+   * The document as a portable artifact.
+   *
+   * Separate from `toString()` because the two have different readers. An
+   * embedded map is styled by its stylesheet and should stay small; a file
+   * is opened by whatever the reader happens to have — a design tool, a
+   * thumbnailer, an editor preview — and many of those ignore `<style>`
+   * entirely, which renders a themed map as black shapes.
+   */
+  async function renderArtifact(renderOptions?: RenderOptions): Promise<string> {
+    const overridden =
+      renderOptions !== undefined &&
+      (renderOptions.theme !== undefined ||
+        renderOptions.palette !== undefined ||
+        renderOptions.tokens !== undefined);
+
+    const theme = overridden
+      ? await resolveTheme({
+          theme: renderOptions?.theme ?? options.theme,
+          palette: renderOptions?.palette ?? options.palette,
+          tokens: renderOptions?.tokens ?? options.tokens,
+        })
+      : themed;
+
+    return render(theme, true, renderOptions?.inlineStyles ?? true);
+  }
+
   const svg = render(themed, false, false);
   const complete = render(themed, true, false);
 
@@ -362,28 +389,18 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
       return complete;
     },
 
+    render: renderArtifact,
+
     async toFile(target: string, renderOptions?: RenderOptions) {
-      const overridden =
-        renderOptions !== undefined &&
-        (renderOptions.theme !== undefined ||
-          renderOptions.palette !== undefined ||
-          renderOptions.tokens !== undefined);
-
-      const theme = overridden
-        ? await resolveTheme({
-            theme: renderOptions?.theme ?? options.theme,
-            palette: renderOptions?.palette ?? options.palette,
-            tokens: renderOptions?.tokens ?? options.tokens,
-          })
-        : themed;
-
-      const output = render(theme, true, renderOptions?.inlineStyles ?? false);
+      const output = await renderArtifact(renderOptions);
       // Imported lazily so browser bundles never pull in node:fs.
       const { writeFile } = await import("node:fs/promises");
       await writeFile(target, output, "utf8");
     },
   };
 }
+
+
 
 function describe(base: string, highlightedNames: readonly string[]): string {
   return highlightedNames.length === 0

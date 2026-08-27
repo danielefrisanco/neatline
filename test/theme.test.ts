@@ -53,9 +53,16 @@ describe("cascade", () => {
       palette: "dusk",
       tokens: { accent: "#ff0000" },
     });
+
+    // Read the expected values from the sources rather than hard-coding them,
+    // so retuning a theme's colours cannot fail a test about ordering.
+    const { minimal } = await import("../src/themes/minimal.js");
+    const { dusk } = await import("../src/palettes/dusk.js");
+    const landIn = (css: string) => /--land:\s*([^;]+);/.exec(css)?.[1]?.trim();
+
     const positions = [
-      resolved.css.indexOf("--land: #E4E4E1"),
-      resolved.css.indexOf("--land: #22303F"),
+      resolved.css.indexOf(`--land: ${landIn(minimal)}`),
+      resolved.css.indexOf(`--land: ${landIn(dusk)}`),
       resolved.css.indexOf("--accent: #ff0000"),
     ];
     expect(positions.every((p) => p > -1)).toBe(true);
