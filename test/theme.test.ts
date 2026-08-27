@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { mapper, THEME_NAMES, PALETTE_NAMES, TOKENS } from "../src/index.js";
+import { mapper, THEME_NAMES, PALETTE_NAMES, TOKENS, LAYERS } from "../src/index.js";
 import { parseCss, scopeSelector, serializeCss } from "../src/css.js";
 import { resolveTheme } from "../src/theme.js";
 
@@ -162,7 +162,9 @@ describe("layers option", () => {
       detail: "110m",
       layers: { land: false, borders: false },
     });
-    expect(map.svg.match(/class="mp-layer /g)).toHaveLength(9);
+    // Counted against the taxonomy rather than against a number, because the
+    // claim is "every slot survives", not "there are nine of them".
+    expect(map.svg.match(/class="mp-layer /g)).toHaveLength(LAYERS.length);
   });
 
   it("still describes highlights that were switched off", async () => {

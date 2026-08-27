@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" width="900" height="900" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0ri34yx" role="img" aria-label="Europe">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" width="900" height="900" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1mx02mv" role="img" aria-label="Europe">
   <title>Europe</title>
   <style>
-    .mp.mp-t-0ri34yx {
+    .mp.mp-t-1mx02mv {
       --bg: #A8C0CC;
       --land: #F2EAD8;
       --land-edge: #C9BFA6;
@@ -33,74 +33,82 @@
       --stripe-width: 1.8;
       --water: #7FA0B4;
       --water-width: 1.1;
+      --graticule: #B9AE97;
+      --graticule-width: 0.4;
+      --equator: #8E8069;
+      --desert: #EFE0B4;
+      --forest: #C3D2AE;
+      --mountain: #D6C6A6;
+      --glacier: #EDF2F4;
+      --sea-ink: #5E7C90;
       --road: #B5462F;
       --neighbour: #E6DEC9;
       --anno: #8C3B4A;
       --anno-ink: #F2EAD8;
       --furniture-ink: #7A7263;
     }
-    .mp.mp-t-0ri34yx .mp-bg {
+    .mp.mp-t-1mx02mv .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-0ri34yx .mp-neighbour {
+    .mp.mp-t-1mx02mv .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-0ri34yx .mp-country {
+    .mp.mp-t-1mx02mv .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-0ri34yx .mp-country[data-bin="1"] {
+    .mp.mp-t-1mx02mv .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-0ri34yx .mp-country[data-bin="2"] {
+    .mp.mp-t-1mx02mv .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-0ri34yx .mp-country[data-bin="3"] {
+    .mp.mp-t-1mx02mv .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-0ri34yx .mp-country[data-bin="4"] {
+    .mp.mp-t-1mx02mv .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-0ri34yx .mp-country[data-bin="5"] {
+    .mp.mp-t-1mx02mv .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-0ri34yx .mp-country[data-fill="1"] {
+    .mp.mp-t-1mx02mv .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-0ri34yx .mp-country[data-fill="2"] {
+    .mp.mp-t-1mx02mv .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-0ri34yx .mp-country[data-fill="3"] {
+    .mp.mp-t-1mx02mv .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-0ri34yx .mp-country[data-fill="4"] {
+    .mp.mp-t-1mx02mv .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-0ri34yx .mp-country[data-fill="5"] {
+    .mp.mp-t-1mx02mv .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-0ri34yx .mp-country[data-fill="6"] {
+    .mp.mp-t-1mx02mv .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-0ri34yx .mp-country.is-highlighted {
+    .mp.mp-t-1mx02mv .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-0ri34yx .mp-water[data-kind="lake"] {
+    .mp.mp-t-1mx02mv .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-0ri34yx .mp-water[data-kind="river"] {
+    .mp.mp-t-1mx02mv .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-0ri34yx .mp-border {
+    .mp.mp-t-1mx02mv .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -108,84 +116,84 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-0ri34yx .mp-road {
+    .mp.mp-t-1mx02mv .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-0ri34yx .mp-place {
+    .mp.mp-t-1mx02mv .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-0ri34yx .mp-prism-top {
+    .mp.mp-t-1mx02mv .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-0ri34yx .mp-prism-side {
+    .mp.mp-t-1mx02mv .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-0ri34yx .mp-prism-edge {
+    .mp.mp-t-1mx02mv .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-0ri34yx .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-1mx02mv .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-0ri34yx .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-1mx02mv .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-0ri34yx .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-1mx02mv .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-0ri34yx .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-1mx02mv .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-0ri34yx .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-1mx02mv .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-0ri34yx .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-1mx02mv .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-0ri34yx .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-1mx02mv .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-0ri34yx .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-1mx02mv .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-0ri34yx .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-1mx02mv .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-0ri34yx .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-1mx02mv .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-0ri34yx .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-1mx02mv .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-0ri34yx .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-1mx02mv .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-0ri34yx .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-1mx02mv .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-0ri34yx .mp-hatch {
+    .mp.mp-t-1mx02mv .mp-hatch {
       fill: url(#mp-stripe);
       stroke: none;
     }
-    .mp.mp-t-0ri34yx .mp-hatch-line {
+    .mp.mp-t-1mx02mv .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-0ri34yx .mp-label {
+    .mp.mp-t-1mx02mv .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-0ri34yx {
+      .mp.mp-t-1mx02mv {
         --bg: #101D26;
         --land: #2C2A24;
         --land-edge: #4A4437;
@@ -226,6 +234,7 @@
     </pattern>
   </defs>
   <rect class="mp-bg" x="0" y="0" width="900" height="900" fill="#A8C0CC"/>
+  <g class="mp-layer mp-graticule"/>
   <g class="mp-layer mp-neighbours"/>
   <g class="mp-layer mp-land">
     <path class="mp-country" data-iso="NO" data-name="Norway" data-fill="2" d="M390.7,-176.3L391.5,-185.9L398.5,-187.6L405.8,-178.9L425.8,-161.6L414.5,-148.7L414.5,-128.6L410.3,-122.9L410.4,-100.7L403.3,-98.8L389,-113.7L393.4,-123.6L384.3,-130.6L372.4,-152.7L367.5,-174L380.3,-184.7L383.7,-175.2ZM551.6,55.2L540.5,69.2L534.4,73.4L532.9,55.8L519.7,49.4L509.2,61L509.6,79.6L504.1,92.2L493.4,88.6L482.4,92.2L470.3,81.3L466.3,88.7L461.1,90.6L462.5,106.8L445.2,105.5L444.7,119.3L436,120.4L432,138.4L425.4,166.2L413,201.4L417.4,209.3L414.5,219.1L404.1,219.4L398.6,242.3L401.1,273.9L409.1,285.5L407,313.6L398,330.3L393.4,344.2L384.6,330L361.1,357.9L344.4,363.4L327.5,351L324.1,325.4L322.5,270.5L333.2,255.5L362,235.7L382.2,210.5L399,176L418.2,127.4L431.4,107.4L450.9,73.5L467.3,59.6L481.1,58.1L488.8,35.3L503.4,32.7L516,24L546,33.7L537.8,43.4ZM447.4,-197.8L444.2,-181.5L430.8,-175L415.4,-176.6L413.2,-184L406.2,-183.4L399.3,-195.3L412.2,-205.2L420.1,-199.9L423,-209L435.9,-204.8ZM449,-136.1L438.9,-122.6L427.8,-126.8L430.3,-134.3L425.5,-142.1L435.5,-149.6L439.8,-140.2Z" fill="#C2D6AE" stroke="#C9BFA6" stroke-width="0.8" stroke-linejoin="round">
@@ -346,6 +355,7 @@
       <title>Kosovo</title>
     </path>
   </g>
+  <g class="mp-layer mp-terrain"/>
   <g class="mp-layer mp-hydro" clip-path="url(#mp-land-clip)">
     <path class="mp-water" data-kind="lake" fill="#7FA0B4" d="M428.8,333.8L429,336.4L428.5,340.7L421.2,348.6L416,351.1L411.6,351.4L412.1,345L411.4,342.9L413.5,340.9L417.4,339.4L419.4,336.2L423.7,330.9Z" stroke="none"/>
     <path class="mp-water" data-kind="river" fill="none" d="M360.4,599.7L365.5,601.6L379,597.3L399,584.9L414,580.9L419.2,574.9L421,575.7L424.4,576.2L426.7,577L429.1,577.8L434.2,580.3L440,583L442.3,584L462.2,590.3L466.8,590.3L476.4,585.5L481,585.5L496.3,588.4L506.7,593.7L512.8,596L525.9,591L529.6,592.3L531.9,595.3L531.9,607L534,616.1L534.6,628.2L533.8,633.9L534,635.5L534.8,637.1L536.2,639L538.7,642.9L540.3,645.3L542.3,646.7L545.3,649.4L546.7,650.8L548.6,651L553.4,651.1L557.9,651.6L559.6,651.8L567.6,658.1L571.5,658.8L581.2,654.8L584.5,655.9L596,660.7L599.7,654.1L604.5,656.2L601.7,661.2L605.5,664.3L612.4,672.8L618.7,669.7L632.2,670.6L657.3,666L663.6,657.7L681.9,647.4L682.5,647.7L683.3,648L684.2,646.7L687.4,644.1L690.4,641.5L692,640.5L693.9,638.3L692.8,636.3L688.7,631.3L687.3,620.1L687.5,618.3L689,615.1L689.2,613.3L691.7,613.4L695.6,613.9L697.8,614.7L704.1,608.9L712.7,610.2" stroke="#7FA0B4" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>

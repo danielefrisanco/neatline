@@ -15,6 +15,33 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
+## [0.9.0] — 2026-08-27
+
+Two layer slots reserved. **Breaking**, in the way the pre-1.0 policy exists
+for: inserting a layer restacks everything above it, so this is the last cheap
+moment to do it. Nothing new draws.
+
+### Added
+
+- **A `graticule` layer**, at the very bottom of the stack — the grid the world
+  is drawn on, which land covers. Parallels, meridians, the equator and the
+  tropics, when they are built
+- **A `terrain` layer**, directly above the land it tints and below the water,
+  because a river runs over a forest. Land cover: desert, forest, mountain,
+  glacier
+- **Eight reserved tokens** — `--graticule`, `--graticule-width`, `--equator`,
+  `--desert`, `--forest`, `--mountain`, `--glacier`, `--sea-ink` — with values
+  in every bundled theme and palette, so the day either layer starts drawing,
+  every preset already knows what it looks like
+
+### Changed
+
+- Both placements are the kind that can only be made once. Reserving them costs
+  two empty groups; making the same decision after 1.0 would cost a major
+- The colour-token test is now a rule rather than a list — anything named
+  `-width` is a measurement — since a list is edited when the vocabulary grows
+  and that is exactly the moment it gets forgotten
+
 ## [0.8.0] — 2026-08-27
 
 Phase 5 — presets and fill modes. Five themes, two fill modes that need no

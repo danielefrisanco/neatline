@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1j003v6" role="img" aria-label="Map of Africa">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0x8t5md" role="img" aria-label="Map of Africa">
   <title>Map of Africa</title>
   <style>
-    .mp.mp-t-1j003v6 {
+    .mp.mp-t-0x8t5md {
       --bg: transparent;
       --land: #D8D8D2;
       --land-edge: #FFFFFF;
@@ -33,74 +33,82 @@
       --stripe-width: 1.6;
       --water: #8FB0C4;
       --water-width: 1.1;
+      --graticule: #C9C9C3;
+      --graticule-width: 0.4;
+      --equator: #A8A8A0;
+      --desert: #E8DFC4;
+      --forest: #B9C9B0;
+      --mountain: #CFC6B6;
+      --glacier: #F2F4F5;
+      --sea-ink: #7E96A6;
       --road: #B08A3E;
       --neighbour: #F0F0EE;
       --anno: #C2482F;
       --anno-ink: #FFFFFF;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-1j003v6 .mp-bg {
+    .mp.mp-t-0x8t5md .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-1j003v6 .mp-neighbour {
+    .mp.mp-t-0x8t5md .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-1j003v6 .mp-country {
+    .mp.mp-t-0x8t5md .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-1j003v6 .mp-country[data-bin="1"] {
+    .mp.mp-t-0x8t5md .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-1j003v6 .mp-country[data-bin="2"] {
+    .mp.mp-t-0x8t5md .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-1j003v6 .mp-country[data-bin="3"] {
+    .mp.mp-t-0x8t5md .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-1j003v6 .mp-country[data-bin="4"] {
+    .mp.mp-t-0x8t5md .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-1j003v6 .mp-country[data-bin="5"] {
+    .mp.mp-t-0x8t5md .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-1j003v6 .mp-country[data-fill="1"] {
+    .mp.mp-t-0x8t5md .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-1j003v6 .mp-country[data-fill="2"] {
+    .mp.mp-t-0x8t5md .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-1j003v6 .mp-country[data-fill="3"] {
+    .mp.mp-t-0x8t5md .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-1j003v6 .mp-country[data-fill="4"] {
+    .mp.mp-t-0x8t5md .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-1j003v6 .mp-country[data-fill="5"] {
+    .mp.mp-t-0x8t5md .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-1j003v6 .mp-country[data-fill="6"] {
+    .mp.mp-t-0x8t5md .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-1j003v6 .mp-country.is-highlighted {
+    .mp.mp-t-0x8t5md .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-1j003v6 .mp-water[data-kind="lake"] {
+    .mp.mp-t-0x8t5md .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-1j003v6 .mp-water[data-kind="river"] {
+    .mp.mp-t-0x8t5md .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-1j003v6 .mp-border {
+    .mp.mp-t-0x8t5md .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -108,84 +116,84 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-1j003v6 .mp-road {
+    .mp.mp-t-0x8t5md .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-1j003v6 .mp-place {
+    .mp.mp-t-0x8t5md .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-1j003v6 .mp-prism-top {
+    .mp.mp-t-0x8t5md .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-1j003v6 .mp-prism-side {
+    .mp.mp-t-0x8t5md .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-1j003v6 .mp-prism-edge {
+    .mp.mp-t-0x8t5md .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-1j003v6 .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-0x8t5md .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-1j003v6 .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-0x8t5md .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-1j003v6 .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-0x8t5md .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-1j003v6 .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-0x8t5md .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-1j003v6 .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-0x8t5md .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-1j003v6 .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-0x8t5md .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-1j003v6 .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-0x8t5md .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-1j003v6 .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-0x8t5md .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-1j003v6 .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-0x8t5md .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-1j003v6 .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-0x8t5md .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-1j003v6 .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-0x8t5md .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-1j003v6 .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-0x8t5md .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-1j003v6 .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-0x8t5md .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-1j003v6 .mp-hatch {
+    .mp.mp-t-0x8t5md .mp-hatch {
       fill: url(#mp-stripe);
       stroke: none;
     }
-    .mp.mp-t-1j003v6 .mp-hatch-line {
+    .mp.mp-t-0x8t5md .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-1j003v6 .mp-label {
+    .mp.mp-t-0x8t5md .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-1j003v6 {
+      .mp.mp-t-0x8t5md {
         --land: #2E3134;
         --land-edge: #16181A;
         --border: #6E747A;
@@ -215,7 +223,7 @@
         --furniture-ink: #85898D;
       }
     }
-    .mp.mp-t-1j003v6 {
+    .mp.mp-t-0x8t5md {
       --bg: #F6F1E7;
       --land: #E3D6BE;
       --land-edge: #F6F1E7;
@@ -240,6 +248,13 @@
       --ink-muted: #8A7C63;
       --stripe: #8A7C63;
       --water: #6F98A6;
+      --graticule: #CBBB98;
+      --equator: #A8916A;
+      --desert: #EDDCB6;
+      --forest: #CBD6B4;
+      --mountain: #D8C9AA;
+      --glacier: #EEF1F0;
+      --sea-ink: #6F98A6;
       --road: #A8916A;
       --neighbour: #EFE7D6;
       --anno: #3E6B5A;
@@ -256,6 +271,7 @@
     </pattern>
   </defs>
   <rect class="mp-bg" x="0" y="0" width="1200" height="700" fill="#F6F1E7"/>
+  <g class="mp-layer mp-graticule"/>
   <g class="mp-layer mp-neighbours"/>
   <g class="mp-layer mp-land">
     <path class="mp-country" data-iso="TZ" data-name="Tanzania" d="M718.6,369.5L719.7,370.5L744.9,389.6L745.3,395L755.2,404.3L751.8,415.9L752.2,421.2L756.5,424.6L756.7,427L754.7,432.6L755.1,435.5L754.5,439.9L756.8,445.8L759.4,454.9L761.9,457L756.3,462.3L748.7,465.9L744.5,465.8L742,468.6L737.2,468.8L735.4,470L727.1,467.4L721.9,468.1L720.3,455.5L718,451.2L716.7,448.6L709.9,446.9L706.1,444.1L701.7,442.5L698.9,440.9L696.1,438.6L692.5,426.8L688.5,421.6L687.2,416.2L687.9,411.3L686.7,402.7L689.6,402.3L692.1,398.9L694.9,394L696.6,392L696.5,389L695,386.9L694.7,383.2L696.7,382L697.1,376.5L694.3,371.2L696.8,370.1L704.4,370.2Z" fill="#E3D6BE" stroke="#F6F1E7" stroke-width="0.5" stroke-linejoin="round">
@@ -412,6 +428,7 @@
       <title>S. Sudan</title>
     </path>
   </g>
+  <g class="mp-layer mp-terrain"/>
   <g class="mp-layer mp-hydro" clip-path="url(#mp-land-clip)">
     <path class="mp-water" data-kind="lake" fill="#6F98A6" d="M719.8,370.4L716.2,374.6L714,378.8L716.8,382.1L712.7,384.5L712,383.4L708,383.9L704.7,386L703,382.4L704.3,375.8L704.5,370.3L704,366.6L707.3,361.1L711.5,359.8L714.5,357.5L718.3,359.3L720.3,363.6ZM696.5,440.8L694.3,440.1L694.8,436.4L692.8,433.9L692.1,428.9L687.9,423.8L685.5,417.1L686.8,413.1L685.1,407.8L686.4,392.9L688.9,402L688.6,406.4L689.8,407.8L689.6,411.7L690.8,415.4L689.2,419L694.6,425.3L695.3,431L699.2,442.1L698,442.8ZM726.2,493.6L725.9,494.6L723.5,491.1L722.2,493.5L721.3,491.5L721.4,488L720,485.3L720.1,481.4L718.2,474.5L720.3,469.4L720.1,458.2L717.7,452.1L718.5,449.4L721.9,454.4L722.5,464L724.6,467.6L722.6,476.5L723.6,488.4L724.8,488.7ZM739.6,250L738.8,248.3L740.3,246.4L742.2,247.1L742.1,250.2L741.1,251.3Z" stroke="none"/>
     <path class="mp-water" data-kind="river" fill="none" d="M664.8,470.2L662.6,469.4L660.6,465.1L661.1,460.9L659.5,457.5L659.3,454.8L659.8,449L660.8,446.9L662.8,445.6L663.8,442.5L666.3,437.9L668.4,436.9L669.1,435.8L669.6,434.6L669.4,432L670.5,426L670.5,422.5L669.8,413.1L670.3,409.7L670.1,407.5L669.1,404.9L666.1,401.1L664.4,398.6L663.6,395.6L663.4,394.2L663.1,391L662.9,387.8L662.7,386.3L662.7,384.9L662.4,381.7L662.4,377.9L662.2,374.6L662.2,373.3L661.5,370.1L660.4,367.9L659.9,365.5L660.2,361.1L659.4,357.3L656.2,355.6L651.6,353.3L640.9,342.3L638.1,340.6L633.9,340.6L623.6,342.6L621.1,343.2L615.9,345.8L612.8,349.3L611.4,352L610.3,355L609.4,359.6L605.1,366.7L604.6,367.6L600.1,372.1L596.9,376.9L593.9,386L594.1,393.7L592.3,396.7L588.4,401.3L584.4,407.2L581.6,407.2L580.6,407.5L579.1,409.9L577.6,410.7L576.6,414.4L576.1,414.6L575.9,415.4L573.4,416.6L571.4,416.4L568.6,417.6M713.8,358.1L713.5,356.6L711.5,348.3L711,347.8L709.8,346.8L708.7,346.1L707.8,345.5L707,344.9L706.5,344.8L706.5,344.5L707.3,342.4L707.5,341.1L706.8,339.9L705.2,339.2L703.7,339L703,339.4L701.8,339.8L701,340L701.2,339L701.7,338.1L701.5,336.9L701.5,335.6L701.5,333L702.2,330.3L703.4,328.4L705.4,326.8L703.4,322.9L702.3,319.8L702.3,316.6L703.3,309.7L702.8,305.1L699.2,296.7L696.6,292.7L695.1,289.9L694.1,286.9L693,280.3L692.7,277.4L693.1,274.5L694.4,272.6L696.4,272.1L698.6,272.5L699.9,272.6L701.3,272.1L703,270.5L705.7,266.8L706.2,265.1L705.7,263.1L705.9,261.7L708.5,256.6L708.9,253.4L709.4,248.6L709.5,242.7L709.2,239.4L708.4,236.1L705.9,229L705.4,225.8L706.8,215.1L707.3,212.2L708.2,209.8L709.8,207.6L712.2,205.8L713.8,203.6L715.3,201.1L715.9,197.4L715.8,194.1L715.4,191.6L713.5,186.1L711.9,180.5L710.1,180.2L708.7,180.6L706.8,182L703.3,186.3L699.3,192L698.2,192.9L697.1,193.1L695.9,192.7L694.9,191.5L693.9,189.6L692.3,184.1L691,176.7L692.5,174.5L692.7,173.5L691.1,170.4L690.8,169.2L692.7,165.7L695.6,160.6L697.9,156.2L699.9,153.2L701.4,151.5L704.5,150.6L705.4,149.5L706.3,147.5L706.8,144.9L707,142.2L706.9,139.3L706.6,134.2L706.3,131.3L704.4,127.4L703.8,124.9L704.9,122.5L705.1,121.4L704.6,120.6L701,120.3L698.5,117.1L695.2,111.7L693.7,109.9L692.7,108L691.8,105.8L691.7,103.4L691.2,101.4L691.3,99.8L693.3,92.4L693.6,89.3L693.4,85.2L692.6,77.6L691.5,73.1" stroke="#6F98A6" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>

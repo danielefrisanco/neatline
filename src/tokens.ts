@@ -53,6 +53,16 @@ export const TOKENS: readonly TokenSpec[] = Object.freeze([
   { name: "--water", status: "live", controls: "Lakes and rivers" },
   { name: "--water-width", status: "live", controls: "River stroke width, in user units" },
   { name: "--road", status: "reserved", controls: "Route strokes — Phase 4 data" },
+  // The graticule and land-cover vocabulary, reserved alongside their layers.
+  // A theme can set them today and they start working when the layer fills.
+  { name: "--graticule", status: "reserved", controls: "Parallels and meridians" },
+  { name: "--graticule-width", status: "reserved", controls: "Grid line width" },
+  { name: "--equator", status: "reserved", controls: "The equator and the tropics, drawn apart from the grid" },
+  { name: "--desert", status: "reserved", controls: "Arid land cover" },
+  { name: "--forest", status: "reserved", controls: "Wooded land cover" },
+  { name: "--mountain", status: "reserved", controls: "Upland and mountain cover" },
+  { name: "--glacier", status: "reserved", controls: "Ice and permanent snow" },
+  { name: "--sea-ink", status: "reserved", controls: "Names of seas, gulfs and straits" },
   { name: "--neighbour", status: "live", controls: "Context countries drawn behind the region" },
   { name: "--anno", status: "reserved", controls: "Pins, arrows, callouts — v1.1" },
   { name: "--anno-ink", status: "reserved", controls: "Text on an annotation — v1.1" },

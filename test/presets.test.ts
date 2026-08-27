@@ -18,19 +18,20 @@ import { TOKENS } from "../src/tokens.js";
 const themes = Object.entries(THEMES);
 const palettes = Object.entries(PALETTES);
 
-/** Tokens that hold a measurement or a type stack, not a colour. */
-const NOT_COLOURS = new Set([
-  "--border-width",
-  "--land-edge-width",
-  "--border-dash",
-  "--water-width",
-  "--stripe-width",
-  "--font",
-  "--label-size",
-]);
+/**
+ * Tokens that hold a measurement or a type stack rather than a colour.
+ *
+ * A rule rather than a list: anything named `-width` is a number, and the
+ * three that are not follow that convention are named here. A list would have
+ * to be edited every time the vocabulary grows, which is the moment it would
+ * be forgotten.
+ */
+const NAMED_NOT_COLOURS = new Set(["--border-dash", "--font", "--label-size"]);
+const isColour = (name: string): boolean =>
+  !name.endsWith("-width") && !NAMED_NOT_COLOURS.has(name);
 
 const LIVE = TOKENS.filter((t) => t.status === "live").map((t) => t.name);
-const LIVE_COLOURS = LIVE.filter((name) => !NOT_COLOURS.has(name));
+const LIVE_COLOURS = LIVE.filter(isColour);
 
 const COLOUR = /^(#[0-9A-Fa-f]{3}|#[0-9A-Fa-f]{6}|#[0-9A-Fa-f]{8}|transparent|none|currentColor|rgba?\(|hsla?\()/;
 
@@ -86,7 +87,7 @@ describe.each(themes)("theme %s", (name, css) => {
     ["dark", dark],
   ])("writes %s colours that a renderer can parse", (_which, read) => {
     for (const [property, value] of read(css)) {
-      if (!property.startsWith("--") || NOT_COLOURS.has(property)) continue;
+      if (!property.startsWith("--") || !isColour(property)) continue;
       expect(value, `${name} ${property}`).toMatch(COLOUR);
     }
   });

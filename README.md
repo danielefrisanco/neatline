@@ -210,6 +210,9 @@ every theme in the wild.
 | `--ink` / `--ink-muted` | Text |
 | `--font` / `--label-size` | Type |
 | `--road` `--anno` `--anno-ink` `--furniture-ink` | *Reserved* — set them now, they start working when their layer lands |
+| `--graticule` `--graticule-width` `--equator` | *Reserved* — the grid, the equator and the tropics |
+| `--desert` `--forest` `--mountain` `--glacier` | *Reserved* — land cover |
+| `--sea-ink` | *Reserved* — names of seas, gulfs and straits |
 
 Every bundled theme defines every live token, and a test holds it: a theme that
 misses one leaves a map wearing another theme's colour in that one place.

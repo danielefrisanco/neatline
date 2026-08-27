@@ -5,8 +5,15 @@
  * this project makes. These names are versioned like a function signature and
  * change only on a major. The order of `LAYERS` is the paint order, and it is
  * part of that promise: a layer inserted between two existing ones would
- * silently restack every theme in the wild, so all eight slots are emitted from
+ * silently restack every theme in the wild, so all eleven slots are emitted from
  * v1 onward, empty where the feature does not exist yet.
+ *
+ * Two of them are reserved for things nobody has asked to build yet, and that
+ * is the whole point. A graticule sits at the very bottom — the grid the world
+ * is drawn on, which land covers. Land cover sits directly above the land it
+ * tints and below the water, because a river runs over a forest. Both are
+ * placements that can only be made once: adding either after 1.0 would restack
+ * everything above it. Reserving them costs two empty groups.
  *
  * Layers are plural (`.mp-land`), features are singular (`.mp-country`).
  *
@@ -18,8 +25,10 @@
  */
 
 export type LayerName =
+  | "graticule"
   | "neighbours"
   | "land"
+  | "terrain"
   | "hydro"
   | "borders"
   | "roads"
@@ -49,6 +58,13 @@ export interface LayerSpec {
  */
 export const LAYERS: readonly LayerSpec[] = Object.freeze([
   {
+    name: "graticule",
+    className: "mp-graticule",
+    feature: "mp-grid",
+    status: "reserved",
+    carries: "Parallels, meridians, the equator and the tropics",
+  },
+  {
     name: "neighbours",
     className: "mp-neighbours",
     feature: "mp-neighbour",
@@ -61,6 +77,13 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     feature: "mp-country",
     status: "live",
     carries: "Filled land polygons, one node per country",
+  },
+  {
+    name: "terrain",
+    className: "mp-terrain",
+    feature: "mp-cover",
+    status: "reserved",
+    carries: "Land cover — desert, forest, mountain, glacier — tinted over the land",
   },
   {
     name: "hydro",
