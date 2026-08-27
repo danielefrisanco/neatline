@@ -26,7 +26,20 @@ export interface SvgText {
   readonly value: string;
 }
 
-export type SvgNode = SvgElement | SvgText;
+/**
+ * Content serialised exactly as given.
+ *
+ * Only `<style>` needs this. Escaping is wrong there: an HTML parser treats
+ * style content as raw text, so `&gt;` would arrive as those four literal
+ * characters and break a child selector. Callers are responsible for handing
+ * over content that is safe to embed — `resolveTheme` does that check.
+ */
+export interface SvgRaw {
+  readonly kind: "raw";
+  readonly value: string;
+}
+
+export type SvgNode = SvgElement | SvgText | SvgRaw;
 
 export function el(
   tag: string,
@@ -38,6 +51,23 @@ export function el(
 
 export function text(value: string): SvgText {
   return { kind: "text", value };
+}
+
+export function raw(value: string): SvgRaw {
+  return { kind: "raw", value };
+}
+
+/**
+ * A `<style>` element whose content survives both parsers.
+ *
+ * A standalone `.svg` is parsed as XML, where a bare `&` or `<` is a parse
+ * error; inline SVG in HTML is parsed as raw text, where entities are not
+ * decoded. CDATA is the one form both accept, so it is used exactly when the
+ * content needs it and skipped otherwise, which keeps ordinary themes clean.
+ */
+export function styleElement(css: string): SvgElement {
+  const needsCdata = css.includes("&") || css.includes("<");
+  return el("style", {}, [raw(needsCdata ? `<![CDATA[\n${css}\n]]>` : css)]);
 }
 
 /** `&` first, or it would double-escape the entities added after it. */
@@ -76,10 +106,18 @@ function isInline(node: SvgElement): boolean {
   return node.children.length === 1 && node.children[0]?.kind === "text";
 }
 
+function indentBlock(value: string, pad: string): string {
+  return value
+    .split("\n")
+    .map((line) => (line === "" ? line : pad + line))
+    .join("\n");
+}
+
 export function serialize(node: SvgNode, depth = 0): string {
   const pad = INDENT.repeat(depth);
 
   if (node.kind === "text") return pad + escapeText(node.value);
+  if (node.kind === "raw") return indentBlock(node.value, pad);
 
   const open = `${pad}<${node.tag}${formatAttributes(node.attributes)}`;
 

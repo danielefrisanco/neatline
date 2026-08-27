@@ -3,7 +3,9 @@ import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
 import { createProjection } from "./projections.js";
 import { expandPreset, isRegionPreset, presetLabel } from "./regions.js";
-import { el, serialize, text, type SvgNode } from "./svg.js";
+import { inlineStyles } from "./inline.js";
+import { el, serialize, styleElement, text, type SvgElement, type SvgNode } from "./svg.js";
+import { resolveTheme, type ResolvedTheme } from "./theme.js";
 import {
   BACKGROUND_CLASS,
   HIGHLIGHT_CLASS,
@@ -28,6 +30,8 @@ import type {
 export { isoTable, resolveId, type IsoEntry } from "./iso.js";
 export { PROJECTION_NAMES, isProjectionName } from "./projections.js";
 export { REGION_PRESETS, REGION_PRESET_NAMES, isRegionPreset } from "./regions.js";
+export { PALETTE_NAMES, THEME_NAMES, THEMES, PALETTES } from "./theme.js";
+export { TOKENS, TOKEN_NAMES, isTokenName, type TokenSpec } from "./tokens.js";
 export {
   BACKGROUND_CLASS,
   HIGHLIGHT_CLASS,
@@ -243,6 +247,7 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   const path = geoPath(projection).digits(1);
 
   const content = new Map<LayerName, SvgNode[]>();
+  const wants = (name: LayerName): boolean => options.layers?.[name] ?? true;
 
   const land: SvgNode[] = [];
   const highlightedNames: string[] = [];
@@ -267,62 +272,86 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
       ),
     );
   }
-  content.set("land", land);
+  // Highlight names are collected even when the layer is off, so the accessible
+  // description stays true to what was asked for.
+  if (wants("land")) content.set("land", land);
 
-  const borderGeometry =
-    resolved.borderIds.length > 0 ? world.borders(resolved.borderIds) : null;
-  if (borderGeometry !== null) {
-    const d = path(borderGeometry as never);
-    if (d) {
-      content.set("borders", [el("path", { class: "mp-border", "data-kind": "intl", d })]);
+  if (wants("borders")) {
+    const borderGeometry =
+      resolved.borderIds.length > 0 ? world.borders(resolved.borderIds) : null;
+    if (borderGeometry !== null) {
+      const d = path(borderGeometry as never);
+      if (d) {
+        content.set("borders", [el("path", { class: "mp-border", "data-kind": "intl", d })]);
+      }
     }
   }
 
   const description = options.title ?? describe(resolved.description, highlightedNames);
+  const themed = await resolveTheme(options);
 
-  const root = el(
-    "svg",
-    {
-      xmlns: "http://www.w3.org/2000/svg",
-      viewBox: `0 0 ${width} ${height}`,
-      width,
-      height,
-      preserveAspectRatio: "xMidYMid meet",
-      class: ROOT_CLASS,
-      role: "img",
-      "aria-label": description,
-    },
-    [
-      el("title", {}, [text(description)]),
-      // `fill="none"` is structural, not stylistic. SVG's default fill is
-      // black, so a full-canvas rectangle with no theme applied would paint
-      // the entire map over — the document would render as a black square.
-      // Presentation attributes lose to any CSS rule, so a theme's
-      // `.mp-bg { fill: … }` still wins.
-      el("rect", { class: BACKGROUND_CLASS, x: 0, y: 0, width, height, fill: "none" }),
-      // Every slot is emitted, in order, empty or not. Inserting one later
-      // would restack the layers underneath it and break themes in the wild.
-      ...LAYERS.map((spec) =>
-        el(
-          "g",
-          {
-            class: `${LAYER_CLASS} ${spec.className}`,
-            // Structural, not stylistic: a line drawn with the default fill
-            // renders as a filled blob. Presentation attributes lose to any
-            // CSS rule, so a theme can still override it.
-            fill: spec.name === "borders" ? "none" : undefined,
-          },
-          content.get(spec.name) ?? [],
-        ),
+  const body: SvgNode[] = [
+    // `fill="none"` is structural, not stylistic. SVG's default fill is
+    // black, so a full-canvas rectangle with no theme applied would paint
+    // the entire map over — the document would render as a black square.
+    // Presentation attributes lose to any CSS rule, so a theme's
+    // `.mp-bg { fill: … }` still wins.
+    el("rect", { class: BACKGROUND_CLASS, x: 0, y: 0, width, height, fill: "none" }),
+    // Every slot is emitted, in order, empty or not. Inserting one later
+    // would restack the layers underneath it and break themes in the wild.
+    ...LAYERS.map((spec) =>
+      el(
+        "g",
+        {
+          class: `${LAYER_CLASS} ${spec.className}`,
+          // Structural, not stylistic: a line drawn with the default fill
+          // renders as a filled blob.
+          fill: spec.name === "borders" ? "none" : undefined,
+        },
+        content.get(spec.name) ?? [],
       ),
-    ],
-  );
+    ),
+  ];
 
-  const svg = serialize(root);
+  function build(theme: ResolvedTheme, withStyle: boolean): SvgElement {
+    // The scope class rides on the root even when the stylesheet is served
+    // separately, or `map.css` would have nothing to match against.
+    const rootClass = theme.scope === null ? ROOT_CLASS : `${ROOT_CLASS} ${theme.scope}`;
+    const children: SvgNode[] = [el("title", {}, [text(description)])];
+    if (withStyle && theme.css !== "") children.push(styleElement(theme.css));
+    children.push(...body);
+
+    return el(
+      "svg",
+      {
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: `0 0 ${width} ${height}`,
+        width,
+        height,
+        preserveAspectRatio: "xMidYMid meet",
+        class: rootClass,
+        role: "img",
+        "aria-label": description,
+      },
+      children,
+    );
+  }
+
+  function render(theme: ResolvedTheme, style: boolean, inline: boolean): string {
+    const tree = build(theme, style);
+    // The stylesheet is kept alongside the flattened attributes rather than
+    // dropped: a browser honours the CSS, a tool that ignores it honours the
+    // attributes, and both resolve to the same paint.
+    const final = inline && theme.nodes.length > 0 ? inlineStyles(tree, theme.nodes).root : tree;
+    return serialize(final);
+  }
+
+  const svg = render(themed, false, false);
+  const complete = render(themed, true, false);
 
   return {
     svg,
-    css: "",
+    css: themed.css,
 
     project(position: Position): Point | null {
       const projected = projection([position[0], position[1]]);
@@ -330,13 +359,28 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     },
 
     toString() {
-      return svg;
+      return complete;
     },
 
-    async toFile(target: string, _options?: RenderOptions) {
+    async toFile(target: string, renderOptions?: RenderOptions) {
+      const overridden =
+        renderOptions !== undefined &&
+        (renderOptions.theme !== undefined ||
+          renderOptions.palette !== undefined ||
+          renderOptions.tokens !== undefined);
+
+      const theme = overridden
+        ? await resolveTheme({
+            theme: renderOptions?.theme ?? options.theme,
+            palette: renderOptions?.palette ?? options.palette,
+            tokens: renderOptions?.tokens ?? options.tokens,
+          })
+        : themed;
+
+      const output = render(theme, true, renderOptions?.inlineStyles ?? false);
       // Imported lazily so browser bundles never pull in node:fs.
       const { writeFile } = await import("node:fs/promises");
-      await writeFile(target, this.toString(), "utf8");
+      await writeFile(target, output, "utf8");
     },
   };
 }

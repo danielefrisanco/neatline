@@ -1,3 +1,5 @@
+import type { LayerName } from "./taxonomy.js";
+
 /**
  * Public type surface.
  *
@@ -87,11 +89,34 @@ export interface MapperOptions {
   readonly title?: string;
   /** ISO codes to mark with `.is-highlighted`. */
   readonly highlight?: readonly string[];
+  /** Bundled theme name, a path to a `.css` file, or a stylesheet. */
+  readonly theme?: string;
+  /**
+   * Colour-only overlay applied after the theme. A theme carries structure —
+   * weights, dashes, type; a palette carries hue. Keeping them separate is what
+   * lets one style be recoloured without being rewritten.
+   */
+  readonly palette?: string;
+  /** Token overrides, applied last. `{ accent: "#c00" }` or `{ "--accent": "#c00" }`. */
+  readonly tokens?: Readonly<Record<string, string>>;
+  /**
+   * Which layers carry content. Omitted layers are still emitted, empty —
+   * the stack is a fixed contract, so this controls what goes in a slot, never
+   * whether the slot exists. The saving is file size, not appearance.
+   */
+  readonly layers?: Readonly<Partial<Record<LayerName, boolean>>>;
 }
 
 export interface RenderOptions {
-  /** Bundled preset name, or a path to a `.css` file. @default "minimal" */
+  /**
+   * Write-time overrides, so one built map can be written several ways —
+   * light, dark, and a flattened export — without recomputing the geometry,
+   * which is the expensive part.
+   */
+  /** Bundled preset name, or a path to a `.css` file. */
   readonly theme?: string;
+  /** Colour-only overlay, applied after the theme. */
+  readonly palette?: string;
   /** Token overrides, applied as a later declaration on the root element. */
   readonly tokens?: Readonly<Record<string, string>>;
   /**

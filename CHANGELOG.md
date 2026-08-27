@@ -15,7 +15,64 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
-Phase 3 — theming.
+Phase 4 — data pipeline.
+
+## [0.3.0] — 2026-08-27
+
+Phase 3 — theming, palettes and layer control. Maps stop being wireframes.
+
+### Added
+
+- **`theme`, `palette` and `tokens` on `MapperOptions`.** Applied in that
+  order, and the ordering *is* the implementation — a palette beats a theme and
+  an override beats a palette because each is a later declaration. No merge
+  logic, no schema, no validation layer
+- **The palette/theme split.** A theme carries structure — weights, dashes,
+  type; a palette carries only colour. Both target users want the same move:
+  keep the style, change the colours. Because tokens are named by role, a
+  palette *is* a set of token values, so this cost nothing to implement
+- Bundled themes `minimal` and `atlas`, palettes `dusk` and `sand`. Each can
+  instead be a path to a `.css` file or a stylesheet passed inline
+- **A token vocabulary of seventeen names**, exported as `TOKENS`. Six are
+  reserved and unused; a theme can set them today and they begin working when
+  their layer arrives, which is cheaper than revising every theme later
+- **`layers`** — controls which slots carry content, never whether a slot
+  exists. The stack is a fixed contract. The saving is file size, not
+  appearance
+- **`inlineStyles`** on `toFile` — resolves the cascade onto presentation
+  attributes for Figma and Illustrator, which ignore `<style>`, and for the
+  renderers found in 0.2.0 that let an attribute beat a stylesheet. The
+  stylesheet still ships alongside, so both paths resolve to the same paint
+- **A gallery of nine committed renders** in `test/__snapshots__/gallery/`,
+  across themes, palettes, projections and canvas shapes. 0.2.0 shipped a map
+  that rendered as a solid black square while every string assertion passed;
+  snapshots that a person can open are the fix
+- `themes/*.css` and `palettes/*.css` are generated at build time from the
+  same strings the library uses, so the published files cannot drift from the
+  bundled ones
+
+### Changed
+
+- **Every rule is scoped to a class derived from a hash of the stylesheet**
+  (`.mp.mp-t-k3f9a1z`). A `<style>` block inside inline SVG applies to the whole
+  host page, so two themed maps would otherwise overwrite each other and a map
+  would restyle anything sharing a class name. Hashing keeps it deterministic:
+  same theme, same class, byte-identical output
+- `map.svg` stays geometry-only but now carries the scope class, so a caller
+  serving `map.css` separately still has something for it to match.
+  `map.toString()` is the complete document
+- `RenderOptions` gained `palette`, so one built map can be written several
+  ways — light, dark, flattened — without recomputing the geometry
+
+### Notes
+
+- Theme stylesheets are authored as strings in `src/` rather than read from
+  disk, so `mapper()` stays isomorphic. Reading a `.css` at call time would make
+  the library Node-only, which is the constraint Phase 4 exists to remove
+- `<style>` content is emitted raw, and wrapped in CDATA only when it contains
+  `&` or `<`. Escaping is wrong there: an HTML parser treats style content as
+  raw text, so `&gt;` would arrive as four literal characters and break a child
+  selector. A stylesheet containing `</style` is rejected rather than emitted
 
 ## [0.2.0] — 2026-08-27
 
@@ -210,7 +267,8 @@ history stay the same document.
 | `1.0.0` | 7 · Ship | Stable taxonomy, published, documented |
 | `1.1.0` | 8 · Annotations | Pins, arrows, callouts, icons |
 
-[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/danielefrisanco/mapper/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/danielefrisanco/mapper/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/danielefrisanco/mapper/releases/tag/v0.1.0
 [0.0.1]: https://github.com/danielefrisanco/mapper/releases/tag/v0.0.1

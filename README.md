@@ -20,9 +20,9 @@ await map.toFile("europe.svg", { theme: "minimal" });
 
 ## Status
 
-Early. **Phases 0–2 are complete** — the package builds under both ESM and CJS,
-resolves real geometry, and emits the frozen document shape below. Themes come
-in Phase 3; until then `map.css` is empty and the SVG carries no styling.
+Early. **Phases 0–3 are complete** — the package builds under both ESM and CJS,
+resolves real geometry, emits the frozen document shape below, and themes it.
+Real data — hydrography, roads, populated places — arrives in Phase 4.
 
 See the build plan for what is in scope, what is reserved, and what is
 deliberately out.
@@ -111,14 +111,108 @@ The generated label describes the geography (`"Map of Western Europe,
 highlighting France and Belgium"`). Pass `title` to say what the map is actually
 about — a map of election results is not "a map of Western Europe".
 
+## Theming
+
+Three inputs, applied in cascade order. There is no merge step, no schema and
+no validation layer, because the cascade already does that work.
+
+```ts
+const map = await mapper({
+  region: "west-europe",
+  theme: "atlas",              // structure: weights, dashes, type
+  palette: "dusk",             // colour only, applied over the theme
+  tokens: { accent: "#C2482F" } // final say
+});
+
+map.css          // the resolved stylesheet, scoped
+map.svg          // geometry only — pair it with map.css yourself
+map.toString()   // the complete document, <style> included
+```
+
+**A theme carries structure; a palette carries only colour.** That split is the
+point: both a newsroom and a company want to keep a style and change its
+colours, not rewrite it. Because tokens are named by role, a palette *is* a set
+of token values — so recolouring costs nothing to implement.
+
+Bundled themes are `minimal` and `atlas`; bundled palettes are `dusk` and
+`sand`. Any of them can instead be a path to a `.css` file or a stylesheet
+passed inline. The files ship too, for linking or forking:
+
+```ts
+import "mapper/themes/atlas.css";
+```
+
+### Tokens
+
+Named by role, never by appearance. `--ink`, never `--dark-gray` — the second
+is a lie the moment someone writes a dark theme, and renaming it later breaks
+every theme in the wild.
+
+| Token | Controls |
+|---|---|
+| `--bg` | Canvas ground — the ocean, or transparent |
+| `--land` | Country fill |
+| `--land-edge` | Country outline |
+| `--border` / `--border-width` | Shared boundaries |
+| `--accent` / `--accent-edge` | Anything highlighted |
+| `--ink` / `--ink-muted` | Text |
+| `--font` / `--label-size` | Type |
+| `--water` `--road` `--neighbour` `--anno` `--anno-ink` `--furniture-ink` | *Reserved* — set them now, they start working when their layer lands |
+
+### Styles are scoped to one map
+
+A `<style>` block inside inline SVG is **not** scoped to that SVG — it applies
+to the whole host page. Two differently themed maps on a page would overwrite
+each other, and a map would restyle anything sharing a class name.
+
+So every rule is scoped to a class derived from a hash of the stylesheet
+itself: `.mp.mp-t-k3f9a1z .mp-country`. Deterministic, so the same theme always
+produces the same class and output stays byte-identical; distinct, so two
+themes cannot collide.
+
+### Flattening for design tools
+
+```ts
+await map.toFile("out.svg", { inlineStyles: true });
+```
+
+Figma and Illustrator import SVG but ignore `<style>`, so a themed map arrives
+as black shapes. `inlineStyles` resolves the cascade and writes the computed
+paint onto each element as presentation attributes. The stylesheet still ships
+alongside, so a browser honours the CSS and a tool that ignores it honours the
+attributes — both resolve to the same paint.
+
+It is not a CSS engine. It handles class selectors and descendant combinators,
+which is what the bundled themes use and what the authoring convention asks for.
+Selectors beyond that are skipped rather than half-applied.
+
+### Choosing layers
+
+```ts
+await mapper({ region: "west-europe", layers: { borders: false } });
+```
+
+This empties `.mp-borders`; it never removes the group. The stack is a fixed
+contract, and a document whose shape depends on its options is one no theme can
+be written against. The saving is file size, not appearance — hiding a layer is
+one CSS rule, but not emitting its path data is real bytes.
+
 ## Scripts
 
 | | |
 |---|---|
 | `npm run check` | typecheck → test → build → verify exports |
 | `npm run build` | dual ESM/CJS bundle plus types |
-| `npm test` | vitest; SVG snapshots land in `test/__snapshots__/` as real `.svg` files |
+| `npm test` | vitest; snapshots land in `test/__snapshots__/` as real `.svg` files you can open |
 | `npm run dev` | rebuild on change |
+
+## The gallery
+
+`test/__snapshots__/gallery/` holds committed renders across themes, palettes,
+projections and canvas shapes. They are snapshots, so a diff fails the build —
+but they are real `.svg` files, so a diff is also something a person can open.
+That matters: Phase 2 shipped a map that rendered as a solid black square while
+every string assertion in the suite passed.
 
 ## License
 
