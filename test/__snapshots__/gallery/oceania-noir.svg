@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" width="1100" height="800" preserveAspectRatio="xMidYMid meet" class="mp mp-t-19b5agj" role="img" aria-label="Oceania">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" width="1100" height="800" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1j8vhym" role="img" aria-label="Oceania">
   <title>Oceania</title>
   <style>
-    .mp.mp-t-19b5agj {
+    .mp.mp-t-1j8vhym {
       --bg: #0B0E11;
       --land: #232B33;
       --land-edge: #3E4A55;
@@ -30,6 +30,9 @@
       --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
       --label-size: 13;
       --place-label-size: 11;
+      --label-track: 0.3;
+      --label-weight: 500;
+      --label-advance: 0.58;
       --label-halo: #0B0E11;
       --label-halo-width: 2.6;
       --stripe: #6C7681;
@@ -50,68 +53,68 @@
       --anno-ink: #0B0E11;
       --furniture-ink: #7A848F;
     }
-    .mp.mp-t-19b5agj .mp-bg {
+    .mp.mp-t-1j8vhym .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-19b5agj .mp-neighbour {
+    .mp.mp-t-1j8vhym .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-19b5agj .mp-country {
+    .mp.mp-t-1j8vhym .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-19b5agj .mp-country[data-bin="1"] {
+    .mp.mp-t-1j8vhym .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-19b5agj .mp-country[data-bin="2"] {
+    .mp.mp-t-1j8vhym .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-19b5agj .mp-country[data-bin="3"] {
+    .mp.mp-t-1j8vhym .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-19b5agj .mp-country[data-bin="4"] {
+    .mp.mp-t-1j8vhym .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-19b5agj .mp-country[data-bin="5"] {
+    .mp.mp-t-1j8vhym .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-19b5agj .mp-country[data-fill="1"] {
+    .mp.mp-t-1j8vhym .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-19b5agj .mp-country[data-fill="2"] {
+    .mp.mp-t-1j8vhym .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-19b5agj .mp-country[data-fill="3"] {
+    .mp.mp-t-1j8vhym .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-19b5agj .mp-country[data-fill="4"] {
+    .mp.mp-t-1j8vhym .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-19b5agj .mp-country[data-fill="5"] {
+    .mp.mp-t-1j8vhym .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-19b5agj .mp-country[data-fill="6"] {
+    .mp.mp-t-1j8vhym .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-19b5agj .mp-country.is-highlighted {
+    .mp.mp-t-1j8vhym .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-19b5agj .mp-water[data-kind="lake"] {
+    .mp.mp-t-1j8vhym .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-19b5agj .mp-water[data-kind="river"] {
+    .mp.mp-t-1j8vhym .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-19b5agj .mp-border {
+    .mp.mp-t-1j8vhym .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -119,98 +122,100 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-19b5agj .mp-road {
+    .mp.mp-t-1j8vhym .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-19b5agj .mp-place {
+    .mp.mp-t-1j8vhym .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-19b5agj .mp-prism-top {
+    .mp.mp-t-1j8vhym .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-19b5agj .mp-prism-side {
+    .mp.mp-t-1j8vhym .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-19b5agj .mp-prism-edge {
+    .mp.mp-t-1j8vhym .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-19b5agj .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-1j8vhym .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-19b5agj .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-1j8vhym .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-19b5agj .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-1j8vhym .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-19b5agj .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-1j8vhym .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-19b5agj .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-1j8vhym .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-19b5agj .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-1j8vhym .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-19b5agj .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-1j8vhym .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-19b5agj .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-1j8vhym .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-19b5agj .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-1j8vhym .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-19b5agj .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-1j8vhym .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-19b5agj .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-1j8vhym .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-19b5agj .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-1j8vhym .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-19b5agj .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-1j8vhym .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-19b5agj .mp-hatch {
+    .mp.mp-t-1j8vhym .mp-hatch {
       fill: url(#mp-stripe);
       stroke: none;
     }
-    .mp.mp-t-19b5agj .mp-hatch-line {
+    .mp.mp-t-1j8vhym .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-19b5agj .mp-label {
+    .mp.mp-t-1j8vhym .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
+      font-weight: var(--label-weight);
+      letter-spacing: var(--label-track);
       stroke: var(--label-halo);
       stroke-width: var(--label-halo-width);
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-19b5agj .mp-label[data-kind="place"] {
+    .mp.mp-t-1j8vhym .mp-label[data-kind="place"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
     }
-    .mp.mp-t-19b5agj .mp-label.is-highlighted {
+    .mp.mp-t-1j8vhym .mp-label.is-highlighted {
       font-weight: 700;
     }
-    .mp.mp-t-19b5agj .mp-label[data-fit="0"] {
+    .mp.mp-t-1j8vhym .mp-label[data-fit="0"] {
       display: none;
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-19b5agj {
+      .mp.mp-t-1j8vhym {
         --bg: #050709;
         --land: #1B222A;
         --land-edge: #333E48;
@@ -290,31 +295,31 @@
     </circle>
   </g>
   <g class="mp-layer mp-labels">
-    <text class="mp-label" data-kind="country" data-iso="FJ" data-rank="3" x="956.4" y="300.4" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Fiji</text>
-    <text class="mp-label" data-kind="country" data-iso="PG" data-rank="2" x="511.2" y="99.2" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="FJ" data-rank="3" x="956.4" y="300.4" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Fiji</text>
+    <text class="mp-label" data-kind="country" data-iso="PG" data-rank="2" x="511.2" y="99.2" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">
       <tspan x="511.2" dy="-7.1">Papua New</tspan>
       <tspan x="511.2" dy="14.3">Guinea</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="VU" data-rank="3" x="811.8" y="256.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke" display="none">Vanuatu</text>
-    <text class="mp-label" data-kind="country" data-iso="NC" data-rank="3" x="787.5" y="359.4" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke" display="none">
+    <text class="mp-label" data-kind="country" data-iso="VU" data-rank="3" x="811.8" y="256.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke" display="none">Vanuatu</text>
+    <text class="mp-label" data-kind="country" data-iso="NC" data-rank="3" x="787.5" y="359.4" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke" display="none">
       <tspan x="787.5" dy="-7.1">New</tspan>
       <tspan x="787.5" dy="14.3">Caledonia</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="SB" data-rank="3" x="713.1" y="124.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke" display="none">
+    <text class="mp-label" data-kind="country" data-iso="SB" data-rank="3" x="713.1" y="124.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke" display="none">
       <tspan x="713.1" dy="-7.1">Solomon</tspan>
       <tspan x="713.1" dy="14.3">Is.</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="NZ" data-rank="3" x="803.9" y="754.1" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="NZ" data-rank="3" x="803.9" y="754.1" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">
       <tspan x="803.9" dy="-7.1">New</tspan>
       <tspan x="803.9" dy="14.3">Zealand</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="AU" data-rank="1" x="383.3" y="429.2" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Australia</text>
-    <text class="mp-label" data-kind="place" data-iso="NZ" data-rank="1" data-capital="" x="883" y="694.8" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Wellington</text>
-    <text class="mp-label" data-kind="place" data-iso="AU" data-rank="1" data-capital="" x="579.4" y="599" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Canberra</text>
-    <text class="mp-label" data-kind="place" data-iso="PG" data-rank="1" data-capital="" x="556" y="150.4" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Port Moresby</text>
-    <text class="mp-label" data-kind="place" data-iso="FJ" data-rank="1" data-capital="" x="968.1" y="305.7" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke" display="none">Suva</text>
-    <text class="mp-label" data-kind="place" data-iso="SB" data-rank="1" data-capital="" x="727.3" y="149.9" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Honiara</text>
-    <text class="mp-label" data-kind="place" data-iso="VU" data-rank="1" data-capital="" x="834.9" y="298.6" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Port Vila</text>
+    <text class="mp-label" data-kind="country" data-iso="AU" data-rank="1" x="383.3" y="429.2" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Australia</text>
+    <text class="mp-label" data-kind="place" data-iso="NZ" data-rank="1" data-capital="" x="883" y="694.8" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Wellington</text>
+    <text class="mp-label" data-kind="place" data-iso="AU" data-rank="1" data-capital="" x="579.4" y="599" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Canberra</text>
+    <text class="mp-label" data-kind="place" data-iso="PG" data-rank="1" data-capital="" x="556" y="150.4" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Port Moresby</text>
+    <text class="mp-label" data-kind="place" data-iso="FJ" data-rank="1" data-capital="" x="968.1" y="305.7" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke" display="none">Suva</text>
+    <text class="mp-label" data-kind="place" data-iso="SB" data-rank="1" data-capital="" x="727.3" y="149.9" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Honiara</text>
+    <text class="mp-label" data-kind="place" data-iso="VU" data-rank="1" data-capital="" x="834.9" y="298.6" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Port Vila</text>
   </g>
   <g class="mp-layer mp-annotations"/>
   <g class="mp-layer mp-furniture"/>

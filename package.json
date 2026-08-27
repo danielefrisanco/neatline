@@ -16,12 +16,14 @@
     },
     "./themes/*.css": "./themes/*.css",
     "./palettes/*.css": "./palettes/*.css",
+    "./typefaces/*.css": "./typefaces/*.css",
     "./package.json": "./package.json"
   },
   "files": [
     "dist",
     "themes",
     "palettes",
+    "typefaces",
     "data"
   ],
   "scripts": {

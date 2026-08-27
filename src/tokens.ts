@@ -49,6 +49,14 @@ export const TOKENS: readonly TokenSpec[] = Object.freeze([
   { name: "--font", status: "live", controls: "Type stack for all text" },
   { name: "--label-size", status: "live", controls: "Country label size, in user units" },
   { name: "--place-label-size", status: "live", controls: "Settlement label size, in user units" },
+  { name: "--label-track", status: "live", controls: "Letter-spacing on label text, in user units" },
+  { name: "--label-weight", status: "live", controls: "Label font weight" },
+  // Not a style: a measurement. SVG offers no way to measure text outside a
+  // browser, so the fit test that decides whether a name goes on a country has
+  // to estimate its width — and the only thing that knows how wide the chosen
+  // face runs is the stylesheet that chose it. A condensed face at 0.46 fits
+  // names a humanist one at 0.58 has to hide.
+  { name: "--label-advance", status: "live", controls: "Average glyph width, as a fraction of the label size" },
   // A name has to sit on whatever the map put underneath it — a band, a river,
   // a border. The casing is drawn behind the glyphs with `paint-order`, which
   // is one stroke rather than a second copy of every label.

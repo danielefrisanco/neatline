@@ -1,5 +1,5 @@
 /**
- * Write the bundled themes and palettes out as real `.css` files.
+ * Write the bundled themes, palettes and typefaces out as real `.css` files.
  *
  * They are authored as TypeScript strings so that `mapper()` stays isomorphic —
  * reading a stylesheet from disk at call time would make the library Node-only,
@@ -9,7 +9,7 @@
  * files are generated from them, rather than the two drifting apart.
  */
 import { mkdir, writeFile } from "node:fs/promises";
-import { THEMES, PALETTES } from "../dist/index.js";
+import { THEMES, PALETTES, TYPEFACES } from "../dist/index.js";
 
 const BANNER = "/* Generated from src/. Edit the source, not this file. */\n";
 
@@ -17,6 +17,7 @@ let count = 0;
 for (const [directory, table] of [
   ["themes", THEMES],
   ["palettes", PALETTES],
+  ["typefaces", TYPEFACES],
 ]) {
   await mkdir(directory, { recursive: true });
   for (const [name, css] of Object.entries(table)) {

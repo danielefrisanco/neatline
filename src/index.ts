@@ -40,7 +40,14 @@ export { PROJECTION_NAMES, isProjectionName } from "./projections.js";
 export { REGION_PRESETS, REGION_PRESET_NAMES, isRegionPreset } from "./regions.js";
 export { FILTER_NAMES } from "./filters.js";
 export { PATTERN_NAMES } from "./patterns.js";
-export { PALETTE_NAMES, THEME_NAMES, THEMES, PALETTES } from "./theme.js";
+export {
+  PALETTE_NAMES,
+  THEME_NAMES,
+  TYPEFACE_NAMES,
+  THEMES,
+  PALETTES,
+  TYPEFACES,
+} from "./theme.js";
 export { TOKENS, TOKEN_NAMES, isTokenName, type TokenSpec } from "./tokens.js";
 export {
   BACKGROUND_CLASS,
@@ -562,7 +569,7 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
         );
       }
       if (wants("labels") && place.rank <= namedRank) {
-        const label = placeLabel(named, x, y, radius, sizes.place);
+        const label = placeLabel(named, x, y, radius, sizes.place, sizes.advance);
         placeNames.push(label);
         placeBoxes.push(label.box);
       }
@@ -594,6 +601,7 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
       projection,
       [width, height],
       sizes.country,
+      sizes.advance,
       placeBoxes,
     );
     const all = labelLayer(names, placeNames);
@@ -698,12 +706,14 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
       renderOptions !== undefined &&
       (renderOptions.theme !== undefined ||
         renderOptions.palette !== undefined ||
+        renderOptions.typeface !== undefined ||
         renderOptions.tokens !== undefined);
 
     const theme = overridden
       ? await resolveTheme({
           theme: renderOptions?.theme ?? options.theme,
           palette: renderOptions?.palette ?? options.palette,
+          typeface: renderOptions?.typeface ?? options.typeface,
           tokens: renderOptions?.tokens ?? options.tokens,
         })
       : themed;

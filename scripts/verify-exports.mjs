@@ -33,6 +33,7 @@ const { readFile } = await import("node:fs/promises");
 for (const [directory, table] of [
   ["themes", esm.THEMES],
   ["palettes", esm.PALETTES],
+  ["typefaces", esm.TYPEFACES],
 ]) {
   for (const name of Object.keys(table)) {
     const path = new URL(`../${directory}/${name}.css`, import.meta.url);

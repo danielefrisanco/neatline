@@ -183,7 +183,17 @@ export interface MapperOptions {
    * lets one style be recoloured without being rewritten.
    */
   readonly palette?: string;
-  /** Token overrides, applied last. `{ accent: "#c00" }` or `{ "--accent": "#c00" }`. */
+  /**
+   * Type-only overlay, applied after the palette. What a palette is for colour,
+   * this is for lettering: `"humanist"`, `"serif"`, `"grotesk"`, `"condensed"`
+   * or `"mono"`, a path to a `.css` file, or a stylesheet.
+   *
+   * Sizes travel with the stack, because a condensed face set at the size of a
+   * humanist one is small. `condensed` is the one to reach for on a crowded
+   * map: narrower names pass the fit test, so more of them are drawn.
+   */
+  readonly typeface?: string;
+  /** Token overrides, applied last — they beat theme, palette and typeface alike. */
   readonly tokens?: Readonly<Record<string, string>>;
   /**
    * Which layers carry content. Omitted layers are still emitted, empty —
@@ -203,6 +213,8 @@ export interface RenderOptions {
   readonly theme?: string;
   /** Colour-only overlay, applied after the theme. */
   readonly palette?: string;
+  /** Type-only overlay, applied after the palette. */
+  readonly typeface?: string;
   /** Token overrides, applied as a later declaration on the root element. */
   readonly tokens?: Readonly<Record<string, string>>;
   /**

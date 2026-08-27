@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 900" width="1000" height="900" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0cprnu9" role="img" aria-label="Europe, named">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 900" width="1000" height="900" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0l5rfwr" role="img" aria-label="Europe, named">
   <title>Europe, named</title>
   <style>
-    .mp.mp-t-0cprnu9 {
+    .mp.mp-t-0l5rfwr {
       --bg: transparent;
       --land: #D8D8D2;
       --land-edge: #FFFFFF;
@@ -30,6 +30,9 @@
       --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
       --label-size: 13;
       --place-label-size: 11;
+      --label-track: 0;
+      --label-weight: 500;
+      --label-advance: 0.58;
       --label-halo: #FFFFFF;
       --label-halo-width: 2.4;
       --stripe: #6E6E68;
@@ -50,68 +53,68 @@
       --anno-ink: #FFFFFF;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-0cprnu9 .mp-bg {
+    .mp.mp-t-0l5rfwr .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-0cprnu9 .mp-neighbour {
+    .mp.mp-t-0l5rfwr .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-0cprnu9 .mp-country {
+    .mp.mp-t-0l5rfwr .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-0cprnu9 .mp-country[data-bin="1"] {
+    .mp.mp-t-0l5rfwr .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-0cprnu9 .mp-country[data-bin="2"] {
+    .mp.mp-t-0l5rfwr .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-0cprnu9 .mp-country[data-bin="3"] {
+    .mp.mp-t-0l5rfwr .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-0cprnu9 .mp-country[data-bin="4"] {
+    .mp.mp-t-0l5rfwr .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-0cprnu9 .mp-country[data-bin="5"] {
+    .mp.mp-t-0l5rfwr .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-0cprnu9 .mp-country[data-fill="1"] {
+    .mp.mp-t-0l5rfwr .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-0cprnu9 .mp-country[data-fill="2"] {
+    .mp.mp-t-0l5rfwr .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-0cprnu9 .mp-country[data-fill="3"] {
+    .mp.mp-t-0l5rfwr .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-0cprnu9 .mp-country[data-fill="4"] {
+    .mp.mp-t-0l5rfwr .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-0cprnu9 .mp-country[data-fill="5"] {
+    .mp.mp-t-0l5rfwr .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-0cprnu9 .mp-country[data-fill="6"] {
+    .mp.mp-t-0l5rfwr .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-0cprnu9 .mp-country.is-highlighted {
+    .mp.mp-t-0l5rfwr .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-0cprnu9 .mp-water[data-kind="lake"] {
+    .mp.mp-t-0l5rfwr .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-0cprnu9 .mp-water[data-kind="river"] {
+    .mp.mp-t-0l5rfwr .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-0cprnu9 .mp-border {
+    .mp.mp-t-0l5rfwr .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -119,98 +122,100 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-0cprnu9 .mp-road {
+    .mp.mp-t-0l5rfwr .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-0cprnu9 .mp-place {
+    .mp.mp-t-0l5rfwr .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-0cprnu9 .mp-prism-top {
+    .mp.mp-t-0l5rfwr .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-0cprnu9 .mp-prism-side {
+    .mp.mp-t-0l5rfwr .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-0cprnu9 .mp-prism-edge {
+    .mp.mp-t-0l5rfwr .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-0cprnu9 .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-0l5rfwr .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-0cprnu9 .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-0l5rfwr .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-0cprnu9 .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-0l5rfwr .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-0cprnu9 .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-0l5rfwr .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-0cprnu9 .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-0l5rfwr .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-0cprnu9 .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-0l5rfwr .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-0cprnu9 .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-0l5rfwr .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-0cprnu9 .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-0l5rfwr .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-0cprnu9 .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-0l5rfwr .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-0cprnu9 .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-0l5rfwr .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-0cprnu9 .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-0l5rfwr .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-0cprnu9 .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-0l5rfwr .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-0cprnu9 .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-0l5rfwr .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-0cprnu9 .mp-hatch {
+    .mp.mp-t-0l5rfwr .mp-hatch {
       fill: url(#mp-stripe);
       stroke: none;
     }
-    .mp.mp-t-0cprnu9 .mp-hatch-line {
+    .mp.mp-t-0l5rfwr .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-0cprnu9 .mp-label {
+    .mp.mp-t-0l5rfwr .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
+      font-weight: var(--label-weight);
+      letter-spacing: var(--label-track);
       stroke: var(--label-halo);
       stroke-width: var(--label-halo-width);
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-0cprnu9 .mp-label[data-kind="place"] {
+    .mp.mp-t-0l5rfwr .mp-label[data-kind="place"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
     }
-    .mp.mp-t-0cprnu9 .mp-label.is-highlighted {
+    .mp.mp-t-0l5rfwr .mp-label.is-highlighted {
       font-weight: 700;
     }
-    .mp.mp-t-0cprnu9 .mp-label[data-fit="0"] {
+    .mp.mp-t-0l5rfwr .mp-label[data-fit="0"] {
       display: none;
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-0cprnu9 {
+      .mp.mp-t-0l5rfwr {
         --land: #2E3134;
         --land-edge: #16181A;
         --border: #6E747A;
@@ -507,90 +512,90 @@
     </circle>
   </g>
   <g class="mp-layer mp-labels">
-    <text class="mp-label" data-kind="country" data-iso="NO" data-rank="1" x="462.2" y="259.9" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Norway</text>
-    <text class="mp-label" data-kind="country" data-iso="FR" data-rank="1" x="373" y="530.6" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">France</text>
-    <text class="mp-label" data-kind="country" data-iso="SE" data-rank="1" x="605.2" y="182.3" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Sweden</text>
-    <text class="mp-label" data-kind="country" data-iso="BY" data-rank="1" x="771.1" y="408.8" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Belarus</text>
-    <text class="mp-label" data-kind="country" data-iso="UA" data-rank="1" x="835.1" y="477.2" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ukraine</text>
-    <text class="mp-label" data-kind="country" data-iso="PL" data-rank="1" x="640.6" y="399" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Poland</text>
-    <text class="mp-label" data-kind="country" data-iso="AT" data-rank="3" x="567.5" y="509.8" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Austria</text>
-    <text class="mp-label" data-kind="country" data-iso="HU" data-rank="2" x="648.1" y="516.3" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Hungary</text>
-    <text class="mp-label" data-kind="country" data-iso="MD" data-rank="3" x="801.3" y="502.8" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Moldova</text>
-    <text class="mp-label" data-kind="country" data-iso="RO" data-rank="1" x="741.4" y="544.8" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Romania</text>
-    <text class="mp-label" data-kind="country" data-iso="LT" data-rank="2" x="704.5" y="338.3" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lithuania</text>
-    <text class="mp-label" data-kind="country" data-iso="LV" data-rank="1" x="715.3" y="310.1" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Latvia</text>
-    <text class="mp-label" data-kind="country" data-iso="EE" data-rank="3" x="725.4" y="295.5" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Estonia</text>
-    <text class="mp-label" data-kind="country" data-iso="DE" data-rank="1" x="500.3" y="438.1" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Germany</text>
-    <text class="mp-label" data-kind="country" data-iso="BG" data-rank="2" x="751.5" y="592.8" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bulgaria</text>
-    <text class="mp-label" data-kind="country" data-iso="GR" data-rank="2" x="696.5" y="682.4" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Greece</text>
-    <text class="mp-label" data-kind="country" data-iso="AL" data-rank="3" x="668.7" y="656.1" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Albania</text>
-    <text class="mp-label" data-kind="country" data-iso="HR" data-rank="3" x="603.1" y="544.7" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Croatia</text>
-    <text class="mp-label" data-kind="country" data-iso="CH" data-rank="3" x="466.6" y="524.7" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Switzerland</text>
-    <text class="mp-label" data-kind="country" data-iso="LU" data-rank="3" x="432.3" y="465.7" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Luxembourg</text>
-    <text class="mp-label" data-kind="country" data-iso="BE" data-rank="3" x="413.1" y="445.2" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Belgium</text>
-    <text class="mp-label" data-kind="country" data-iso="NL" data-rank="3" x="426" y="395.3" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Netherlands</text>
-    <text class="mp-label" data-kind="country" data-iso="PT" data-rank="3" x="186.1" y="675.2" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Portugal</text>
-    <text class="mp-label" data-kind="country" data-iso="ES" data-rank="1" x="267.9" y="647.1" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Spain</text>
-    <text class="mp-label" data-kind="country" data-iso="IE" data-rank="3" x="219.7" y="380.3" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ireland</text>
-    <text class="mp-label" data-kind="country" data-iso="IT" data-rank="2" x="536.6" y="597.3" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Italy</text>
-    <text class="mp-label" data-kind="country" data-iso="DK" data-rank="3" x="484.1" y="339.2" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Denmark</text>
-    <text class="mp-label" data-kind="country" data-iso="GB" data-rank="1" x="318.4" y="375.7" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="NO" data-rank="1" x="462.2" y="259.9" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Norway</text>
+    <text class="mp-label" data-kind="country" data-iso="FR" data-rank="1" x="373" y="530.6" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">France</text>
+    <text class="mp-label" data-kind="country" data-iso="SE" data-rank="1" x="605.2" y="182.3" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Sweden</text>
+    <text class="mp-label" data-kind="country" data-iso="BY" data-rank="1" x="771.1" y="408.8" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Belarus</text>
+    <text class="mp-label" data-kind="country" data-iso="UA" data-rank="1" x="835.1" y="477.2" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ukraine</text>
+    <text class="mp-label" data-kind="country" data-iso="PL" data-rank="1" x="640.6" y="399" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Poland</text>
+    <text class="mp-label" data-kind="country" data-iso="AT" data-rank="3" x="567.5" y="509.8" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Austria</text>
+    <text class="mp-label" data-kind="country" data-iso="HU" data-rank="2" x="648.1" y="516.3" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Hungary</text>
+    <text class="mp-label" data-kind="country" data-iso="MD" data-rank="3" x="801.3" y="502.8" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Moldova</text>
+    <text class="mp-label" data-kind="country" data-iso="RO" data-rank="1" x="741.4" y="544.8" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Romania</text>
+    <text class="mp-label" data-kind="country" data-iso="LT" data-rank="2" x="704.5" y="338.3" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lithuania</text>
+    <text class="mp-label" data-kind="country" data-iso="LV" data-rank="1" x="715.3" y="310.1" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Latvia</text>
+    <text class="mp-label" data-kind="country" data-iso="EE" data-rank="3" x="725.4" y="295.5" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Estonia</text>
+    <text class="mp-label" data-kind="country" data-iso="DE" data-rank="1" x="500.3" y="438.1" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Germany</text>
+    <text class="mp-label" data-kind="country" data-iso="BG" data-rank="2" x="751.5" y="592.8" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bulgaria</text>
+    <text class="mp-label" data-kind="country" data-iso="GR" data-rank="2" x="696.5" y="682.4" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Greece</text>
+    <text class="mp-label" data-kind="country" data-iso="AL" data-rank="3" x="668.7" y="656.1" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Albania</text>
+    <text class="mp-label" data-kind="country" data-iso="HR" data-rank="3" x="603.1" y="544.7" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Croatia</text>
+    <text class="mp-label" data-kind="country" data-iso="CH" data-rank="3" x="466.6" y="524.7" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Switzerland</text>
+    <text class="mp-label" data-kind="country" data-iso="LU" data-rank="3" x="432.3" y="465.7" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Luxembourg</text>
+    <text class="mp-label" data-kind="country" data-iso="BE" data-rank="3" x="413.1" y="445.2" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Belgium</text>
+    <text class="mp-label" data-kind="country" data-iso="NL" data-rank="3" x="426" y="395.3" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Netherlands</text>
+    <text class="mp-label" data-kind="country" data-iso="PT" data-rank="3" x="186.1" y="675.2" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Portugal</text>
+    <text class="mp-label" data-kind="country" data-iso="ES" data-rank="1" x="267.9" y="647.1" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Spain</text>
+    <text class="mp-label" data-kind="country" data-iso="IE" data-rank="3" x="219.7" y="380.3" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ireland</text>
+    <text class="mp-label" data-kind="country" data-iso="IT" data-rank="2" x="536.6" y="597.3" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Italy</text>
+    <text class="mp-label" data-kind="country" data-iso="DK" data-rank="3" x="484.1" y="339.2" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Denmark</text>
+    <text class="mp-label" data-kind="country" data-iso="GB" data-rank="1" x="318.4" y="375.7" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
       <tspan x="318.4" dy="-7.1">United</tspan>
       <tspan x="318.4" dy="14.3">Kingdom</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="IS" data-rank="1" x="97.7" y="190" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Iceland</text>
-    <text class="mp-label" data-kind="country" data-iso="SI" data-rank="3" x="577.7" y="538.6" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Slovenia</text>
-    <text class="mp-label" data-kind="country" data-iso="FI" data-rank="1" x="715.6" y="203.8" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Finland</text>
-    <text class="mp-label" data-kind="country" data-iso="SK" data-rank="2" x="648.3" y="484.7" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Slovakia</text>
-    <text class="mp-label" data-kind="country" data-iso="CZ" data-rank="1" x="580.9" y="463.5" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Czechia</text>
-    <text class="mp-label" data-kind="country" data-iso="CY" data-rank="3" x="902.9" y="787.4" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cyprus</text>
-    <text class="mp-label" data-kind="country" data-iso="BA" data-rank="3" x="627" y="580.1" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">
+    <text class="mp-label" data-kind="country" data-iso="IS" data-rank="1" x="97.7" y="190" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Iceland</text>
+    <text class="mp-label" data-kind="country" data-iso="SI" data-rank="3" x="577.7" y="538.6" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Slovenia</text>
+    <text class="mp-label" data-kind="country" data-iso="FI" data-rank="1" x="715.6" y="203.8" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Finland</text>
+    <text class="mp-label" data-kind="country" data-iso="SK" data-rank="2" x="648.3" y="484.7" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Slovakia</text>
+    <text class="mp-label" data-kind="country" data-iso="CZ" data-rank="1" x="580.9" y="463.5" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Czechia</text>
+    <text class="mp-label" data-kind="country" data-iso="CY" data-rank="3" x="902.9" y="787.4" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cyprus</text>
+    <text class="mp-label" data-kind="country" data-iso="BA" data-rank="3" x="627" y="580.1" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">
       <tspan x="627" dy="-7.1">Bosnia</tspan>
       <tspan x="627" dy="14.3">and Herz.</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="MK" data-rank="3" x="695" y="635.9" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Macedonia</text>
-    <text class="mp-label" data-kind="country" data-iso="RS" data-rank="2" x="676.6" y="579.2" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Serbia</text>
-    <text class="mp-label" data-kind="country" data-iso="ME" data-rank="3" x="653" y="610" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Montenegro</text>
-    <text class="mp-label" data-kind="country" data-iso="XK" data-rank="3" x="680.2" y="614.6" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kosovo</text>
-    <text class="mp-label" data-kind="place" data-iso="FR" data-rank="1" data-capital="" x="380.8" y="481.9" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Paris</text>
-    <text class="mp-label" data-kind="place" data-iso="GB" data-rank="1" data-capital="" x="344.1" y="428.9" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">London</text>
-    <text class="mp-label" data-kind="place" data-iso="IT" data-rank="1" data-capital="" x="546.2" y="629.5" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Rome</text>
-    <text class="mp-label" data-kind="place" data-iso="ES" data-rank="1" data-capital="" x="273.1" y="662.5" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Madrid</text>
-    <text class="mp-label" data-kind="place" data-iso="DE" data-rank="1" data-capital="" x="554.4" y="408.8" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Berlin</text>
-    <text class="mp-label" data-kind="place" data-iso="GR" data-rank="1" data-capital="" x="741.5" y="716.8" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Athens</text>
-    <text class="mp-label" data-kind="place" data-iso="UA" data-rank="1" data-capital="" x="825.5" y="450" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kiev</text>
-    <text class="mp-label" data-kind="place" data-iso="AT" data-rank="1" data-capital="" x="605" y="495.3" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Vienna</text>
-    <text class="mp-label" data-kind="place" data-iso="SE" data-rank="1" data-capital="" x="617" y="283.4" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Stockholm</text>
-    <text class="mp-label" data-kind="place" data-iso="NL" data-rank="1" data-capital="" x="423" y="412.2" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Amsterdam</text>
-    <text class="mp-label" data-kind="place" data-iso="PT" data-rank="1" data-capital="" x="177.6" y="700.1" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lisbon</text>
-    <text class="mp-label" data-kind="place" data-iso="RO" data-rank="1" data-capital="" x="769.4" y="574.4" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bucharest</text>
-    <text class="mp-label" data-kind="place" data-iso="BE" data-rank="1" data-capital="" x="413.3" y="442.1" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Brussels</text>
-    <text class="mp-label" data-kind="place" data-iso="PL" data-rank="1" data-capital="" x="672.6" y="414.5" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Warsaw</text>
-    <text class="mp-label" data-kind="place" data-iso="HU" data-rank="1" data-capital="" x="649.6" y="509.8" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Budapest</text>
-    <text class="mp-label" data-kind="place" data-iso="CZ" data-rank="1" data-capital="" x="572.3" y="457" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Prague</text>
-    <text class="mp-label" data-kind="place" data-iso="FI" data-rank="1" data-capital="" x="714.7" y="269" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Helsinki</text>
-    <text class="mp-label" data-kind="place" data-iso="DK" data-rank="1" data-capital="" x="539.4" y="348.9" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kobenhavn</text>
-    <text class="mp-label" data-kind="place" data-iso="IE" data-rank="1" data-capital="" x="251.8" y="392.9" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dublin</text>
-    <text class="mp-label" data-kind="place" data-iso="NO" data-rank="1" data-capital="" x="510.4" y="273.2" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Oslo</text>
-    <text class="mp-label" data-kind="place" data-iso="BY" data-rank="1" data-capital="" x="769.9" y="382.3" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Minsk</text>
-    <text class="mp-label" data-kind="place" data-iso="BG" data-rank="1" data-capital="" x="726.6" y="612.2" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Sofia</text>
-    <text class="mp-label" data-kind="place" data-iso="RS" data-rank="1" data-capital="" x="675.9" y="566.2" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Belgrade</text>
-    <text class="mp-label" data-kind="place" data-iso="AL" data-rank="1" data-capital="" x="670" y="642" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Tirana</text>
-    <text class="mp-label" data-kind="place" data-iso="LV" data-rank="1" data-capital="" x="710.1" y="325.6" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Riga</text>
-    <text class="mp-label" data-kind="place" data-iso="HR" data-rank="1" data-capital="" x="601.6" y="545.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Zagreb</text>
-    <text class="mp-label" data-kind="place" data-iso="BA" data-rank="1" data-capital="" x="642.9" y="587" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Sarajevo</text>
-    <text class="mp-label" data-kind="place" data-iso="MD" data-rank="1" data-capital="" x="808.4" y="520.1" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Chisinau</text>
-    <text class="mp-label" data-kind="place" data-iso="LT" data-rank="1" data-capital="" x="733.7" y="367.5" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Vilnius</text>
-    <text class="mp-label" data-kind="place" data-iso="EE" data-rank="1" data-capital="" x="713.5" y="281.5" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tallinn</text>
-    <text class="mp-label" data-kind="place" data-iso="CY" data-rank="1" data-capital="" x="914.2" y="781.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Nicosia</text>
-    <text class="mp-label" data-kind="place" data-iso="IS" data-rank="1" data-capital="" x="56.4" y="203.9" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Reykjavik</text>
-    <text class="mp-label" data-kind="place" data-iso="MK" data-rank="1" data-capital="" x="696.2" y="627.2" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Skopje</text>
-    <text class="mp-label" data-kind="place" data-rank="1" data-capital="" x="690.7" y="612.7" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Pristina</text>
-    <text class="mp-label" data-kind="place" data-iso="SK" data-rank="1" data-capital="" x="617.1" y="496.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Bratislava</text>
-    <text class="mp-label" data-kind="place" data-iso="SI" data-rank="1" data-capital="" x="577.1" y="540" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Ljubljana</text>
-    <text class="mp-label" data-kind="place" data-iso="CH" data-rank="1" data-capital="" x="462.3" y="522" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Bern</text>
-    <text class="mp-label" data-kind="place" data-iso="ME" data-rank="1" data-capital="" x="659.3" y="617" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Podgorica</text>
-    <text class="mp-label" data-kind="place" data-iso="LU" data-rank="1" data-capital="" x="441.2" y="466.6" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Luxembourg</text>
+    <text class="mp-label" data-kind="country" data-iso="MK" data-rank="3" x="695" y="635.9" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Macedonia</text>
+    <text class="mp-label" data-kind="country" data-iso="RS" data-rank="2" x="676.6" y="579.2" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Serbia</text>
+    <text class="mp-label" data-kind="country" data-iso="ME" data-rank="3" x="653" y="610" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Montenegro</text>
+    <text class="mp-label" data-kind="country" data-iso="XK" data-rank="3" x="680.2" y="614.6" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kosovo</text>
+    <text class="mp-label" data-kind="place" data-iso="FR" data-rank="1" data-capital="" x="380.8" y="481.9" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Paris</text>
+    <text class="mp-label" data-kind="place" data-iso="GB" data-rank="1" data-capital="" x="344.1" y="428.9" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">London</text>
+    <text class="mp-label" data-kind="place" data-iso="IT" data-rank="1" data-capital="" x="546.2" y="629.5" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Rome</text>
+    <text class="mp-label" data-kind="place" data-iso="ES" data-rank="1" data-capital="" x="273.1" y="662.5" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Madrid</text>
+    <text class="mp-label" data-kind="place" data-iso="DE" data-rank="1" data-capital="" x="554.4" y="408.8" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Berlin</text>
+    <text class="mp-label" data-kind="place" data-iso="GR" data-rank="1" data-capital="" x="741.5" y="716.8" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Athens</text>
+    <text class="mp-label" data-kind="place" data-iso="UA" data-rank="1" data-capital="" x="825.5" y="450" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kiev</text>
+    <text class="mp-label" data-kind="place" data-iso="AT" data-rank="1" data-capital="" x="605" y="495.3" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Vienna</text>
+    <text class="mp-label" data-kind="place" data-iso="SE" data-rank="1" data-capital="" x="617" y="283.4" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Stockholm</text>
+    <text class="mp-label" data-kind="place" data-iso="NL" data-rank="1" data-capital="" x="423" y="412.2" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Amsterdam</text>
+    <text class="mp-label" data-kind="place" data-iso="PT" data-rank="1" data-capital="" x="177.6" y="700.1" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lisbon</text>
+    <text class="mp-label" data-kind="place" data-iso="RO" data-rank="1" data-capital="" x="769.4" y="574.4" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bucharest</text>
+    <text class="mp-label" data-kind="place" data-iso="BE" data-rank="1" data-capital="" x="413.3" y="442.1" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Brussels</text>
+    <text class="mp-label" data-kind="place" data-iso="PL" data-rank="1" data-capital="" x="672.6" y="414.5" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Warsaw</text>
+    <text class="mp-label" data-kind="place" data-iso="HU" data-rank="1" data-capital="" x="649.6" y="509.8" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Budapest</text>
+    <text class="mp-label" data-kind="place" data-iso="CZ" data-rank="1" data-capital="" x="572.3" y="457" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Prague</text>
+    <text class="mp-label" data-kind="place" data-iso="FI" data-rank="1" data-capital="" x="714.7" y="269" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Helsinki</text>
+    <text class="mp-label" data-kind="place" data-iso="DK" data-rank="1" data-capital="" x="539.4" y="348.9" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kobenhavn</text>
+    <text class="mp-label" data-kind="place" data-iso="IE" data-rank="1" data-capital="" x="251.8" y="392.9" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dublin</text>
+    <text class="mp-label" data-kind="place" data-iso="NO" data-rank="1" data-capital="" x="510.4" y="273.2" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Oslo</text>
+    <text class="mp-label" data-kind="place" data-iso="BY" data-rank="1" data-capital="" x="769.9" y="382.3" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Minsk</text>
+    <text class="mp-label" data-kind="place" data-iso="BG" data-rank="1" data-capital="" x="726.6" y="612.2" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Sofia</text>
+    <text class="mp-label" data-kind="place" data-iso="RS" data-rank="1" data-capital="" x="675.9" y="566.2" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Belgrade</text>
+    <text class="mp-label" data-kind="place" data-iso="AL" data-rank="1" data-capital="" x="670" y="642" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Tirana</text>
+    <text class="mp-label" data-kind="place" data-iso="LV" data-rank="1" data-capital="" x="710.1" y="325.6" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Riga</text>
+    <text class="mp-label" data-kind="place" data-iso="HR" data-rank="1" data-capital="" x="601.6" y="545.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Zagreb</text>
+    <text class="mp-label" data-kind="place" data-iso="BA" data-rank="1" data-capital="" x="642.9" y="587" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Sarajevo</text>
+    <text class="mp-label" data-kind="place" data-iso="MD" data-rank="1" data-capital="" x="808.4" y="520.1" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Chisinau</text>
+    <text class="mp-label" data-kind="place" data-iso="LT" data-rank="1" data-capital="" x="733.7" y="367.5" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Vilnius</text>
+    <text class="mp-label" data-kind="place" data-iso="EE" data-rank="1" data-capital="" x="713.5" y="281.5" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tallinn</text>
+    <text class="mp-label" data-kind="place" data-iso="CY" data-rank="1" data-capital="" x="914.2" y="781.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Nicosia</text>
+    <text class="mp-label" data-kind="place" data-iso="IS" data-rank="1" data-capital="" x="56.4" y="203.9" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Reykjavik</text>
+    <text class="mp-label" data-kind="place" data-iso="MK" data-rank="1" data-capital="" x="696.2" y="627.2" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Skopje</text>
+    <text class="mp-label" data-kind="place" data-rank="1" data-capital="" x="690.7" y="612.7" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Pristina</text>
+    <text class="mp-label" data-kind="place" data-iso="SK" data-rank="1" data-capital="" x="617.1" y="496.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Bratislava</text>
+    <text class="mp-label" data-kind="place" data-iso="SI" data-rank="1" data-capital="" x="577.1" y="540" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Ljubljana</text>
+    <text class="mp-label" data-kind="place" data-iso="CH" data-rank="1" data-capital="" x="462.3" y="522" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Bern</text>
+    <text class="mp-label" data-kind="place" data-iso="ME" data-rank="1" data-capital="" x="659.3" y="617" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Podgorica</text>
+    <text class="mp-label" data-kind="place" data-iso="LU" data-rank="1" data-capital="" x="441.2" y="466.6" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Luxembourg</text>
   </g>
   <g class="mp-layer mp-annotations"/>
   <g class="mp-layer mp-furniture"/>

@@ -49,6 +49,8 @@ import { HIGHLIGHT_CLASS } from "./taxonomy.js";
  * SVG has no measuring API outside a browser and this library has no font
  * metrics, so the fit test estimates. 0.58 is close for the sans and serif
  * stacks the bundled themes use, and erring high would hide names that fit.
+ * A stylesheet that knows better says so in `--label-advance` — which is how a
+ * condensed face earns the extra names it can actually carry.
  */
 const ADVANCE = 0.58;
 
@@ -61,6 +63,8 @@ const DEFAULT_LABEL_SIZE = 13;
 export interface LabelSizes {
   readonly country: number;
   readonly place: number;
+  /** How wide the chosen face runs, as a fraction of the size. */
+  readonly advance: number;
 }
 
 function declared(css: string, token: string, fallback: number): number {
@@ -85,15 +89,19 @@ function declared(css: string, token: string, fallback: number): number {
  */
 export function labelSizes(css: string): LabelSizes {
   const country = declared(css, "--label-size", DEFAULT_LABEL_SIZE);
-  return { country, place: declared(css, "--place-label-size", country) };
+  return {
+    country,
+    place: declared(css, "--place-label-size", country),
+    advance: declared(css, "--label-advance", ADVANCE),
+  };
 }
 
 function round(value: number): number {
   return Math.round(value * 10) / 10;
 }
 
-function textWidth(name: string, size: number): number {
-  return name.length * size * ADVANCE;
+function textWidth(name: string, size: number, advance: number): number {
+  return name.length * size * advance;
 }
 
 /** Distance from a point to a segment — the metric the interior search maximises. */
@@ -259,16 +267,16 @@ interface Lines {
  * not better. Two lines and no more — a third would be taller than most of the
  * countries that need one.
  */
-function wrapped(name: string, size: number): Lines {
+function wrapped(name: string, size: number, advance: number): Lines {
   const words = name.split(" ");
-  const single: Lines = { lines: [name], width: textWidth(name, size) };
+  const single: Lines = { lines: [name], width: textWidth(name, size, advance) };
   if (words.length < 2) return single;
 
   let best = single;
   for (let cut = 1; cut < words.length; cut += 1) {
     const head = words.slice(0, cut).join(" ");
     const tail = words.slice(cut).join(" ");
-    const width = Math.max(textWidth(head, size), textWidth(tail, size));
+    const width = Math.max(textWidth(head, size, advance), textWidth(tail, size, advance));
     if (width < best.width) best = { lines: [head, tail], width };
   }
   return best;
@@ -426,6 +434,7 @@ export function countryLabels(
   projection: GeoProjection,
   canvas: readonly [number, number],
   size: number,
+  advance: number,
   avoid: readonly LabelBox[] = [],
 ): Placed[] {
   const [width, height] = canvas;
@@ -433,7 +442,7 @@ export function countryLabels(
 
   for (const country of countries) {
     if (country.name === "") continue;
-    const needed = textWidth(country.name, size);
+    const needed = textWidth(country.name, size, advance);
     const anchor = anchorOf(projectRings(country.geometry, projection), canvas, needed);
     if (anchor === null) continue;
 
@@ -441,7 +450,7 @@ export function countryLabels(
     const settled = ground - country.lift;
     if (x < 0 || x > width || settled < 0 || settled > height) continue;
 
-    const set = anchor.span >= needed ? { lines: [country.name], width: needed } : wrapped(country.name, size);
+    const set = anchor.span >= needed ? { lines: [country.name], width: needed } : wrapped(country.name, size, advance);
     // A two-line name is twice as tall, and has twice as much to clear.
     const y = stepAside(x, settled, set.width, size * set.lines.length, avoid, (at) =>
       contains(anchor.ring, at),
@@ -490,9 +499,10 @@ export function placeLabel(
   y: number,
   radius: number,
   size: number,
+  advance: number,
 ): Placed {
   const left = x + radius + PLACE_GAP;
-  const width = textWidth(place.name, size);
+  const width = textWidth(place.name, size, advance);
   return {
     fits: true,
     // Settlements are handed over already ranked by the data, so their order

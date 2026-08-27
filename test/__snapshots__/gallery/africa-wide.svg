@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-07wtpgf" role="img" aria-label="Map of Africa">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1668eod" role="img" aria-label="Map of Africa">
   <title>Map of Africa</title>
   <style>
-    .mp.mp-t-07wtpgf {
+    .mp.mp-t-1668eod {
       --bg: transparent;
       --land: #D8D8D2;
       --land-edge: #FFFFFF;
@@ -30,6 +30,9 @@
       --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
       --label-size: 13;
       --place-label-size: 11;
+      --label-track: 0;
+      --label-weight: 500;
+      --label-advance: 0.58;
       --label-halo: #FFFFFF;
       --label-halo-width: 2.4;
       --stripe: #6E6E68;
@@ -50,68 +53,68 @@
       --anno-ink: #FFFFFF;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-07wtpgf .mp-bg {
+    .mp.mp-t-1668eod .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-07wtpgf .mp-neighbour {
+    .mp.mp-t-1668eod .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-07wtpgf .mp-country {
+    .mp.mp-t-1668eod .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-07wtpgf .mp-country[data-bin="1"] {
+    .mp.mp-t-1668eod .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-07wtpgf .mp-country[data-bin="2"] {
+    .mp.mp-t-1668eod .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-07wtpgf .mp-country[data-bin="3"] {
+    .mp.mp-t-1668eod .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-07wtpgf .mp-country[data-bin="4"] {
+    .mp.mp-t-1668eod .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-07wtpgf .mp-country[data-bin="5"] {
+    .mp.mp-t-1668eod .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-07wtpgf .mp-country[data-fill="1"] {
+    .mp.mp-t-1668eod .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-07wtpgf .mp-country[data-fill="2"] {
+    .mp.mp-t-1668eod .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-07wtpgf .mp-country[data-fill="3"] {
+    .mp.mp-t-1668eod .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-07wtpgf .mp-country[data-fill="4"] {
+    .mp.mp-t-1668eod .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-07wtpgf .mp-country[data-fill="5"] {
+    .mp.mp-t-1668eod .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-07wtpgf .mp-country[data-fill="6"] {
+    .mp.mp-t-1668eod .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-07wtpgf .mp-country.is-highlighted {
+    .mp.mp-t-1668eod .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-07wtpgf .mp-water[data-kind="lake"] {
+    .mp.mp-t-1668eod .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-07wtpgf .mp-water[data-kind="river"] {
+    .mp.mp-t-1668eod .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-07wtpgf .mp-border {
+    .mp.mp-t-1668eod .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -119,98 +122,100 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-07wtpgf .mp-road {
+    .mp.mp-t-1668eod .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-07wtpgf .mp-place {
+    .mp.mp-t-1668eod .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-07wtpgf .mp-prism-top {
+    .mp.mp-t-1668eod .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-07wtpgf .mp-prism-side {
+    .mp.mp-t-1668eod .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-07wtpgf .mp-prism-edge {
+    .mp.mp-t-1668eod .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-07wtpgf .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-1668eod .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-07wtpgf .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-1668eod .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-07wtpgf .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-1668eod .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-07wtpgf .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-1668eod .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-07wtpgf .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-1668eod .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-07wtpgf .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-1668eod .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-07wtpgf .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-1668eod .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-07wtpgf .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-1668eod .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-07wtpgf .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-1668eod .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-07wtpgf .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-1668eod .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-07wtpgf .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-1668eod .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-07wtpgf .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-1668eod .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-07wtpgf .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-1668eod .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-07wtpgf .mp-hatch {
+    .mp.mp-t-1668eod .mp-hatch {
       fill: url(#mp-stripe);
       stroke: none;
     }
-    .mp.mp-t-07wtpgf .mp-hatch-line {
+    .mp.mp-t-1668eod .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-07wtpgf .mp-label {
+    .mp.mp-t-1668eod .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
+      font-weight: var(--label-weight);
+      letter-spacing: var(--label-track);
       stroke: var(--label-halo);
       stroke-width: var(--label-halo-width);
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-07wtpgf .mp-label[data-kind="place"] {
+    .mp.mp-t-1668eod .mp-label[data-kind="place"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
     }
-    .mp.mp-t-07wtpgf .mp-label.is-highlighted {
+    .mp.mp-t-1668eod .mp-label.is-highlighted {
       font-weight: 700;
     }
-    .mp.mp-t-07wtpgf .mp-label[data-fit="0"] {
+    .mp.mp-t-1668eod .mp-label[data-fit="0"] {
       display: none;
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-07wtpgf {
+      .mp.mp-t-1668eod {
         --land: #2E3134;
         --land-edge: #16181A;
         --border: #6E747A;
@@ -241,7 +246,7 @@
         --furniture-ink: #85898D;
       }
     }
-    .mp.mp-t-07wtpgf {
+    .mp.mp-t-1668eod {
       --bg: #F6F1E7;
       --land: #E3D6BE;
       --land-edge: #F6F1E7;
@@ -624,137 +629,137 @@
     </circle>
   </g>
   <g class="mp-layer mp-labels">
-    <text class="mp-label" data-kind="country" data-iso="TZ" data-rank="2" x="720.8" y="414.2" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tanzania</text>
-    <text class="mp-label" data-kind="country" data-iso="EH" data-rank="3" x="394.8" y="158.3" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">
+    <text class="mp-label" data-kind="country" data-iso="TZ" data-rank="2" x="720.8" y="414.2" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tanzania</text>
+    <text class="mp-label" data-kind="country" data-iso="EH" data-rank="3" x="394.8" y="158.3" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">
       <tspan x="394.8" dy="-7.1">W.</tspan>
       <tspan x="394.8" dy="14.3">Sahara</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="CD" data-rank="2" x="642.9" y="422" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="CD" data-rank="2" x="642.9" y="422" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
       <tspan x="642.9" dy="-7.1">Dem. Rep.</tspan>
       <tspan x="642.9" dy="14.3">Congo</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="SO" data-rank="3" x="786.9" y="315.1" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Somalia</text>
-    <text class="mp-label" data-kind="country" data-iso="KE" data-rank="2" x="745.6" y="336.8" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kenya</text>
-    <text class="mp-label" data-kind="country" data-iso="SD" data-rank="1" x="688.6" y="194.2" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Sudan</text>
-    <text class="mp-label" data-kind="country" data-iso="TD" data-rank="1" x="611.8" y="218.7" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Chad</text>
-    <text class="mp-label" data-kind="country" data-iso="ZA" data-rank="1" x="651" y="633.4" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="SO" data-rank="3" x="786.9" y="315.1" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Somalia</text>
+    <text class="mp-label" data-kind="country" data-iso="KE" data-rank="2" x="745.6" y="336.8" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kenya</text>
+    <text class="mp-label" data-kind="country" data-iso="SD" data-rank="1" x="688.6" y="194.2" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Sudan</text>
+    <text class="mp-label" data-kind="country" data-iso="TD" data-rank="1" x="611.8" y="218.7" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Chad</text>
+    <text class="mp-label" data-kind="country" data-iso="ZA" data-rank="1" x="651" y="633.4" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
       <tspan x="651" dy="-7.1">South</tspan>
       <tspan x="651" dy="14.3">Africa</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="LS" data-rank="3" x="673.7" y="631.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Lesotho</text>
-    <text class="mp-label" data-kind="country" data-iso="ZW" data-rank="3" x="687.1" y="553.9" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Zimbabwe</text>
-    <text class="mp-label" data-kind="country" data-iso="BW" data-rank="3" x="650.8" y="544.4" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Botswana</text>
-    <text class="mp-label" data-kind="country" data-iso="NA" data-rank="2" x="600.6" y="546.9" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Namibia</text>
-    <text class="mp-label" data-kind="country" data-iso="SN" data-rank="3" x="385.2" y="208.7" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Senegal</text>
-    <text class="mp-label" data-kind="country" data-iso="ML" data-rank="1" x="476.7" y="190.9" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mali</text>
-    <text class="mp-label" data-kind="country" data-iso="MR" data-rank="3" x="416.1" y="169.3" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mauritania</text>
-    <text class="mp-label" data-kind="country" data-iso="BJ" data-rank="3" x="499.8" y="261.9" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Benin</text>
-    <text class="mp-label" data-kind="country" data-iso="NE" data-rank="1" x="548.5" y="199.8" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Niger</text>
-    <text class="mp-label" data-kind="country" data-iso="NG" data-rank="2" x="538.8" y="271.5" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nigeria</text>
-    <text class="mp-label" data-kind="country" data-iso="CM" data-rank="3" x="564.8" y="316.8" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cameroon</text>
-    <text class="mp-label" data-kind="country" data-iso="TG" data-rank="3" x="490.5" y="276.2" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Togo</text>
-    <text class="mp-label" data-kind="country" data-iso="GH" data-rank="3" x="474.4" y="280.1" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ghana</text>
-    <text class="mp-label" data-kind="country" data-iso="CI" data-rank="3" x="444.4" y="290" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">
+    <text class="mp-label" data-kind="country" data-iso="LS" data-rank="3" x="673.7" y="631.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Lesotho</text>
+    <text class="mp-label" data-kind="country" data-iso="ZW" data-rank="3" x="687.1" y="553.9" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Zimbabwe</text>
+    <text class="mp-label" data-kind="country" data-iso="BW" data-rank="3" x="650.8" y="544.4" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Botswana</text>
+    <text class="mp-label" data-kind="country" data-iso="NA" data-rank="2" x="600.6" y="546.9" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Namibia</text>
+    <text class="mp-label" data-kind="country" data-iso="SN" data-rank="3" x="385.2" y="208.7" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Senegal</text>
+    <text class="mp-label" data-kind="country" data-iso="ML" data-rank="1" x="476.7" y="190.9" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mali</text>
+    <text class="mp-label" data-kind="country" data-iso="MR" data-rank="3" x="416.1" y="169.3" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mauritania</text>
+    <text class="mp-label" data-kind="country" data-iso="BJ" data-rank="3" x="499.8" y="261.9" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Benin</text>
+    <text class="mp-label" data-kind="country" data-iso="NE" data-rank="1" x="548.5" y="199.8" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Niger</text>
+    <text class="mp-label" data-kind="country" data-iso="NG" data-rank="2" x="538.8" y="271.5" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nigeria</text>
+    <text class="mp-label" data-kind="country" data-iso="CM" data-rank="3" x="564.8" y="316.8" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cameroon</text>
+    <text class="mp-label" data-kind="country" data-iso="TG" data-rank="3" x="490.5" y="276.2" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Togo</text>
+    <text class="mp-label" data-kind="country" data-iso="GH" data-rank="3" x="474.4" y="280.1" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ghana</text>
+    <text class="mp-label" data-kind="country" data-iso="CI" data-rank="3" x="444.4" y="290" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">
       <tspan x="444.4" dy="-7.1">Côte</tspan>
       <tspan x="444.4" dy="14.3">d'Ivoire</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="GN" data-rank="3" x="407.5" y="263" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Guinea</text>
-    <text class="mp-label" data-kind="country" data-iso="GW" data-rank="3" x="380" y="248.4" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Guinea-Bissau</text>
-    <text class="mp-label" data-kind="country" data-iso="LR" data-rank="3" x="415.6" y="299" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Liberia</text>
-    <text class="mp-label" data-kind="country" data-iso="SL" data-rank="3" x="401.4" y="280.7" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="GN" data-rank="3" x="407.5" y="263" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Guinea</text>
+    <text class="mp-label" data-kind="country" data-iso="GW" data-rank="3" x="380" y="248.4" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Guinea-Bissau</text>
+    <text class="mp-label" data-kind="country" data-iso="LR" data-rank="3" x="415.6" y="299" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Liberia</text>
+    <text class="mp-label" data-kind="country" data-iso="SL" data-rank="3" x="401.4" y="280.7" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
       <tspan x="401.4" dy="-7.1">Sierra</tspan>
       <tspan x="401.4" dy="14.3">Leone</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="BF" data-rank="3" x="475.9" y="242.5" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="BF" data-rank="3" x="475.9" y="242.5" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
       <tspan x="475.9" dy="-7.1">Burkina</tspan>
       <tspan x="475.9" dy="14.3">Faso</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="CF" data-rank="3" x="624.4" y="299.4" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="CF" data-rank="3" x="624.4" y="299.4" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
       <tspan x="624.4" dy="-7.1">Central</tspan>
       <tspan x="624.4" dy="14.3">African Rep.</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="CG" data-rank="3" x="593.1" y="375.9" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Congo</text>
-    <text class="mp-label" data-kind="country" data-iso="GA" data-rank="3" x="564.1" y="384.8" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Gabon</text>
-    <text class="mp-label" data-kind="country" data-iso="GQ" data-rank="3" x="554.9" y="345.1" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">
+    <text class="mp-label" data-kind="country" data-iso="CG" data-rank="3" x="593.1" y="375.9" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Congo</text>
+    <text class="mp-label" data-kind="country" data-iso="GA" data-rank="3" x="564.1" y="384.8" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Gabon</text>
+    <text class="mp-label" data-kind="country" data-iso="GQ" data-rank="3" x="554.9" y="345.1" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">
       <tspan x="554.9" dy="-7.1">Eq.</tspan>
       <tspan x="554.9" dy="14.3">Guinea</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="ZM" data-rank="1" x="674.8" y="485.2" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Zambia</text>
-    <text class="mp-label" data-kind="country" data-iso="MW" data-rank="3" x="715.3" y="467.4" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Malawi</text>
-    <text class="mp-label" data-kind="country" data-iso="MZ" data-rank="3" x="744.5" y="469.1" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mozambique</text>
-    <text class="mp-label" data-kind="country" data-iso="SZ" data-rank="3" x="695.7" y="604.8" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">eSwatini</text>
-    <text class="mp-label" data-kind="country" data-iso="AO" data-rank="2" x="604.4" y="474.8" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Angola</text>
-    <text class="mp-label" data-kind="country" data-iso="BI" data-rank="3" x="690.9" y="391.8" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Burundi</text>
-    <text class="mp-label" data-kind="country" data-iso="MG" data-rank="3" x="802.7" y="507.7" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Madagascar</text>
-    <text class="mp-label" data-kind="country" data-iso="GM" data-rank="3" x="374.1" y="235.9" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Gambia</text>
-    <text class="mp-label" data-kind="country" data-iso="TN" data-rank="3" x="549.7" y="54.3" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Tunisia</text>
-    <text class="mp-label" data-kind="country" data-iso="DZ" data-rank="1" x="506.6" y="104.1" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Algeria</text>
-    <text class="mp-label" data-kind="country" data-iso="ER" data-rank="3" x="743.9" y="212.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Eritrea</text>
-    <text class="mp-label" data-kind="country" data-iso="MA" data-rank="3" x="463.4" y="75" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Morocco</text>
-    <text class="mp-label" data-kind="country" data-iso="EG" data-rank="2" x="685.8" y="117.7" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Egypt</text>
-    <text class="mp-label" data-kind="country" data-iso="LY" data-rank="1" x="607.6" y="113.5" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Libya</text>
-    <text class="mp-label" data-kind="country" data-iso="ET" data-rank="2" x="757" y="298.1" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ethiopia</text>
-    <text class="mp-label" data-kind="country" data-iso="DJ" data-rank="3" x="775.2" y="253.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Djibouti</text>
-    <text class="mp-label" data-kind="country" data-iso="XS" data-rank="3" x="802.9" y="269.4" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Somaliland</text>
-    <text class="mp-label" data-kind="country" data-iso="UG" data-rank="3" x="707.8" y="330.2" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Uganda</text>
-    <text class="mp-label" data-kind="country" data-iso="RW" data-rank="3" x="692.3" y="378.1" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Rwanda</text>
-    <text class="mp-label" data-kind="country" data-iso="SS" data-rank="2" x="689.6" y="294.6" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="ZM" data-rank="1" x="674.8" y="485.2" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Zambia</text>
+    <text class="mp-label" data-kind="country" data-iso="MW" data-rank="3" x="715.3" y="467.4" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Malawi</text>
+    <text class="mp-label" data-kind="country" data-iso="MZ" data-rank="3" x="744.5" y="469.1" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mozambique</text>
+    <text class="mp-label" data-kind="country" data-iso="SZ" data-rank="3" x="695.7" y="604.8" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">eSwatini</text>
+    <text class="mp-label" data-kind="country" data-iso="AO" data-rank="2" x="604.4" y="474.8" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Angola</text>
+    <text class="mp-label" data-kind="country" data-iso="BI" data-rank="3" x="690.9" y="391.8" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Burundi</text>
+    <text class="mp-label" data-kind="country" data-iso="MG" data-rank="3" x="802.7" y="507.7" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Madagascar</text>
+    <text class="mp-label" data-kind="country" data-iso="GM" data-rank="3" x="374.1" y="235.9" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Gambia</text>
+    <text class="mp-label" data-kind="country" data-iso="TN" data-rank="3" x="549.7" y="54.3" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Tunisia</text>
+    <text class="mp-label" data-kind="country" data-iso="DZ" data-rank="1" x="506.6" y="104.1" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Algeria</text>
+    <text class="mp-label" data-kind="country" data-iso="ER" data-rank="3" x="743.9" y="212.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Eritrea</text>
+    <text class="mp-label" data-kind="country" data-iso="MA" data-rank="3" x="463.4" y="75" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Morocco</text>
+    <text class="mp-label" data-kind="country" data-iso="EG" data-rank="2" x="685.8" y="117.7" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Egypt</text>
+    <text class="mp-label" data-kind="country" data-iso="LY" data-rank="1" x="607.6" y="113.5" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Libya</text>
+    <text class="mp-label" data-kind="country" data-iso="ET" data-rank="2" x="757" y="298.1" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ethiopia</text>
+    <text class="mp-label" data-kind="country" data-iso="DJ" data-rank="3" x="775.2" y="253.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Djibouti</text>
+    <text class="mp-label" data-kind="country" data-iso="XS" data-rank="3" x="802.9" y="269.4" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Somaliland</text>
+    <text class="mp-label" data-kind="country" data-iso="UG" data-rank="3" x="707.8" y="330.2" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Uganda</text>
+    <text class="mp-label" data-kind="country" data-iso="RW" data-rank="3" x="692.3" y="378.1" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Rwanda</text>
+    <text class="mp-label" data-kind="country" data-iso="SS" data-rank="2" x="689.6" y="294.6" text-anchor="middle" dominant-baseline="central" fill="#3B3427" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
       <tspan x="689.6" dy="-7.1">S.</tspan>
       <tspan x="689.6" dy="14.3">Sudan</tspan>
     </text>
-    <text class="mp-label" data-kind="place" data-iso="EG" data-rank="1" data-capital="" x="699.8" y="85.9" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cairo</text>
-    <text class="mp-label" data-kind="place" data-iso="NG" data-rank="1" x="512.9" y="300.2" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lagos</text>
-    <text class="mp-label" data-kind="place" data-iso="ZA" data-rank="1" data-capital="" x="616.2" y="668.4" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cape Town</text>
-    <text class="mp-label" data-kind="place" data-iso="KE" data-rank="1" data-capital="" x="745" y="372.6" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nairobi</text>
-    <text class="mp-label" data-kind="place" data-iso="CD" data-rank="1" data-capital="" x="595.5" y="401.1" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kinshasa</text>
-    <text class="mp-label" data-kind="place" data-iso="ET" data-rank="1" data-capital="" x="757.2" y="276.1" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Addis Ababa</text>
-    <text class="mp-label" data-kind="place" data-iso="SN" data-rank="1" data-capital="" x="371.2" y="223.5" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dakar</text>
-    <text class="mp-label" data-kind="place" data-iso="AO" data-rank="1" data-capital="" x="581.2" y="443.2" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Luanda</text>
-    <text class="mp-label" data-kind="place" data-iso="SD" data-rank="1" data-capital="" x="713.3" y="215.4" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Khartoum</text>
-    <text class="mp-label" data-kind="place" data-iso="CI" data-rank="1" data-capital="" x="461.3" y="310.7" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Abidjan</text>
-    <text class="mp-label" data-kind="place" data-iso="DZ" data-rank="1" data-capital="" x="519.4" y="28.9" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Algiers</text>
-    <text class="mp-label" data-kind="place" data-iso="TZ" data-rank="1" data-capital="" x="761.5" y="424.2" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dar es Salaam</text>
-    <text class="mp-label" data-kind="place" data-iso="LY" data-rank="1" data-capital="" x="582.6" y="61.5" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tripoli</text>
-    <text class="mp-label" data-kind="place" data-iso="GH" data-rank="1" data-capital="" x="487.7" y="308.6" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Accra</text>
-    <text class="mp-label" data-kind="place" data-iso="LR" data-rank="1" data-capital="" x="414.4" y="301.5" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Monrovia</text>
-    <text class="mp-label" data-kind="place" data-iso="TN" data-rank="1" data-capital="" x="564.2" y="28.5" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Tunis</text>
-    <text class="mp-label" data-kind="place" data-iso="MA" data-rank="1" data-capital="" x="455" y="51.8" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Rabat</text>
-    <text class="mp-label" data-kind="place" data-iso="MG" data-rank="1" data-capital="" x="813.9" y="536.1" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Antananarivo</text>
-    <text class="mp-label" data-kind="place" data-iso="CM" data-rank="1" data-capital="" x="569.1" y="324.3" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Yaounde</text>
-    <text class="mp-label" data-kind="place" data-iso="NG" data-rank="1" data-capital="" x="541.5" y="275.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Abuja</text>
-    <text class="mp-label" data-kind="place" data-iso="ZW" data-rank="1" data-capital="" x="702.6" y="526.1" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Harare</text>
-    <text class="mp-label" data-kind="place" data-iso="ML" data-rank="1" data-capital="" x="435.4" y="242.5" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Bamako</text>
-    <text class="mp-label" data-kind="place" data-iso="GN" data-rank="1" data-capital="" x="395.2" y="271.5" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Conakry</text>
-    <text class="mp-label" data-kind="place" data-iso="TG" data-rank="1" data-capital="" x="497.8" y="303.2" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Lome</text>
-    <text class="mp-label" data-kind="place" data-iso="MZ" data-rank="1" data-capital="" x="710.3" y="599.3" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Maputo</text>
-    <text class="mp-label" data-kind="place" data-iso="UG" data-rank="1" data-capital="" x="715.6" y="357.6" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kampala</text>
-    <text class="mp-label" data-kind="place" data-iso="CG" data-rank="1" data-capital="" x="595.3" y="400.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Brazzaville</text>
-    <text class="mp-label" data-kind="place" data-iso="ZA" data-rank="1" data-capital="" x="681.5" y="597.1" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Pretoria</text>
-    <text class="mp-label" data-kind="place" data-iso="ZM" data-rank="1" data-capital="" x="684.3" y="504.1" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lusaka</text>
-    <text class="mp-label" data-kind="place" data-iso="BF" data-rank="1" data-capital="" x="479.8" y="245.1" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Ouagadougou</text>
-    <text class="mp-label" data-kind="place" data-iso="SO" data-rank="1" data-capital="" x="804.4" y="341.2" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mogadishu</text>
-    <text class="mp-label" data-kind="place" data-iso="TD" data-rank="1" data-capital="" x="593.8" y="247.5" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ndjamena</text>
-    <text class="mp-label" data-kind="place" data-iso="NE" data-rank="1" data-capital="" x="505.1" y="234.5" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Niamey</text>
-    <text class="mp-label" data-kind="place" data-iso="CF" data-rank="1" data-capital="" x="618" y="319.7" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bangui</text>
-    <text class="mp-label" data-kind="place" data-iso="SL" data-rank="1" data-capital="" x="398" y="281.3" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Freetown</text>
-    <text class="mp-label" data-kind="place" data-iso="BJ" data-rank="1" data-capital="" x="506" y="301" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Cotonou</text>
-    <text class="mp-label" data-kind="place" data-iso="MR" data-rank="1" data-capital="" x="383.3" y="192.6" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nouakchott</text>
-    <text class="mp-label" data-kind="place" data-iso="MW" data-rank="1" data-capital="" x="722.3" y="490.9" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lilongwe</text>
-    <text class="mp-label" data-kind="place" data-iso="ER" data-rank="1" data-capital="" x="757.1" y="217.8" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Asmara</text>
-    <text class="mp-label" data-kind="place" data-iso="GA" data-rank="1" data-capital="" x="554.8" y="357" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Libreville</text>
-    <text class="mp-label" data-kind="place" data-rank="1" data-capital="" x="794.2" y="271.2" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Hargeysa</text>
-    <text class="mp-label" data-kind="place" data-iso="ZA" data-rank="1" data-capital="" x="667.4" y="627.1" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Bloemfontein</text>
-    <text class="mp-label" data-kind="place" data-iso="GW" data-rank="1" data-capital="" x="382.8" y="249.8" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bissau</text>
-    <text class="mp-label" data-kind="place" data-iso="LS" data-rank="1" data-capital="" x="675.5" y="628.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Maseru</text>
-    <text class="mp-label" data-kind="place" data-iso="NA" data-rank="1" data-capital="" x="607.7" y="569.1" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Windhoek</text>
-    <text class="mp-label" data-kind="place" data-iso="BW" data-rank="1" data-capital="" x="666.4" y="587.7" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Gaborone</text>
-    <text class="mp-label" data-kind="place" data-iso="CI" data-rank="1" data-capital="" x="452.8" y="296.8" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Yamoussoukro</text>
-    <text class="mp-label" data-kind="place" data-iso="GQ" data-rank="1" data-capital="" x="550.1" y="325.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Malabo</text>
-    <text class="mp-label" data-kind="place" data-iso="DJ" data-rank="1" data-capital="" x="787.3" y="252.3" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Djibouti</text>
-    <text class="mp-label" data-kind="place" data-iso="RW" data-rank="1" data-capital="" x="698" y="378.8" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kigali</text>
-    <text class="mp-label" data-kind="place" data-iso="BI" data-rank="1" data-capital="" x="693.1" y="392.2" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bujumbura</text>
-    <text class="mp-label" data-kind="place" data-iso="SZ" data-rank="1" data-capital="" x="700.5" y="602.5" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Mbabane</text>
-    <text class="mp-label" data-kind="place" data-iso="GM" data-rank="1" data-capital="" x="376.7" y="235.1" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Banjul</text>
+    <text class="mp-label" data-kind="place" data-iso="EG" data-rank="1" data-capital="" x="699.8" y="85.9" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cairo</text>
+    <text class="mp-label" data-kind="place" data-iso="NG" data-rank="1" x="512.9" y="300.2" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lagos</text>
+    <text class="mp-label" data-kind="place" data-iso="ZA" data-rank="1" data-capital="" x="616.2" y="668.4" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cape Town</text>
+    <text class="mp-label" data-kind="place" data-iso="KE" data-rank="1" data-capital="" x="745" y="372.6" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nairobi</text>
+    <text class="mp-label" data-kind="place" data-iso="CD" data-rank="1" data-capital="" x="595.5" y="401.1" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kinshasa</text>
+    <text class="mp-label" data-kind="place" data-iso="ET" data-rank="1" data-capital="" x="757.2" y="276.1" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Addis Ababa</text>
+    <text class="mp-label" data-kind="place" data-iso="SN" data-rank="1" data-capital="" x="371.2" y="223.5" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dakar</text>
+    <text class="mp-label" data-kind="place" data-iso="AO" data-rank="1" data-capital="" x="581.2" y="443.2" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Luanda</text>
+    <text class="mp-label" data-kind="place" data-iso="SD" data-rank="1" data-capital="" x="713.3" y="215.4" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Khartoum</text>
+    <text class="mp-label" data-kind="place" data-iso="CI" data-rank="1" data-capital="" x="461.3" y="310.7" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Abidjan</text>
+    <text class="mp-label" data-kind="place" data-iso="DZ" data-rank="1" data-capital="" x="519.4" y="28.9" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Algiers</text>
+    <text class="mp-label" data-kind="place" data-iso="TZ" data-rank="1" data-capital="" x="761.5" y="424.2" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dar es Salaam</text>
+    <text class="mp-label" data-kind="place" data-iso="LY" data-rank="1" data-capital="" x="582.6" y="61.5" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tripoli</text>
+    <text class="mp-label" data-kind="place" data-iso="GH" data-rank="1" data-capital="" x="487.7" y="308.6" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Accra</text>
+    <text class="mp-label" data-kind="place" data-iso="LR" data-rank="1" data-capital="" x="414.4" y="301.5" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Monrovia</text>
+    <text class="mp-label" data-kind="place" data-iso="TN" data-rank="1" data-capital="" x="564.2" y="28.5" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Tunis</text>
+    <text class="mp-label" data-kind="place" data-iso="MA" data-rank="1" data-capital="" x="455" y="51.8" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Rabat</text>
+    <text class="mp-label" data-kind="place" data-iso="MG" data-rank="1" data-capital="" x="813.9" y="536.1" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Antananarivo</text>
+    <text class="mp-label" data-kind="place" data-iso="CM" data-rank="1" data-capital="" x="569.1" y="324.3" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Yaounde</text>
+    <text class="mp-label" data-kind="place" data-iso="NG" data-rank="1" data-capital="" x="541.5" y="275.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Abuja</text>
+    <text class="mp-label" data-kind="place" data-iso="ZW" data-rank="1" data-capital="" x="702.6" y="526.1" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Harare</text>
+    <text class="mp-label" data-kind="place" data-iso="ML" data-rank="1" data-capital="" x="435.4" y="242.5" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Bamako</text>
+    <text class="mp-label" data-kind="place" data-iso="GN" data-rank="1" data-capital="" x="395.2" y="271.5" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Conakry</text>
+    <text class="mp-label" data-kind="place" data-iso="TG" data-rank="1" data-capital="" x="497.8" y="303.2" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Lome</text>
+    <text class="mp-label" data-kind="place" data-iso="MZ" data-rank="1" data-capital="" x="710.3" y="599.3" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Maputo</text>
+    <text class="mp-label" data-kind="place" data-iso="UG" data-rank="1" data-capital="" x="715.6" y="357.6" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kampala</text>
+    <text class="mp-label" data-kind="place" data-iso="CG" data-rank="1" data-capital="" x="595.3" y="400.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Brazzaville</text>
+    <text class="mp-label" data-kind="place" data-iso="ZA" data-rank="1" data-capital="" x="681.5" y="597.1" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Pretoria</text>
+    <text class="mp-label" data-kind="place" data-iso="ZM" data-rank="1" data-capital="" x="684.3" y="504.1" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lusaka</text>
+    <text class="mp-label" data-kind="place" data-iso="BF" data-rank="1" data-capital="" x="479.8" y="245.1" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Ouagadougou</text>
+    <text class="mp-label" data-kind="place" data-iso="SO" data-rank="1" data-capital="" x="804.4" y="341.2" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mogadishu</text>
+    <text class="mp-label" data-kind="place" data-iso="TD" data-rank="1" data-capital="" x="593.8" y="247.5" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ndjamena</text>
+    <text class="mp-label" data-kind="place" data-iso="NE" data-rank="1" data-capital="" x="505.1" y="234.5" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Niamey</text>
+    <text class="mp-label" data-kind="place" data-iso="CF" data-rank="1" data-capital="" x="618" y="319.7" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bangui</text>
+    <text class="mp-label" data-kind="place" data-iso="SL" data-rank="1" data-capital="" x="398" y="281.3" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Freetown</text>
+    <text class="mp-label" data-kind="place" data-iso="BJ" data-rank="1" data-capital="" x="506" y="301" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Cotonou</text>
+    <text class="mp-label" data-kind="place" data-iso="MR" data-rank="1" data-capital="" x="383.3" y="192.6" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nouakchott</text>
+    <text class="mp-label" data-kind="place" data-iso="MW" data-rank="1" data-capital="" x="722.3" y="490.9" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lilongwe</text>
+    <text class="mp-label" data-kind="place" data-iso="ER" data-rank="1" data-capital="" x="757.1" y="217.8" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Asmara</text>
+    <text class="mp-label" data-kind="place" data-iso="GA" data-rank="1" data-capital="" x="554.8" y="357" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Libreville</text>
+    <text class="mp-label" data-kind="place" data-rank="1" data-capital="" x="794.2" y="271.2" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Hargeysa</text>
+    <text class="mp-label" data-kind="place" data-iso="ZA" data-rank="1" data-capital="" x="667.4" y="627.1" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Bloemfontein</text>
+    <text class="mp-label" data-kind="place" data-iso="GW" data-rank="1" data-capital="" x="382.8" y="249.8" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bissau</text>
+    <text class="mp-label" data-kind="place" data-iso="LS" data-rank="1" data-capital="" x="675.5" y="628.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Maseru</text>
+    <text class="mp-label" data-kind="place" data-iso="NA" data-rank="1" data-capital="" x="607.7" y="569.1" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Windhoek</text>
+    <text class="mp-label" data-kind="place" data-iso="BW" data-rank="1" data-capital="" x="666.4" y="587.7" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Gaborone</text>
+    <text class="mp-label" data-kind="place" data-iso="CI" data-rank="1" data-capital="" x="452.8" y="296.8" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Yamoussoukro</text>
+    <text class="mp-label" data-kind="place" data-iso="GQ" data-rank="1" data-capital="" x="550.1" y="325.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Malabo</text>
+    <text class="mp-label" data-kind="place" data-iso="DJ" data-rank="1" data-capital="" x="787.3" y="252.3" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Djibouti</text>
+    <text class="mp-label" data-kind="place" data-iso="RW" data-rank="1" data-capital="" x="698" y="378.8" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kigali</text>
+    <text class="mp-label" data-kind="place" data-iso="BI" data-rank="1" data-capital="" x="693.1" y="392.2" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bujumbura</text>
+    <text class="mp-label" data-kind="place" data-iso="SZ" data-rank="1" data-capital="" x="700.5" y="602.5" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Mbabane</text>
+    <text class="mp-label" data-kind="place" data-iso="GM" data-rank="1" data-capital="" x="376.7" y="235.1" text-anchor="start" dominant-baseline="central" fill="#8A7C63" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#F6F1E7" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Banjul</text>
   </g>
   <g class="mp-layer mp-annotations"/>
   <g class="mp-layer mp-furniture"/>

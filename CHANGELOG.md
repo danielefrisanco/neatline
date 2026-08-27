@@ -54,6 +54,24 @@ document exactly.
 - Four gallery renders: `europe-named`, `west-europe-named-cities`,
   `asia-named-blueprint`, and `west-europe-unnamed` for the layer switched off.
 
+- **A `typeface` axis** — `"humanist"`, `"serif"`, `"grotesk"`, `"condensed"`,
+  `"mono"`, a `.css` path, or a stylesheet. What a palette is for colour, this
+  is for lettering: tokens only, so it lays over any theme and never fights one
+  over structure. Colour has had a swappable axis since 0.3; type could only be
+  changed by naming an exact font stack and guessing at sizes to match it.
+  Resolution order is now theme → palette → typeface → tokens, and tokens still
+  win, as they always have.
+- **`--label-advance`**, the one token that is a measurement rather than a
+  style: how wide the chosen face runs, as a fraction of the label size. The
+  fit test has no font metrics — SVG cannot measure text outside a browser — so
+  the stylesheet that chose the face is the only thing that knows. `condensed`
+  declares `0.46` against `humanist`'s `0.58`, which is what earns it the extra
+  names it can genuinely carry.
+- **`--label-track` and `--label-weight`**, so a typeface can set tracking and
+  weight rather than only a stack.
+- **Two more palettes**, `slate` (cool neutral, the register of a report) and
+  `moss` (warm greens on stone, a walking map). Four in total.
+
 ### Fixed
 
 - **noir was too dark to read.** Land sat ten values off the sea in every

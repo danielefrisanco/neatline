@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 900" width="1000" height="900" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0l9abt8" role="img" aria-label="Africa">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 900" width="1000" height="900" preserveAspectRatio="xMidYMid meet" class="mp mp-t-16mszs3" role="img" aria-label="Africa">
   <title>Africa</title>
   <style>
-    .mp.mp-t-0l9abt8 {
+    .mp.mp-t-16mszs3 {
       --bg: #10395E;
       --land: #17466F;
       --land-edge: #BCD9F0;
@@ -30,6 +30,9 @@
       --font: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
       --label-size: 12;
       --place-label-size: 10;
+      --label-track: 0.25;
+      --label-weight: 500;
+      --label-advance: 0.58;
       --label-halo: #10395E;
       --label-halo-width: 2.4;
       --stripe: #E9F3FD;
@@ -50,68 +53,68 @@
       --anno-ink: #10395E;
       --furniture-ink: #8FB4D4;
     }
-    .mp.mp-t-0l9abt8 .mp-bg {
+    .mp.mp-t-16mszs3 .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-0l9abt8 .mp-neighbour {
+    .mp.mp-t-16mszs3 .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-0l9abt8 .mp-country {
+    .mp.mp-t-16mszs3 .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-bin="1"] {
+    .mp.mp-t-16mszs3 .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-bin="2"] {
+    .mp.mp-t-16mszs3 .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-bin="3"] {
+    .mp.mp-t-16mszs3 .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-bin="4"] {
+    .mp.mp-t-16mszs3 .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-bin="5"] {
+    .mp.mp-t-16mszs3 .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-fill="1"] {
+    .mp.mp-t-16mszs3 .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-fill="2"] {
+    .mp.mp-t-16mszs3 .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-fill="3"] {
+    .mp.mp-t-16mszs3 .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-fill="4"] {
+    .mp.mp-t-16mszs3 .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-fill="5"] {
+    .mp.mp-t-16mszs3 .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-fill="6"] {
+    .mp.mp-t-16mszs3 .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-0l9abt8 .mp-country.is-highlighted {
+    .mp.mp-t-16mszs3 .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-0l9abt8 .mp-water[data-kind="lake"] {
+    .mp.mp-t-16mszs3 .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-0l9abt8 .mp-water[data-kind="river"] {
+    .mp.mp-t-16mszs3 .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-0l9abt8 .mp-border {
+    .mp.mp-t-16mszs3 .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -119,98 +122,100 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-0l9abt8 .mp-road {
+    .mp.mp-t-16mszs3 .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-0l9abt8 .mp-place {
+    .mp.mp-t-16mszs3 .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-0l9abt8 .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-0l9abt8 .mp-prism-side {
+    .mp.mp-t-16mszs3 .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-0l9abt8 .mp-prism-edge {
+    .mp.mp-t-16mszs3 .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-0l9abt8 .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-0l9abt8 .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-16mszs3 .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-0l9abt8 .mp-hatch {
+    .mp.mp-t-16mszs3 .mp-hatch {
       fill: url(#mp-stripe);
       stroke: none;
     }
-    .mp.mp-t-0l9abt8 .mp-hatch-line {
+    .mp.mp-t-16mszs3 .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-0l9abt8 .mp-label {
+    .mp.mp-t-16mszs3 .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
+      font-weight: var(--label-weight);
+      letter-spacing: var(--label-track);
       stroke: var(--label-halo);
       stroke-width: var(--label-halo-width);
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-0l9abt8 .mp-label[data-kind="place"] {
+    .mp.mp-t-16mszs3 .mp-label[data-kind="place"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
     }
-    .mp.mp-t-0l9abt8 .mp-label.is-highlighted {
+    .mp.mp-t-16mszs3 .mp-label.is-highlighted {
       font-weight: 700;
     }
-    .mp.mp-t-0l9abt8 .mp-label[data-fit="0"] {
+    .mp.mp-t-16mszs3 .mp-label[data-fit="0"] {
       display: none;
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-0l9abt8 {
+      .mp.mp-t-16mszs3 {
         --bg: #081F35;
         --land: #0D2B47;
         --land-edge: #7FA8C9;
@@ -583,128 +588,128 @@
     </circle>
   </g>
   <g class="mp-layer mp-labels">
-    <text class="mp-label" data-kind="country" data-iso="TZ" data-rank="2" x="662" y="540.1" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tanzania</text>
-    <text class="mp-label" data-kind="country" data-iso="EH" data-rank="3" x="231.9" y="199.4" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">
+    <text class="mp-label" data-kind="country" data-iso="TZ" data-rank="2" x="662" y="540.1" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tanzania</text>
+    <text class="mp-label" data-kind="country" data-iso="EH" data-rank="3" x="231.9" y="199.4" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">
       <tspan x="231.9" dy="-6.6">W.</tspan>
       <tspan x="231.9" dy="13.2">Sahara</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="CD" data-rank="2" x="556" y="496.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dem. Rep. Congo</text>
-    <text class="mp-label" data-kind="country" data-iso="SO" data-rank="3" x="744.2" y="411.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Somalia</text>
-    <text class="mp-label" data-kind="country" data-iso="KE" data-rank="1" x="690.2" y="439.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kenya</text>
-    <text class="mp-label" data-kind="country" data-iso="SD" data-rank="1" x="615.7" y="270.2" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Sudan</text>
-    <text class="mp-label" data-kind="country" data-iso="TD" data-rank="1" x="515.4" y="278.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Chad</text>
-    <text class="mp-label" data-kind="country" data-iso="ZA" data-rank="2" x="571.2" y="792.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">South Africa</text>
-    <text class="mp-label" data-kind="country" data-iso="LS" data-rank="3" x="596.3" y="817.9" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Lesotho</text>
-    <text class="mp-label" data-kind="country" data-iso="ZW" data-rank="3" x="613.8" y="692.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Zimbabwe</text>
-    <text class="mp-label" data-kind="country" data-iso="BW" data-rank="2" x="560.7" y="713.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Botswana</text>
-    <text class="mp-label" data-kind="country" data-iso="NA" data-rank="2" x="500.8" y="707.3" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Namibia</text>
-    <text class="mp-label" data-kind="country" data-iso="SN" data-rank="3" x="219.3" y="272.3" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Senegal</text>
-    <text class="mp-label" data-kind="country" data-iso="ML" data-rank="2" x="318.4" y="255.1" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mali</text>
-    <text class="mp-label" data-kind="country" data-iso="MR" data-rank="2" x="260.3" y="219.9" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mauritania</text>
-    <text class="mp-label" data-kind="country" data-iso="BJ" data-rank="3" x="369.1" y="334.9" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Benin</text>
-    <text class="mp-label" data-kind="country" data-iso="NE" data-rank="1" x="432.8" y="253.8" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Niger</text>
-    <text class="mp-label" data-kind="country" data-iso="NG" data-rank="1" x="420" y="330.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nigeria</text>
-    <text class="mp-label" data-kind="country" data-iso="CM" data-rank="3" x="454" y="389.8" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cameroon</text>
-    <text class="mp-label" data-kind="country" data-iso="TG" data-rank="3" x="357" y="353.5" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Togo</text>
-    <text class="mp-label" data-kind="country" data-iso="GH" data-rank="3" x="335.8" y="365.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ghana</text>
-    <text class="mp-label" data-kind="country" data-iso="CI" data-rank="3" x="296.7" y="371.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">
+    <text class="mp-label" data-kind="country" data-iso="CD" data-rank="2" x="556" y="496.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dem. Rep. Congo</text>
+    <text class="mp-label" data-kind="country" data-iso="SO" data-rank="3" x="744.2" y="411.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Somalia</text>
+    <text class="mp-label" data-kind="country" data-iso="KE" data-rank="1" x="690.2" y="439.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kenya</text>
+    <text class="mp-label" data-kind="country" data-iso="SD" data-rank="1" x="615.7" y="270.2" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Sudan</text>
+    <text class="mp-label" data-kind="country" data-iso="TD" data-rank="1" x="515.4" y="278.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Chad</text>
+    <text class="mp-label" data-kind="country" data-iso="ZA" data-rank="2" x="571.2" y="792.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">South Africa</text>
+    <text class="mp-label" data-kind="country" data-iso="LS" data-rank="3" x="596.3" y="817.9" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Lesotho</text>
+    <text class="mp-label" data-kind="country" data-iso="ZW" data-rank="3" x="613.8" y="692.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Zimbabwe</text>
+    <text class="mp-label" data-kind="country" data-iso="BW" data-rank="2" x="560.7" y="713.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Botswana</text>
+    <text class="mp-label" data-kind="country" data-iso="NA" data-rank="2" x="500.8" y="707.3" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Namibia</text>
+    <text class="mp-label" data-kind="country" data-iso="SN" data-rank="3" x="219.3" y="272.3" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Senegal</text>
+    <text class="mp-label" data-kind="country" data-iso="ML" data-rank="2" x="318.4" y="255.1" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mali</text>
+    <text class="mp-label" data-kind="country" data-iso="MR" data-rank="2" x="260.3" y="219.9" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mauritania</text>
+    <text class="mp-label" data-kind="country" data-iso="BJ" data-rank="3" x="369.1" y="334.9" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Benin</text>
+    <text class="mp-label" data-kind="country" data-iso="NE" data-rank="1" x="432.8" y="253.8" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Niger</text>
+    <text class="mp-label" data-kind="country" data-iso="NG" data-rank="1" x="420" y="330.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nigeria</text>
+    <text class="mp-label" data-kind="country" data-iso="CM" data-rank="3" x="454" y="389.8" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cameroon</text>
+    <text class="mp-label" data-kind="country" data-iso="TG" data-rank="3" x="357" y="353.5" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Togo</text>
+    <text class="mp-label" data-kind="country" data-iso="GH" data-rank="3" x="335.8" y="365.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ghana</text>
+    <text class="mp-label" data-kind="country" data-iso="CI" data-rank="3" x="296.7" y="371.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">
       <tspan x="296.7" dy="-6.6">Côte</tspan>
       <tspan x="296.7" dy="13.2">d'Ivoire</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="GN" data-rank="2" x="248.4" y="336.3" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Guinea</text>
-    <text class="mp-label" data-kind="country" data-iso="GW" data-rank="3" x="212.6" y="317.2" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Guinea-Bissau</text>
-    <text class="mp-label" data-kind="country" data-iso="LR" data-rank="3" x="259.1" y="383.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Liberia</text>
-    <text class="mp-label" data-kind="country" data-iso="SL" data-rank="3" x="240.5" y="359.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="GN" data-rank="2" x="248.4" y="336.3" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Guinea</text>
+    <text class="mp-label" data-kind="country" data-iso="GW" data-rank="3" x="212.6" y="317.2" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Guinea-Bissau</text>
+    <text class="mp-label" data-kind="country" data-iso="LR" data-rank="3" x="259.1" y="383.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Liberia</text>
+    <text class="mp-label" data-kind="country" data-iso="SL" data-rank="3" x="240.5" y="359.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
       <tspan x="240.5" dy="-6.6">Sierra</tspan>
       <tspan x="240.5" dy="13.2">Leone</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="BF" data-rank="2" x="337.9" y="309.5" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="BF" data-rank="2" x="337.9" y="309.5" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
       <tspan x="337.9" dy="-6.6">Burkina</tspan>
       <tspan x="337.9" dy="13.2">Faso</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="CF" data-rank="2" x="531.8" y="383.9" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="CF" data-rank="2" x="531.8" y="383.9" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
       <tspan x="531.8" dy="-6.6">Central</tspan>
       <tspan x="531.8" dy="13.2">African Rep.</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="CG" data-rank="2" x="491" y="443.3" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Congo</text>
-    <text class="mp-label" data-kind="country" data-iso="GA" data-rank="2" x="453.1" y="471.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Gabon</text>
-    <text class="mp-label" data-kind="country" data-iso="GQ" data-rank="3" x="441.1" y="443.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="CG" data-rank="2" x="491" y="443.3" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Congo</text>
+    <text class="mp-label" data-kind="country" data-iso="GA" data-rank="2" x="453.1" y="471.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Gabon</text>
+    <text class="mp-label" data-kind="country" data-iso="GQ" data-rank="3" x="441.1" y="443.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
       <tspan x="441.1" dy="-6.6">Eq.</tspan>
       <tspan x="441.1" dy="13.2">Guinea</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="ZM" data-rank="1" x="597.7" y="626.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Zambia</text>
-    <text class="mp-label" data-kind="country" data-iso="MW" data-rank="3" x="650.7" y="610.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Malawi</text>
-    <text class="mp-label" data-kind="country" data-iso="MZ" data-rank="3" x="688.8" y="612.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mozambique</text>
-    <text class="mp-label" data-kind="country" data-iso="SZ" data-rank="3" x="625.1" y="782.9" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">eSwatini</text>
-    <text class="mp-label" data-kind="country" data-iso="AO" data-rank="1" x="505.8" y="613.1" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Angola</text>
-    <text class="mp-label" data-kind="country" data-iso="BI" data-rank="3" x="618.8" y="504.7" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Burundi</text>
-    <text class="mp-label" data-kind="country" data-iso="MG" data-rank="3" x="764.9" y="679.9" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Madagascar</text>
-    <text class="mp-label" data-kind="country" data-iso="GM" data-rank="3" x="204.8" y="300.8" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Gambia</text>
-    <text class="mp-label" data-kind="country" data-iso="TN" data-rank="3" x="434.3" y="63.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tunisia</text>
-    <text class="mp-label" data-kind="country" data-iso="DZ" data-rank="1" x="377.9" y="128.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Algeria</text>
-    <text class="mp-label" data-kind="country" data-iso="ER" data-rank="3" x="688" y="253.5" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Eritrea</text>
-    <text class="mp-label" data-kind="country" data-iso="MA" data-rank="3" x="321.5" y="83.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Morocco</text>
-    <text class="mp-label" data-kind="country" data-iso="EG" data-rank="1" x="612.1" y="146.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Egypt</text>
-    <text class="mp-label" data-kind="country" data-iso="LY" data-rank="1" x="510" y="141" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Libya</text>
-    <text class="mp-label" data-kind="country" data-iso="ET" data-rank="1" x="705.1" y="341.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ethiopia</text>
-    <text class="mp-label" data-kind="country" data-iso="DJ" data-rank="3" x="728.9" y="323.9" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Djibouti</text>
-    <text class="mp-label" data-kind="country" data-iso="XS" data-rank="3" x="765.1" y="344.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Somaliland</text>
-    <text class="mp-label" data-kind="country" data-iso="UG" data-rank="3" x="640.9" y="448" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Uganda</text>
-    <text class="mp-label" data-kind="country" data-iso="RW" data-rank="3" x="620.6" y="486.7" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Rwanda</text>
-    <text class="mp-label" data-kind="country" data-iso="SS" data-rank="2" x="620.8" y="374.8" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">S. Sudan</text>
-    <text class="mp-label" data-kind="place" data-iso="EG" data-rank="1" data-capital="" x="628.5" y="104.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cairo</text>
-    <text class="mp-label" data-kind="place" data-iso="NG" data-rank="1" x="384.2" y="385" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lagos</text>
-    <text class="mp-label" data-kind="place" data-iso="ZA" data-rank="1" data-capital="" x="519.3" y="866.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cape Town</text>
-    <text class="mp-label" data-kind="place" data-iso="KE" data-rank="1" data-capital="" x="687.6" y="479.5" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nairobi</text>
-    <text class="mp-label" data-kind="place" data-iso="CD" data-rank="1" data-capital="" x="492.2" y="516.8" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kinshasa</text>
-    <text class="mp-label" data-kind="place" data-iso="ET" data-rank="1" data-capital="" x="703.5" y="353.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Addis Ababa</text>
-    <text class="mp-label" data-kind="place" data-iso="SN" data-rank="1" data-capital="" x="199.1" y="284.7" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dakar</text>
-    <text class="mp-label" data-kind="place" data-iso="AO" data-rank="1" data-capital="" x="473.5" y="571.8" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Luanda</text>
-    <text class="mp-label" data-kind="place" data-iso="SD" data-rank="1" data-capital="" x="646.2" y="274.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Khartoum</text>
-    <text class="mp-label" data-kind="place" data-iso="CI" data-rank="1" data-capital="" x="316.9" y="398.7" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Abidjan</text>
-    <text class="mp-label" data-kind="place" data-iso="DZ" data-rank="1" data-capital="" x="392.8" y="30.3" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Algiers</text>
-    <text class="mp-label" data-kind="place" data-iso="TZ" data-rank="1" data-capital="" x="709.2" y="546.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dar es Salaam</text>
-    <text class="mp-label" data-kind="place" data-iso="LY" data-rank="1" data-capital="" x="475.3" y="72.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tripoli</text>
-    <text class="mp-label" data-kind="place" data-iso="GH" data-rank="1" data-capital="" x="351.4" y="395.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Accra</text>
-    <text class="mp-label" data-kind="place" data-iso="LR" data-rank="1" data-capital="" x="255.6" y="386.6" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Monrovia</text>
-    <text class="mp-label" data-kind="place" data-iso="TN" data-rank="1" data-capital="" x="451.3" y="29.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tunis</text>
-    <text class="mp-label" data-kind="place" data-iso="MA" data-rank="1" data-capital="" x="308.7" y="60.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Rabat</text>
-    <text class="mp-label" data-kind="place" data-iso="MG" data-rank="1" data-capital="" x="777.6" y="693.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Antananarivo</text>
-    <text class="mp-label" data-kind="place" data-iso="CM" data-rank="1" data-capital="" x="457.7" y="416.5" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Yaounde</text>
-    <text class="mp-label" data-kind="place" data-iso="NG" data-rank="1" data-capital="" x="421.6" y="353.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Abuja</text>
-    <text class="mp-label" data-kind="place" data-iso="ZW" data-rank="1" data-capital="" x="632.2" y="680.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Harare</text>
-    <text class="mp-label" data-kind="place" data-iso="ML" data-rank="1" data-capital="" x="282.9" y="309.6" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Bamako</text>
-    <text class="mp-label" data-kind="place" data-iso="GN" data-rank="1" data-capital="" x="230.5" y="347.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Conakry</text>
-    <text class="mp-label" data-kind="place" data-iso="TG" data-rank="1" data-capital="" x="364.5" y="388.8" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Lome</text>
-    <text class="mp-label" data-kind="place" data-iso="MZ" data-rank="1" data-capital="" x="642.2" y="775.8" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Maputo</text>
-    <text class="mp-label" data-kind="place" data-iso="UG" data-rank="1" data-capital="" x="649.1" y="459.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kampala</text>
-    <text class="mp-label" data-kind="place" data-iso="CG" data-rank="1" data-capital="" x="491.9" y="515.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Brazzaville</text>
-    <text class="mp-label" data-kind="place" data-iso="ZA" data-rank="1" data-capital="" x="604.6" y="772.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Pretoria</text>
-    <text class="mp-label" data-kind="place" data-iso="ZM" data-rank="1" data-capital="" x="608.3" y="651.3" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lusaka</text>
-    <text class="mp-label" data-kind="place" data-iso="BF" data-rank="1" data-capital="" x="341" y="312.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Ouagadougou</text>
-    <text class="mp-label" data-kind="place" data-iso="SO" data-rank="1" data-capital="" x="765.2" y="438.5" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mogadishu</text>
-    <text class="mp-label" data-kind="place" data-iso="TD" data-rank="1" data-capital="" x="490" y="316.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ndjamena</text>
-    <text class="mp-label" data-kind="place" data-iso="NE" data-rank="1" data-capital="" x="374" y="299.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Niamey</text>
-    <text class="mp-label" data-kind="place" data-iso="CF" data-rank="1" data-capital="" x="521.7" y="410.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bangui</text>
-    <text class="mp-label" data-kind="place" data-iso="SL" data-rank="1" data-capital="" x="234.2" y="360.3" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Freetown</text>
-    <text class="mp-label" data-kind="place" data-iso="BJ" data-rank="1" data-capital="" x="375.3" y="386" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Cotonou</text>
-    <text class="mp-label" data-kind="place" data-iso="MR" data-rank="1" data-capital="" x="214.9" y="244.3" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nouakchott</text>
-    <text class="mp-label" data-kind="place" data-iso="MW" data-rank="1" data-capital="" x="657.9" y="634.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lilongwe</text>
-    <text class="mp-label" data-kind="place" data-iso="ER" data-rank="1" data-capital="" x="703.4" y="277.3" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Asmara</text>
-    <text class="mp-label" data-kind="place" data-iso="GA" data-rank="1" data-capital="" x="439" y="459.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Libreville</text>
-    <text class="mp-label" data-kind="place" data-rank="1" data-capital="" x="751.8" y="347" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Hargeysa</text>
-    <text class="mp-label" data-kind="place" data-iso="ZA" data-rank="1" data-capital="" x="586.2" y="812.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bloemfontein</text>
-    <text class="mp-label" data-kind="place" data-iso="GW" data-rank="1" data-capital="" x="214.3" y="319.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bissau</text>
-    <text class="mp-label" data-kind="place" data-iso="LS" data-rank="1" data-capital="" x="596.8" y="814.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Maseru</text>
-    <text class="mp-label" data-kind="place" data-iso="NA" data-rank="1" data-capital="" x="508.2" y="736.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Windhoek</text>
-    <text class="mp-label" data-kind="place" data-iso="BW" data-rank="1" data-capital="" x="584.9" y="760.6" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Gaborone</text>
-    <text class="mp-label" data-kind="place" data-iso="CI" data-rank="1" data-capital="" x="305.8" y="380.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Yamoussoukro</text>
-    <text class="mp-label" data-kind="place" data-iso="GQ" data-rank="1" data-capital="" x="432.9" y="417.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Malabo</text>
-    <text class="mp-label" data-kind="place" data-iso="DJ" data-rank="1" data-capital="" x="742.8" y="322.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Djibouti</text>
-    <text class="mp-label" data-kind="place" data-iso="RW" data-rank="1" data-capital="" x="626.2" y="487.7" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kigali</text>
-    <text class="mp-label" data-kind="place" data-iso="BI" data-rank="1" data-capital="" x="619.8" y="505.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bujumbura</text>
-    <text class="mp-label" data-kind="place" data-iso="SZ" data-rank="1" data-capital="" x="629.5" y="780" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Mbabane</text>
-    <text class="mp-label" data-kind="place" data-iso="GM" data-rank="1" data-capital="" x="206.2" y="299.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Banjul</text>
+    <text class="mp-label" data-kind="country" data-iso="ZM" data-rank="1" x="597.7" y="626.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Zambia</text>
+    <text class="mp-label" data-kind="country" data-iso="MW" data-rank="3" x="650.7" y="610.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Malawi</text>
+    <text class="mp-label" data-kind="country" data-iso="MZ" data-rank="3" x="688.8" y="612.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mozambique</text>
+    <text class="mp-label" data-kind="country" data-iso="SZ" data-rank="3" x="625.1" y="782.9" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">eSwatini</text>
+    <text class="mp-label" data-kind="country" data-iso="AO" data-rank="1" x="505.8" y="613.1" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Angola</text>
+    <text class="mp-label" data-kind="country" data-iso="BI" data-rank="3" x="618.8" y="504.7" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Burundi</text>
+    <text class="mp-label" data-kind="country" data-iso="MG" data-rank="3" x="764.9" y="679.9" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Madagascar</text>
+    <text class="mp-label" data-kind="country" data-iso="GM" data-rank="3" x="204.8" y="300.8" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Gambia</text>
+    <text class="mp-label" data-kind="country" data-iso="TN" data-rank="3" x="434.3" y="63.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tunisia</text>
+    <text class="mp-label" data-kind="country" data-iso="DZ" data-rank="1" x="377.9" y="128.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Algeria</text>
+    <text class="mp-label" data-kind="country" data-iso="ER" data-rank="3" x="688" y="253.5" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Eritrea</text>
+    <text class="mp-label" data-kind="country" data-iso="MA" data-rank="3" x="321.5" y="83.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Morocco</text>
+    <text class="mp-label" data-kind="country" data-iso="EG" data-rank="1" x="612.1" y="146.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Egypt</text>
+    <text class="mp-label" data-kind="country" data-iso="LY" data-rank="1" x="510" y="141" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Libya</text>
+    <text class="mp-label" data-kind="country" data-iso="ET" data-rank="1" x="705.1" y="341.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ethiopia</text>
+    <text class="mp-label" data-kind="country" data-iso="DJ" data-rank="3" x="728.9" y="323.9" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Djibouti</text>
+    <text class="mp-label" data-kind="country" data-iso="XS" data-rank="3" x="765.1" y="344.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Somaliland</text>
+    <text class="mp-label" data-kind="country" data-iso="UG" data-rank="3" x="640.9" y="448" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Uganda</text>
+    <text class="mp-label" data-kind="country" data-iso="RW" data-rank="3" x="620.6" y="486.7" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Rwanda</text>
+    <text class="mp-label" data-kind="country" data-iso="SS" data-rank="2" x="620.8" y="374.8" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">S. Sudan</text>
+    <text class="mp-label" data-kind="place" data-iso="EG" data-rank="1" data-capital="" x="628.5" y="104.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cairo</text>
+    <text class="mp-label" data-kind="place" data-iso="NG" data-rank="1" x="384.2" y="385" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lagos</text>
+    <text class="mp-label" data-kind="place" data-iso="ZA" data-rank="1" data-capital="" x="519.3" y="866.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cape Town</text>
+    <text class="mp-label" data-kind="place" data-iso="KE" data-rank="1" data-capital="" x="687.6" y="479.5" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nairobi</text>
+    <text class="mp-label" data-kind="place" data-iso="CD" data-rank="1" data-capital="" x="492.2" y="516.8" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kinshasa</text>
+    <text class="mp-label" data-kind="place" data-iso="ET" data-rank="1" data-capital="" x="703.5" y="353.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Addis Ababa</text>
+    <text class="mp-label" data-kind="place" data-iso="SN" data-rank="1" data-capital="" x="199.1" y="284.7" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dakar</text>
+    <text class="mp-label" data-kind="place" data-iso="AO" data-rank="1" data-capital="" x="473.5" y="571.8" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Luanda</text>
+    <text class="mp-label" data-kind="place" data-iso="SD" data-rank="1" data-capital="" x="646.2" y="274.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Khartoum</text>
+    <text class="mp-label" data-kind="place" data-iso="CI" data-rank="1" data-capital="" x="316.9" y="398.7" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Abidjan</text>
+    <text class="mp-label" data-kind="place" data-iso="DZ" data-rank="1" data-capital="" x="392.8" y="30.3" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Algiers</text>
+    <text class="mp-label" data-kind="place" data-iso="TZ" data-rank="1" data-capital="" x="709.2" y="546.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dar es Salaam</text>
+    <text class="mp-label" data-kind="place" data-iso="LY" data-rank="1" data-capital="" x="475.3" y="72.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tripoli</text>
+    <text class="mp-label" data-kind="place" data-iso="GH" data-rank="1" data-capital="" x="351.4" y="395.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Accra</text>
+    <text class="mp-label" data-kind="place" data-iso="LR" data-rank="1" data-capital="" x="255.6" y="386.6" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Monrovia</text>
+    <text class="mp-label" data-kind="place" data-iso="TN" data-rank="1" data-capital="" x="451.3" y="29.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tunis</text>
+    <text class="mp-label" data-kind="place" data-iso="MA" data-rank="1" data-capital="" x="308.7" y="60.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Rabat</text>
+    <text class="mp-label" data-kind="place" data-iso="MG" data-rank="1" data-capital="" x="777.6" y="693.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Antananarivo</text>
+    <text class="mp-label" data-kind="place" data-iso="CM" data-rank="1" data-capital="" x="457.7" y="416.5" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Yaounde</text>
+    <text class="mp-label" data-kind="place" data-iso="NG" data-rank="1" data-capital="" x="421.6" y="353.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Abuja</text>
+    <text class="mp-label" data-kind="place" data-iso="ZW" data-rank="1" data-capital="" x="632.2" y="680.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Harare</text>
+    <text class="mp-label" data-kind="place" data-iso="ML" data-rank="1" data-capital="" x="282.9" y="309.6" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Bamako</text>
+    <text class="mp-label" data-kind="place" data-iso="GN" data-rank="1" data-capital="" x="230.5" y="347.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Conakry</text>
+    <text class="mp-label" data-kind="place" data-iso="TG" data-rank="1" data-capital="" x="364.5" y="388.8" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Lome</text>
+    <text class="mp-label" data-kind="place" data-iso="MZ" data-rank="1" data-capital="" x="642.2" y="775.8" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Maputo</text>
+    <text class="mp-label" data-kind="place" data-iso="UG" data-rank="1" data-capital="" x="649.1" y="459.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kampala</text>
+    <text class="mp-label" data-kind="place" data-iso="CG" data-rank="1" data-capital="" x="491.9" y="515.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Brazzaville</text>
+    <text class="mp-label" data-kind="place" data-iso="ZA" data-rank="1" data-capital="" x="604.6" y="772.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Pretoria</text>
+    <text class="mp-label" data-kind="place" data-iso="ZM" data-rank="1" data-capital="" x="608.3" y="651.3" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lusaka</text>
+    <text class="mp-label" data-kind="place" data-iso="BF" data-rank="1" data-capital="" x="341" y="312.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Ouagadougou</text>
+    <text class="mp-label" data-kind="place" data-iso="SO" data-rank="1" data-capital="" x="765.2" y="438.5" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mogadishu</text>
+    <text class="mp-label" data-kind="place" data-iso="TD" data-rank="1" data-capital="" x="490" y="316.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ndjamena</text>
+    <text class="mp-label" data-kind="place" data-iso="NE" data-rank="1" data-capital="" x="374" y="299.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Niamey</text>
+    <text class="mp-label" data-kind="place" data-iso="CF" data-rank="1" data-capital="" x="521.7" y="410.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bangui</text>
+    <text class="mp-label" data-kind="place" data-iso="SL" data-rank="1" data-capital="" x="234.2" y="360.3" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Freetown</text>
+    <text class="mp-label" data-kind="place" data-iso="BJ" data-rank="1" data-capital="" x="375.3" y="386" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Cotonou</text>
+    <text class="mp-label" data-kind="place" data-iso="MR" data-rank="1" data-capital="" x="214.9" y="244.3" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nouakchott</text>
+    <text class="mp-label" data-kind="place" data-iso="MW" data-rank="1" data-capital="" x="657.9" y="634.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lilongwe</text>
+    <text class="mp-label" data-kind="place" data-iso="ER" data-rank="1" data-capital="" x="703.4" y="277.3" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Asmara</text>
+    <text class="mp-label" data-kind="place" data-iso="GA" data-rank="1" data-capital="" x="439" y="459.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Libreville</text>
+    <text class="mp-label" data-kind="place" data-rank="1" data-capital="" x="751.8" y="347" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Hargeysa</text>
+    <text class="mp-label" data-kind="place" data-iso="ZA" data-rank="1" data-capital="" x="586.2" y="812.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bloemfontein</text>
+    <text class="mp-label" data-kind="place" data-iso="GW" data-rank="1" data-capital="" x="214.3" y="319.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bissau</text>
+    <text class="mp-label" data-kind="place" data-iso="LS" data-rank="1" data-capital="" x="596.8" y="814.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Maseru</text>
+    <text class="mp-label" data-kind="place" data-iso="NA" data-rank="1" data-capital="" x="508.2" y="736.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Windhoek</text>
+    <text class="mp-label" data-kind="place" data-iso="BW" data-rank="1" data-capital="" x="584.9" y="760.6" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Gaborone</text>
+    <text class="mp-label" data-kind="place" data-iso="CI" data-rank="1" data-capital="" x="305.8" y="380.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Yamoussoukro</text>
+    <text class="mp-label" data-kind="place" data-iso="GQ" data-rank="1" data-capital="" x="432.9" y="417.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Malabo</text>
+    <text class="mp-label" data-kind="place" data-iso="DJ" data-rank="1" data-capital="" x="742.8" y="322.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Djibouti</text>
+    <text class="mp-label" data-kind="place" data-iso="RW" data-rank="1" data-capital="" x="626.2" y="487.7" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kigali</text>
+    <text class="mp-label" data-kind="place" data-iso="BI" data-rank="1" data-capital="" x="619.8" y="505.1" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bujumbura</text>
+    <text class="mp-label" data-kind="place" data-iso="SZ" data-rank="1" data-capital="" x="629.5" y="780" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Mbabane</text>
+    <text class="mp-label" data-kind="place" data-iso="GM" data-rank="1" data-capital="" x="206.2" y="299.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Banjul</text>
   </g>
   <g class="mp-layer mp-annotations"/>
   <g class="mp-layer mp-furniture"/>

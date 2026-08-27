@@ -3,7 +3,7 @@ import { parseCss, type Rule } from "../src/css.js";
 import { loadWorld } from "../src/topology.js";
 import { politicalFill } from "../src/political.js";
 import { mapper } from "../src/index.js";
-import { PALETTES, THEMES } from "../src/theme.js";
+import { PALETTES, THEMES, TYPEFACES } from "../src/theme.js";
 import { TOKENS } from "../src/tokens.js";
 
 /**
@@ -17,6 +17,7 @@ import { TOKENS } from "../src/tokens.js";
 
 const themes = Object.entries(THEMES);
 const palettes = Object.entries(PALETTES);
+const typefaces = Object.entries(TYPEFACES);
 
 /**
  * Tokens that hold a measurement or a type stack rather than a colour.
@@ -30,7 +31,13 @@ const palettes = Object.entries(PALETTES);
 // remaining tokens whose value is a keyword list rather than a paint. Naming
 // the rule rather than the tokens is what keeps this from having to be edited
 // every time the vocabulary grows.
-const NAMED_NOT_COLOURS = new Set(["--border-dash", "--font"]);
+const NAMED_NOT_COLOURS = new Set([
+  "--border-dash",
+  "--font",
+  "--label-track",
+  "--label-weight",
+  "--label-advance",
+]);
 const isColour = (name: string): boolean =>
   !name.endsWith("-width") && !name.endsWith("-size") && !NAMED_NOT_COLOURS.has(name);
 
@@ -179,5 +186,81 @@ describe("political fill", () => {
     expect(france).toContain("data-bin=");
     expect(france).not.toContain("data-fill=");
     expect(spain).toContain("data-fill=");
+  });
+});
+
+/**
+ * A typeface is only type — the same contract a palette has for colour, which
+ * is what lets the two be chosen independently of each other and of the theme.
+ */
+const TYPE_TOKENS = new Set([
+  "--font",
+  "--label-size",
+  "--place-label-size",
+  "--label-track",
+  "--label-weight",
+  "--label-advance",
+]);
+
+describe.each(typefaces)("typeface %s", (name, css) => {
+  it("sets the whole type vocabulary", () => {
+    const defined = light(css);
+    for (const token of TYPE_TOKENS) expect(defined.has(token), `${name} lacks ${token}`).toBe(true);
+  });
+
+  it("sets nothing else — no colour, no structure", () => {
+    for (const rule of rules(css)) {
+      expect(rule.selector.trim()).toBe(".mp");
+      for (const declaration of rule.declarations) {
+        expect(TYPE_TOKENS.has(declaration.property), `${name} sets ${declaration.property}`).toBe(
+          true,
+        );
+      }
+    }
+  });
+
+  it("names only stacks already on the machine", () => {
+    // A map is a standalone file and cannot fetch a webfont; a stack that ends
+    // in a generic family is one every reader can actually resolve.
+    const stack = light(css).get("--font") as string;
+    expect(stack).toMatch(/(sans-serif|serif|monospace)\s*$/);
+  });
+});
+
+describe("choosing a typeface", () => {
+  it("changes the type without touching the colour", async () => {
+    const base = await mapper({ region: ["FR"], detail: "110m", theme: "atlas" });
+    const set = await mapper({
+      region: ["FR"],
+      detail: "110m",
+      theme: "atlas",
+      typeface: "grotesk",
+    });
+    expect(set.css).toContain("Helvetica");
+    expect(base.css).not.toContain("Helvetica");
+    // The theme's ground survives it.
+    expect(set.css).toContain("#A8C0CC");
+  });
+
+  it("loses to a token override, which is applied last", async () => {
+    const map = await mapper({
+      region: ["FR"],
+      detail: "110m",
+      theme: "atlas",
+      typeface: "grotesk",
+      tokens: { "--font": "Papyrus, fantasy" },
+    });
+    const flattened = await map.render();
+    expect(flattened).toContain("Papyrus");
+    expect(flattened).not.toContain('font-family="Helvetica');
+  });
+
+  it("fits more names when the face is narrower", async () => {
+    const region = { region: "europe", detail: "110m", size: [900, 800], theme: "minimal" } as const;
+    const wide = await mapper(region);
+    const narrow = await mapper({ ...region, typeface: "condensed" });
+    const shown = (svg: string): number =>
+      (svg.match(/<text class="mp-label"(?![^>]*data-fit="0")/g) ?? []).length;
+    expect(shown(narrow.svg)).toBeGreaterThanOrEqual(shown(wide.svg));
   });
 });

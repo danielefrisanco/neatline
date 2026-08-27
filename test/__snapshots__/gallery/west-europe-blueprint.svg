@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0l9abt8" role="img" aria-label="Map of Western Europe">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp mp-t-16mszs3" role="img" aria-label="Map of Western Europe">
   <title>Map of Western Europe</title>
   <style>
-    .mp.mp-t-0l9abt8 {
+    .mp.mp-t-16mszs3 {
       --bg: #10395E;
       --land: #17466F;
       --land-edge: #BCD9F0;
@@ -30,6 +30,9 @@
       --font: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
       --label-size: 12;
       --place-label-size: 10;
+      --label-track: 0.25;
+      --label-weight: 500;
+      --label-advance: 0.58;
       --label-halo: #10395E;
       --label-halo-width: 2.4;
       --stripe: #E9F3FD;
@@ -50,68 +53,68 @@
       --anno-ink: #10395E;
       --furniture-ink: #8FB4D4;
     }
-    .mp.mp-t-0l9abt8 .mp-bg {
+    .mp.mp-t-16mszs3 .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-0l9abt8 .mp-neighbour {
+    .mp.mp-t-16mszs3 .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-0l9abt8 .mp-country {
+    .mp.mp-t-16mszs3 .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-bin="1"] {
+    .mp.mp-t-16mszs3 .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-bin="2"] {
+    .mp.mp-t-16mszs3 .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-bin="3"] {
+    .mp.mp-t-16mszs3 .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-bin="4"] {
+    .mp.mp-t-16mszs3 .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-bin="5"] {
+    .mp.mp-t-16mszs3 .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-fill="1"] {
+    .mp.mp-t-16mszs3 .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-fill="2"] {
+    .mp.mp-t-16mszs3 .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-fill="3"] {
+    .mp.mp-t-16mszs3 .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-fill="4"] {
+    .mp.mp-t-16mszs3 .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-fill="5"] {
+    .mp.mp-t-16mszs3 .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-0l9abt8 .mp-country[data-fill="6"] {
+    .mp.mp-t-16mszs3 .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-0l9abt8 .mp-country.is-highlighted {
+    .mp.mp-t-16mszs3 .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-0l9abt8 .mp-water[data-kind="lake"] {
+    .mp.mp-t-16mszs3 .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-0l9abt8 .mp-water[data-kind="river"] {
+    .mp.mp-t-16mszs3 .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-0l9abt8 .mp-border {
+    .mp.mp-t-16mszs3 .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -119,98 +122,100 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-0l9abt8 .mp-road {
+    .mp.mp-t-16mszs3 .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-0l9abt8 .mp-place {
+    .mp.mp-t-16mszs3 .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-0l9abt8 .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-0l9abt8 .mp-prism-side {
+    .mp.mp-t-16mszs3 .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-0l9abt8 .mp-prism-edge {
+    .mp.mp-t-16mszs3 .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-0l9abt8 .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-0l9abt8 .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-16mszs3 .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-0l9abt8 .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-16mszs3 .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-0l9abt8 .mp-hatch {
+    .mp.mp-t-16mszs3 .mp-hatch {
       fill: url(#mp-stripe);
       stroke: none;
     }
-    .mp.mp-t-0l9abt8 .mp-hatch-line {
+    .mp.mp-t-16mszs3 .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-0l9abt8 .mp-label {
+    .mp.mp-t-16mszs3 .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
+      font-weight: var(--label-weight);
+      letter-spacing: var(--label-track);
       stroke: var(--label-halo);
       stroke-width: var(--label-halo-width);
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-0l9abt8 .mp-label[data-kind="place"] {
+    .mp.mp-t-16mszs3 .mp-label[data-kind="place"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
     }
-    .mp.mp-t-0l9abt8 .mp-label.is-highlighted {
+    .mp.mp-t-16mszs3 .mp-label.is-highlighted {
       font-weight: 700;
     }
-    .mp.mp-t-0l9abt8 .mp-label[data-fit="0"] {
+    .mp.mp-t-16mszs3 .mp-label[data-fit="0"] {
       display: none;
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-0l9abt8 {
+      .mp.mp-t-16mszs3 {
         --bg: #081F35;
         --land: #0D2B47;
         --land-edge: #7FA8C9;
@@ -348,32 +353,32 @@
     </circle>
   </g>
   <g class="mp-layer mp-labels">
-    <text class="mp-label" data-kind="country" data-iso="FR" data-rank="1" x="443.2" y="546.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">France</text>
-    <text class="mp-label" data-kind="country" data-iso="AT" data-rank="2" x="775.5" y="485" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Austria</text>
-    <text class="mp-label" data-kind="country" data-iso="DE" data-rank="1" x="657.4" y="350.5" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Germany</text>
-    <text class="mp-label" data-kind="country" data-iso="CH" data-rank="2" x="609.4" y="517.8" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Switzerland</text>
-    <text class="mp-label" data-kind="country" data-iso="LU" data-rank="3" x="544.5" y="400.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Luxembourg</text>
-    <text class="mp-label" data-kind="country" data-iso="BE" data-rank="2" x="507.1" y="391.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Belgium</text>
-    <text class="mp-label" data-kind="country" data-iso="NL" data-rank="3" x="530.4" y="288.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Netherlands</text>
-    <text class="mp-label" data-kind="country" data-iso="PT" data-rank="2" x="97.2" y="809.2" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Portugal</text>
-    <text class="mp-label" data-kind="country" data-iso="ES" data-rank="1" x="244" y="781.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Spain</text>
-    <text class="mp-label" data-kind="country" data-iso="IE" data-rank="2" x="188.6" y="244.1" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ireland</text>
-    <text class="mp-label" data-kind="country" data-iso="IT" data-rank="1" x="746.9" y="666.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Italy</text>
-    <text class="mp-label" data-kind="country" data-iso="DK" data-rank="2" x="617.8" y="135.8" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Denmark</text>
-    <text class="mp-label" data-kind="country" data-iso="GB" data-rank="1" x="346.4" y="300.2" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">United Kingdom</text>
-    <text class="mp-label" data-kind="place" data-iso="FR" data-rank="1" data-capital="" x="451.8" y="449.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Paris</text>
-    <text class="mp-label" data-kind="place" data-iso="GB" data-rank="1" data-capital="" x="389.7" y="336" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">London</text>
-    <text class="mp-label" data-kind="place" data-iso="IT" data-rank="1" data-capital="" x="762.7" y="729.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Rome</text>
-    <text class="mp-label" data-kind="place" data-iso="ES" data-rank="1" data-capital="" x="248.8" y="793.8" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Madrid</text>
-    <text class="mp-label" data-kind="place" data-iso="DE" data-rank="1" data-capital="" x="738.9" y="282.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Berlin</text>
-    <text class="mp-label" data-kind="place" data-iso="AT" data-rank="1" data-capital="" x="842.6" y="451.7" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Vienna</text>
-    <text class="mp-label" data-kind="place" data-iso="NL" data-rank="1" data-capital="" x="521.5" y="303.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Amsterdam</text>
-    <text class="mp-label" data-kind="place" data-iso="PT" data-rank="1" data-capital="" x="62" y="839.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lisbon</text>
-    <text class="mp-label" data-kind="place" data-iso="BE" data-rank="1" data-capital="" x="506.5" y="367.3" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Brussels</text>
-    <text class="mp-label" data-kind="place" data-iso="DK" data-rank="1" data-capital="" x="703.2" y="151.7" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kobenhavn</text>
-    <text class="mp-label" data-kind="place" data-iso="IE" data-rank="1" data-capital="" x="239.9" y="243.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dublin</text>
-    <text class="mp-label" data-kind="place" data-iso="CH" data-rank="1" data-capital="" x="596.7" y="530.3" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bern</text>
-    <text class="mp-label" data-kind="place" data-iso="LU" data-rank="1" data-capital="" x="555.6" y="418.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Luxembourg</text>
+    <text class="mp-label" data-kind="country" data-iso="FR" data-rank="1" x="443.2" y="546.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">France</text>
+    <text class="mp-label" data-kind="country" data-iso="AT" data-rank="2" x="775.5" y="485" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Austria</text>
+    <text class="mp-label" data-kind="country" data-iso="DE" data-rank="1" x="657.4" y="350.5" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Germany</text>
+    <text class="mp-label" data-kind="country" data-iso="CH" data-rank="2" x="609.4" y="517.8" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Switzerland</text>
+    <text class="mp-label" data-kind="country" data-iso="LU" data-rank="3" x="544.5" y="400.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Luxembourg</text>
+    <text class="mp-label" data-kind="country" data-iso="BE" data-rank="2" x="507.1" y="391.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Belgium</text>
+    <text class="mp-label" data-kind="country" data-iso="NL" data-rank="3" x="530.4" y="288.7" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Netherlands</text>
+    <text class="mp-label" data-kind="country" data-iso="PT" data-rank="2" x="97.2" y="809.2" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Portugal</text>
+    <text class="mp-label" data-kind="country" data-iso="ES" data-rank="1" x="244" y="781.4" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Spain</text>
+    <text class="mp-label" data-kind="country" data-iso="IE" data-rank="2" x="188.6" y="244.1" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ireland</text>
+    <text class="mp-label" data-kind="country" data-iso="IT" data-rank="1" x="746.9" y="666.6" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Italy</text>
+    <text class="mp-label" data-kind="country" data-iso="DK" data-rank="2" x="617.8" y="135.8" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Denmark</text>
+    <text class="mp-label" data-kind="country" data-iso="GB" data-rank="1" x="346.4" y="300.2" text-anchor="middle" dominant-baseline="central" fill="#E9F3FD" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="12" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">United Kingdom</text>
+    <text class="mp-label" data-kind="place" data-iso="FR" data-rank="1" data-capital="" x="451.8" y="449.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Paris</text>
+    <text class="mp-label" data-kind="place" data-iso="GB" data-rank="1" data-capital="" x="389.7" y="336" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">London</text>
+    <text class="mp-label" data-kind="place" data-iso="IT" data-rank="1" data-capital="" x="762.7" y="729.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Rome</text>
+    <text class="mp-label" data-kind="place" data-iso="ES" data-rank="1" data-capital="" x="248.8" y="793.8" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Madrid</text>
+    <text class="mp-label" data-kind="place" data-iso="DE" data-rank="1" data-capital="" x="738.9" y="282.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Berlin</text>
+    <text class="mp-label" data-kind="place" data-iso="AT" data-rank="1" data-capital="" x="842.6" y="451.7" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Vienna</text>
+    <text class="mp-label" data-kind="place" data-iso="NL" data-rank="1" data-capital="" x="521.5" y="303.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Amsterdam</text>
+    <text class="mp-label" data-kind="place" data-iso="PT" data-rank="1" data-capital="" x="62" y="839.9" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lisbon</text>
+    <text class="mp-label" data-kind="place" data-iso="BE" data-rank="1" data-capital="" x="506.5" y="367.3" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Brussels</text>
+    <text class="mp-label" data-kind="place" data-iso="DK" data-rank="1" data-capital="" x="703.2" y="151.7" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kobenhavn</text>
+    <text class="mp-label" data-kind="place" data-iso="IE" data-rank="1" data-capital="" x="239.9" y="243.4" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dublin</text>
+    <text class="mp-label" data-kind="place" data-iso="CH" data-rank="1" data-capital="" x="596.7" y="530.3" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bern</text>
+    <text class="mp-label" data-kind="place" data-iso="LU" data-rank="1" data-capital="" x="555.6" y="418.2" text-anchor="start" dominant-baseline="central" fill="#8FB4D4" font-family="ui-monospace, &quot;SFMono-Regular&quot;, Menlo, Consolas, monospace" font-size="10" font-weight="500" letter-spacing="0.25" stroke="#10395E" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Luxembourg</text>
   </g>
   <g class="mp-layer mp-annotations"/>
   <g class="mp-layer mp-furniture"/>

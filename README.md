@@ -137,12 +137,49 @@ await map.toFile(p)  // render(), written to disk
 |---|---|
 | `minimal` | Flat fills, hairline edges, no ocean — for a page with a ground of its own |
 | `atlas` | Printed-atlas paper on a cold sea, dashed boundaries, serif |
-| `noir` | Dark ground, hairline linework, no fills to speak of, one warm accent |
+| `noir` | Dark ground, slate land, fine linework, one warm accent |
 | `blueprint` | White linework on drafting blue, monospaced, dashed boundaries |
 | `contrast` | Black and white sized for legibility — heavy strokes, no muted ink |
 
-Palettes are colour only: `dusk` and `sand` restyle any of them without
-touching a weight, a dash or the type.
+Palettes are colour only, and restyle any theme without touching a weight, a
+dash or the type:
+
+| Palette | |
+|---|---|
+| `sand` | Warm paper and a deep green accent |
+| `slate` | Cool neutral grey, one cold blue — the register of a report |
+| `moss` | Warm greens on stone, the colouring of a walking map |
+| `dusk` | Night blues, for a dark page |
+
+### The typefaces
+
+Type is a category you pick, the same way colour is:
+
+```ts
+await mapper({ region: "west-europe", theme: "atlas", typeface: "serif" });
+```
+
+| | |
+|---|---|
+| `humanist` | The system UI face. Even colour, no affect — the default voice |
+| `serif` | A book face with a little tracking; the printed-atlas register |
+| `grotesk` | Swiss signage: neutral, tight, slightly heavy |
+| `condensed` | Narrow. **Reach for this on a crowded map** — more names fit |
+| `mono` | Even widths, for maps that sit beside figures |
+
+A typeface carries only type tokens, exactly as a palette carries only colour,
+so the two are chosen independently and neither can fight the theme over
+structure. Sizes travel with the stack because they have to — a serif needs a
+fraction more room than a grotesk.
+
+Only stacks already on the machine. A map is a standalone file with no network,
+so a webfont would arrive as a request the document cannot make.
+
+One of the tokens a typeface sets is not a style at all. `--label-advance` is
+how wide the face runs, as a fraction of the size — the fit test has no font
+metrics, and the only thing that knows the answer is the stylesheet that chose
+the face. `condensed` declares `0.46` where `humanist` declares `0.58`, and
+that is precisely why more names fit.
 
 ### Dark mode
 

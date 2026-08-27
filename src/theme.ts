@@ -5,7 +5,16 @@ import { contrast } from "./themes/contrast.js";
 import { minimal } from "./themes/minimal.js";
 import { noir } from "./themes/noir.js";
 import { dusk } from "./palettes/dusk.js";
+import { moss } from "./palettes/moss.js";
 import { sand } from "./palettes/sand.js";
+import { slate } from "./palettes/slate.js";
+import {
+  condensed,
+  grotesk,
+  humanist,
+  mono,
+  serif,
+} from "./typefaces/index.js";
 
 // Insertion order is the order they are documented and emitted in. `minimal`
 // first because it is the default; the rest from quietest to loudest.
@@ -16,10 +25,23 @@ export const THEMES: Readonly<Record<string, string>> = Object.freeze({
   blueprint,
   contrast,
 });
-export const PALETTES: Readonly<Record<string, string>> = Object.freeze({ dusk, sand });
+export const PALETTES: Readonly<Record<string, string>> = Object.freeze({
+  sand,
+  slate,
+  moss,
+  dusk,
+});
+export const TYPEFACES: Readonly<Record<string, string>> = Object.freeze({
+  humanist,
+  serif,
+  grotesk,
+  condensed,
+  mono,
+});
 
 export const THEME_NAMES: readonly string[] = Object.freeze(Object.keys(THEMES));
 export const PALETTE_NAMES: readonly string[] = Object.freeze(Object.keys(PALETTES));
+export const TYPEFACE_NAMES: readonly string[] = Object.freeze(Object.keys(TYPEFACES));
 
 export interface ResolvedTheme {
   /** The stylesheet, already scoped. Empty when nothing was themed. */
@@ -45,8 +67,16 @@ function assertEmbeddable(css: string, source: string): void {
   }
 }
 
-async function readStylesheet(reference: string, kind: "theme" | "palette"): Promise<string> {
-  const table = kind === "theme" ? THEMES : PALETTES;
+type Kind = "theme" | "palette" | "typeface";
+
+const TABLES: Readonly<Record<Kind, Readonly<Record<string, string>>>> = {
+  theme: THEMES,
+  palette: PALETTES,
+  typeface: TYPEFACES,
+};
+
+async function readStylesheet(reference: string, kind: Kind): Promise<string> {
+  const table = TABLES[kind];
   const bundled = table[reference];
   if (bundled !== undefined) return bundled;
 
@@ -83,15 +113,18 @@ function tokensToCss(tokens: Readonly<Record<string, string>>): string {
 export interface ThemeRequest {
   readonly theme?: string;
   readonly palette?: string;
+  readonly typeface?: string;
   readonly tokens?: Readonly<Record<string, string>>;
 }
 
 /**
  * Resolve theme, palette and overrides into one scoped stylesheet.
  *
- * Order is the entire implementation: theme, then palette, then overrides.
- * Later declarations win, so a palette needs no merge logic to beat a theme and
- * an override needs none to beat a palette — the cascade already does it.
+ * Order is the entire implementation: theme, then palette, then typeface, then
+ * overrides. Later declarations win, so a palette needs no merge logic to beat
+ * a theme and an override needs none to beat either — the cascade already does
+ * it. Palette and typeface never meet, because one carries only colour and the
+ * other only type, which is what lets them be chosen independently.
  */
 export async function resolveTheme(request: ThemeRequest): Promise<ResolvedTheme> {
   const parts: string[] = [];
@@ -104,6 +137,11 @@ export async function resolveTheme(request: ThemeRequest): Promise<ResolvedTheme
   if (request.palette !== undefined) {
     const css = await readStylesheet(request.palette, "palette");
     assertEmbeddable(css, `palette "${request.palette}"`);
+    parts.push(css);
+  }
+  if (request.typeface !== undefined) {
+    const css = await readStylesheet(request.typeface, "typeface");
+    assertEmbeddable(css, `typeface "${request.typeface}"`);
     parts.push(css);
   }
   if (request.tokens !== undefined) {
