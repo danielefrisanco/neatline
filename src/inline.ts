@@ -115,6 +115,63 @@ function resolveValue(value: string, tokens: ReadonlyMap<string, string>, depth 
   return resolveValue(next, tokens, depth + 1);
 }
 
+/**
+ * Turn a CSS `drop-shadow()` into a real SVG filter.
+ *
+ * `filter: drop-shadow(...)` is a CSS Filter Effects function. Browsers accept
+ * it, including through the presentation attribute — but SVG 1.1 only allows
+ * `url(#id)` there, so every viewer and design tool that predates CSS filters
+ * silently drops it and the relief disappears. `feDropShadow` is understood far
+ * more widely, and this is what the reserved `<defs>` block exists for.
+ */
+const DROP_SHADOW =
+  /drop-shadow\(\s*(-?[\d.]+)px\s+(-?[\d.]+)px(?:\s+([\d.]+)px)?\s*((?:[^()]|\([^()]*\))*?)\s*\)\s*$/;
+
+interface ShadowFilter {
+  readonly id: string;
+  readonly element: SvgElement;
+}
+
+function shadowFilter(value: string, index: number): ShadowFilter | null {
+  const match = DROP_SHADOW.exec(value);
+  if (match === null) return null;
+
+  const [dx, dy] = [match[1] as string, match[2] as string];
+  // CSS states a blur radius; a Gaussian filter wants a standard deviation.
+  const blur = Number(match[3] ?? "0") / 2;
+  const colour = (match[4] ?? "").trim() || "black";
+
+  let floodColour = colour;
+  let floodOpacity: string | undefined;
+  // Split the alpha out: flood-opacity is honoured far more widely than an
+  // alpha channel inside flood-color.
+  const rgba = /^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/.exec(
+    colour,
+  );
+  if (rgba !== null) {
+    floodColour = `rgb(${rgba[1]},${rgba[2]},${rgba[3]})`;
+    if (rgba[4] !== undefined) floodOpacity = rgba[4];
+  }
+
+  const id = `mp-shadow-${index}`;
+  return {
+    id,
+    element: el(
+      "filter",
+      { id, x: "-25%", y: "-25%", width: "150%", height: "150%" },
+      [
+        el("feDropShadow", {
+          dx,
+          dy,
+          stdDeviation: blur,
+          "flood-color": floodColour,
+          "flood-opacity": floodOpacity,
+        }),
+      ],
+    ),
+  };
+}
+
 export interface InlineResult {
   readonly root: SvgElement;
   /** Selectors that were skipped because they are beyond this matcher. */
@@ -146,6 +203,8 @@ export function inlineStyles(root: SvgElement, nodes: readonly CssNode[]): Inlin
       });
     }
   }
+
+  const filters = new Map<string, ShadowFilter>();
 
   function walk(
     node: SvgNode,
@@ -179,10 +238,34 @@ export function inlineStyles(root: SvgElement, nodes: readonly CssNode[]): Inlin
       }
     }
 
+    const shadow = painted["filter"];
+    if (shadow !== undefined && shadow.includes("drop-shadow")) {
+      const existing = filters.get(shadow);
+      const made = existing ?? shadowFilter(shadow, filters.size + 1);
+      if (made !== null) {
+        filters.set(shadow, made);
+        painted["filter"] = `url(#${made.id})`;
+      }
+    }
+
     const attributes: Attributes = { ...node.attributes, ...painted };
     const children = node.children.map((child) => walk(child, nextStack, tokens));
     return el(node.tag, attributes, children);
   }
 
-  return { root: walk(root, [], new Map()) as SvgElement, skipped };
+  const walked = walk(root, [], new Map()) as SvgElement;
+  if (filters.size === 0) return { root: walked, skipped };
+
+  // Definitions have to exist before anything references them, which is why
+  // the slot sits ahead of everything drawn.
+  const children = walked.children.map((child) =>
+    child.kind === "element" && child.tag === "defs"
+      ? el(child.tag, child.attributes, [
+          ...child.children,
+          ...[...filters.values()].map((f) => f.element),
+        ])
+      : child,
+  );
+
+  return { root: el(walked.tag, walked.attributes, children), skipped };
 }

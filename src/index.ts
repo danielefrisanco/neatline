@@ -1,8 +1,9 @@
-import { geoBounds, geoPath } from "d3-geo";
+import { geoBounds, geoContains, geoPath } from "d3-geo";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
 import { createProjection } from "./projections.js";
 import { expandPreset, isRegionPreset, presetLabel } from "./regions.js";
+import { referencedFilters } from "./filters.js";
 import { inlineStyles } from "./inline.js";
 import { el, serialize, styleElement, text, type SvgElement, type SvgNode } from "./svg.js";
 import { resolveTheme, type ResolvedTheme } from "./theme.js";
@@ -31,6 +32,7 @@ import type {
 export { isoTable, resolveId, type IsoEntry } from "./iso.js";
 export { PROJECTION_NAMES, isProjectionName } from "./projections.js";
 export { REGION_PRESETS, REGION_PRESET_NAMES, isRegionPreset } from "./regions.js";
+export { FILTER_NAMES } from "./filters.js";
 export { PALETTE_NAMES, THEME_NAMES, THEMES, PALETTES } from "./theme.js";
 export { TOKENS, TOKEN_NAMES, isTokenName, type TokenSpec } from "./tokens.js";
 export {
@@ -60,11 +62,36 @@ export type {
   Size,
 } from "./types.js";
 
+const DEFS_TAG = "defs";
+
 const DEFAULT_SIZE: Size = [1000, 1000];
 const DEFAULT_PADDING = 24;
 
 /** Dot size by rank. A theme can override `r` in CSS; this is the fallback. */
 const PLACE_RADIUS: Readonly<Record<1 | 2 | 3, number>> = { 1: 3.2, 2: 2.2, 3: 1.5 };
+
+/**
+ * Points along a geometry, for testing whether it touches a country.
+ *
+ * A bounding box is not enough: France's box spans Guadeloupe to Réunion
+ * because those are France, so box overlap alone put Lake Constance — which is
+ * German, Swiss and Austrian — on a map of France.
+ */
+function samples(geometry: unknown, limit = 32): Array<[number, number]> {
+  const points: Array<[number, number]> = [];
+  const walk = (node: unknown): void => {
+    if (!Array.isArray(node)) return;
+    if (typeof node[0] === "number" && typeof node[1] === "number") {
+      points.push([node[0], node[1]]);
+      return;
+    }
+    for (const child of node) walk(child);
+  };
+  walk((geometry as { geometry?: { coordinates?: unknown } }).geometry?.coordinates);
+  if (points.length <= limit) return points;
+  const step = points.length / limit;
+  return Array.from({ length: limit }, (_, i) => points[Math.floor(i * step)] as [number, number]);
+}
 
 type Box = readonly [number, number, number, number];
 
@@ -262,6 +289,7 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   const projection = createProjection(projectionName, frame, width, height, padding);
   const path = geoPath(projection).digits(1);
 
+
   const content = new Map<LayerName, SvgNode[]>();
   const wants = (name: LayerName): boolean => options.layers?.[name] ?? true;
 
@@ -292,18 +320,50 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   // description stays true to what was asked for.
   if (wants("land")) content.set("land", land);
 
+  // Context, drawn beneath the region and excluded from the camera, so turning
+  // it on can never change the framing — the subject stays exactly where it was.
+  if (options.neighbours === true && wants("neighbours")) {
+    const inRegion = new Set(frame.countries.map((c) => c.id));
+    const [[west, south], [east, north]] = frame.bounds;
+    const view: Box = [west, south, east, north];
+    const context: SvgNode[] = [];
+    for (const country of world.countries) {
+      if (inRegion.has(country.id)) continue;
+      if (!overlaps(boxOf(country.geometry), view)) continue;
+      const d = path(country.geometry as never);
+      if (!d) continue;
+      context.push(
+        el(
+          "path",
+          { class: "mp-neighbour", "data-iso": country.id, "data-name": country.name, d },
+          // Named for hover, but never labelled or highlighted: context must
+          // not compete with the subject.
+          country.name === "" ? [] : [el("title", {}, [text(country.name)])],
+        ),
+      );
+    }
+    if (context.length > 0) content.set("neighbours", context);
+  }
+
   // Water is matched against the countries actually drawn, not the framed
   // rectangle. A lake carries no country of its own, and filtering on the
   // viewport alone floats Scandinavian lakes over open sea on a map whose
   // northern edge stops at Denmark.
   if (wants("hydro")) {
-    const drawnBoxes = frame.countries.map((c) => boxOf(c.geometry));
+    const drawn = frame.countries.map((c) => ({ box: boxOf(c.geometry), geometry: c.geometry }));
     const water: SvgNode[] = [];
     for (const kind of ["lake", "river"] as const) {
       const collection = world.water(kind) as { features: readonly unknown[] };
       const kept = collection.features.filter((f) => {
         const box = boxOf(f);
-        return drawnBoxes.some((country) => overlaps(box, country));
+        // Box overlap first because it is cheap, then containment because it
+        // is the question actually being asked.
+        const near = drawn.filter((country) => overlaps(box, country.box));
+        if (near.length === 0) return false;
+        const points = samples(f);
+        return points.some((point) =>
+          near.some((country) => geoContains(country.geometry as never, point)),
+        );
       });
       if (kept.length === 0) continue;
       const d = path({ type: "FeatureCollection", features: kept } as never);
@@ -369,10 +429,6 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   const themed = await resolveTheme(options);
 
   const body: SvgNode[] = [
-    // Reserved and empty. Gradients, patterns and arrow markers are SVG
-    // elements rather than declarations, so a theme that needs one needs
-    // somewhere to put it.
-    el("defs", { class: DEFS_CLASS }),
     // `fill="none"` is structural, not stylistic. SVG's default fill is
     // black, so a full-canvas rectangle with no theme applied would paint
     // the entire map over — the document would render as a black square.
@@ -396,12 +452,16 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   ];
 
   function build(theme: ResolvedTheme, withStyle: boolean): SvgElement {
+    // A stylesheet cannot create SVG elements, so a theme names the effect it
+    // wants and the definition is emitted here. Referenced only — an unused
+    // filter is never written.
+    const defs = el(DEFS_TAG, { class: DEFS_CLASS }, referencedFilters(theme.css));
     // The scope class rides on the root even when the stylesheet is served
     // separately, or `map.css` would have nothing to match against.
     const rootClass = theme.scope === null ? ROOT_CLASS : `${ROOT_CLASS} ${theme.scope}`;
     const children: SvgNode[] = [el("title", {}, [text(description)])];
     if (withStyle && theme.css !== "") children.push(styleElement(theme.css));
-    children.push(...body);
+    children.push(defs, ...body);
 
     return el(
       "svg",

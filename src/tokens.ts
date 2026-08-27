@@ -31,7 +31,7 @@ export const TOKENS: readonly TokenSpec[] = Object.freeze([
   { name: "--label-size", status: "live", controls: "Base label size, in user units" },
   { name: "--water", status: "live", controls: "Lakes and rivers" },
   { name: "--road", status: "reserved", controls: "Route strokes — Phase 4 data" },
-  { name: "--neighbour", status: "reserved", controls: "Context countries — v1.2" },
+  { name: "--neighbour", status: "live", controls: "Context countries drawn behind the region" },
   { name: "--anno", status: "reserved", controls: "Pins, arrows, callouts — v1.1" },
   { name: "--anno-ink", status: "reserved", controls: "Text on an annotation — v1.1" },
   { name: "--furniture-ink", status: "reserved", controls: "Credit lines and legends — v2" },

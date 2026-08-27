@@ -90,6 +90,14 @@ export interface MapperOptions {
   /** ISO codes to mark with `.is-highlighted`. */
   readonly highlight?: readonly string[];
   /**
+   * Draw the surrounding countries as context, beneath the region.
+   *
+   * Never labelled, never highlighted, and excluded from the camera — so
+   * turning context on cannot move the subject.
+   * @default false
+   */
+  readonly neighbours?: boolean;
+  /**
    * How far down the settlement ranking to draw. 1 is capitals and the largest
    * cities, 2 adds everything over a million, 3 adds the rest.
    * @default 2

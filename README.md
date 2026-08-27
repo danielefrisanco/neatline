@@ -210,16 +210,34 @@ of them.
 
 ### Relief without data
 
-The raised-landmass look editorial maps use is one CSS declaration:
-
 ```css
-.mp .mp-land { filter: drop-shadow(4px 5px 4px rgba(40, 30, 15, .45)); }
+.mp .mp-land { filter: url(#mp-relief); }
 ```
 
-No elevation model, no raster, no markup. Worth separating from *terrain*, which
+`mp-relief` and `mp-relief-soft` are built in. A stylesheet cannot create SVG
+elements, so a theme names the effect and the definition is written into the
+reserved `<defs>` — only when referenced. `FILTER_NAMES` lists what is
+available.
+
+They are lighting filters, not shadows. A shadow separates a shape from its
+ground; relief needs a lit face and an unlit one, so the land's own alpha is
+blurred into a height map and lit from the north-west. The light is *multiplied*
+rather than added, which keeps the theme's colour instead of bleaching it white.
+
+No elevation model, no raster, no data. Worth separating from *terrain*, which
 is a data problem — glaciers, salt flats and depth bands are real vectors, but
 land contour lines would have to be derived from an elevation model.
 See `west-europe-relief.svg` in the gallery.
+
+### Neighbours
+
+```ts
+await mapper({ region: "west-europe", neighbours: true });
+```
+
+The surrounding countries, drawn beneath the region as context. Never labelled,
+never highlighted, and **excluded from the camera** — so turning context on
+cannot move your subject. Styled from `--neighbour`.
 
 ### Cities
 

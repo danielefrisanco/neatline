@@ -17,6 +17,45 @@ signature — themes in the wild depend on those names.
 
 Phase 5 — presets and fill modes.
 
+## [0.5.0] — 2026-08-27
+
+Neighbours, built-in filters, and two water fixes. Brought forward from later
+phases because each turned out to be small once the slots were reserved.
+
+### Added
+
+- **`neighbours: true`** — the surrounding countries drawn as context beneath
+  the region, into the layer reserved in Phase 2. Never labelled, never
+  highlighted, and excluded from the camera, so turning context on cannot move
+  the subject. Planned for v1.2; the reserved slot made it a filter and a class
+- **Built-in SVG filters**, referenced from a theme by name:
+  `filter: url(#mp-relief)`. A stylesheet cannot create SVG elements, so
+  effects needing markup were out of a theme's reach — these close that gap, and
+  are the first real use of the reserved `<defs>` block. Emitted only when
+  referenced. `FILTER_NAMES` lists them
+- `mp-relief` and `mp-relief-soft` — lit relief rather than a drop shadow. A
+  shadow only separates a shape from its ground; relief needs a lit face and an
+  unlit one, so the land's own alpha is blurred into a height map and lit with
+  `feDiffuseLighting`. The light is **multiplied**, not added: a specular
+  highlight bleaches the land to white and throws the theme's colour away.
+  Its constant is normalised by `1/sin(elevation)` so flat ground returns at
+  full brightness and only the slopes shade
+- `inlineStyles` also materialises a CSS `drop-shadow()` into a real
+  `feDropShadow`, since SVG 1.1 only permits `url(#id)` in the `filter`
+  attribute and older viewers drop the CSS function silently
+- `west-europe-neighbours` gallery render; `--neighbour` is now a live token
+
+### Fixed
+
+- **Water was matched by bounding box, which put Lake Constance on a map of
+  France.** France's box spans Guadeloupe to Réunion — those are France — so box
+  overlap admitted anything in between. Boxes are still used as a cheap
+  pre-filter, but the question is now answered with `geoContains` against the
+  countries actually drawn
+- **Rivers were invisible.** They were being emitted correctly, but every
+  palette's water sat a shade away from its land colour at 0.8 stroke width.
+  Water is now distinctly blue across all four, and rivers are stroked at 1.1
+
 ## [0.4.0] — 2026-08-27
 
 Phase 4 — data pipeline. Maps now carry water and cities.
@@ -353,7 +392,8 @@ history stay the same document.
 | `1.0.0` | 7 · Ship | Stable taxonomy, published, documented |
 | `1.1.0` | 8 · Annotations | Pins, arrows, callouts, icons |
 
-[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/danielefrisanco/mapper/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/danielefrisanco/mapper/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/danielefrisanco/mapper/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/danielefrisanco/mapper/compare/v0.2.0...v0.3.0

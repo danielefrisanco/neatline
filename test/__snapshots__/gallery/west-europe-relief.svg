@@ -1,39 +1,49 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp mp-t-07z0rk4" role="img" aria-label="Western Europe in relief">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0cc81ap" role="img" aria-label="Western Europe in relief">
   <title>Western Europe in relief</title>
   <style>
-    .mp.mp-t-07z0rk4 {
+    .mp.mp-t-0cc81ap {
       --sea: #9FBACB;
       --land: #F3ECDC;
       --edge: #C0B49A;
       --ink: #57503F;
     }
-    .mp.mp-t-07z0rk4 .mp-bg {
+    .mp.mp-t-0cc81ap .mp-bg {
       fill: var(--sea);
     }
-    .mp.mp-t-07z0rk4 .mp-land {
-      filter: drop-shadow(4px 5px 4px rgba(40,30,15,.45));
+    .mp.mp-t-0cc81ap .mp-land {
+      filter: url(#mp-relief);
     }
-    .mp.mp-t-07z0rk4 .mp-country {
+    .mp.mp-t-0cc81ap .mp-country {
       fill: var(--land);
       stroke: var(--edge);
       stroke-width: 0.7;
     }
-    .mp.mp-t-07z0rk4 .mp-border {
+    .mp.mp-t-0cc81ap .mp-border {
       fill: none;
       stroke: var(--ink);
       stroke-width: 0.9;
     }
-    .mp.mp-t-07z0rk4 .mp-water[data-kind="lake"] {
+    .mp.mp-t-0cc81ap .mp-water[data-kind="lake"] {
       fill: var(--sea);
     }
-    .mp.mp-t-07z0rk4 .mp-place {
+    .mp.mp-t-0cc81ap .mp-place {
       fill: var(--ink);
     }
   </style>
-  <defs class="mp-defs"/>
+  <defs class="mp-defs">
+    <filter id="mp-relief" x="-30%" y="-30%" width="170%" height="170%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3.5" result="height"/>
+      <feDiffuseLighting in="height" surfaceScale="3" diffuseConstant="1.414" lighting-color="#ffffff" result="light">
+        <feDistantLight azimuth="235" elevation="45"/>
+      </feDiffuseLighting>
+      <feComposite in="SourceGraphic" in2="light" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="shaded"/>
+      <feComposite in="shaded" in2="SourceAlpha" operator="in" result="clipped"/>
+      <feDropShadow in="clipped" dx="2" dy="3" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.38"/>
+    </filter>
+  </defs>
   <rect class="mp-bg" x="0" y="0" width="1000" height="1000" fill="#9FBACB"/>
   <g class="mp-layer mp-neighbours"/>
-  <g class="mp-layer mp-land" filter="drop-shadow(4px 5px 4px rgba(40,30,15,.45))">
+  <g class="mp-layer mp-land" filter="url(#mp-relief)">
     <path class="mp-country" data-iso="FR" data-name="France" d="M-2268.6,1458.6L-2325.6,1474.7L-2365.2,1493.8L-2395.1,1495.2L-2417.4,1480.2L-2412.4,1463.6L-2419.9,1453.5L-2442.7,1452.8L-2452.4,1428L-2426.3,1420.7L-2405.7,1405.6L-2382.6,1395L-2376.1,1356.9L-2353.9,1327.2L-2302.4,1312.4L-2293.1,1329L-2272.8,1364.7L-2260.7,1436.1ZM551.1,424.4L564.3,435L604.3,441.2L591.6,470.6L589.3,500.7L581.8,508.2L568.7,504.8L570,515.4L549.7,539.6L549.6,558.6L563.4,551.7L573.9,569.9L573.1,581.8L582.4,597.3L572.4,610.5L581.3,642.7L597.9,647.4L595.2,665.8L568.3,690.6L507.5,680.2L462.7,693.7L458.8,719L422.5,723.6L388.3,703.2L376.6,711.7L320.9,689.1L309.9,671.8L327.6,647.8L339.2,564.5L312.8,518.2L293.7,495.2L252.4,474.7L253.1,443.9L289.8,438.5L335.2,453.3L330.2,405.2L354.6,425.1L419.5,395.6L428.9,361.4L452.3,353.6L455.8,368.4L468.1,369.4L480.3,386.4L499.1,406.4L513,403L537.1,421.9L543.2,425.5ZM637.7,708.8L656.6,691.4L664.3,727.2L656,760.4L641.1,752.7L632.3,724.7Z" fill="#F3ECDC" stroke="#C0B49A" stroke-width="0.7">
       <title>France</title>
     </path>

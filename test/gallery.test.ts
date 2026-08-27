@@ -87,12 +87,24 @@ const GALLERY: ReadonlyArray<readonly [string, MapperOptions]> = [
       projection: "conic-conformal",
       theme: `.mp { --sea: #9FBACB; --land: #F3ECDC; --edge: #C0B49A; --ink: #57503F; }
 .mp .mp-bg { fill: var(--sea); }
-.mp .mp-land { filter: drop-shadow(4px 5px 4px rgba(40,30,15,.45)); }
+.mp .mp-land { filter: url(#mp-relief); }
 .mp .mp-country { fill: var(--land); stroke: var(--edge); stroke-width: 0.7; }
 .mp .mp-border { fill: none; stroke: var(--ink); stroke-width: 0.9; }
 .mp .mp-water[data-kind="lake"] { fill: var(--sea); }
 .mp .mp-place { fill: var(--ink); }`,
       title: "Western Europe in relief",
+    },
+  ],
+  // Context, not subject: the surrounding countries fade in beneath the region
+  // and are excluded from the camera, so the framing is identical without them.
+  [
+    "west-europe-neighbours",
+    {
+      region: "west-europe",
+      projection: "conic-conformal",
+      theme: "atlas",
+      neighbours: true,
+      title: "Western Europe, with its neighbours",
     },
   ],
   [
