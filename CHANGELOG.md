@@ -44,6 +44,13 @@ document exactly.
 - **`--place-label-size`, `--label-halo` and `--label-halo-width`**, live in all
   five presets and both palettes. The casing is one `paint-order: stroke`
   rather than a second copy of every label.
+- **`names`** — replace the name of anything the map labels, keyed by ISO code
+  for a country and by name for a city. This is how a map is produced in a
+  language other than English: the bundled sources carry English only, and
+  neither `world-atlas` nor the vendored Natural Earth places file has a single
+  translated name field, so a `language` option would mean shipping name tables
+  this package does not have. The override is what can honestly be offered
+  today, and it covers every language rather than a chosen list.
 - Four gallery renders: `europe-named`, `west-europe-named-cities`,
   `asia-named-blueprint`, and `west-europe-unnamed` for the layer switched off.
 

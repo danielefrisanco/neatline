@@ -476,6 +476,23 @@ settled by then.
 crowded map, and a settlement name can cross a border it does not belong to.
 Ranks exist so a theme can thin its way out of both.
 
+### Names in another language
+
+The bundled data is English. `names` replaces the name of anything the map
+labels — keys are ISO codes for countries and settlement names for cities:
+
+```ts
+await mapper({
+  region: "west-europe",
+  names: { DE: "Deutschland", FR: "Frankreich", Munich: "München" },
+});
+```
+
+The new name is the map's name for that feature throughout: the label, the
+`data-name` attribute, the hover title, and the accessible description. There
+is no `language: "de"` option, because it would need name tables this package
+does not ship.
+
 ### Choosing layers
 
 ```ts

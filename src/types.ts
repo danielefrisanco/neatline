@@ -88,6 +88,25 @@ export interface MapperOptions {
    * geography — a map about something needs the caller to say what.
    */
   readonly title?: string;
+  /**
+   * Rename anything the map labels.
+   *
+   * Keys are ISO codes for countries and settlement names for cities; values
+   * are whatever you want written on the map. This is how a map is produced in
+   * a language other than English, and how a country gets the short form a
+   * headline needs.
+   *
+   * ```ts
+   * names: { DE: "Deutschland", FR: "Frankreich", Munich: "München" }
+   * ```
+   *
+   * The new name is the map's name for that feature throughout — it is what
+   * the label reads, what `data-name` carries, what the hover title says, and
+   * what the accessible description is built from. The bundled data is English
+   * only, so there is no `language` option to give you: it would need name
+   * tables this package does not ship.
+   */
+  readonly names?: Readonly<Record<string, string>>;
   /** ISO codes to mark with `.is-highlighted`. */
   readonly highlight?: readonly string[];
   /**

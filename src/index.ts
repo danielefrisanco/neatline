@@ -284,6 +284,20 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     throw new Error("mapper: region resolved to no countries");
   }
 
+  /**
+   * The caller's name for a feature, where they gave one.
+   *
+   * Keyed by ISO code where the key resolves to one and by the bundled name
+   * otherwise, which is what lets one option cover both countries and cities
+   * without asking which is which.
+   */
+  const renamed = new Map<string, string>();
+  for (const [key, value] of Object.entries(options.names ?? {})) {
+    renamed.set(resolveId(key) ?? key, value);
+  }
+  const nameOf = (id: string, bundled: string): string =>
+    renamed.get(id) ?? renamed.get(bundled) ?? bundled;
+
   const highlighted = new Set<string>();
   for (const code of options.highlight ?? []) {
     const code2 = resolveId(code);
@@ -353,7 +367,8 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     const d = path(country.geometry as never);
     if (!d) continue;
     const isHighlighted = country.id !== "" && highlighted.has(country.id);
-    if (isHighlighted && country.name) highlightedNames.push(country.name);
+    const name = nameOf(country.id, country.name);
+    if (isHighlighted && name) highlightedNames.push(name);
     const banded = bins?.get(country.id);
     land.push(
       el(
@@ -361,7 +376,7 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
         {
           class: isHighlighted ? `mp-country ${HIGHLIGHT_CLASS}` : "mp-country",
           "data-iso": country.id === "" ? undefined : country.id,
-          "data-name": country.name === "" ? undefined : country.name,
+          "data-name": name === "" ? undefined : name,
           "data-bin": banded?.bin,
           "data-value": banded?.value,
           "data-fill": fillOf(country.id),
@@ -371,7 +386,7 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
         // A per-feature title is a hover tooltip, not an accessibility tree:
         // the root carries `role="img"`, so assistive technology reads the
         // label once instead of announcing two hundred paths.
-        country.name === "" ? [] : [el("title", {}, [text(country.name)])],
+        name === "" ? [] : [el("title", {}, [text(name)])],
       ),
     );
     if (striped.has(country.id)) {
@@ -387,7 +402,7 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     } else {
       const raised: PrismInput[] = frame.countries.map((country) => ({
         id: country.id,
-        name: country.name,
+        name: nameOf(country.id, country.name),
         geometry: country.geometry,
         height: extrusion.uniform ?? extrusion.byId.get(country.id) ?? 0,
         highlighted: country.id !== "" && highlighted.has(country.id),
@@ -418,10 +433,17 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
       context.push(
         el(
           "path",
-          { class: "mp-neighbour", "data-iso": country.id, "data-name": country.name, d },
+          {
+            class: "mp-neighbour",
+            "data-iso": country.id,
+            "data-name": nameOf(country.id, country.name),
+            d,
+          },
           // Named for hover, but never labelled or highlighted: context must
           // not compete with the subject.
-          country.name === "" ? [] : [el("title", {}, [text(country.name)])],
+          country.name === ""
+            ? []
+            : [el("title", {}, [text(nameOf(country.id, country.name))])],
         ),
       );
     }
@@ -517,13 +539,17 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
           : rawY - (extrusion.uniform ?? (place.iso === null ? 0 : extrusion.byId.get(place.iso) ?? 0));
       if (x < 0 || x > width || y < 0 || y > height) continue;
       const radius = PLACE_RADIUS[place.rank];
+      // Keyed by its own name only: a settlement's ISO is its country's, so
+      // looking one up by it would rename Paris to whatever the caller called
+      // France.
+      const named = { ...place, name: renamed.get(place.name) ?? place.name };
       if (wants("places")) {
         dots.push(
           el(
             "circle",
             {
               class: "mp-place",
-              "data-name": place.name,
+              "data-name": named.name,
               "data-iso": place.iso ?? undefined,
               "data-rank": place.rank,
               "data-pop": place.population,
@@ -531,14 +557,14 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
               cy: y,
               r: radius,
             },
-            [el("title", {}, [text(place.name)])],
+            [el("title", {}, [text(named.name)])],
           ),
         );
       }
       if (wants("labels") && place.rank <= namedRank) {
-        const named = placeLabel(place, x, y, radius, sizes.place);
-        placeNames.push(named);
-        placeBoxes.push(named.box);
+        const label = placeLabel(named, x, y, radius, sizes.place);
+        placeNames.push(label);
+        placeBoxes.push(label.box);
       }
     }
     if (dots.length > 0) content.set("places", dots);
@@ -557,7 +583,7 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     const names = countryLabels(
       frame.countries.map((country) => ({
         id: country.id,
-        name: country.name,
+        name: nameOf(country.id, country.name),
         geometry: country.geometry,
         lift:
           extrusion === null

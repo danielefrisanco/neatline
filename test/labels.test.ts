@@ -211,3 +211,38 @@ describe("the labels layer", () => {
     expect(map.svg).not.toContain('<text class="mp-label');
   });
 });
+
+describe("names", () => {
+  it("puts the caller's name on the map, everywhere the bundled one appeared", async () => {
+    const map = await mapper({
+      region: "west-europe",
+      detail: "50m",
+      theme: "minimal",
+      highlight: ["DE"],
+      names: { DE: "Deutschland", FR: "Frankreich", Paris: "Pariisi" },
+    });
+
+    const named = labels(map.svg);
+    expect(named.some((l) => l.kind === "country" && l.text === "Deutschland")).toBe(true);
+    expect(named.some((l) => l.kind === "country" && l.text === "Frankreich")).toBe(true);
+    expect(named.some((l) => l.kind === "place" && l.text === "Pariisi")).toBe(true);
+
+    // The same name in the tooltip, the data attribute and the description.
+    expect(map.svg).toContain('data-name="Deutschland"');
+    expect(map.svg).toContain("<title>Deutschland</title>");
+    expect(map.svg).toContain("highlighting Deutschland");
+    expect(map.svg).not.toContain(">Germany<");
+  });
+
+  it("does not rename a city after its country", async () => {
+    const map = await mapper({
+      region: ["FR"],
+      detail: "50m",
+      theme: "minimal",
+      names: { FR: "Frankreich" },
+    });
+    const named = labels(map.svg);
+    expect(named.some((l) => l.kind === "place" && l.text === "Paris")).toBe(true);
+    expect(named.some((l) => l.kind === "place" && l.text === "Frankreich")).toBe(false);
+  });
+});
