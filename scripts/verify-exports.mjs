@@ -16,8 +16,10 @@ for (const [label, mod] of [
 ]) {
   assert.equal(typeof mod.mapper, "function", `${label}: named export missing`);
 
-  const map = mod.mapper({ region: "west-europe", size: [640, 480] });
+  const map = await mod.mapper({ region: "west-europe", detail: "110m", size: [640, 480] });
   assert.ok(map.svg.startsWith("<svg"), `${label}: no svg emitted`);
+  assert.ok(map.svg.includes("<path"), `${label}: no geometry emitted`);
+  assert.ok(Array.isArray(map.project([2.35, 48.86])), `${label}: project() broken`);
   assert.ok(map.svg.includes('viewBox="0 0 640 480"'), `${label}: options ignored`);
   assert.equal(typeof map.project, "function", `${label}: project() missing`);
   assert.equal(typeof map.toFile, "function", `${label}: toFile() missing`);

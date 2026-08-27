@@ -15,8 +15,66 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
-Phase 1 — geometry core. Region resolvers, the projection lookup table, the
-`fitExtent` camera, coordinate rounding, and `map.project()`.
+Phase 2 — class taxonomy and the node-tree emitter.
+
+## [0.1.0] — 2026-08-27
+
+Phase 1 — geometry core. `mapper()` now produces real maps.
+
+### Added
+
+- Region resolvers: presets, code lists, bounding boxes. Presets are saved
+  code lists rather than a separate mechanism, and are explicit because the
+  topology carries no continent field and because membership is an editorial
+  call — "Western Europe" has no single correct definition
+- Projection registry as a lookup table: `mercator`, `conic-conformal`,
+  `albers`, `equal-earth`, `orthographic`. Conic standard parallels are derived
+  from the region's latitude span, so a conic works anywhere without the caller
+  knowing what a parallel is
+- `fitExtent` camera, coordinate rounding via `geoPath.digits(1)`
+- `map.project([lon, lat])` — the hook the annotation layer will hang from
+- Country identity: alpha-2, ISO numeric and user-assigned codes all resolve to
+  one canonical id, emitted as `data-iso`
+- `isoTable()` publishing every accepted code
+- Highlighting via `highlight: ["FR"]`, emitted as `.is-highlighted`
+- Unrecognised codes throw rather than silently producing an empty map
+
+### Changed
+
+- **`mapper()` is now async.** The full dataset is 8 MB across detail tiers, so
+  geometry has to be loaded per region rather than bundled wholesale. Deciding
+  this now avoids a breaking change later
+- Dropped the Phase 0 tests that asserted the absence of geometry
+
+### Fixed
+
+- **Framing no longer includes overseas territories.** France governs French
+  Guiana, so its geometry reaches South America; fitting to raw bounds framed
+  the Atlantic and squashed Europe into a corner. Outlying pieces are rejected
+  by angular distance from the region's centre — not by area, since Guyane is
+  13% of France and an area threshold would never catch it. A safety valve
+  leaves genuinely dispersed regions (Oceania, the world) untouched
+
+### Decided
+
+- **Outlying pieces are dropped from the output, not just the camera** — a map
+  of France is continental France. This is a default, not a statement about
+  what belongs to whom: Guyane is France. Representing overseas territories
+  properly, with insets or an explicit opt-in, is planned work
+- **ISO codes are the canonical id, not the topology's numeric.** Five features
+  (Kosovo, Somaliland, N. Cyprus, Indian Ocean Ter., Siachen Glacier) ship with
+  no id at all, so "fall back to the number" had nothing to fall back to. They
+  get user-assigned codes from the `X` range ISO reserves for private use —
+  `XK`, `XS`, `XN`, `XI`, `XG`. These are ours, not ISO, and are flagged as
+  such in `isoTable()`
+
+### Known
+
+- `world-atlas` is a devDependency and geometry is read from disk, so the
+  library is Node-only until Phase 4 bundles per-region extracts. The seam is
+  isolated in `src/topology.ts`
+- Regions are drawn without surrounding context — a West Europe map ends at the
+  German border rather than fading into Poland. Context is a Phase 2 question
 
 ## [0.0.1] — 2026-08-27
 
@@ -68,7 +126,6 @@ history stay the same document.
 
 | Version | Phase | Ships |
 | --- | --- | --- |
-| `0.1.0` | 1 · Geometry core | Regions, projections, paths, `project()` |
 | `0.2.0` | 2 · Taxonomy & emitter | Class contract, node-tree emitter, highlighting |
 | `0.3.0` | 3 · Theming | Tokens, theme resolution, inline-styles pass |
 | `0.4.0` | 4 · Data pipeline | Bundled Natural Earth, topology simplification |
@@ -77,5 +134,6 @@ history stay the same document.
 | `1.0.0` | 7 · Ship | Stable taxonomy, published, documented |
 | `1.1.0` | 8 · Annotations | Pins, arrows, callouts, icons |
 
-[Unreleased]: https://github.com/OWNER/mapper/compare/v0.0.1...HEAD
-[0.0.1]: https://github.com/OWNER/mapper/releases/tag/v0.0.1
+[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/danielefrisanco/mapper/releases/tag/v0.1.0
+[0.0.1]: https://github.com/danielefrisanco/mapper/releases/tag/v0.0.1
