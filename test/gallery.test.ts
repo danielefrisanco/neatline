@@ -139,6 +139,150 @@ const GALLERY: ReadonlyArray<readonly [string, MapperOptions]> = [
       title: "Italy, raised",
     },
   ],
+  // The three presets Phase 5 added. Each is shown on the same region and
+  // projection as `west-europe-minimal`, so what differs between the files is
+  // only ever the theme.
+  [
+    "west-europe-noir",
+    { region: "west-europe", projection: "conic-conformal", theme: "noir" },
+  ],
+  [
+    "west-europe-blueprint",
+    { region: "west-europe", projection: "conic-conformal", theme: "blueprint" },
+  ],
+  [
+    "west-europe-contrast",
+    { region: "west-europe", projection: "conic-conformal", theme: "contrast" },
+  ],
+  // Political fill: no data, no legend — colour only so that no country
+  // matches the one beside it.
+  [
+    "europe-political",
+    {
+      region: "europe",
+      projection: "conic-conformal",
+      theme: "atlas",
+      fill: "political",
+      size: [900, 900],
+      title: "Europe",
+    },
+  ],
+  // The same idea where the theme has no six hues to give it: blueprint fills
+  // with steps of its own blue, which still keeps every neighbour distinct.
+  [
+    "africa-political-blueprint",
+    {
+      region: "africa",
+      projection: "equal-earth",
+      theme: "blueprint",
+      fill: "political",
+      size: [1000, 900],
+      title: "Africa",
+    },
+  ],
+  // Every preset has to survive a highlight — that is the shot people judge.
+  [
+    "west-europe-noir-highlight",
+    {
+      region: "west-europe",
+      projection: "conic-conformal",
+      theme: "noir",
+      highlight: ["DE"],
+      title: "Germany",
+    },
+  ],
+  [
+    "world-contrast",
+    {
+      region: "world",
+      projection: "equal-earth",
+      theme: "contrast",
+      size: [1200, 620],
+      layers: { places: false },
+    },
+  ],
+  // Asia, for a region whose shape and scale test the framing differently from
+  // Europe: an equal-area projection over a span wide enough that a conformal
+  // one would be indefensible.
+  [
+    "asia-dusk",
+    {
+      region: "asia",
+      projection: "equal-earth",
+      theme: "minimal",
+      palette: "dusk",
+      size: [1200, 800],
+      title: "Asia",
+    },
+  ],
+  [
+    "asia-political",
+    {
+      region: "asia",
+      projection: "equal-earth",
+      theme: "atlas",
+      fill: "political",
+      size: [1200, 800],
+      title: "Asia",
+    },
+  ],
+  // Two encodings composing rather than competing: members filled with the
+  // accent, candidates hatched over their own political colour.
+  [
+    "europe-union",
+    {
+      region: "europe",
+      projection: "conic-conformal",
+      theme: "atlas",
+      size: [900, 900],
+      highlight: [
+        "AT", "BE", "BG", "HR", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU",
+        "IE", "IT", "LV", "LT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE",
+      ],
+      stripe: ["AL", "BA", "MD", "ME", "MK", "RS", "UA"],
+      title: "The European Union and its candidate countries",
+    },
+  ],
+  // The two continents the gallery was missing, so every one is now rendered
+  // at least once. `oceania` is the important one: it straddles the
+  // antimeridian, which is where centring a projection on its region either
+  // works or produces a map of the wrong half of the planet.
+  [
+    "north-america-albers",
+    {
+      region: "north-america",
+      projection: "albers",
+      theme: "minimal",
+      palette: "sand",
+      size: [1100, 900],
+      title: "North America",
+    },
+  ],
+  [
+    "oceania-noir",
+    {
+      region: "oceania",
+      projection: "equal-earth",
+      theme: "noir",
+      size: [1100, 800],
+      title: "Oceania",
+    },
+  ],
+  // A continent that is one country, at the one place a cylindrical projection
+  // cannot describe: the pole is a line there, not a point, so Antarctica comes
+  // out as a smear across the bottom of the map. Orthographic turns the globe
+  // to look straight down at it instead.
+  [
+    "antarctica-orthographic",
+    {
+      region: "antarctica",
+      projection: "orthographic",
+      theme: "blueprint",
+      size: [900, 900],
+      layers: { hydro: false },
+      title: "Antarctica",
+    },
+  ],
   [
     "italy-brand-tokens",
     {

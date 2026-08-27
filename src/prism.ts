@@ -87,6 +87,8 @@ export interface PrismInput {
   readonly highlighted: boolean;
   readonly bin?: number | undefined;
   readonly value?: number | undefined;
+  readonly fill?: number | undefined;
+  readonly striped?: boolean;
   /** This country's share of the shared borders, drawn at its own height. */
   readonly edges?: unknown;
 }
@@ -126,12 +128,11 @@ export function prisms(
     if (lift > 0) {
       children.push(el("path", { class: "mp-prism-side", d: sidePath(recorder.rings, lift) }));
     }
-    children.push(
-      el("path", {
-        class: "mp-prism-top",
-        d: recorder.rings.map((ring) => ringPath(ring, lift)).join(""),
-      }),
-    );
+    const top = recorder.rings.map((ring) => ringPath(ring, lift)).join("");
+    children.push(el("path", { class: "mp-prism-top", d: top }));
+    // Over the top face, at its lifted height — hatching the footprint would
+    // leave the marking on the ground while the country stood above it.
+    if (country.striped === true) children.push(el("path", { class: "mp-hatch", d: top }));
 
     // Lifted by a transform rather than by rewriting coordinates: a border is
     // a line, so there is nothing to sweep — it simply belongs on the surface
@@ -161,6 +162,7 @@ export function prisms(
           "data-height": round(lift),
           "data-bin": country.bin,
           "data-value": country.value,
+          "data-fill": country.fill,
         },
         children,
       ),

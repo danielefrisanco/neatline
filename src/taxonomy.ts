@@ -149,6 +149,11 @@ export const RESERVED_CLASSES: readonly string[] = Object.freeze([
   "mp-prism",
   "mp-prism-top",
   "mp-prism-side",
+  // Hatching laid over a country to say the thing that is not a quantity —
+  // disputed, claimed, excluded, no data. `mp-hatch` is the overlay on the
+  // map; `mp-hatch-line` is the stroke inside the pattern that draws it.
+  "mp-hatch",
+  "mp-hatch-line",
   "mp-flow",
   "mp-symbol",
   "mp-credit",

@@ -9,10 +9,17 @@ import { el, type Attributes, type SvgElement, type SvgNode } from "./svg.js";
  * non-browser renderers invert the cascade and let a presentation attribute
  * beat a stylesheet, which Phase 2 discovered the hard way.
  *
- * This is not a CSS engine. It matches class selectors and descendant
- * combinators, which is what the bundled themes use and what the documented
- * authoring convention asks for. Selectors it cannot understand are skipped
- * rather than half-applied, and are reported so the caller is not guessing.
+ * This is not a CSS engine. It matches class and attribute selectors joined by
+ * descendant combinators, which is what the bundled themes use and what the
+ * documented authoring convention asks for. Selectors it cannot understand are
+ * skipped rather than half-applied, and are reported so the caller is not
+ * guessing.
+ *
+ * Attribute selectors are not an extra: every data-driven encoding this library
+ * has is expressed as one. `[data-bin]` carries the choropleth, `[data-fill]`
+ * the political colouring, `[data-kind]` the difference between a lake and a
+ * river. While this understood classes alone, all three were dropped on the way
+ * out and a flattened choropleth exported as one flat colour.
  */
 
 /** Properties that exist as SVG presentation attributes. Nothing else transfers. */
@@ -44,26 +51,85 @@ const PRESENTATION = new Set([
   "visibility",
 ]);
 
-type Compound = readonly string[];
+/** `[data-bin]` (presence) or `[data-bin="3"]` (equality). Nothing else. */
+interface AttributeTest {
+  readonly name: string;
+  /** `null` tests only that the attribute is present. */
+  readonly value: string | null;
+}
 
-/** A selector we can honour: only class compounds, only descendant combinators. */
+interface Compound {
+  readonly classes: readonly string[];
+  readonly attributes: readonly AttributeTest[];
+}
+
+/** What a selector is matched against: an element's classes and its attributes. */
+interface Facts {
+  readonly classes: ReadonlySet<string>;
+  readonly attributes: Attributes;
+}
+
+const TOKEN =
+  /\.([A-Za-z_][\w-]*)|\[([A-Za-z_][\w:.-]*)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\]\s]*)))?\]/g;
+
+/** One compound — `.mp-country[data-bin="3"]` — or `null` if anything is unfamiliar. */
+function parseCompound(part: string): Compound | null {
+  const classes: string[] = [];
+  const attributes: AttributeTest[] = [];
+  let consumed = 0;
+
+  TOKEN.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = TOKEN.exec(part)) !== null) {
+    // A gap means something sits between the tokens that this does not read —
+    // a pseudo-class, a combinator, an element name. Better skipped than
+    // guessed at.
+    if (match.index !== consumed) return null;
+    consumed = TOKEN.lastIndex;
+    if (match[1] !== undefined) {
+      classes.push(match[1]);
+    } else {
+      const value = match[3] ?? match[4] ?? match[5];
+      attributes.push({ name: match[2] as string, value: value ?? null });
+    }
+  }
+
+  if (consumed !== part.length) return null;
+  if (classes.length === 0 && attributes.length === 0) return null;
+  return { classes, attributes };
+}
+
+/** A selector we can honour: class and attribute compounds, descendant combinators. */
 function parseSelector(selector: string): Compound[] | null {
   const compounds: Compound[] = [];
   for (const part of selector.trim().split(/\s+/)) {
     if (part === "") continue;
-    if (!/^(\.[A-Za-z_][\w-]*)+$/.test(part)) return null;
-    compounds.push(part.split(".").filter(Boolean));
+    const compound = parseCompound(part);
+    if (compound === null) return null;
+    compounds.push(compound);
   }
   return compounds.length === 0 ? null : compounds;
 }
 
-function classesOf(element: SvgElement): Set<string> {
+function factsOf(element: SvgElement): Facts {
   const value = element.attributes["class"];
-  return new Set(typeof value === "string" ? value.split(/\s+/).filter(Boolean) : []);
+  return {
+    classes: new Set(typeof value === "string" ? value.split(/\s+/).filter(Boolean) : []),
+    attributes: element.attributes,
+  };
 }
 
-function matches(compound: Compound, classes: ReadonlySet<string>): boolean {
-  return compound.every((name) => classes.has(name));
+function matches(compound: Compound, facts: Facts): boolean {
+  for (const name of compound.classes) {
+    if (!facts.classes.has(name)) return false;
+  }
+  for (const test of compound.attributes) {
+    const actual = facts.attributes[test.name];
+    if (actual === undefined) return false;
+    // Attributes are held as strings or numbers; `data-bin` is a number.
+    if (test.value !== null && String(actual) !== test.value) return false;
+  }
+  return true;
 }
 
 interface Candidate {
@@ -79,7 +145,7 @@ interface Candidate {
  */
 function selectorApplies(
   compounds: readonly Compound[],
-  stack: readonly ReadonlySet<string>[],
+  stack: readonly Facts[],
 ): boolean {
   const last = compounds[compounds.length - 1];
   const own = stack[stack.length - 1];
@@ -90,7 +156,7 @@ function selectorApplies(
     const wanted = compounds[i] as Compound;
     let found = false;
     while (ancestor >= 0) {
-      const candidate = stack[ancestor] as ReadonlySet<string>;
+      const candidate = stack[ancestor] as Facts;
       ancestor -= 1;
       if (matches(wanted, candidate)) {
         found = true;
@@ -198,7 +264,10 @@ export function inlineStyles(root: SvgElement, nodes: readonly CssNode[]): Inlin
       candidates.push({
         compounds,
         declarations: rule.declarations,
-        specificity: compounds.reduce((total, c) => total + c.length, 0),
+        specificity: compounds.reduce(
+          (total, c) => total + c.classes.length + c.attributes.length,
+          0,
+        ),
         order: (order += 1),
       });
     }
@@ -208,13 +277,12 @@ export function inlineStyles(root: SvgElement, nodes: readonly CssNode[]): Inlin
 
   function walk(
     node: SvgNode,
-    stack: readonly ReadonlySet<string>[],
+    stack: readonly Facts[],
     inherited: ReadonlyMap<string, string>,
   ): SvgNode {
     if (node.kind === "text" || node.kind === "raw") return node;
 
-    const own = classesOf(node);
-    const nextStack = [...stack, own];
+    const nextStack = [...stack, factsOf(node)];
 
     const applicable = candidates
       .filter((candidate) => selectorApplies(candidate.compounds, nextStack))

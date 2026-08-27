@@ -131,6 +131,35 @@ await map.render()   // complete and portable — renders without CSS support
 await map.toFile(p)  // render(), written to disk
 ```
 
+### The presets
+
+| Theme | |
+|---|---|
+| `minimal` | Flat fills, hairline edges, no ocean — for a page with a ground of its own |
+| `atlas` | Printed-atlas paper on a cold sea, dashed boundaries, serif |
+| `noir` | Dark ground, hairline linework, no fills to speak of, one warm accent |
+| `blueprint` | White linework on drafting blue, monospaced, dashed boundaries |
+| `contrast` | Black and white sized for legibility — heavy strokes, no muted ink |
+
+Palettes are colour only: `dusk` and `sand` restyle any of them without
+touching a weight, a dash or the type.
+
+### Dark mode
+
+Every preset ships a `@media (prefers-color-scheme: dark)` block, so a map
+dropped into a page follows the reader's system. Because tokens are role-named
+it is a value swap and nothing structural.
+
+An explicit `palette` still wins — it is applied after the theme, so the
+cascade settles it. Asking for `sand` gets sand whatever the system is set to;
+automatic dark is the default, never an override.
+
+One consequence worth knowing: `render()` flattens the theme onto presentation
+attributes, and a media query cannot be flattened — whether it applies is not
+known until someone looks at it. So the flattened attributes carry the light
+values and the stylesheet still ships alongside. A browser honours the dark
+block; a design tool gets the light map.
+
 ### Two output forms, for two different readers
 
 `toString()` is styled by its stylesheet alone. That is the right form to embed
@@ -168,13 +197,29 @@ every theme in the wild.
 | Token | Controls |
 |---|---|
 | `--bg` | Canvas ground — the ocean, or transparent |
-| `--land` | Country fill |
-| `--land-edge` | Country outline |
-| `--border` / `--border-width` | Shared boundaries |
+| `--land` / `--land-edge` / `--land-edge-width` | Country fill and outline |
+| `--border` / `--border-width` / `--border-dash` | Shared boundaries |
 | `--accent` / `--accent-edge` | Anything highlighted |
+| `--bin-1` … `--bin-5` | Bands of a classified value |
+| `--fill-1` … `--fill-6` | Political fill |
+| `--stripe` / `--stripe-width` | Diagonal hatching |
+| `--prism-side` / `--accent-side` | Walls of a raised country |
+| `--water` / `--water-width` | Lakes and rivers |
+| `--place` | Settlement dots |
+| `--neighbour` | Context countries |
 | `--ink` / `--ink-muted` | Text |
 | `--font` / `--label-size` | Type |
-| `--water` `--road` `--neighbour` `--anno` `--anno-ink` `--furniture-ink` | *Reserved* — set them now, they start working when their layer lands |
+| `--road` `--anno` `--anno-ink` `--furniture-ink` | *Reserved* — set them now, they start working when their layer lands |
+
+Every bundled theme defines every live token, and a test holds it: a theme that
+misses one leaves a map wearing another theme's colour in that one place.
+
+Two of these encode a rule rather than a preference. `--prism-side` has to be
+darker than any band that can sit on top of it — a pale wall under a dark top
+inverts the light source and a prism map turns to mud. And `--accent-side`
+exists because the obvious `filter: brightness()` is a CSS filter function that
+SVG 1.1 does not accept, so every viewer ignoring stylesheets drew the wall in
+the top's colour and flattened the prism into a silhouette.
 
 ### Styles are scoped to one map
 
@@ -249,6 +294,50 @@ and everything else in the bottom one.
 `values` defaults to whatever `extrude` was given, so one set of numbers can
 drive height and colour at once.
 
+A highlight beats a band. `.mp-country.is-highlighted` and
+`.mp-country[data-bin="3"]` have identical specificity, so the one written last
+wins — and highlight is the caller naming a country outright, where a band is a
+number it happened to fall into.
+
+### Colour without data
+
+```ts
+await mapper({ region: "africa", fill: "political" });
+```
+
+Every country gets a colour none of its neighbours has, written out as
+`data-fill` for the theme to resolve from `--fill-1` … `--fill-6`. The oldest
+convention in map-making, and the sensible default for a map with nothing to
+encode.
+
+It costs almost nothing: the border mesh already visits every shared arc to
+find the boundaries, so the adjacency graph comes out of the same pass. Four
+colours suffice for Europe and five for the world — six exist because a real
+country graph is not quite the planar one the four-colour theorem is about.
+
+Political fill defers to a band. A country carrying a number is already saying
+something with its colour, and two encodings on one fill is one of them lying.
+
+### Hatching
+
+```ts
+await mapper({
+  region: "europe",
+  highlight: [...members],
+  stripe: ["AL", "BA", "MD", "ME", "MK", "RS", "UA"],
+});
+```
+
+For the thing a map has to say about a country that is not a quantity —
+disputed, claimed, excluded, no data. It is an overlay rather than a fill, so a
+hatched country keeps whatever colour it already had and the two readings
+stack.
+
+The pattern lives in `<defs>` and the line inside it carries a class, so a
+theme styles it like everything else. It has to be a class: `currentColor`
+inside a pattern resolves where the pattern *sits*, in the defs block, not
+where it is used.
+
 ### Height as quantity
 
 ```ts
@@ -271,6 +360,38 @@ prism exactly as on a flat country. See `europe-gdp-prism.svg` and
 
 Nothing about this is a raster trick: the solid is built by sweeping the
 projected outline upward, so it stays vector, themeable and diffable.
+
+### Projections face their region
+
+A projection is centred on its region's meridian before being fitted to the
+canvas — `fitExtent` solves scale and position but never rotation, so without
+this a map of Asia is drawn from the far edge of a Greenwich-centred projection
+and arrives sheared.
+
+Only the central meridian moves for the cylindrical and pseudocylindrical
+projections; tilting one off the equator gives an oblique aspect, which is a
+deliberate choice rather than a default. `orthographic` turns in both axes,
+because a globe has no other way to look at a place.
+
+Past a 180° span the region is effectively the world, and rotating stops being
+a service — so a world map keeps the Atlantic in the middle, where readers
+expect it.
+
+Regions that cross the antimeridian are handled with the wrap: Oceania reports
+as 113°E to -180°E, and averaging those two numbers would centre the map on the
+opposite side of the planet.
+
+`antarctica` is the exception that proves this section: a pole is a line rather
+than a point in any cylindrical projection, so it smears across the bottom of
+the map. Draw it `orthographic`.
+
+### Water is clipped to land
+
+A river is one feature from its source to its mouth, so keeping the Danube
+because it passes through Austria keeps the whole of it — and it used to carry
+on across the sea to the Black Sea on every map of Western Europe. The hydro
+layer is clipped to the land actually drawn, which is also the truer statement:
+a river is on land.
 
 ### Neighbours
 
@@ -313,7 +434,7 @@ one CSS rule, but not emitting its path data is real bytes.
 ## The gallery
 
 `test/__snapshots__/gallery/` holds committed renders across themes, palettes,
-projections and canvas shapes. They are snapshots, so a diff fails the build —
+projections and canvas shapes, including one map of every continent. They are snapshots, so a diff fails the build —
 but they are real `.svg` files, so a diff is also something a person can open.
 That matters twice over: Phase 2 shipped a map that rendered as a solid black
 square while every string assertion passed, and Phase 3 first shipped this

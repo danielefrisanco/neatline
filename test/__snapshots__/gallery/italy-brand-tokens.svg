@@ -1,136 +1,231 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1k3c3d0" role="img" aria-label="Where we operate">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1bl35jb" role="img" aria-label="Where we operate">
   <title>Where we operate</title>
   <style>
-    .mp.mp-t-1k3c3d0 {
+    .mp.mp-t-1bl35jb {
       --bg: transparent;
       --land: #D8D8D2;
       --land-edge: #FFFFFF;
+      --land-edge-width: 0.5;
       --border: #94948C;
       --border-width: 0.75;
+      --border-dash: none;
       --accent: #C2482F;
       --accent-edge: #FFFFFF;
-      --bin-1: #E6E6E1;
-      --bin-2: #C9CFC6;
-      --bin-3: #A6B4AB;
-      --bin-4: #7E9186;
-      --bin-5: #566B5F;
-      --prism-side: #A9A9A2;
+      --bin-1: #EDEDE8;
+      --bin-2: #C6CFC5;
+      --bin-3: #9CAFA3;
+      --bin-4: #6E857A;
+      --bin-5: #435850;
+      --fill-1: #B9C7B4;
+      --fill-2: #DFCBA8;
+      --fill-3: #A9BECF;
+      --fill-4: #D3AFB4;
+      --fill-5: #C9C49A;
+      --fill-6: #B6ADC6;
+      --prism-side: #29352F;
+      --accent-side: #8A3320;
       --place: #2B2B29;
       --ink: #2B2B29;
       --ink-muted: #80807A;
       --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
       --label-size: 13;
+      --stripe: #6E6E68;
+      --stripe-width: 1.6;
       --water: #8FB0C4;
+      --water-width: 1.1;
       --road: #B08A3E;
       --neighbour: #F0F0EE;
       --anno: #C2482F;
       --anno-ink: #FFFFFF;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-1k3c3d0 .mp-bg {
+    .mp.mp-t-1bl35jb .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-1k3c3d0 .mp-country {
-      fill: var(--land);
-      stroke: var(--land-edge);
-      stroke-width: 0.5;
-      stroke-linejoin: round;
-    }
-    .mp.mp-t-1k3c3d0 .mp-country.is-highlighted {
-      fill: var(--accent);
-      stroke: var(--accent-edge);
-    }
-    .mp.mp-t-1k3c3d0 .mp-border {
-      fill: none;
-      stroke: var(--border);
-      stroke-width: var(--border-width);
-      stroke-linejoin: round;
-      stroke-linecap: round;
-    }
-    .mp.mp-t-1k3c3d0 .mp-neighbour {
+    .mp.mp-t-1bl35jb .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-1k3c3d0 .mp-water[data-kind="lake"] {
+    .mp.mp-t-1bl35jb .mp-country {
+      fill: var(--land);
+      stroke: var(--land-edge);
+      stroke-width: var(--land-edge-width);
+      stroke-linejoin: round;
+    }
+    .mp.mp-t-1bl35jb .mp-country[data-bin="1"] {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-1bl35jb .mp-country[data-bin="2"] {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-1bl35jb .mp-country[data-bin="3"] {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-1bl35jb .mp-country[data-bin="4"] {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-1bl35jb .mp-country[data-bin="5"] {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-1bl35jb .mp-country[data-fill="1"] {
+      fill: var(--fill-1);
+    }
+    .mp.mp-t-1bl35jb .mp-country[data-fill="2"] {
+      fill: var(--fill-2);
+    }
+    .mp.mp-t-1bl35jb .mp-country[data-fill="3"] {
+      fill: var(--fill-3);
+    }
+    .mp.mp-t-1bl35jb .mp-country[data-fill="4"] {
+      fill: var(--fill-4);
+    }
+    .mp.mp-t-1bl35jb .mp-country[data-fill="5"] {
+      fill: var(--fill-5);
+    }
+    .mp.mp-t-1bl35jb .mp-country[data-fill="6"] {
+      fill: var(--fill-6);
+    }
+    .mp.mp-t-1bl35jb .mp-country.is-highlighted {
+      fill: var(--accent);
+      stroke: var(--accent-edge);
+    }
+    .mp.mp-t-1bl35jb .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-1k3c3d0 .mp-water[data-kind="river"] {
+    .mp.mp-t-1bl35jb .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
-      stroke-width: 1.1;
+      stroke-width: var(--water-width);
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
-    .mp.mp-t-1k3c3d0 .mp-place {
-      fill: var(--place);
-      stroke: none;
-    }
-    .mp.mp-t-1k3c3d0 .mp-country[data-bin="1"] {
-      fill: var(--bin-1);
-    }
-    .mp.mp-t-1k3c3d0 .mp-country[data-bin="2"] {
-      fill: var(--bin-2);
-    }
-    .mp.mp-t-1k3c3d0 .mp-country[data-bin="3"] {
-      fill: var(--bin-3);
-    }
-    .mp.mp-t-1k3c3d0 .mp-country[data-bin="4"] {
-      fill: var(--bin-4);
-    }
-    .mp.mp-t-1k3c3d0 .mp-country[data-bin="5"] {
-      fill: var(--bin-5);
-    }
-    .mp.mp-t-1k3c3d0 .mp-prism[data-bin="1"] .mp-prism-top {
-      fill: var(--bin-1);
-    }
-    .mp.mp-t-1k3c3d0 .mp-prism[data-bin="2"] .mp-prism-top {
-      fill: var(--bin-2);
-    }
-    .mp.mp-t-1k3c3d0 .mp-prism[data-bin="3"] .mp-prism-top {
-      fill: var(--bin-3);
-    }
-    .mp.mp-t-1k3c3d0 .mp-prism[data-bin="4"] .mp-prism-top {
-      fill: var(--bin-4);
-    }
-    .mp.mp-t-1k3c3d0 .mp-prism[data-bin="5"] .mp-prism-top {
-      fill: var(--bin-5);
-    }
-    .mp.mp-t-1k3c3d0 .mp-prism-top {
-      fill: var(--land);
-      stroke: var(--land-edge);
-      stroke-width: 0.5;
-    }
-    .mp.mp-t-1k3c3d0 .mp-prism-side {
-      fill: var(--prism-side);
-      stroke: none;
-    }
-    .mp.mp-t-1k3c3d0 .mp-prism-edge {
+    .mp.mp-t-1bl35jb .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
+      stroke-dasharray: var(--border-dash);
+      stroke-linejoin: round;
+      stroke-linecap: round;
     }
-    .mp.mp-t-1k3c3d0 .mp-prism.is-highlighted .mp-prism-top {
-      fill: var(--accent);
-    }
-    .mp.mp-t-1k3c3d0 .mp-prism.is-highlighted .mp-prism-side {
-      fill: var(--accent);
-      filter: brightness(0.7);
-    }
-    .mp.mp-t-1k3c3d0 .mp-road {
+    .mp.mp-t-1bl35jb .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-1k3c3d0 .mp-label {
+    .mp.mp-t-1bl35jb .mp-place {
+      fill: var(--place);
+      stroke: none;
+    }
+    .mp.mp-t-1bl35jb .mp-prism-top {
+      fill: var(--land);
+      stroke: var(--land-edge);
+      stroke-width: var(--land-edge-width);
+    }
+    .mp.mp-t-1bl35jb .mp-prism-side {
+      fill: var(--prism-side);
+      stroke: none;
+    }
+    .mp.mp-t-1bl35jb .mp-prism-edge {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: var(--border-width);
+      stroke-dasharray: var(--border-dash);
+    }
+    .mp.mp-t-1bl35jb .mp-prism[data-bin="1"] .mp-prism-top {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-1bl35jb .mp-prism[data-bin="2"] .mp-prism-top {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-1bl35jb .mp-prism[data-bin="3"] .mp-prism-top {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-1bl35jb .mp-prism[data-bin="4"] .mp-prism-top {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-1bl35jb .mp-prism[data-bin="5"] .mp-prism-top {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-1bl35jb .mp-prism[data-fill="1"] .mp-prism-top {
+      fill: var(--fill-1);
+    }
+    .mp.mp-t-1bl35jb .mp-prism[data-fill="2"] .mp-prism-top {
+      fill: var(--fill-2);
+    }
+    .mp.mp-t-1bl35jb .mp-prism[data-fill="3"] .mp-prism-top {
+      fill: var(--fill-3);
+    }
+    .mp.mp-t-1bl35jb .mp-prism[data-fill="4"] .mp-prism-top {
+      fill: var(--fill-4);
+    }
+    .mp.mp-t-1bl35jb .mp-prism[data-fill="5"] .mp-prism-top {
+      fill: var(--fill-5);
+    }
+    .mp.mp-t-1bl35jb .mp-prism[data-fill="6"] .mp-prism-top {
+      fill: var(--fill-6);
+    }
+    .mp.mp-t-1bl35jb .mp-prism.is-highlighted .mp-prism-top {
+      fill: var(--accent);
+    }
+    .mp.mp-t-1bl35jb .mp-prism.is-highlighted .mp-prism-side {
+      fill: var(--accent-side);
+    }
+    .mp.mp-t-1bl35jb .mp-hatch {
+      fill: url(#mp-stripe);
+      stroke: none;
+    }
+    .mp.mp-t-1bl35jb .mp-hatch-line {
+      fill: none;
+      stroke: var(--stripe);
+      stroke-width: var(--stripe-width);
+    }
+    .mp.mp-t-1bl35jb .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
     }
-    .mp.mp-t-1k3c3d0 {
+    @media (prefers-color-scheme: dark) {
+      .mp.mp-t-1bl35jb {
+        --land: #2E3134;
+        --land-edge: #16181A;
+        --border: #6E747A;
+        --accent: #E2694A;
+        --accent-edge: #16181A;
+        --bin-1: #24272A;
+        --bin-2: #2F3A36;
+        --bin-3: #3F5049;
+        --bin-4: #55685E;
+        --bin-5: #7A9184;
+        --fill-1: #364039;
+        --fill-2: #453D2F;
+        --fill-3: #2F3B45;
+        --fill-4: #443338;
+        --fill-5: #41402E;
+        --fill-6: #383345;
+        --prism-side: #14181A;
+        --accent-side: #9C4832;
+        --place: #DCDCD6;
+        --ink: #DCDCD6;
+        --ink-muted: #85898D;
+        --stripe: #9A9A94;
+        --water: #4C7A96;
+        --neighbour: #202325;
+        --anno: #E2694A;
+        --anno-ink: #16181A;
+        --furniture-ink: #85898D;
+      }
+    }
+    .mp.mp-t-1bl35jb {
       --land: #0B5D3B;
       --land-edge: #F4F1E8;
       --bg: #F4F1E8;
     }
   </style>
-  <defs class="mp-defs"/>
+  <defs class="mp-defs">
+    <pattern id="mp-stripe" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path class="mp-hatch-line" d="M0,0 V7" fill="none" stroke="#6E6E68" stroke-width="1.6"/>
+    </pattern>
+  </defs>
   <rect class="mp-bg" x="0" y="0" width="600" height="800" fill="#F4F1E8"/>
   <g class="mp-layer mp-neighbours"/>
   <g class="mp-layer mp-land">

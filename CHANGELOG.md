@@ -15,7 +15,98 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
-Phase 5 — presets and fill modes.
+## [0.8.0] — 2026-08-27
+
+Phase 5 — presets and fill modes. Five themes, two fill modes that need no
+data, and the fix that made the last release's choropleth actually visible.
+
+### Fixed
+
+- **Attribute selectors were dropped when flattening.** `inline.ts` matched
+  class selectors only, so every rule keyed on a data attribute was skipped on
+  the way out: `[data-bin]`, `[data-kind]`, and — had this not been found —
+  `[data-fill]`. The consequences shipped in 0.7 and went unnoticed because the
+  tests only ever asserted on strings. A choropleth exported as one flat
+  colour, and **rivers exported with no stroke at all**, which is to say
+  invisible. Both worked in a browser, which is why the gallery looked fine to
+  anything that reads `<style>` and wrong to everything else
+- **Rivers ran off the map.** A river is one feature from source to mouth, so
+  keeping the Danube because it crosses Austria kept all of it — it carried on
+  across the sea to the Black Sea on every map of Western Europe. Water is now
+  clipped to the land actually drawn, which is also the truer statement
+- **Prism walls were lighter than the tops they carried**, inverting the light
+  source and turning a choropleth prism map to mud. A wall is in shadow, so
+  `--prism-side` is now darker than any band that can sit on it. The
+  choropleth ramps were widened at the same time — five browns inside a narrow
+  lightness range read as one brown
+- **A highlight lost to a band.** `.mp-country.is-highlighted` and
+  `.mp-country[data-bin="3"]` have identical specificity, so source order
+  decided it, and the band was written last. Highlight is the caller naming a
+  country outright; a band is a number it fell into. Highlight now wins, and a
+  test holds the ordering
+- **A highlighted prism wall used `filter: brightness()`**, a CSS filter
+  function SVG 1.1 does not accept — so every viewer that ignores stylesheets
+  drew the wall in the top's colour and flattened the prism to a silhouette.
+  It is now the `--accent-side` token
+- **Palettes covered half the colour vocabulary.** `dusk` set `--land` but no
+  `--bin-n`, so a choropleth came out in pale daylight bands over a night sea
+- **`mercator` and `equal-earth` never turned to face their region.**
+  `fitExtent` scales and translates but does not rotate, so a map of Asia was
+  drawn from a Greenwich-centred projection — 90° out from the part of it that
+  is faithful, and sheared accordingly. The conics and `orthographic` already
+  rotated, which is exactly why South America looked right and Asia did not.
+  Both now centre on their region's meridian, and stop doing so past a 180°
+  span, where a world map should keep the Atlantic in the middle
+- **The central meridian was computed wrongly across the antimeridian.**
+  `(west + east) / 2` puts Oceania — 113°E to -180°E — at 33°W, on the other
+  side of the planet. Longitude span and centre are now computed with the wrap,
+  which the conics and `orthographic` inherit as well
+
+### Added
+
+- **Three presets — `noir`, `blueprint`, `contrast`** — joining `minimal` and
+  `atlas`. `noir` is dark ground and hairline linework with no fills to speak
+  of; `blueprint` is white linework on drafting blue, monospaced, with dashed
+  boundaries; `contrast` is black and white sized for legibility, and is the
+  one preset that overrides the shared structure — a filled lake in black and
+  white reads as a hole punched in the land, so its lakes are outlines
+- **A dark block on every preset.** Tokens are role-named, so it is a value
+  swap and nothing structural. An explicit `palette` still wins, because it is
+  applied after the theme and the cascade settles it: asking for `sand` gets
+  sand whatever the reader's system is set to
+- **`fill: "political"`** — every country a colour none of its neighbours has,
+  written out as `data-fill`. No data needed. The adjacency was already known:
+  the border mesh visits every shared arc to find the boundaries, so recording
+  the graph costs one more pass and no new geometry. Welsh–Powell colouring,
+  ties broken on the code so the same map always comes out the same way. Four
+  colours suffice for Europe, five for the world, and there are six to draw on
+- **`stripe`** — diagonal hatching over named countries, for the thing a map
+  has to say that is not a quantity: disputed, claimed, excluded, no data.
+  Drawn as an overlay rather than a fill, so a hatched country keeps whatever
+  colour it already had and the two readings stack. The first thing to use the
+  `<defs>` slot reserved in Phase 2 for a pattern
+- **A shared structural stylesheet.** Five themes repeating forty rules is five
+  places for them to drift, so the rules live once in `structure.ts` and read
+  entirely from tokens. New tokens carry what the duplication used to:
+  `--land-edge-width`, `--border-dash`, `--water-width`, `--accent-side`,
+  `--stripe`, `--stripe-width`, and `--fill-1` … `--fill-6`
+- **An `antarctica` region preset**, and a gallery image for every continent.
+  `north-america` and `oceania` were never rendered before; `oceania` is the one
+  that matters, since it straddles the antimeridian. Antarctica is one country
+  and the one place a cylindrical projection cannot describe — the pole is a
+  line there rather than a point — so it is drawn orthographic
+- **`test/presets.test.ts`** — what a preset has to be, as tests rather than as
+  prose: every live token defined, a dark block that introduces nothing new,
+  every colour parseable, highlight ordered after the bands, and no country
+  anywhere sharing a neighbour's political fill
+
+### Changed
+
+- `inline.ts` understands attribute selectors — presence and equality, quoted
+  or not. Still not a CSS engine; anything it cannot read is still skipped and
+  reported rather than half-applied
+- The `<defs>` block is no longer always empty: it carries the land clip path
+  when water is drawn, and any pattern or filter the stylesheet references
 
 ## [0.7.0] — 2026-08-27
 

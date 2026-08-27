@@ -46,7 +46,11 @@ describe("document shape", () => {
   // declarations, so they need somewhere to be defined. The slot is claimed
   // now because adding it later would be a structural change.
   it("reserves a defs block ahead of everything drawn", () => {
-    expect(map.svg).toContain('<defs class="mp-defs"/>');
+    // Definitions have to exist before anything references them, so the slot
+    // sits ahead of the background. What it holds depends on the map — a clip
+    // path once water is drawn, a filter once a theme asks for one — but the
+    // slot itself is unconditional.
+    expect(map.svg).toMatch(/<defs class="mp-defs"[/>]/);
     expect(map.svg.indexOf('class="mp-defs"')).toBeLessThan(map.svg.indexOf('class="mp-bg"'));
   });
 

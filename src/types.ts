@@ -47,7 +47,8 @@ export type RegionPreset =
   | "south-america"
   | "africa"
   | "asia"
-  | "oceania";
+  | "oceania"
+  | "antarctica";
 
 /**
  * Minimal structural GeoJSON. Deliberately local rather than a dependency —
@@ -100,6 +101,24 @@ export interface MapperOptions {
   readonly values?: Readonly<Record<string, number>>;
   /** How many bands to classify `values` into. @default 5 */
   readonly bins?: number;
+  /**
+   * How the land is coloured when it is not carrying data.
+   *
+   * `"political"` gives every country a colour none of its neighbours has,
+   * written out as `data-fill` for the theme to resolve — the old convention
+   * that makes a boundary readable without tracing the line. It needs no data,
+   * and it defers to `values`: a country with a band keeps its band.
+   */
+  readonly fill?: "political";
+  /**
+   * ISO codes to lay diagonal hatching over.
+   *
+   * The thing a map has to say about a country that is not a quantity —
+   * disputed, claimed, excluded, no data. It is drawn as an overlay rather
+   * than as a fill, so a hatched country keeps whatever colour it already had
+   * and the two readings stack instead of one replacing the other.
+   */
+  readonly stripe?: readonly string[];
   /**
    * Raise each country off the map, so height reads as quantity.
    *

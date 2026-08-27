@@ -3,9 +3,11 @@ import { assignBins, DEFAULT_BINS } from "./bins.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
 import { heightsFor, prisms, type PrismInput } from "./prism.js";
+import { politicalFill } from "./political.js";
 import { createProjection } from "./projections.js";
 import { expandPreset, isRegionPreset, presetLabel } from "./regions.js";
 import { referencedFilters } from "./filters.js";
+import { referencedPatterns } from "./patterns.js";
 import { inlineStyles } from "./inline.js";
 import { el, serialize, styleElement, text, type SvgElement, type SvgNode } from "./svg.js";
 import { resolveTheme, type ResolvedTheme } from "./theme.js";
@@ -32,9 +34,11 @@ import type {
 } from "./types.js";
 
 export { isoTable, resolveId, type IsoEntry } from "./iso.js";
+export { FILL_COUNT, politicalFill } from "./political.js";
 export { PROJECTION_NAMES, isProjectionName } from "./projections.js";
 export { REGION_PRESETS, REGION_PRESET_NAMES, isRegionPreset } from "./regions.js";
 export { FILTER_NAMES } from "./filters.js";
+export { PATTERN_NAMES } from "./patterns.js";
 export { PALETTE_NAMES, THEME_NAMES, THEMES, PALETTES } from "./theme.js";
 export { TOKENS, TOKEN_NAMES, isTokenName, type TokenSpec } from "./tokens.js";
 export {
@@ -288,6 +292,15 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     highlighted.add(code2);
   }
 
+  const striped = new Set<string>();
+  for (const code of options.stripe ?? []) {
+    const code2 = resolveId(code);
+    if (code2 === null) {
+      throw new Error(`mapper: unrecognised stripe code "${code}"`);
+    }
+    striped.add(code2);
+  }
+
   // Extruded countries rise off their footprint, so the camera needs room
   // above the map or the tallest prism is cut off by the top edge.
   const extrusion =
@@ -303,6 +316,16 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     source === undefined
       ? null
       : assignBins(source, options.bins ?? DEFAULT_BINS, resolveId);
+  // Political fill defers to a band: a country carrying a number is already
+  // saying something with its colour, and two encodings on one fill is one of
+  // them lying. So this only ever fills what `values` left alone.
+  const fills =
+    options.fill === "political"
+      ? politicalFill(resolved.borderIds, world.adjacency(resolved.borderIds))
+      : null;
+  const fillOf = (id: string): number | undefined =>
+    fills === null || bins?.has(id) === true ? undefined : fills.get(id);
+
   const headroom =
     extrusion === null
       ? 0
@@ -316,6 +339,9 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   const wants = (name: LayerName): boolean => options.layers?.[name] ?? true;
 
   const land: SvgNode[] = [];
+  // Collected separately and appended, so hatching sits over every country in
+  // the layer rather than only over the ones drawn after it.
+  const hatched: SvgNode[] = [];
   const highlightedNames: string[] = [];
   for (const country of frame.countries) {
     const d = path(country.geometry as never);
@@ -332,6 +358,8 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
           "data-name": country.name === "" ? undefined : country.name,
           "data-bin": banded?.bin,
           "data-value": banded?.value,
+          "data-fill": fillOf(country.id),
+          "data-stripe": striped.has(country.id) ? "" : undefined,
           d,
         },
         // A per-feature title is a hover tooltip, not an accessibility tree:
@@ -340,7 +368,11 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
         country.name === "" ? [] : [el("title", {}, [text(country.name)])],
       ),
     );
+    if (striped.has(country.id)) {
+      hatched.push(el("path", { class: "mp-hatch", "data-iso": country.id, d }));
+    }
   }
+  land.push(...hatched);
   // Highlight names are collected even when the layer is off, so the accessible
   // description stays true to what was asked for.
   if (wants("land")) {
@@ -355,6 +387,8 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
         highlighted: country.id !== "" && highlighted.has(country.id),
         bin: bins?.get(country.id)?.bin,
         value: bins?.get(country.id)?.value,
+        fill: fillOf(country.id),
+        striped: striped.has(country.id),
         edges: wants("borders")
           ? world.borders(resolved.borderIds, country.id) ?? undefined
           : undefined,
@@ -423,6 +457,24 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     }
     if (water.length > 0) content.set("hydro", water);
   }
+
+  /**
+   * Water is clipped to the land actually drawn.
+   *
+   * A river is one feature from its source to its mouth, so keeping the Danube
+   * because it passes through Austria keeps the whole of it — and it carried on
+   * across the sea to the Black Sea on every map of Western Europe. Trimming the
+   * coordinates would mean writing a clipper; the land silhouette is already to
+   * hand and says the true thing anyway, which is that a river is on land.
+   */
+  const landClip =
+    content.has("hydro") && frame.countries.length > 0
+      ? path({
+          type: "FeatureCollection",
+          features: frame.countries.map((c) => c.geometry),
+        } as never)
+      : null;
+  const LAND_CLIP_ID = "mp-land-clip";
 
   if (wants("places")) {
     const maxRank = options.placeRank ?? 2;
@@ -506,6 +558,8 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
           // Structural, not stylistic: a line drawn with the default fill
           // renders as a filled blob.
           fill: spec.name === "borders" ? "none" : undefined,
+          "clip-path":
+            spec.name === "hydro" && landClip !== null ? `url(#${LAND_CLIP_ID})` : undefined,
         },
         content.get(spec.name) ?? [],
       ),
@@ -516,7 +570,12 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
     // A stylesheet cannot create SVG elements, so a theme names the effect it
     // wants and the definition is emitted here. Referenced only — an unused
     // filter is never written.
-    const defs = el(DEFS_TAG, { class: DEFS_CLASS }, referencedFilters(theme.css));
+    const definitions: SvgNode[] = [];
+    if (landClip !== null) {
+      definitions.push(el("clipPath", { id: LAND_CLIP_ID }, [el("path", { d: landClip })]));
+    }
+    definitions.push(...referencedPatterns(theme.css), ...referencedFilters(theme.css));
+    const defs = el(DEFS_TAG, { class: DEFS_CLASS }, definitions);
     // The scope class rides on the root even when the stylesheet is served
     // separately, or `map.css` would have nothing to match against.
     const rootClass = theme.scope === null ? ROOT_CLASS : `${ROOT_CLASS} ${theme.scope}`;

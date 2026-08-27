@@ -42,6 +42,15 @@ export interface World {
    * country's own height, or it floats between the two.
    */
   borders(ids: readonly string[], focus?: string): unknown | null;
+  /**
+   * Which of the named countries share a boundary with which.
+   *
+   * The same fact `borders` is built on, kept rather than discarded. A political
+   * fill needs the graph, not the lines — and the mesh already visits every
+   * shared arc to find them, so this costs one more pass over arcs and no new
+   * geometry.
+   */
+  adjacency(ids: readonly string[]): Map<string, Set<string>>;
   water(kind: WaterKind): unknown;
 }
 
@@ -141,6 +150,36 @@ export async function loadWorld(detail: Detail): Promise<World> {
         a !== b && (focused === undefined || a === focused || b === focused),
       ) as { coordinates: readonly unknown[] };
       return lines.coordinates.length === 0 ? null : lines;
+    },
+
+    adjacency(ids: readonly string[]): Map<string, Set<string>> {
+      const graph = new Map<string, Set<string>>();
+      const geometries: unknown[] = [];
+      const idOf = new Map<unknown, string>();
+
+      for (const id of ids) {
+        const source = rawById.get(id);
+        if (source === undefined) continue;
+        geometries.push(source);
+        idOf.set(source, id);
+        graph.set(id, new Set());
+      }
+      if (geometries.length < 2) return graph;
+
+      const subset = { type: "GeometryCollection" as const, geometries };
+      // The filter is called once per arc whatever it returns, so returning
+      // false throughout records the graph and builds no line work at all.
+      mesh(topology as never, subset as never, (a, b) => {
+        if (a === b) return false;
+        const left = idOf.get(a);
+        const right = idOf.get(b);
+        if (left === undefined || right === undefined) return false;
+        graph.get(left)?.add(right);
+        graph.get(right)?.add(left);
+        return false;
+      });
+
+      return graph;
     },
 
     water(kind: WaterKind): unknown {

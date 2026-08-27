@@ -44,6 +44,12 @@ export const REGION_PRESETS: Readonly<Record<Exclude<RegionPreset, "world">, rea
     "AU", "FJ", "KI", "MH", "FM", "NR", "NZ", "PW", "PG", "WS", "SB", "TO",
     "TV", "VU", "NC", "PF",
   ],
+  // One country, and the only preset that is a whole continent in a single
+  // code. The French Southern and Antarctic Lands are deliberately left out:
+  // Kerguelen and its neighbours sit thousands of kilometres north in the
+  // Indian Ocean, and including them would frame an ocean rather than a
+  // continent.
+  antarctica: ["AQ"],
 } as const;
 
 export const REGION_PRESET_NAMES = [
@@ -76,6 +82,7 @@ const PRESET_LABELS: Readonly<Record<RegionPreset, string>> = {
   africa: "Africa",
   asia: "Asia",
   oceania: "Oceania",
+  antarctica: "Antarctica",
 };
 
 export function presetLabel(preset: RegionPreset): string {

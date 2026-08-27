@@ -1,10 +1,21 @@
 import { hashCss, parseCss, scopeCss, serializeCss, type CssNode } from "./css.js";
 import { atlas } from "./themes/atlas.js";
+import { blueprint } from "./themes/blueprint.js";
+import { contrast } from "./themes/contrast.js";
 import { minimal } from "./themes/minimal.js";
+import { noir } from "./themes/noir.js";
 import { dusk } from "./palettes/dusk.js";
 import { sand } from "./palettes/sand.js";
 
-export const THEMES: Readonly<Record<string, string>> = Object.freeze({ minimal, atlas });
+// Insertion order is the order they are documented and emitted in. `minimal`
+// first because it is the default; the rest from quietest to loudest.
+export const THEMES: Readonly<Record<string, string>> = Object.freeze({
+  minimal,
+  atlas,
+  noir,
+  blueprint,
+  contrast,
+});
 export const PALETTES: Readonly<Record<string, string>> = Object.freeze({ dusk, sand });
 
 export const THEME_NAMES: readonly string[] = Object.freeze(Object.keys(THEMES));
