@@ -144,6 +144,18 @@ export interface MapperOptions {
    * @default 2
    */
   readonly placeRank?: 1 | 2 | 3;
+  /**
+   * How far down the same ranking to *name* the settlements that are drawn.
+   *
+   * Lower than `placeRank` on purpose: a dot is a mark and a name is a word,
+   * and words collide where dots merely crowd. The default names the capitals
+   * and the largest cities and leaves the rest as dots.
+   *
+   * Country names are not ranked by the caller — a country is named if its
+   * name fits inside it, which the geometry decides.
+   * @default 1
+   */
+  readonly labelRank?: 1 | 2 | 3;
   /** Bundled theme name, a path to a `.css` file, or a stylesheet. */
   readonly theme?: string;
   /**

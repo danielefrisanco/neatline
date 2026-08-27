@@ -1,4 +1,5 @@
 import { geoPath, type GeoProjection } from "d3-geo";
+import { Recorder, type Ring } from "./rings.js";
 import { el, type SvgElement, type SvgNode } from "./svg.js";
 import { text } from "./svg.js";
 
@@ -14,25 +15,6 @@ import { text } from "./svg.js";
  * works for any polygon — concave, holed, or in pieces — without a geometry
  * library.
  */
-
-/** Collects the points d3 would otherwise write straight into a path string. */
-class Recorder {
-  readonly rings: Array<Array<[number, number]>> = [];
-  private current: Array<[number, number]> = [];
-
-  moveTo(x: number, y: number): void {
-    this.current = [[x, y]];
-  }
-  lineTo(x: number, y: number): void {
-    this.current.push([x, y]);
-  }
-  closePath(): void {
-    if (this.current.length > 2) this.rings.push(this.current);
-    this.current = [];
-  }
-  /** d3 calls this for point geometry; a prism has none. */
-  arc(): void {}
-}
 
 function round(value: number): number {
   return Math.round(value * 10) / 10;
@@ -53,7 +35,7 @@ function ringPath(ring: ReadonlyArray<readonly [number, number]>, lift: number):
  * follows the direction the outline happens to run, and under the nonzero fill
  * rule two quads of opposite winding punch a hole in each other.
  */
-function sidePath(rings: ReadonlyArray<ReadonlyArray<[number, number]>>, lift: number): string {
+function sidePath(rings: readonly Ring[], lift: number): string {
   let out = "";
   for (const ring of rings) {
     out += ringPath(ring, 0);

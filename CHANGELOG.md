@@ -15,6 +15,79 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
+## [0.10.0] — 2026-08-27
+
+Names. Country and settlement labels, the layer slot reserved since Phase 2.
+
+**Breaking**, under the pre-1.0 policy: every map now carries names by default,
+so existing output changes. `layers: { labels: false }` restores the old
+document exactly.
+
+### Added
+
+- **Country names**, placed at the balance point of the largest piece of the
+  country *that is on the canvas* — not the centroid of the whole geometry,
+  which puts "France" in the Atlantic, because France's geometry reaches French
+  Guiana. That is the same fact that once made France the frontmost country in
+  Europe for prism depth sorting; it has now cost two features.
+- **A deeper anchor when the balance point will not do.** Where the centroid
+  falls outside the country — every crescent, every Croatia — the name goes to
+  the point furthest from any edge, found by refining a grid. The plan called
+  for a curated table of thirty hand-tuned anchors instead; the geometry knows
+  the answer, and unlike a table it cannot go stale when the source data does.
+- **Two-line names**, broken at the most even word gap, when one line does not
+  fit. This is what rescues *United Kingdom*, *South Korea*, *Sri Lanka* and
+  *Papua New Guinea*.
+- **Settlement names**, beside their dots, governed by `labelRank` — one step
+  tighter than `placeRank` by default, because a dot is a mark and a name is a
+  word. A name is never written for a settlement whose dot was filtered out.
+- **`--place-label-size`, `--label-halo` and `--label-halo-width`**, live in all
+  five presets and both palettes. The casing is one `paint-order: stroke`
+  rather than a second copy of every label.
+- Four gallery renders: `europe-named`, `west-europe-named-cities`,
+  `asia-named-blueprint`, and `west-europe-unnamed` for the layer switched off.
+
+### Fixed
+
+- **noir was too dark to read.** Land sat ten values off the sea in every
+  channel, on the theory that a dark editorial map should whisper. At that
+  separation the continents were not quiet, they were gone: on a world map the
+  coastline hairline was the only evidence there was land at all. Land, borders
+  and the political fills all step up; the theme is still dark and still
+  restrained.
+- **A country name no longer sits on its own capital's name.** A capital
+  usually sits near the middle of its country, which is exactly where the
+  country's name goes — "Madrid" ran through "Spain", "Bern" through
+  "Switzerland" and "Amsterdam" through "Netherlands" on the same map. The
+  country name steps one line up or down, and only if the step keeps it on the
+  country: moving "Belgium" clear of "Brussels" by putting it in France helps
+  nobody.
+- **A world map is no longer mush.** Names are laid down in order and anything
+  landing on one already placed is marked `data-fit="0"`. This is not a
+  placement solver — nothing is moved twice and nothing is retried — but the
+  world has some two hundred capitals and a world map has room for about
+  thirty, and without it every one of them was drawn.
+- **`neighbours` was still marked `reserved` in the taxonomy** after shipping
+  in 0.8.0. The status was wrong, not the layer.
+
+### Changed
+
+- The `labels` layer is `live`. `--label-size` now means the country label
+  size specifically; settlement names read `--place-label-size`.
+- `Recorder` and the plane geometry the prism layer used moved to `src/rings.ts`,
+  because labels need the same projected outlines.
+- The colour-token test now derives what counts as a colour from a rule — not a
+  `-width` or a `-size`, not `--font` or `--border-dash` — instead of listing
+  the exceptions, which had to be edited every time the vocabulary grew.
+
+### Known limits
+
+Two country names can still overlap on a crowded map, and a settlement name can
+cross a border it does not belong to. There is no font metrics engine: label
+width is estimated from an average glyph advance, and a write-time token
+override passed to `render()` arrives after the geometry is settled, so the fit
+test cannot follow it. Ranks exist so a theme can thin its way out.
+
 ## [0.9.0] — 2026-08-27
 
 Two layer slots reserved. **Breaking**, in the way the pre-1.0 policy exists

@@ -47,7 +47,13 @@ export const TOKENS: readonly TokenSpec[] = Object.freeze([
   { name: "--ink", status: "live", controls: "Primary text" },
   { name: "--ink-muted", status: "live", controls: "Secondary text" },
   { name: "--font", status: "live", controls: "Type stack for all text" },
-  { name: "--label-size", status: "live", controls: "Base label size, in user units" },
+  { name: "--label-size", status: "live", controls: "Country label size, in user units" },
+  { name: "--place-label-size", status: "live", controls: "Settlement label size, in user units" },
+  // A name has to sit on whatever the map put underneath it — a band, a river,
+  // a border. The casing is drawn behind the glyphs with `paint-order`, which
+  // is one stroke rather than a second copy of every label.
+  { name: "--label-halo", status: "live", controls: "Casing drawn behind label text" },
+  { name: "--label-halo-width", status: "live", controls: "Casing width, in user units" },
   { name: "--stripe", status: "live", controls: "Diagonal hatching over a marked country" },
   { name: "--stripe-width", status: "live", controls: "Hatch line width, in user units" },
   { name: "--water", status: "live", controls: "Lakes and rivers" },

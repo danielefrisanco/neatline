@@ -2,6 +2,7 @@ import { geoBounds, geoContains, geoPath } from "d3-geo";
 import { assignBins, DEFAULT_BINS } from "./bins.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
+import { countryLabels, labelLayer, labelSizes, placeLabel, type LabelBox, type Placed } from "./labels.js";
 import { heightsFor, prisms, type PrismInput } from "./prism.js";
 import { politicalFill } from "./political.js";
 import { createProjection } from "./projections.js";
@@ -334,6 +335,11 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   const projection = createProjection(projectionName, frame, width, height, padding, headroom);
   const path = geoPath(projection).digits(1);
 
+  // Resolved before the layers rather than after, because the label fit test
+  // has to know what size the text will actually be set at.
+  const themed = await resolveTheme(options);
+  const sizes = labelSizes(themed.css);
+
 
   const content = new Map<LayerName, SvgNode[]>();
   const wants = (name: LayerName): boolean => options.layers?.[name] ?? true;
@@ -476,8 +482,15 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
       : null;
   const LAND_CLIP_ID = "mp-land-clip";
 
-  if (wants("places")) {
+  // Names ride with their dots, so both are produced by the same walk — and a
+  // name is never written for a settlement whose dot was filtered out.
+  const placeNames: Placed[] = [];
+  // Their footprints, so a country name can step around one rather than
+  // through it.
+  const placeBoxes: LabelBox[] = [];
+  if (wants("places") || wants("labels")) {
     const maxRank = options.placeRank ?? 2;
+    const namedRank = options.labelRank ?? 1;
     const drawn = new Set(frame.countries.map((c) => c.id));
     const dots: SvgNode[] = [];
     for (const place of world.places) {
@@ -503,24 +516,62 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
           ? rawY
           : rawY - (extrusion.uniform ?? (place.iso === null ? 0 : extrusion.byId.get(place.iso) ?? 0));
       if (x < 0 || x > width || y < 0 || y > height) continue;
-      dots.push(
-        el(
-          "circle",
-          {
-            class: "mp-place",
-            "data-name": place.name,
-            "data-iso": place.iso ?? undefined,
-            "data-rank": place.rank,
-            "data-pop": place.population,
-            cx: x,
-            cy: y,
-            r: PLACE_RADIUS[place.rank],
-          },
-          [el("title", {}, [text(place.name)])],
-        ),
-      );
+      const radius = PLACE_RADIUS[place.rank];
+      if (wants("places")) {
+        dots.push(
+          el(
+            "circle",
+            {
+              class: "mp-place",
+              "data-name": place.name,
+              "data-iso": place.iso ?? undefined,
+              "data-rank": place.rank,
+              "data-pop": place.population,
+              cx: x,
+              cy: y,
+              r: radius,
+            },
+            [el("title", {}, [text(place.name)])],
+          ),
+        );
+      }
+      if (wants("labels") && place.rank <= namedRank) {
+        const named = placeLabel(place, x, y, radius, sizes.place);
+        placeNames.push(named);
+        placeBoxes.push(named.box);
+      }
     }
     if (dots.length > 0) content.set("places", dots);
+  }
+
+  /**
+   * Names, last of the geographic layers to be built and top of the stack.
+   *
+   * There is no collision detection here and v1 does not pretend otherwise: a
+   * country name and a city name can land on each other. What is guaranteed is
+   * narrower and more useful — a name is only shown where it fits inside the
+   * shape it belongs to, and everything carries a rank so a theme can thin the
+   * rest away in one rule.
+   */
+  if (wants("labels")) {
+    const names = countryLabels(
+      frame.countries.map((country) => ({
+        id: country.id,
+        name: country.name,
+        geometry: country.geometry,
+        lift:
+          extrusion === null
+            ? 0
+            : extrusion.uniform ?? extrusion.byId.get(country.id) ?? 0,
+        highlighted: country.id !== "" && highlighted.has(country.id),
+      })),
+      projection,
+      [width, height],
+      sizes.country,
+      placeBoxes,
+    );
+    const all = labelLayer(names, placeNames);
+    if (all.length > 0) content.set("labels", all);
   }
 
   // On an extruded map the borders move into the prisms themselves: a mesh
@@ -539,7 +590,6 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   }
 
   const description = options.title ?? describe(resolved.description, highlightedNames);
-  const themed = await resolveTheme(options);
 
   const body: SvgNode[] = [
     // `fill="none"` is structural, not stylistic. SVG's default fill is

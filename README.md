@@ -38,13 +38,13 @@ canvas, then eight layer groups in **fixed paint order**, bottom to top:
 
 | Layer group | Feature class | Data attributes | Carries |
 |---|---|---|---|
-| `.mp-neighbours` | `.mp-neighbour` | `data-iso` | *Reserved* · surrounding countries drawn as context |
+| `.mp-neighbours` | `.mp-neighbour` | `data-iso`, `data-name` | Surrounding countries drawn as context |
 | `.mp-land` | `.mp-country` | `data-iso`, `data-name` | Filled land polygons, one node per country |
 | `.mp-hydro` | `.mp-water` | `data-kind` | Lakes and rivers, drawn over the land |
 | `.mp-borders` | `.mp-border` | `data-kind` | Shared boundaries, each drawn once |
 | `.mp-roads` | `.mp-road` | `data-kind` | *Reserved* · motorway, trunk, primary |
 | `.mp-places` | `.mp-place` | `data-name`, `data-iso`, `data-rank`, `data-pop` | Settlement dots, ranked 1–3 |
-| `.mp-labels` | `.mp-label` | `data-rank`, `data-iso` | *Reserved* · text nodes, thinned by rank |
+| `.mp-labels` | `.mp-label` | `data-kind`, `data-rank`, `data-fit`, `data-iso`, `data-capital` | Country and settlement names |
 | `.mp-annotations` | `.mp-anno` | `data-id` | *Reserved* · pins, arrows, callouts |
 | `.mp-furniture` | `.mp-credit` | `data-anchor` | *Reserved* · credits, watermarks, legends |
 
@@ -207,8 +207,9 @@ every theme in the wild.
 | `--water` / `--water-width` | Lakes and rivers |
 | `--place` | Settlement dots |
 | `--neighbour` | Context countries |
-| `--ink` / `--ink-muted` | Text |
-| `--font` / `--label-size` | Type |
+| `--ink` / `--ink-muted` | Country names / settlement names |
+| `--font` / `--label-size` / `--place-label-size` | Type |
+| `--label-halo` / `--label-halo-width` | The casing drawn behind label text |
 | `--road` `--anno` `--anno-ink` `--furniture-ink` | *Reserved* — set them now, they start working when their layer lands |
 | `--graticule` `--graticule-width` `--equator` | *Reserved* — the grid, the equator and the tropics |
 | `--desert` `--forest` `--mountain` `--glacier` | *Reserved* — land cover |
@@ -413,6 +414,67 @@ over a million, then the rest. `placeRank` decides how far down to draw
 (default 2 — which on Western Europe means the thirteen capitals plus Milan,
 Hamburg, Munich, Lyon, Marseille, Turin and Barcelona). Every dot also carries
 `data-rank`, so a theme can thin them further with one CSS rule.
+
+### Names
+
+Country and settlement names, on by default.
+
+```ts
+await mapper({ region: "west-europe", theme: "atlas" });     // names included
+await mapper({ region: "west-europe", labelRank: 2 });       // name more cities
+await mapper({ region: "west-europe", layers: { labels: false } });  // none
+```
+
+`labelRank` decides how far down the settlement ranking to *name* the dots that
+are drawn — it defaults to 1, one step tighter than `placeRank`, because a dot
+is a mark and a name is a word. Countries are not ranked by you: a country is
+named if its name fits inside it, which is a fact about the map, not a setting.
+
+**What placement actually does.** There is no label-placement solver here, and
+this is the honest limit of drawing a map as an SVG. What there is:
+
+- **The anchor is the balance point of the largest piece of the country that is
+  on the canvas** — not the centroid of all of it, which puts "France" in the
+  Atlantic because France's geometry reaches French Guiana. When that point
+  falls outside the country, as it does for every crescent and every Croatia,
+  it is replaced by the point furthest from any edge.
+- **A name that does not fit is set over two lines** at the most even break —
+  which is what rescues *United Kingdom*, *South Korea* and *Papua New Guinea*.
+- **A country name steps clear of its own capital's name**, one line up or one
+  line down, and only if the step keeps it on the country. A capital usually
+  sits near the middle of its country, which is exactly where its country's
+  name goes; without this, "Madrid" runs through "Spain" on every map.
+- **Whatever still overlaps is hidden.** Names are laid down in order — the
+  countries with room to be named first, then settlements in the order the data
+  ranks them — and anything landing on one already placed is marked
+  `data-fit="0"`. Nothing is moved twice and nothing is retried. The world has
+  some two hundred capitals and a world map has room for about thirty, so the
+  only question is which thirty.
+
+**Nothing is ever dropped from the document.** Every name is written out, and
+`data-fit="0"` is hidden by a stylesheet rule you can turn off:
+
+```css
+.mp .mp-label[data-fit="0"] { display: revert; }   /* show every name */
+.mp .mp-label[data-rank="3"] { display: none; }    /* drop the cramped ones */
+.mp .mp-label[data-kind="place"] { display: none; } /* countries only */
+.mp .mp-label[data-capital] { font-weight: 600; }
+```
+
+Every label carries `data-kind` (`country` or `place`), `data-rank` 1–3, and
+`data-iso`. For a country, rank is how comfortably the name fits: 1 has room to
+spare, 3 overhangs. For a settlement it is the same rank the dot carries.
+
+The fit test has no font metrics — SVG offers no way to measure text outside a
+browser — so it estimates width from an average glyph advance and reads
+`--label-size` and `--place-label-size` out of your resolved stylesheet. Change
+those tokens through `tokens:` and the fit test follows; change them in a
+write-time override passed to `render()` and it cannot, because the geometry is
+settled by then.
+
+**The limitation that remains:** two country names can still overlap on a very
+crowded map, and a settlement name can cross a border it does not belong to.
+Ranks exist so a theme can thin its way out of both.
 
 ### Choosing layers
 

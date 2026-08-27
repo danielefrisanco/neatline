@@ -104,7 +104,34 @@
       <title>The Hague</title>
     </circle>
   </g>
-  <g class="mp-layer mp-labels"/>
+  <g class="mp-layer mp-labels">
+    <text class="mp-label" data-kind="country" data-iso="FR" data-rank="1" x="443.2" y="546.7" text-anchor="middle" dominant-baseline="central">France</text>
+    <text class="mp-label" data-kind="country" data-iso="AT" data-rank="2" x="775.5" y="485" text-anchor="middle" dominant-baseline="central">Austria</text>
+    <text class="mp-label" data-kind="country" data-iso="DE" data-rank="1" x="657.4" y="350.5" text-anchor="middle" dominant-baseline="central">Germany</text>
+    <text class="mp-label" data-kind="country" data-iso="CH" data-rank="2" x="609.4" y="516.4" text-anchor="middle" dominant-baseline="central">Switzerland</text>
+    <text class="mp-label" data-kind="country" data-iso="LU" data-rank="3" x="544.5" y="399.1" text-anchor="middle" dominant-baseline="central" data-fit="0">Luxembourg</text>
+    <text class="mp-label" data-kind="country" data-iso="BE" data-rank="2" x="507.1" y="393.1" text-anchor="middle" dominant-baseline="central">Belgium</text>
+    <text class="mp-label" data-kind="country" data-iso="NL" data-rank="3" x="530.4" y="287.3" text-anchor="middle" dominant-baseline="central">Netherlands</text>
+    <text class="mp-label" data-kind="country" data-iso="PT" data-rank="2" x="97.2" y="809.2" text-anchor="middle" dominant-baseline="central">Portugal</text>
+    <text class="mp-label" data-kind="country" data-iso="ES" data-rank="1" x="244" y="780" text-anchor="middle" dominant-baseline="central">Spain</text>
+    <text class="mp-label" data-kind="country" data-iso="IE" data-rank="2" x="188.6" y="244.1" text-anchor="middle" dominant-baseline="central">Ireland</text>
+    <text class="mp-label" data-kind="country" data-iso="IT" data-rank="1" x="746.9" y="666.6" text-anchor="middle" dominant-baseline="central">Italy</text>
+    <text class="mp-label" data-kind="country" data-iso="DK" data-rank="2" x="615.9" y="126.8" text-anchor="middle" dominant-baseline="central">Denmark</text>
+    <text class="mp-label" data-kind="country" data-iso="GB" data-rank="1" x="346.4" y="300.2" text-anchor="middle" dominant-baseline="central">United Kingdom</text>
+    <text class="mp-label" data-kind="place" data-iso="FR" data-rank="1" data-capital="" x="451.8" y="449.9" text-anchor="start" dominant-baseline="central">Paris</text>
+    <text class="mp-label" data-kind="place" data-iso="GB" data-rank="1" data-capital="" x="389.7" y="336" text-anchor="start" dominant-baseline="central">London</text>
+    <text class="mp-label" data-kind="place" data-iso="IT" data-rank="1" data-capital="" x="762.7" y="729.9" text-anchor="start" dominant-baseline="central">Rome</text>
+    <text class="mp-label" data-kind="place" data-iso="ES" data-rank="1" data-capital="" x="248.8" y="793.8" text-anchor="start" dominant-baseline="central">Madrid</text>
+    <text class="mp-label" data-kind="place" data-iso="DE" data-rank="1" data-capital="" x="738.9" y="282.2" text-anchor="start" dominant-baseline="central">Berlin</text>
+    <text class="mp-label" data-kind="place" data-iso="AT" data-rank="1" data-capital="" x="842.6" y="451.7" text-anchor="start" dominant-baseline="central">Vienna</text>
+    <text class="mp-label" data-kind="place" data-iso="NL" data-rank="1" data-capital="" x="521.5" y="303.2" text-anchor="start" dominant-baseline="central">Amsterdam</text>
+    <text class="mp-label" data-kind="place" data-iso="PT" data-rank="1" data-capital="" x="62" y="839.9" text-anchor="start" dominant-baseline="central">Lisbon</text>
+    <text class="mp-label" data-kind="place" data-iso="BE" data-rank="1" data-capital="" x="506.5" y="367.3" text-anchor="start" dominant-baseline="central">Brussels</text>
+    <text class="mp-label" data-kind="place" data-iso="DK" data-rank="1" data-capital="" x="703.2" y="151.7" text-anchor="start" dominant-baseline="central">Kobenhavn</text>
+    <text class="mp-label" data-kind="place" data-iso="IE" data-rank="1" data-capital="" x="239.9" y="243.4" text-anchor="start" dominant-baseline="central">Dublin</text>
+    <text class="mp-label" data-kind="place" data-iso="CH" data-rank="1" data-capital="" x="596.7" y="530.3" text-anchor="start" dominant-baseline="central">Bern</text>
+    <text class="mp-label" data-kind="place" data-iso="LU" data-rank="1" data-capital="" x="555.6" y="418.2" text-anchor="start" dominant-baseline="central">Luxembourg</text>
+  </g>
   <g class="mp-layer mp-annotations"/>
   <g class="mp-layer mp-furniture"/>
 </svg>

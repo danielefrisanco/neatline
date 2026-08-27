@@ -68,7 +68,7 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     name: "neighbours",
     className: "mp-neighbours",
     feature: "mp-neighbour",
-    status: "reserved",
+    status: "live",
     carries: "Surrounding countries drawn as context behind the region",
   },
   {
@@ -117,8 +117,8 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     name: "labels",
     className: "mp-labels",
     feature: "mp-label",
-    status: "reserved",
-    carries: "Text nodes, thinned by rank in CSS",
+    status: "live",
+    carries: "Country and settlement names, ranked so a theme can thin them",
   },
   {
     name: "annotations",

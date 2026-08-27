@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" preserveAspectRatio="xMidYMid meet" class="mp mp-t-09bpqy1" role="img" aria-label="Asia">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0fpvywm" role="img" aria-label="Asia">
   <title>Asia</title>
   <style>
-    .mp.mp-t-09bpqy1 {
+    .mp.mp-t-0fpvywm {
       --bg: transparent;
       --land: #D8D8D2;
       --land-edge: #FFFFFF;
@@ -29,6 +29,9 @@
       --ink-muted: #80807A;
       --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
       --label-size: 13;
+      --place-label-size: 11;
+      --label-halo: #FFFFFF;
+      --label-halo-width: 2.4;
       --stripe: #6E6E68;
       --stripe-width: 1.6;
       --water: #8FB0C4;
@@ -47,68 +50,68 @@
       --anno-ink: #FFFFFF;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-09bpqy1 .mp-bg {
+    .mp.mp-t-0fpvywm .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-09bpqy1 .mp-neighbour {
+    .mp.mp-t-0fpvywm .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-09bpqy1 .mp-country {
+    .mp.mp-t-0fpvywm .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-09bpqy1 .mp-country[data-bin="1"] {
+    .mp.mp-t-0fpvywm .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-09bpqy1 .mp-country[data-bin="2"] {
+    .mp.mp-t-0fpvywm .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-09bpqy1 .mp-country[data-bin="3"] {
+    .mp.mp-t-0fpvywm .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-09bpqy1 .mp-country[data-bin="4"] {
+    .mp.mp-t-0fpvywm .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-09bpqy1 .mp-country[data-bin="5"] {
+    .mp.mp-t-0fpvywm .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-09bpqy1 .mp-country[data-fill="1"] {
+    .mp.mp-t-0fpvywm .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-09bpqy1 .mp-country[data-fill="2"] {
+    .mp.mp-t-0fpvywm .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-09bpqy1 .mp-country[data-fill="3"] {
+    .mp.mp-t-0fpvywm .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-09bpqy1 .mp-country[data-fill="4"] {
+    .mp.mp-t-0fpvywm .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-09bpqy1 .mp-country[data-fill="5"] {
+    .mp.mp-t-0fpvywm .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-09bpqy1 .mp-country[data-fill="6"] {
+    .mp.mp-t-0fpvywm .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-09bpqy1 .mp-country.is-highlighted {
+    .mp.mp-t-0fpvywm .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-09bpqy1 .mp-water[data-kind="lake"] {
+    .mp.mp-t-0fpvywm .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-09bpqy1 .mp-water[data-kind="river"] {
+    .mp.mp-t-0fpvywm .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-09bpqy1 .mp-border {
+    .mp.mp-t-0fpvywm .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -116,84 +119,98 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-09bpqy1 .mp-road {
+    .mp.mp-t-0fpvywm .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-09bpqy1 .mp-place {
+    .mp.mp-t-0fpvywm .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-09bpqy1 .mp-prism-top {
+    .mp.mp-t-0fpvywm .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-09bpqy1 .mp-prism-side {
+    .mp.mp-t-0fpvywm .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-09bpqy1 .mp-prism-edge {
+    .mp.mp-t-0fpvywm .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-09bpqy1 .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-0fpvywm .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-09bpqy1 .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-0fpvywm .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-09bpqy1 .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-0fpvywm .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-09bpqy1 .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-0fpvywm .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-09bpqy1 .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-0fpvywm .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-09bpqy1 .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-0fpvywm .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-09bpqy1 .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-0fpvywm .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-09bpqy1 .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-0fpvywm .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-09bpqy1 .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-0fpvywm .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-09bpqy1 .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-0fpvywm .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-09bpqy1 .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-0fpvywm .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-09bpqy1 .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-0fpvywm .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-09bpqy1 .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-0fpvywm .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-09bpqy1 .mp-hatch {
+    .mp.mp-t-0fpvywm .mp-hatch {
       fill: url(#mp-stripe);
       stroke: none;
     }
-    .mp.mp-t-09bpqy1 .mp-hatch-line {
+    .mp.mp-t-0fpvywm .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-09bpqy1 .mp-label {
+    .mp.mp-t-0fpvywm .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
+      stroke: var(--label-halo);
+      stroke-width: var(--label-halo-width);
+      stroke-linejoin: round;
+      paint-order: stroke;
+    }
+    .mp.mp-t-0fpvywm .mp-label[data-kind="place"] {
+      fill: var(--ink-muted);
+      font-size: var(--place-label-size);
+    }
+    .mp.mp-t-0fpvywm .mp-label.is-highlighted {
+      font-weight: 700;
+    }
+    .mp.mp-t-0fpvywm .mp-label[data-fit="0"] {
+      display: none;
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-09bpqy1 {
+      .mp.mp-t-0fpvywm {
         --land: #2E3134;
         --land-edge: #16181A;
         --border: #6E747A;
@@ -215,6 +232,7 @@
         --place: #DCDCD6;
         --ink: #DCDCD6;
         --ink-muted: #85898D;
+        --label-halo: #1A1D1F;
         --stripe: #9A9A94;
         --water: #4C7A96;
         --neighbour: #202325;
@@ -223,7 +241,7 @@
         --furniture-ink: #85898D;
       }
     }
-    .mp.mp-t-09bpqy1 {
+    .mp.mp-t-0fpvywm {
       --bg: #0E1620;
       --land: #22303F;
       --land-edge: #0E1620;
@@ -246,6 +264,7 @@
       --place: #DCE5ED;
       --ink: #DCE5ED;
       --ink-muted: #7B8B9C;
+      --label-halo: #0E1620;
       --stripe: #7B8B9C;
       --water: #35607A;
       --graticule: #25323F;
@@ -589,7 +608,115 @@
       <title>Kyoto</title>
     </circle>
   </g>
-  <g class="mp-layer mp-labels"/>
+  <g class="mp-layer mp-labels">
+    <text class="mp-label" data-kind="country" data-iso="KZ" data-rank="1" x="448.8" y="93.9" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kazakhstan</text>
+    <text class="mp-label" data-kind="country" data-iso="UZ" data-rank="3" x="410.7" y="158" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Uzbekistan</text>
+    <text class="mp-label" data-kind="country" data-iso="ID" data-rank="2" x="846.2" y="660.1" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Indonesia</text>
+    <text class="mp-label" data-kind="country" data-iso="TL" data-rank="3" x="957.8" y="756.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Timor-Leste</text>
+    <text class="mp-label" data-kind="country" data-iso="IL" data-rank="3" x="156.3" y="275.3" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Israel</text>
+    <text class="mp-label" data-kind="country" data-iso="LB" data-rank="3" x="174.8" y="237.9" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Lebanon</text>
+    <text class="mp-label" data-kind="country" data-iso="PS" data-rank="3" x="161.8" y="264.6" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Palestine</text>
+    <text class="mp-label" data-kind="country" data-iso="JO" data-rank="3" x="169.9" y="278.4" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Jordan</text>
+    <text class="mp-label" data-kind="country" data-iso="AE" data-rank="3" x="313.5" y="358" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">
+      <tspan x="313.5" dy="-7.1">United Arab</tspan>
+      <tspan x="313.5" dy="14.3">Emirates</tspan>
+    </text>
+    <text class="mp-label" data-kind="country" data-iso="QA" data-rank="3" x="288.6" y="340" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Qatar</text>
+    <text class="mp-label" data-kind="country" data-iso="KW" data-rank="3" x="262.2" y="293.1" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Kuwait</text>
+    <text class="mp-label" data-kind="country" data-iso="IQ" data-rank="2" x="236.1" y="234.7" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Iraq</text>
+    <text class="mp-label" data-kind="country" data-iso="OM" data-rank="2" x="341.4" y="376.3" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Oman</text>
+    <text class="mp-label" data-kind="country" data-iso="KH" data-rank="3" x="764.3" y="492.3" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Cambodia</text>
+    <text class="mp-label" data-kind="country" data-iso="TH" data-rank="3" x="732.3" y="456.2" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Thailand</text>
+    <text class="mp-label" data-kind="country" data-iso="LA" data-rank="2" x="741.9" y="388.5" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Laos</text>
+    <text class="mp-label" data-kind="country" data-iso="MM" data-rank="2" x="686.4" y="392.9" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Myanmar</text>
+    <text class="mp-label" data-kind="country" data-iso="VN" data-rank="3" x="763.9" y="365.3" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Vietnam</text>
+    <text class="mp-label" data-kind="country" data-iso="KP" data-rank="3" x="921.7" y="174" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+      <tspan x="921.7" dy="-7.1">North</tspan>
+      <tspan x="921.7" dy="14.3">Korea</tspan>
+    </text>
+    <text class="mp-label" data-kind="country" data-iso="KR" data-rank="3" x="940.3" y="214.7" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+      <tspan x="940.3" dy="-7.1">South</tspan>
+      <tspan x="940.3" dy="14.3">Korea</tspan>
+    </text>
+    <text class="mp-label" data-kind="country" data-iso="MN" data-rank="1" x="724.8" y="106.3" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mongolia</text>
+    <text class="mp-label" data-kind="country" data-iso="IN" data-rank="1" x="536.4" y="372.3" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">India</text>
+    <text class="mp-label" data-kind="country" data-iso="BD" data-rank="3" x="628.7" y="355.4" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Bangladesh</text>
+    <text class="mp-label" data-kind="country" data-iso="BT" data-rank="3" x="631.9" y="316.3" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bhutan</text>
+    <text class="mp-label" data-kind="country" data-iso="NP" data-rank="3" x="576.1" y="307" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nepal</text>
+    <text class="mp-label" data-kind="country" data-iso="PK" data-rank="2" x="425.8" y="314.5" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Pakistan</text>
+    <text class="mp-label" data-kind="country" data-iso="AF" data-rank="3" x="424.9" y="262" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Afghanistan</text>
+    <text class="mp-label" data-kind="country" data-iso="TJ" data-rank="3" x="470.4" y="191.2" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tajikistan</text>
+    <text class="mp-label" data-kind="country" data-iso="KG" data-rank="3" x="503.3" y="157.3" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kyrgyzstan</text>
+    <text class="mp-label" data-kind="country" data-iso="TM" data-rank="3" x="375" y="186" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Turkmenistan</text>
+    <text class="mp-label" data-kind="country" data-iso="IR" data-rank="1" x="325.3" y="259.9" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Iran</text>
+    <text class="mp-label" data-kind="country" data-iso="SY" data-rank="2" x="195.8" y="230.4" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Syria</text>
+    <text class="mp-label" data-kind="country" data-iso="AM" data-rank="3" x="260.2" y="173.6" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Armenia</text>
+    <text class="mp-label" data-kind="country" data-iso="TR" data-rank="1" x="178.9" y="205.2" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Turkey</text>
+    <text class="mp-label" data-kind="country" data-iso="LK" data-rank="3" x="545.5" y="556.5" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
+      <tspan x="545.5" dy="-7.1">Sri</tspan>
+      <tspan x="545.5" dy="14.3">Lanka</tspan>
+    </text>
+    <text class="mp-label" data-kind="country" data-iso="CN" data-rank="1" x="738.4" y="221.7" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">China</text>
+    <text class="mp-label" data-kind="country" data-iso="TW" data-rank="3" x="899.5" y="361.7" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Taiwan</text>
+    <text class="mp-label" data-kind="country" data-iso="AZ" data-rank="3" x="282.1" y="172.9" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Azerbaijan</text>
+    <text class="mp-label" data-kind="country" data-iso="GE" data-rank="3" x="252.2" y="153" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Georgia</text>
+    <text class="mp-label" data-kind="country" data-iso="PH" data-rank="3" x="911.2" y="439.8" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Philippines</text>
+    <text class="mp-label" data-kind="country" data-iso="MY" data-rank="3" x="875.9" y="565.4" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Malaysia</text>
+    <text class="mp-label" data-kind="country" data-iso="BN" data-rank="3" x="858" y="590.4" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Brunei</text>
+    <text class="mp-label" data-kind="country" data-iso="JP" data-rank="3" x="1031.4" y="200.7" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Japan</text>
+    <text class="mp-label" data-kind="country" data-iso="YE" data-rank="1" x="246.8" y="453.2" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Yemen</text>
+    <text class="mp-label" data-kind="country" data-iso="SA" data-rank="2" x="229.6" y="374.6" text-anchor="middle" dominant-baseline="central" fill="#DCE5ED" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Saudi Arabia</text>
+    <text class="mp-label" data-kind="place" data-iso="JP" data-rank="1" data-capital="" x="1047.5" y="222.7" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tokyo</text>
+    <text class="mp-label" data-kind="place" data-iso="IN" data-rank="1" x="482.2" y="415" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mumbai</text>
+    <text class="mp-label" data-kind="place" data-iso="CN" data-rank="1" x="901.6" y="272.7" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Shanghai</text>
+    <text class="mp-label" data-kind="place" data-iso="IN" data-rank="1" x="620.3" y="373.2" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kolkata</text>
+    <text class="mp-label" data-kind="place" data-iso="CN" data-rank="1" data-capital="" x="846.5" y="176.9" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Beijing</text>
+    <text class="mp-label" data-kind="place" data-iso="TR" data-rank="1" x="138.6" y="165" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Istanbul</text>
+    <text class="mp-label" data-kind="place" data-iso="ID" data-rank="1" data-capital="" x="789.9" y="724.5" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Jakarta</text>
+    <text class="mp-label" data-kind="place" data-iso="SA" data-rank="1" data-capital="" x="254.8" y="348.9" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Riyadh</text>
+    <text class="mp-label" data-kind="place" data-iso="JP" data-rank="1" x="1014.3" y="233.7" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Osaka</text>
+    <text class="mp-label" data-kind="place" data-iso="PH" data-rank="1" data-capital="" x="915.3" y="468.9" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Manila</text>
+    <text class="mp-label" data-kind="place" data-iso="KR" data-rank="1" data-capital="" x="937.5" y="202" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Seoul</text>
+    <text class="mp-label" data-kind="place" data-iso="IR" data-rank="1" data-capital="" x="310.9" y="222.8" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tehran</text>
+    <text class="mp-label" data-kind="place" data-iso="TW" data-rank="1" data-capital="" x="910.9" y="344.2" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Taipei</text>
+    <text class="mp-label" data-kind="place" data-iso="IN" data-rank="1" x="522.9" y="488.8" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bengaluru</text>
+    <text class="mp-label" data-kind="place" data-iso="TH" data-rank="1" data-capital="" x="730.7" y="479.3" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bangkok</text>
+    <text class="mp-label" data-kind="place" data-iso="IQ" data-rank="1" data-capital="" x="248" y="248.8" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Baghdad</text>
+    <text class="mp-label" data-kind="place" data-iso="AF" data-rank="1" data-capital="" x="458.1" y="235.6" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kabul</text>
+    <text class="mp-label" data-kind="place" data-iso="UZ" data-rank="1" data-capital="" x="464.3" y="162" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Tashkent</text>
+    <text class="mp-label" data-kind="place" data-iso="IN" data-rank="1" data-capital="" x="523.4" y="302.7" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">New Delhi</text>
+    <text class="mp-label" data-kind="place" data-iso="BD" data-rank="1" data-capital="" x="638.1" y="359.6" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dhaka</text>
+    <text class="mp-label" data-kind="place" data-iso="VN" data-rank="1" data-capital="" x="775.6" y="391.5" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Hanoi</text>
+    <text class="mp-label" data-kind="place" data-iso="TR" data-rank="1" data-capital="" x="167" y="176.6" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ankara</text>
+    <text class="mp-label" data-kind="place" data-iso="KP" data-rank="1" data-capital="" x="924.4" y="186.3" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Pyongyang</text>
+    <text class="mp-label" data-kind="place" data-iso="SY" data-rank="1" data-capital="" x="180" y="247" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Damascus</text>
+    <text class="mp-label" data-kind="place" data-iso="KW" data-rank="1" data-capital="" x="272.2" y="293.8" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kuwait City</text>
+    <text class="mp-label" data-kind="place" data-iso="YE" data-rank="1" data-capital="" x="222.6" y="459.8" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Sanaa</text>
+    <text class="mp-label" data-kind="place" data-iso="MY" data-rank="1" data-capital="" x="743.2" y="609.6" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kuala Lumpur</text>
+    <text class="mp-label" data-kind="place" data-iso="AZ" data-rank="1" data-capital="" x="306.1" y="171.6" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Baku</text>
+    <text class="mp-label" data-kind="place" data-iso="LB" data-rank="1" data-capital="" x="174.1" y="242.8" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Beirut</text>
+    <text class="mp-label" data-kind="place" data-iso="KH" data-rank="1" data-capital="" x="771.2" y="506.1" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Phnom Penh</text>
+    <text class="mp-label" data-kind="place" data-iso="AM" data-rank="1" data-capital="" x="262.3" y="173.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Yerevan</text>
+    <text class="mp-label" data-kind="place" data-iso="GE" data-rank="1" data-capital="" x="267.9" y="157.5" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Tbilisi</text>
+    <text class="mp-label" data-kind="place" data-iso="TJ" data-rank="1" data-capital="" x="457.9" y="191.3" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Dushanbe</text>
+    <text class="mp-label" data-kind="place" data-iso="JO" data-rank="1" data-capital="" x="173.6" y="264.4" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Amman</text>
+    <text class="mp-label" data-kind="place" data-iso="IL" data-rank="1" data-capital="" x="167.1" y="266.4" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Jerusalem</text>
+    <text class="mp-label" data-kind="place" data-iso="MM" data-rank="1" data-capital="" x="689.6" y="406.6" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Naypyidaw</text>
+    <text class="mp-label" data-kind="place" data-iso="NP" data-rank="1" data-capital="" x="593.4" y="312.9" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Kathmandu</text>
+    <text class="mp-label" data-kind="place" data-iso="MN" data-rank="1" data-capital="" x="760" y="94.3" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ulaanbaatar</text>
+    <text class="mp-label" data-kind="place" data-iso="KG" data-rank="1" data-capital="" x="508.1" y="145.5" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bishkek</text>
+    <text class="mp-label" data-kind="place" data-iso="PK" data-rank="1" data-capital="" x="490.4" y="244.9" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Islamabad</text>
+    <text class="mp-label" data-kind="place" data-iso="LA" data-rank="1" data-capital="" x="748.1" y="428.2" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Vientiane</text>
+    <text class="mp-label" data-kind="place" data-iso="OM" data-rank="1" data-capital="" x="356.2" y="361.2" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Muscat</text>
+    <text class="mp-label" data-kind="place" data-iso="TM" data-rank="1" data-capital="" x="371.9" y="197.9" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ashgabat</text>
+    <text class="mp-label" data-kind="place" data-iso="AE" data-rank="1" data-capital="" x="321.7" y="350.9" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Abu Dhabi</text>
+    <text class="mp-label" data-kind="place" data-iso="KZ" data-rank="1" data-capital="" x="489.9" y="62.7" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Astana</text>
+    <text class="mp-label" data-kind="place" data-iso="BN" data-rank="1" data-capital="" x="864.4" y="588" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bandar Seri Begawan</text>
+    <text class="mp-label" data-kind="place" data-iso="TL" data-rank="1" data-capital="" x="960.5" y="753.9" text-anchor="start" dominant-baseline="central" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dili</text>
+    <text class="mp-label" data-kind="place" data-iso="LK" data-rank="1" data-capital="" x="543.3" y="562.8" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Colombo</text>
+    <text class="mp-label" data-kind="place" data-iso="BT" data-rank="1" data-capital="" x="630.9" y="315.7" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Thimphu</text>
+    <text class="mp-label" data-kind="place" data-iso="QA" data-rank="1" data-capital="" x="297.8" y="341.2" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#7B8B9C" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" stroke="#0E1620" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Doha</text>
+  </g>
   <g class="mp-layer mp-annotations"/>
   <g class="mp-layer mp-furniture"/>
 </svg>

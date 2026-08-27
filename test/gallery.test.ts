@@ -284,6 +284,41 @@ const GALLERY: ReadonlyArray<readonly [string, MapperOptions]> = [
     },
   ],
   [
+    "europe-named",
+    {
+      region: "europe",
+      theme: "minimal",
+      size: [1000, 900],
+      title: "Europe, named",
+    },
+  ],
+  [
+    "west-europe-named-cities",
+    {
+      region: "west-europe",
+      projection: "conic-conformal",
+      theme: "atlas",
+      size: [1000, 800],
+      placeRank: 2,
+      labelRank: 2,
+      title: "Western Europe and its cities",
+    },
+  ],
+  [
+    "asia-named-blueprint",
+    { region: "asia", theme: "blueprint", size: [1100, 900], title: "Asia, named" },
+  ],
+  [
+    "west-europe-unnamed",
+    {
+      region: "west-europe",
+      projection: "conic-conformal",
+      theme: "minimal",
+      layers: { labels: false },
+      title: "Western Europe, unlabelled",
+    },
+  ],
+  [
     "italy-brand-tokens",
     {
       region: ["IT"],

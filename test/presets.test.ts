@@ -26,9 +26,13 @@ const palettes = Object.entries(PALETTES);
  * to be edited every time the vocabulary grows, which is the moment it would
  * be forgotten.
  */
-const NAMED_NOT_COLOURS = new Set(["--border-dash", "--font", "--label-size"]);
+// A width or a size is a length, and `--border-dash` and `--font` are the two
+// remaining tokens whose value is a keyword list rather than a paint. Naming
+// the rule rather than the tokens is what keeps this from having to be edited
+// every time the vocabulary grows.
+const NAMED_NOT_COLOURS = new Set(["--border-dash", "--font"]);
 const isColour = (name: string): boolean =>
-  !name.endsWith("-width") && !NAMED_NOT_COLOURS.has(name);
+  !name.endsWith("-width") && !name.endsWith("-size") && !NAMED_NOT_COLOURS.has(name);
 
 const LIVE = TOKENS.filter((t) => t.status === "live").map((t) => t.name);
 const LIVE_COLOURS = LIVE.filter(isColour);
