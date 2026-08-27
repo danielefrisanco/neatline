@@ -60,3 +60,24 @@ export function expandPreset(preset: RegionPreset): readonly string[] | null {
   if (preset === "world") return null;
   return REGION_PRESETS[preset];
 }
+
+/**
+ * Human-readable names, for the root `aria-label` and `<title>`.
+ *
+ * Kept beside the code lists so a new preset cannot ship without one: an
+ * unnamed map is an inaccessible map.
+ */
+const PRESET_LABELS: Readonly<Record<RegionPreset, string>> = {
+  world: "the world",
+  europe: "Europe",
+  "west-europe": "Western Europe",
+  "north-america": "North America",
+  "south-america": "South America",
+  africa: "Africa",
+  asia: "Asia",
+  oceania: "Oceania",
+};
+
+export function presetLabel(preset: RegionPreset): string {
+  return PRESET_LABELS[preset];
+}

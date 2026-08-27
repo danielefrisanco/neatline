@@ -79,6 +79,12 @@ export interface MapperOptions {
   readonly size?: Size;
   /** Inset from the canvas edge, in user units. @default 24 */
   readonly padding?: number;
+  /**
+   * Accessible name for the map, used as the root `aria-label` and `<title>`.
+   * Generated from the region when omitted, which can only ever describe the
+   * geography — a map about something needs the caller to say what.
+   */
+  readonly title?: string;
   /** ISO codes to mark with `.is-highlighted`. */
   readonly highlight?: readonly string[];
 }

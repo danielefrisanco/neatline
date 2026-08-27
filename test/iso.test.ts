@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { featureId, isoTable, resolveId } from "../src/iso.js";
-import { loadCountries } from "../src/topology.js";
+import { loadWorld } from "../src/topology.js";
 
 describe("resolveId", () => {
   it("accepts alpha-2, case-insensitively", () => {
@@ -66,13 +66,13 @@ describe("isoTable", () => {
 
 describe("coverage of the real topology", () => {
   it("resolves an id for every feature, so nothing is unreachable", async () => {
-    const countries = await loadCountries("50m");
+    const { countries } = await loadWorld("50m");
     expect(countries.length).toBeGreaterThan(200);
     expect(countries.every((c) => c.id.length > 0)).toBe(true);
   });
 
   it("keeps the five id-less territories addressable", async () => {
-    const countries = await loadCountries("50m");
+    const { countries } = await loadWorld("50m");
     const ids = new Set(countries.map((c) => c.id));
     for (const code of ["XK", "XS", "XN", "XI", "XG"]) {
       expect(ids.has(code)).toBe(true);

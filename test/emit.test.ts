@@ -11,7 +11,7 @@ describe("geometry", () => {
 
   it("draws only what the region asked for", async () => {
     const map = await mapper({ region: ["FR", "DE"], detail: "110m" });
-    expect(map.svg.match(/<path/g)).toHaveLength(2);
+    expect(map.svg.match(/class="mp-country"/g)).toHaveLength(2);
     expect(map.svg).not.toContain('data-iso="ES"');
   });
 
@@ -72,7 +72,7 @@ describe("framing", () => {
   // work, not a decision that they do not belong.
   it("draws continental France, with no stray geometry off-canvas", async () => {
     const map = await mapper({ region: ["FR"], detail: "110m", size: [1000, 1000] });
-    expect(map.svg.match(/<path/g)).toHaveLength(1);
+    expect(map.svg.match(/class="mp-country"/g)).toHaveLength(1);
     expect(map.svg).toContain('data-iso="FR"');
 
     const coordinates = /d="([^"]+)"/.exec(map.svg)![1]!;

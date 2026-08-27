@@ -1,4 +1,4 @@
-import { feature } from "topojson-client";
+import { feature, mesh } from "topojson-client";
 import { featureId } from "./iso.js";
 import type { Detail } from "./types.js";
 
@@ -9,7 +9,28 @@ export interface CountryFeature {
   readonly geometry: unknown;
 }
 
-const cache = new Map<Detail, readonly CountryFeature[]>();
+/**
+ * The geometry the emitter draws from.
+ *
+ * `borders` is exposed as a capability rather than handing out the raw
+ * topology, because shared boundaries can only be derived where arcs are
+ * shared — a fact of the *source format*, not of the map. Keeping it behind
+ * this interface means Phase 4 can serve borders from a precomputed mesh
+ * without any caller learning that the storage changed.
+ */
+export interface World {
+  readonly countries: readonly CountryFeature[];
+  /**
+   * The boundaries shared between the named countries, each drawn once.
+   *
+   * Coastlines and the region's outer edge are excluded: they are already the
+   * silhouette of the land layer, and stroking them twice makes translucent or
+   * dashed border themes render wrong. Returns `null` when nothing is shared.
+   */
+  borders(ids: readonly string[]): unknown | null;
+}
+
+const cache = new Map<Detail, World>();
 
 /**
  * Load and normalise the world topology.
@@ -18,10 +39,10 @@ const cache = new Map<Detail, readonly CountryFeature[]>();
  * and depends on a devDependency — deliberately temporary. The full dataset is
  * 8 MB across all tiers, far too much to ship to every consumer, so Phase 4
  * replaces this with per-region extracts bundled in `data/`. Everything above
- * this function is written against the returned shape, not the source, so that
- * swap should not reach any caller.
+ * this function is written against `World`, not the source, so that swap should
+ * not reach any caller.
  */
-export async function loadCountries(detail: Detail): Promise<readonly CountryFeature[]> {
+export async function loadWorld(detail: Detail): Promise<World> {
   const cached = cache.get(detail);
   if (cached) return cached;
 
@@ -44,20 +65,24 @@ export async function loadCountries(detail: Detail): Promise<readonly CountryFea
   }
 
   const topology = JSON.parse(await readFile(path, "utf8")) as {
-    objects: { countries: unknown };
+    objects: { countries: { geometries: readonly unknown[] } };
   };
+  const object = topology.objects.countries;
 
   const collection = feature(
     topology as never,
-    topology.objects.countries as never,
+    object as never,
   ) as unknown as { features: ReadonlyArray<Record<string, never>> };
 
   const countries: CountryFeature[] = [];
-  for (const raw of collection.features) {
+  // Kept so `borders` can rebuild a subset object: the mesh needs the raw
+  // arc-indexed geometry, which the GeoJSON conversion above has thrown away.
+  const rawById = new Map<string, unknown>();
+
+  for (const [index, raw] of collection.features.entries()) {
     const record = raw as unknown as {
       id?: string | number;
       properties?: { name?: string };
-      geometry: unknown;
     };
     const name = record.properties?.name ?? "";
     const id = featureId(record.id, name);
@@ -65,9 +90,31 @@ export async function loadCountries(detail: Detail): Promise<readonly CountryFea
     // dropping it silently would be worse than leaving it unaddressable.
     if (id === null) continue;
     countries.push({ id, name, geometry: raw });
+    const source = object.geometries[index];
+    if (source !== undefined) rawById.set(id, source);
   }
 
-  const frozen = Object.freeze(countries);
-  cache.set(detail, frozen);
-  return frozen;
+  const world: World = {
+    countries: Object.freeze(countries),
+    borders(ids: readonly string[]): unknown | null {
+      const geometries: unknown[] = [];
+      for (const id of ids) {
+        const source = rawById.get(id);
+        if (source !== undefined) geometries.push(source);
+      }
+      if (geometries.length < 2) return null;
+
+      const subset = { type: "GeometryCollection" as const, geometries };
+      // `a !== b` selects arcs that two different countries share. The same
+      // call with `a === b` would give the outer edge, which the land layer
+      // already draws.
+      const lines = mesh(topology as never, subset as never, (a, b) => a !== b) as {
+        coordinates: readonly unknown[];
+      };
+      return lines.coordinates.length === 0 ? null : lines;
+    },
+  };
+
+  cache.set(detail, world);
+  return world;
 }

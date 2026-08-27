@@ -15,7 +15,71 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
-Phase 2 — class taxonomy and the node-tree emitter.
+Phase 3 — theming.
+
+## [0.2.0] — 2026-08-27
+
+Phase 2 — class taxonomy and the node-tree emitter. The document shape is now
+frozen, which is what everything after this builds against.
+
+A minor bump because the emitted SVG changed shape, and by this project's own
+policy the class taxonomy is public API.
+
+### Added
+
+- **The class taxonomy**, documented in the README and exported at runtime as
+  `LAYERS`, `ROOT_CLASS`, `LAYER_CLASS`, `BACKGROUND_CLASS`, `HIGHLIGHT_CLASS`
+  and `RESERVED_CLASSES`. Exporting it means the Phase 9 web tool never has to
+  hard-code a class name, and that the docs cannot drift from the emitter
+- **Eight layer groups in fixed paint order**, every one emitted even when
+  empty: `mp-neighbours`, `mp-land`, `mp-hydro`, `mp-borders`, `mp-roads`,
+  `mp-places`, `mp-labels`, `mp-annotations`. Adding a layer later would
+  restack everything beneath it and break themes in the wild; thirty bytes per
+  empty slot is the cheapest insurance in the project
+- **`.mp-bg`** — a rectangle covering the canvas, so a theme can colour the
+  ocean without the consumer wrapping the SVG in a styled element
+- **Real international borders**, meshed from shared arcs so each boundary is
+  drawn once rather than once per neighbour. Invisible for an opaque hairline,
+  obviously wrong for a translucent or dashed one. No new dependency:
+  `topojson-client` already shipped `mesh`
+- **Accessibility**: `role="img"` plus `aria-label` and a matching `<title>` on
+  the root, and a per-country `<title>` for hover. The root role keeps assistive
+  technology from announcing two hundred paths
+- **`title` option** — the generated label can only ever describe geography, and
+  a map of election results is not "a map of Western Europe"
+- **Caller-supplied GeoJSON as a region.** `Region` has always included
+  `FeatureCollection`; the resolver threw on it. The declared type no longer
+  lies
+
+### Changed
+
+- The SVG is built as a **node tree and serialised once** (`src/svg.ts`) rather
+  than concatenated. Escaping now happens in one place instead of at each call
+  site, and Phase 8 appends to a node that already exists
+- Root `<svg>` carries explicit `width`/`height` alongside `viewBox`, so files
+  written with `toFile()` have an intrinsic size in design tools and raster
+  converters. CSS overrides both
+- `preserveAspectRatio="xMidYMid meet"` is explicit rather than relying on the
+  SVG default
+- Internal: `loadCountries()` became `loadWorld()`, returning a `World` that
+  exposes `borders()` as a capability instead of leaking the topology. Not a
+  public export; Phase 4 can serve borders from a precomputed mesh without any
+  caller noticing
+
+### Fixed
+
+- The neighbours layer sits **above the background and below the land**. The
+  plan placed it above the water, which was wrong — lakes and rivers are drawn
+  on top of the land they sit in, so context would have covered its own subject
+
+### Notes
+
+- `.mp-hydro`, `.mp-roads`, `.mp-places` and `.mp-labels` are reserved and
+  always empty: `world-atlas` carries country polygons and nothing else. The
+  populated-places and hydrography data they need arrives in Phase 4
+- The water *layer* is `.mp-hydro` rather than `.mp-water` so it does not
+  collide with the `.mp-water` feature class. Layers are plural, features are
+  singular, and this is the one place where English forced an exception
 
 ## [0.1.0] — 2026-08-27
 
@@ -134,6 +198,7 @@ history stay the same document.
 | `1.0.0` | 7 · Ship | Stable taxonomy, published, documented |
 | `1.1.0` | 8 · Annotations | Pins, arrows, callouts, icons |
 
-[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/danielefrisanco/mapper/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/danielefrisanco/mapper/releases/tag/v0.1.0
 [0.0.1]: https://github.com/danielefrisanco/mapper/releases/tag/v0.0.1
