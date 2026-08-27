@@ -46,9 +46,16 @@ canvas, then eight layer groups in **fixed paint order**, bottom to top:
 | `.mp-places` | `.mp-place` | `data-rank`, `data-pop` | *Reserved* · settlement dots |
 | `.mp-labels` | `.mp-label` | `data-rank`, `data-iso` | *Reserved* · text nodes, thinned by rank |
 | `.mp-annotations` | `.mp-anno` | `data-id` | *Reserved* · pins, arrows, callouts |
+| `.mp-furniture` | `.mp-credit` | `data-anchor` | *Reserved* · credits, watermarks, legends |
 
 `.is-highlighted` is a modifier on any feature named in `highlight`.
-`.mp-pin`, `.mp-arrow` and `.mp-callout` are claimed but not yet emitted.
+`.mp-pin`, `.mp-arrow`, `.mp-callout`, `.mp-watermark`, `.mp-legend`,
+`.mp-scale` and `.mp-compass` are claimed but not yet emitted.
+
+Every layer but the last is geographic — its contents move when the projection
+or region changes. `.mp-furniture` is the exception: a credit line or watermark
+is placed on the canvas in fixed user units and must not shift when the camera
+does, which is why it is a layer of its own and sits above everything else.
 
 `.mp-bg` and the `.mp-borders` group ship with `fill="none"`. That is structural,
 not stylistic: SVG's default fill is black, so a full-canvas rectangle or a line

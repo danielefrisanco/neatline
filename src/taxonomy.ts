@@ -9,6 +9,12 @@
  * v1 onward, empty where the feature does not exist yet.
  *
  * Layers are plural (`.mp-land`), features are singular (`.mp-country`).
+ *
+ * Every layer but the last is geographic: its contents move when the projection
+ * or the region changes. `furniture` is the exception — a credit line or a
+ * watermark is placed on the *canvas*, in fixed user units, and must not shift
+ * when the camera does. That difference is why it is a layer of its own rather
+ * than a kind of annotation.
  */
 
 export type LayerName =
@@ -19,7 +25,8 @@ export type LayerName =
   | "roads"
   | "places"
   | "labels"
-  | "annotations";
+  | "annotations"
+  | "furniture";
 
 export interface LayerSpec {
   readonly name: LayerName;
@@ -95,7 +102,14 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     className: "mp-annotations",
     feature: "mp-anno",
     status: "reserved",
-    carries: "Pins, arrows and callouts — always the top of the stack",
+    carries: "Pins, arrows and callouts — the top of the geographic stack",
+  },
+  {
+    name: "furniture",
+    className: "mp-furniture",
+    feature: "mp-credit",
+    status: "reserved",
+    carries: "Credit lines, watermarks, legends — placed on the canvas, not on the map",
   },
 ]);
 
@@ -117,6 +131,11 @@ export const RESERVED_CLASSES: readonly string[] = Object.freeze([
   "mp-pin",
   "mp-arrow",
   "mp-callout",
+  "mp-credit",
+  "mp-watermark",
+  "mp-legend",
+  "mp-scale",
+  "mp-compass",
 ]);
 
 export function layer(name: LayerName): LayerSpec {

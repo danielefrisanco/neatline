@@ -31,11 +31,16 @@ policy the class taxonomy is public API.
   `LAYERS`, `ROOT_CLASS`, `LAYER_CLASS`, `BACKGROUND_CLASS`, `HIGHLIGHT_CLASS`
   and `RESERVED_CLASSES`. Exporting it means the Phase 9 web tool never has to
   hard-code a class name, and that the docs cannot drift from the emitter
-- **Eight layer groups in fixed paint order**, every one emitted even when
+- **Nine layer groups in fixed paint order**, every one emitted even when
   empty: `mp-neighbours`, `mp-land`, `mp-hydro`, `mp-borders`, `mp-roads`,
-  `mp-places`, `mp-labels`, `mp-annotations`. Adding a layer later would
+  `mp-places`, `mp-labels`, `mp-annotations`, `mp-furniture`. Adding a layer later would
   restack everything beneath it and break themes in the wild; thirty bytes per
   empty slot is the cheapest insurance in the project
+- **`.mp-furniture`** — the one non-geographic layer, reserved and empty. Credit
+  lines, watermarks and legends are placed on the canvas in fixed user units
+  rather than at a coordinate, so they must not move when the camera does.
+  Reserved alongside `.mp-credit`, `.mp-watermark`, `.mp-legend`, `.mp-scale`
+  and `.mp-compass`
 - **`.mp-bg`** — a rectangle covering the canvas, so a theme can colour the
   ocean without the consumer wrapping the SVG in a styled element
 - **Real international borders**, meshed from shared arcs so each boundary is

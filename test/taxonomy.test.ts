@@ -61,6 +61,7 @@ describe("layer stack", () => {
       "mp-places",
       "mp-labels",
       "mp-annotations",
+      "mp-furniture",
     ]);
   });
 
@@ -75,9 +76,16 @@ describe("layer stack", () => {
     }
   });
 
-  it("keeps the annotation slot at the top of the stack", () => {
+  it("keeps annotations above every geographic layer", () => {
     const order = layerOrder(map.svg);
-    expect(order[order.length - 1]).toBe("mp-annotations");
+    expect(order.indexOf("mp-annotations")).toBeGreaterThan(order.indexOf("mp-labels"));
+  });
+
+  // Furniture is not geographic: a credit line sits on the canvas and must not
+  // move when the camera does, so nothing may be drawn over it.
+  it("keeps furniture at the very top of the stack", () => {
+    const order = layerOrder(map.svg);
+    expect(order[order.length - 1]).toBe("mp-furniture");
   });
 
   it("places context below the land it provides context for", () => {
