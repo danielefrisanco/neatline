@@ -38,6 +38,7 @@ const PRESENTATION = new Set([
   "dominant-baseline",
   "paint-order",
   "vector-effect",
+  "r",
   "display",
   "visibility",
 ]);

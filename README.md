@@ -20,9 +20,9 @@ await map.toFile("europe.svg", { theme: "minimal" });
 
 ## Status
 
-Early. **Phases 0–3 are complete** — the package builds under both ESM and CJS,
-resolves real geometry, emits the frozen document shape below, and themes it.
-Real data — hydrography, roads, populated places — arrives in Phase 4.
+Early. **Phases 0–4 are complete** — the package builds under both ESM and CJS,
+resolves real geometry, emits the frozen document shape below, themes it, and
+carries lakes, rivers and cities. Labels arrive in Phase 6.
 
 See the build plan for what is in scope, what is reserved, and what is
 deliberately out.
@@ -40,10 +40,10 @@ canvas, then eight layer groups in **fixed paint order**, bottom to top:
 |---|---|---|---|
 | `.mp-neighbours` | `.mp-neighbour` | `data-iso` | *Reserved* · surrounding countries drawn as context |
 | `.mp-land` | `.mp-country` | `data-iso`, `data-name` | Filled land polygons, one node per country |
-| `.mp-hydro` | `.mp-water` | `data-kind` | *Reserved* · lakes and rivers |
+| `.mp-hydro` | `.mp-water` | `data-kind` | Lakes and rivers, drawn over the land |
 | `.mp-borders` | `.mp-border` | `data-kind` | Shared boundaries, each drawn once |
 | `.mp-roads` | `.mp-road` | `data-kind` | *Reserved* · motorway, trunk, primary |
-| `.mp-places` | `.mp-place` | `data-rank`, `data-pop` | *Reserved* · settlement dots |
+| `.mp-places` | `.mp-place` | `data-name`, `data-iso`, `data-rank`, `data-pop` | Settlement dots, ranked 1–3 |
 | `.mp-labels` | `.mp-label` | `data-rank`, `data-iso` | *Reserved* · text nodes, thinned by rank |
 | `.mp-annotations` | `.mp-anno` | `data-id` | *Reserved* · pins, arrows, callouts |
 | `.mp-furniture` | `.mp-credit` | `data-anchor` | *Reserved* · credits, watermarks, legends |
@@ -193,6 +193,14 @@ themes cannot collide.
 element as presentation attributes. It is not a CSS engine. It handles class selectors and descendant combinators,
 which is what the bundled themes use and what the authoring convention asks for.
 Selectors beyond that are skipped rather than half-applied.
+
+### Cities
+
+Settlements are ranked 1–3: capitals and the largest cities, then everything
+over a million, then the rest. `placeRank` decides how far down to draw
+(default 2 — which on Western Europe means the thirteen capitals plus Milan,
+Hamburg, Munich, Lyon, Marseille, Turin and Barcelona). Every dot also carries
+`data-rank`, so a theme can thin them further with one CSS rule.
 
 ### Choosing layers
 

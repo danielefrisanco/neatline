@@ -66,7 +66,7 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     name: "hydro",
     className: "mp-hydro",
     feature: "mp-water",
-    status: "reserved",
+    status: "live",
     carries: "Lakes and rivers, drawn over the land they sit in",
   },
   {
@@ -87,8 +87,8 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     name: "places",
     className: "mp-places",
     feature: "mp-place",
-    status: "reserved",
-    carries: "Settlement dots, ranked by population",
+    status: "live",
+    carries: "Settlement dots, ranked 1-3 so a theme can thin them",
   },
   {
     name: "labels",

@@ -80,8 +80,26 @@ describe("layer stack", () => {
   it("emits reserved layers empty rather than omitting them", () => {
     for (const spec of LAYERS) {
       if (spec.status !== "reserved") continue;
-      expect(map.svg).toContain(`<g class="mp-layer ${spec.className}"/>`);
+      expect(map.svg, `${spec.className} should be empty`).toContain(
+        `<g class="mp-layer ${spec.className}"/>`,
+      );
     }
+  });
+
+  it("draws the cities of the countries it drew", () => {
+    expect(map.svg).toContain('class="mp-place"');
+    expect(map.svg).toContain('data-name="Paris"');
+    // Tied to a drawn country, so a map of Western Europe grows no dots in
+    // North Africa even though the viewport reaches it.
+    expect(map.svg).not.toContain('data-name="Algiers"');
+  });
+
+  // The 110m tier carries only the world's largest lakes, none of them in
+  // Western Europe — so water is checked where water exists.
+  it("draws water at a detail tier that has some", async () => {
+    const detailed = await mapper({ region: "west-europe", detail: "50m" });
+    expect(detailed.svg).toContain('class="mp-water" data-kind="lake"');
+    expect(detailed.svg).toContain('class="mp-water" data-kind="river"');
   });
 
   it("keeps annotations above every geographic layer", () => {

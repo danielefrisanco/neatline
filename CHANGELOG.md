@@ -15,7 +15,53 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
-Phase 4 — data pipeline.
+Phase 5 — presets and fill modes.
+
+## [0.4.0] — 2026-08-27
+
+Phase 4 — data pipeline. Maps now carry water and cities.
+
+### Added
+
+- **A build step producing `data/`**, and `loadWorld()` reads only that. The
+  library no longer resolves a devDependency off disk at call time, which is
+  what tied it to Node — sources stay on the build machine, the extract ships
+- **Lakes and rivers** in `.mp-hydro`, from `sane-topojson`. 275 lakes and 461
+  rivers at 50m. Water is matched against the countries actually drawn, not the
+  framed rectangle — filtering on the viewport alone floats Scandinavian lakes
+  over open sea on a map whose northern edge stops at Denmark
+- **Cities** in `.mp-places`, from Natural Earth populated places, vendored.
+  Ranked 1–3: capitals and the largest cities, then everything over a million,
+  then the rest. Capitals are promoted regardless of size — a map showing Milan
+  but not Bern is wrong — but the bands are otherwise population, so Hamburg,
+  Lyon and Turin appear where a capitals-only rule would have missed them
+- **`placeRank`** — how far down the ranking to draw. Default 2
+- Three new gallery renders: `west-europe-cities`, `france-rivers`,
+  `europe-no-water`
+- `--place` token; `--water` is now live rather than reserved
+
+### Fixed
+
+- **Framing is now judged one country at a time.** It was judged across the
+  whole region, which broke at 50m: France carries dozens of polygons there,
+  enough of them overseas that the outlier threshold stretched until it caught
+  nothing, and a map of France framed the Atlantic from Guadeloupe to Réunion.
+  Country-by-country is also the only framing that gets every case right —
+  French Guiana is 15% of France by area, Alaska 17% of the US and Patagonia
+  14% of South America, so no threshold on *size* can separate them, and no
+  threshold on distance can either. What distinguishes them is that Guiana and
+  Alaska are outliers within their own country while Patagonia is simply where
+  Argentina is. Continental France, the lower 48 and mainland Portugal now frame
+  correctly, while Indonesia's archipelago and New Zealand stay whole
+
+### Notes
+
+- `data/` is generated and not committed; `vendor/` holds the raw Natural Earth
+  input. `npm run check` builds the data first
+- Oceania still spans the antimeridian, which widens its frame. Pre-existing,
+  and a projection problem rather than a framing one
+
+## [0.3.1] — 2026-08-27
 
 ### Added
 
@@ -291,7 +337,9 @@ history stay the same document.
 | `1.0.0` | 7 · Ship | Stable taxonomy, published, documented |
 | `1.1.0` | 8 · Annotations | Pins, arrows, callouts, icons |
 
-[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/danielefrisanco/mapper/compare/v0.3.1...v0.4.0
+[0.3.1]: https://github.com/danielefrisanco/mapper/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/danielefrisanco/mapper/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/danielefrisanco/mapper/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/danielefrisanco/mapper/releases/tag/v0.1.0

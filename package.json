@@ -1,6 +1,6 @@
 {
   "name": "mapper",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Generate standalone, CSS-themeable SVG maps from a region and a stylesheet.",
   "license": "MIT",
   "type": "module",
@@ -31,8 +31,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "verify:exports": "node scripts/verify-exports.mjs",
-    "check": "npm run typecheck && npm run test && npm run build && npm run verify:exports",
-    "prepublishOnly": "npm run check"
+    "check": "npm run build:data && npm run typecheck && npm run test && npm run build && npm run verify:exports",
+    "prepublishOnly": "npm run check",
+    "build:data": "node scripts/build-data.mjs"
   },
   "dependencies": {
     "d3-geo": "^3.1.1",
@@ -42,6 +43,7 @@
     "@types/d3-geo": "^3.1.0",
     "@types/node": "^22.10.2",
     "@types/topojson-client": "^3.1.5",
+    "sane-topojson": "^4.0.0",
     "tsup": "^8.5.1",
     "typescript": "^5.7.2",
     "vitest": "^4.1.11",

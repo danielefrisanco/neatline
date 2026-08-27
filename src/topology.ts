@@ -1,6 +1,6 @@
 import { feature, mesh } from "topojson-client";
 import { featureId } from "./iso.js";
-import type { Detail } from "./types.js";
+import type { Detail, Position } from "./types.js";
 
 /** A country ready to draw: geometry plus the ids the emitter needs. */
 export interface CountryFeature {
@@ -9,70 +9,87 @@ export interface CountryFeature {
   readonly geometry: unknown;
 }
 
+/** A settlement. Ranked 1–3 so a theme can thin density with one CSS rule. */
+export interface Place {
+  readonly name: string;
+  /** The country it sits in, or `null` where Natural Earth records none. */
+  readonly iso: string | null;
+  readonly position: Position;
+  readonly population: number;
+  readonly capital: boolean;
+  readonly rank: 1 | 2 | 3;
+}
+
+export type WaterKind = "lake" | "river";
+
 /**
  * The geometry the emitter draws from.
  *
- * `borders` is exposed as a capability rather than handing out the raw
- * topology, because shared boundaries can only be derived where arcs are
- * shared — a fact of the *source format*, not of the map. Keeping it behind
- * this interface means Phase 4 can serve borders from a precomputed mesh
- * without any caller learning that the storage changed.
+ * `borders` is a capability rather than raw topology, because shared boundaries
+ * can only be derived where arcs are shared — a fact of the storage format, not
+ * of the map. Water needs no equivalent: no two lakes share an edge, so it is
+ * stored as plain geometry.
  */
 export interface World {
   readonly countries: readonly CountryFeature[];
+  readonly places: readonly Place[];
   /**
    * The boundaries shared between the named countries, each drawn once.
-   *
-   * Coastlines and the region's outer edge are excluded: they are already the
-   * silhouette of the land layer, and stroking them twice makes translucent or
-   * dashed border themes render wrong. Returns `null` when nothing is shared.
+   * Coastlines are excluded — the land layer already draws that silhouette.
    */
   borders(ids: readonly string[]): unknown | null;
+  water(kind: WaterKind): unknown;
 }
 
 const cache = new Map<Detail, World>();
 
+interface Bundle {
+  readonly countries: { objects: { countries: { geometries: readonly unknown[] } } };
+  readonly lakes: unknown;
+  readonly rivers: unknown;
+  readonly places: ReadonlyArray<{
+    n: string;
+    i: string | null;
+    x: number;
+    y: number;
+    p: number;
+    c: number;
+    r: number;
+  }>;
+}
+
 /**
- * Load and normalise the world topology.
+ * Load the bundled map data.
  *
- * PHASE 1 SEAM. This reads `world-atlas` from disk, which makes it Node-only
- * and depends on a devDependency — deliberately temporary. The full dataset is
- * 8 MB across all tiers, far too much to ship to every consumer, so Phase 4
- * replaces this with per-region extracts bundled in `data/`. Everything above
- * this function is written against `World`, not the source, so that swap should
- * not reach any caller.
+ * Reads `data/`, which the build produces — not a package off disk. That
+ * distinction is the whole point of this seam: Phase 1 resolved `world-atlas`
+ * through `createRequire`, which tied the library to Node and to a
+ * devDependency being present at call time. Sources now stay on the build
+ * machine and only the extract ships.
  */
 export async function loadWorld(detail: Detail): Promise<World> {
   const cached = cache.get(detail);
   if (cached) return cached;
 
-  const [{ readFile }, { createRequire }] = await Promise.all([
-    import("node:fs/promises"),
-    import("node:module"),
-  ]);
+  const url = new URL(`../data/${detail}.json`, import.meta.url);
 
-  const require = createRequire(import.meta.url);
-
-  let path: string;
+  let bundle: Bundle;
   try {
-    path = require.resolve(`world-atlas/countries-${detail}.json`);
+    const { readFile } = await import("node:fs/promises");
+    bundle = JSON.parse(await readFile(url, "utf8")) as Bundle;
   } catch {
     throw new Error(
-      `mapper: could not find world-atlas data for detail "${detail}". ` +
-        `Phase 1 loads geometry from the world-atlas package; install it with ` +
-        `\`npm i -D world-atlas\`. Phase 4 replaces this with bundled data.`,
+      `mapper: could not read bundled data for detail "${detail}". ` +
+        `Run \`npm run build:data\` to regenerate it.`,
     );
   }
 
-  const topology = JSON.parse(await readFile(path, "utf8")) as {
-    objects: { countries: { geometries: readonly unknown[] } };
-  };
+  const topology = bundle.countries;
   const object = topology.objects.countries;
 
-  const collection = feature(
-    topology as never,
-    object as never,
-  ) as unknown as { features: ReadonlyArray<Record<string, never>> };
+  const collection = feature(topology as never, object as never) as unknown as {
+    features: ReadonlyArray<Record<string, never>>;
+  };
 
   const countries: CountryFeature[] = [];
   // Kept so `borders` can rebuild a subset object: the mesh needs the raw
@@ -80,10 +97,7 @@ export async function loadWorld(detail: Detail): Promise<World> {
   const rawById = new Map<string, unknown>();
 
   for (const [index, raw] of collection.features.entries()) {
-    const record = raw as unknown as {
-      id?: string | number;
-      properties?: { name?: string };
-    };
+    const record = raw as unknown as { id?: string | number; properties?: { name?: string } };
     const name = record.properties?.name ?? "";
     const id = featureId(record.id, name);
     // A feature with no resolvable id cannot be targeted or highlighted;
@@ -94,8 +108,19 @@ export async function loadWorld(detail: Detail): Promise<World> {
     if (source !== undefined) rawById.set(id, source);
   }
 
+  const places: Place[] = bundle.places.map((p) => ({
+    name: p.n,
+    iso: p.i,
+    position: [p.x, p.y] as Position,
+    population: p.p,
+    capital: p.c === 1,
+    rank: (p.r === 1 || p.r === 2 ? p.r : 3) as 1 | 2 | 3,
+  }));
+
   const world: World = {
     countries: Object.freeze(countries),
+    places: Object.freeze(places),
+
     borders(ids: readonly string[]): unknown | null {
       const geometries: unknown[] = [];
       for (const id of ids) {
@@ -105,13 +130,16 @@ export async function loadWorld(detail: Detail): Promise<World> {
       if (geometries.length < 2) return null;
 
       const subset = { type: "GeometryCollection" as const, geometries };
-      // `a !== b` selects arcs that two different countries share. The same
-      // call with `a === b` would give the outer edge, which the land layer
-      // already draws.
+      // `a !== b` selects arcs two different countries share. The same call
+      // with `a === b` would give the outer edge, which the land layer draws.
       const lines = mesh(topology as never, subset as never, (a, b) => a !== b) as {
         coordinates: readonly unknown[];
       };
       return lines.coordinates.length === 0 ? null : lines;
+    },
+
+    water(kind: WaterKind): unknown {
+      return kind === "lake" ? bundle.lakes : bundle.rivers;
     },
   };
 

@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1uosstx" role="img" aria-label="Map of Africa">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0x3zcyu" role="img" aria-label="Map of Africa">
   <title>Map of Africa</title>
   <style>
-    .mp.mp-t-1uosstx {
+    .mp.mp-t-0x3zcyu {
       --bg: transparent;
       --land: #D8D8D2;
       --land-edge: #FFFFFF;
@@ -9,6 +9,7 @@
       --border-width: 0.75;
       --accent: #C2482F;
       --accent-edge: #FFFFFF;
+      --place: #2B2B29;
       --ink: #2B2B29;
       --ink-muted: #80807A;
       --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -20,44 +21,53 @@
       --anno-ink: #FFFFFF;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-1uosstx .mp-bg {
+    .mp.mp-t-0x3zcyu .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-1uosstx .mp-country {
+    .mp.mp-t-0x3zcyu .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: 0.5;
       stroke-linejoin: round;
     }
-    .mp.mp-t-1uosstx .mp-country.is-highlighted {
+    .mp.mp-t-0x3zcyu .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-1uosstx .mp-border {
+    .mp.mp-t-0x3zcyu .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-1uosstx .mp-neighbour {
+    .mp.mp-t-0x3zcyu .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-1uosstx .mp-water {
+    .mp.mp-t-0x3zcyu .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-1uosstx .mp-road {
+    .mp.mp-t-0x3zcyu .mp-water[data-kind="river"] {
+      fill: none;
+      stroke: var(--water);
+      stroke-width: 0.8;
+    }
+    .mp.mp-t-0x3zcyu .mp-place {
+      fill: var(--place);
+      stroke: none;
+    }
+    .mp.mp-t-0x3zcyu .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-1uosstx .mp-label {
+    .mp.mp-t-0x3zcyu .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
     }
-    .mp.mp-t-1uosstx {
+    .mp.mp-t-0x3zcyu {
       --bg: #F6F1E7;
       --land: #E3D6BE;
       --land-edge: #F6F1E7;
@@ -183,7 +193,7 @@
     <path class="mp-country" data-iso="SZ" data-name="eSwatini" d="M695.8,606.2L694.1,610.1L690.2,611.1L686.7,606.3L686.9,603.3L689,599.9L689.9,597.3L691.8,596.7L695,598.3L695.6,602.3Z" fill="#E3D6BE" stroke="#F6F1E7" stroke-width="0.5" stroke-linejoin="round">
       <title>eSwatini</title>
     </path>
-    <path class="mp-country" data-iso="AO" data-name="Angola" d="M574.5,405.3L572,407.3L570.8,409.7L570.6,413.8L568.8,414.8L567,407.7L569.8,403.7L571.9,402.1ZM569.7,417.7L572.6,416.4L574.6,416.6L577.1,415.5L597.5,415.6L599.2,422.5L601.1,428.1L602.6,431.1L605.2,436L609.8,435.3L612.1,434L615.9,435.3L617,432.9L618.8,427.5L623.1,427.2L623.5,425.5L627,425.5L626.4,428.9L634.8,428.8L634.8,434.7L636.1,438.2L635,443.9L635.4,449.6L637.6,453L637,464.1L638.7,463.2L641.7,463.5L646,462.1L649.1,462.6L649.8,465.5L648.8,470L649.9,474.3L648.8,477.8L649.3,481L635,480.9L633.6,510.2L637.9,517.7L642.1,523.4L629.5,527.1L613.1,525.8L608.5,521.4L581,521.8L579.9,522.5L575.9,518.3L571.5,518.1L567.4,519.6L564.1,521.4L563.6,515.6L564.7,507.6L567.2,499.1L567.7,495.2L570.1,486.9L571.8,483.1L575.8,477L578.1,472.9L578.9,466.1L578.7,460.8L576.6,457.5L574.9,451.8L573.3,446.3L573.7,444.3L575.8,440.6L573.8,431.6L572.5,425.4L569.1,419.5Z" fill="#E3D6BE" stroke="#F6F1E7" stroke-width="0.5" stroke-linejoin="round">
+    <path class="mp-country" data-iso="AO" data-name="Angola" d="M569.7,417.7L572.6,416.4L574.6,416.6L577.1,415.5L597.5,415.6L599.2,422.5L601.1,428.1L602.6,431.1L605.2,436L609.8,435.3L612.1,434L615.9,435.3L617,432.9L618.8,427.5L623.1,427.2L623.5,425.5L627,425.5L626.4,428.9L634.8,428.8L634.8,434.7L636.1,438.2L635,443.9L635.4,449.6L637.6,453L637,464.1L638.7,463.2L641.7,463.5L646,462.1L649.1,462.6L649.8,465.5L648.8,470L649.9,474.3L648.8,477.8L649.3,481L635,480.9L633.6,510.2L637.9,517.7L642.1,523.4L629.5,527.1L613.1,525.8L608.5,521.4L581,521.8L579.9,522.5L575.9,518.3L571.5,518.1L567.4,519.6L564.1,521.4L563.6,515.6L564.7,507.6L567.2,499.1L567.7,495.2L570.1,486.9L571.8,483.1L575.8,477L578.1,472.9L578.9,466.1L578.7,460.8L576.6,457.5L574.9,451.8L573.3,446.3L573.7,444.3L575.8,440.6L573.8,431.6L572.5,425.4L569.1,419.5Z" fill="#E3D6BE" stroke="#F6F1E7" stroke-width="0.5" stroke-linejoin="round">
       <title>Angola</title>
     </path>
     <path class="mp-country" data-iso="BI" data-name="Burundi" d="M696.1,383.2L696.4,386.9L697.9,389L698,392L696.2,394L693.5,398.9L690.9,402.3L688,402.7L687.7,391.4L686,387.2L690.2,387.9L692.4,382.6Z" fill="#E3D6BE" stroke="#F6F1E7" stroke-width="0.5" stroke-linejoin="round">
@@ -232,12 +242,181 @@
       <title>S. Sudan</title>
     </path>
   </g>
-  <g class="mp-layer mp-hydro"/>
+  <g class="mp-layer mp-hydro">
+    <path class="mp-water" data-kind="lake" d="M721.3,370.4L717.7,374.6L715.4,378.8L718.2,382.1L714.2,384.5L713.4,383.4L709.4,383.9L706.1,386L704.4,382.4L705.7,375.8L706,370.3L705.5,366.6L708.8,361.1L713,359.8L716,357.5L719.8,359.3L721.8,363.6ZM697.3,440.8L695.1,440.1L695.7,436.4L693.8,433.9L693.1,428.9L689,423.8L686.7,417.1L688,413.1L686.3,407.8L687.8,392.9L690.2,402L689.8,406.4L691.1,407.8L690.8,411.7L692,415.4L690.4,419L695.7,425.3L696.3,431L700.1,442.1L698.8,442.8ZM725.9,493.6L725.6,494.6L723.3,491.1L722,493.5L721.1,491.5L721.3,488L719.9,485.3L720.1,481.4L718.4,474.5L720.7,469.4L720.6,458.2L718.4,452.1L719.2,449.4L722.5,454.4L722.9,464L724.9,467.6L722.8,476.5L723.5,488.4L724.7,488.7ZM739.9,250L739.1,248.3L740.5,246.4L742.5,247.1L742.4,250.2L741.4,251.3Z"/>
+    <path class="mp-water" data-kind="river" fill="none" d="M665.1,470.2L662.9,469.4L661,465.1L661.6,460.9L660,457.5L659.9,454.8L660.5,449L661.6,446.9L663.6,445.6L664.6,442.5L667.2,437.9L669.3,436.9L670.1,435.8L670.6,434.6L670.4,432L671.5,426L671.6,422.5L671,413.1L671.5,409.7L671.4,407.5L670.4,404.9L667.4,401.1L665.7,398.6L665,395.6L664.8,394.2L664.5,391L664.3,387.8L664.1,386.3L664.1,384.9L663.8,381.7L663.9,377.9L663.7,374.6L663.7,373.3L662.9,370.1L661.9,367.9L661.4,365.5L661.7,361.1L660.9,357.3L657.6,355.6L653.1,353.3L642.4,342.3L639.6,340.6L635.3,340.6L625.1,342.6L622.6,343.2L617.4,345.8L614.3,349.3L612.9,352L611.8,355L610.8,359.6L606.6,366.7L606.1,367.6L601.6,372.1L598.3,376.9L595.3,386L595.4,393.7L593.7,396.7L589.7,401.3L585.6,407.2L582.9,407.2L581.9,407.5L580.3,409.9L578.9,410.7L577.8,414.4L577.3,414.6L577.1,415.4L574.6,416.6L572.6,416.4L569.8,417.6M715.2,358.1L715,356.6L713,348.3L712.5,347.8L711.2,346.8L710.2,346.1L709.2,345.5L708.4,344.9L708,344.8L708,344.5L708.7,342.4L708.9,341.1L708.2,339.9L706.7,339.2L705.1,339L704.4,339.4L703.2,339.8L702.4,340L702.6,339L703.2,338.1L702.9,336.9L702.9,335.6L702.9,333L703.6,330.3L704.8,328.4L706.8,326.8L704.8,322.9L703.7,319.8L703.6,316.6L704.5,309.7L704,305.1L700.2,296.7L697.7,292.7L696.1,289.9L695,286.9L693.9,280.3L693.5,277.4L693.9,274.5L695.1,272.6L697.1,272.1L699.4,272.5L700.6,272.6L702.1,272.1L703.7,270.5L706.4,266.8L706.8,265.1L706.2,263.1L706.5,261.7L709,256.6L709.3,253.4L709.7,248.6L709.6,242.7L709.2,239.4L708.3,236.1L705.7,229L705.1,225.8L706.2,215.1L706.6,212.2L707.4,209.8L709,207.6L711.3,205.8L712.9,203.6L714.3,201.1L714.8,197.4L714.5,194.1L714.1,191.6L712,186.1L710.2,180.5L708.4,180.2L707,180.6L705.2,182L701.8,186.3L698,192L696.9,192.9L695.9,193.1L694.6,192.7L693.6,191.5L692.5,189.6L690.7,184.1L689.2,176.7L690.5,174.5L690.7,173.5L689,170.4L688.7,169.2L690.4,165.7L693.2,160.6L695.3,156.2L697.2,153.2L698.5,151.5L701.6,150.6L702.4,149.5L703.3,147.5L703.7,144.9L703.8,142.2L703.5,139.3L703.1,134.2L702.5,131.3L700.5,127.4L699.8,124.9L700.8,122.5L700.9,121.4L700.3,120.6L696.7,120.3L694.1,117.1L690.5,111.7L688.9,109.9L687.8,108L686.9,105.8L686.6,103.4L686,101.4L686,99.8L687.6,92.4L687.7,89.3L687.3,85.2L686,77.6L684.6,73.1"/>
+  </g>
   <g class="mp-layer mp-borders" fill="none">
     <path class="mp-border" data-kind="intl" d="M762.5,457L756.7,462.3L749.1,465.9L744.9,465.8L742.3,468.6L737.5,468.8L735.7,470L727.5,467.4L722.3,468.1L720.9,455.5L718.7,451.2L717.4,448.6L710.7,446.9L706.9,444.1L702.5,442.5L699.8,440.9L697,438.6L693.5,426.8L689.6,421.6L688.4,416.2L689.1,411.3L688,402.7L690.9,402.3L693.5,398.9L696.2,394L698,392L697.9,389L696.4,386.9L696.1,383.2L698.1,382L698.5,376.5L695.8,371.2L698.3,370.1L705.9,370.2L720,369.5L721.2,370.5L746.3,389.6L746.7,395L756.5,404.3M369.8,162.3L370,162.3L385.1,161.6L386,158.4L388.9,154.3L391.6,141.9L401.2,132.3L404.7,121.1L406.8,120.5L409.2,113.6L414.8,112.7L417.1,113.8L420.1,113.8L422.3,111.8L426.4,111.5L426.3,106.8L427.3,106.8L427.3,107.4L427.1,109.1L426.8,122.5L405.1,122L404.5,144.8L398.2,145.6L396.5,150.2L397.3,163.2L371,163.1L369.4,166.1M697,438.6L694.3,437.6L684.9,439.2L683,440.3L680.9,446.2L682.3,450.3L680.8,461.3L679.6,470.6L681.4,472.3L686.1,475.9L688,474.2L688.2,484.2L682.9,484.1L680.3,479L677.9,475.1L672.7,473.8L671.3,468.9L667,471.9L661.6,470.6L659.4,466.4L655.1,465.5L651.8,465.7L651.5,462.8L649.1,462.6L646,462.1L641.7,463.5L638.7,463.2L637,464.1L637.6,453L635.4,449.6L635,443.9L636.1,438.2L634.8,434.7L634.8,428.8L626.4,428.9L627,425.5L623.5,425.5L623.1,427.2L618.8,427.5L617,432.9L615.9,435.3L612.1,434L609.8,435.3L605.2,436L602.6,431.1L601.1,428.1L599.2,422.5L597.5,415.6L577.1,415.5L574.6,416.6L572.6,416.4L569.7,417.7M568.8,414.8L570.6,413.8L570.8,409.7L572,407.3L574.5,405.3L576.3,406.3L578.7,402.7L582.5,402.8L582.9,405.4L585.5,407.1L589.6,401.2L593.7,396.7L595.5,393.7L595.3,386L598.4,376.9L601.5,372.1L606.1,367.5L606.9,364.5L607.1,361.1L608.2,357.9L607.9,352.6L608.7,344.2L610.1,338.4L612.1,333.4L612.5,327.7L613.1,321.2L615.7,316.5L619.4,313.5L625.2,316.6L629.6,320.1L634.7,321L639.9,322.8L641.9,317.2L642.9,316.5L646,317.4L653.7,312.7L656.5,314.7L658.7,314.4L659.7,312.2L662.3,311.4L667.6,312.3L672,312.6L674.3,311.6L678.6,319.3L681.7,320.4L683.6,318.8L686.8,319.5L690.6,317.5L692.3,321.5L698.5,327.7L698.2,338.6L701,339.9L698.8,343.2L696.1,345.7L693.5,350.6L692,355L691.7,362.5L690,366.1L690,373.1L687.9,375.8L687.7,381.3L686.7,382L686,387.2L687.7,391.4L688,402.7M773.4,376.3L769.3,368.6L769.1,334.5L775,323.9L776.9,320.9L781.3,320.7L787.4,314.1L796.4,313.7L815.1,285.7L819.6,277.9L822.4,272.2L822.1,267.4L821.6,258L821.4,254.2L821.5,254M720,369.5L720,359.5L722,355.7L725.4,349.5L727.9,342.7L724.7,332L723.8,327.3L720.4,320.8L724.6,315.2L729.2,309L732.9,310.6L733,315.8L735.4,318.9L740.2,318.9L749.1,326.9L751.3,327L752.9,326.7L754.5,327.8L759.2,328.5L761.1,324.6L767.4,320.7L770.3,323.9L775,323.9M745.1,193.4L742.1,198.6L737.2,200.1L735.2,202.9L735,209L732.9,222.5L733.8,226.2L733.1,234.1L730.8,243.2L726.9,247.8L724.3,254.9L723.7,258.7L720.6,261.3L718.9,271L719.3,279.4L718.9,272.1L718,271.9L717.9,267.3L717,264.1L713.3,260.4L712.2,253.7L712.7,246.9L709.5,246.3L709.1,248.3L705,248.8L706.8,251.5L707.6,257.1L704,262.2L700.8,268.9L697.3,269.8L691.3,264.4L688.7,266.3L688.1,269L684.6,270.8L684.4,272.7L677.5,272.7L676.5,270.8L671.6,270.5L669.1,272.1L667.2,271.3L663.5,265.9L662.2,263.3L657.3,264.6L655.5,268.9L653.9,277.2L651.6,278.9L649.5,280L654.3,283.6L648.9,279.5L646.5,276.9L646,274L647,270.1L646.9,266.3L642.7,260.5L641.9,256.5L641.9,254.3L639.3,251.5L639,246.2L637.5,242.6L635.1,243.1L635.7,239.7L637.3,235.9L636.4,232.1L638.6,229.2L637.1,227.1L638.7,221.4L641.5,214.6L647.5,215.3L645.5,179L645.3,175.2L653.1,175.2L652.1,157.1L679,157.1L705.1,157.1L731.7,157.1M641.9,256.5L637.5,258.1L634.1,261.9L629.4,272L623,276.3L616.3,275.7L614.3,276.6L615.1,279.9L611.5,283.1L608.7,286.8L600,290.3L598.2,288.2L597.1,288L595.8,290.4L590.1,291.1L591.2,288.6L588.9,282.2L587.9,278.3L584.8,276.7L580.7,271.3L582.1,266.9L585.3,267.9L587.2,267.2L591.1,267.3L587.2,258.9L587.3,252.7L586.7,246.5L583.9,240.6L584.5,236.3L580.1,236.1L580,230.1L577,226.7L579.7,214.6L588.2,205.9L588.2,194L590.2,175.6L591.6,171.7L588.6,168.6L588.4,165.7L585.8,163.4L583.7,149.4L590.2,144.5L617.7,161.7L645.5,179M591.3,622.4L594.6,618.1L597.1,620.5L598,624.2L600.9,624.8L604.9,626.5L608.5,625.9L614.6,621.4L616.5,588.8L618.2,590.1L621.7,598.6L620.7,604L622,607L626.8,606.1L630.4,602.2L633.7,599.6L635.6,595.3L638.9,593.2L641.7,594.3L644.7,596.8L650,597.2L654.4,595.2L655.3,592.4L656.7,588.1L660.4,587.4L662.7,584.1L665.3,578.1L671.8,571.4L681.7,564.8L684.5,564.9L687.6,566.5L689.9,565.4L693.4,566.3L695.6,578.9L696.8,585.2L694.8,595.2L695,598.3L691.8,596.7L689.9,597.3L689,599.9L686.9,603.3L686.7,606.3L690.2,611.1L694.1,610.1L695.8,606.2L700.8,606.3M673.7,625.7L671.1,623L667.8,624.8L664,628.2L660,633.7L664.3,640.4L666.7,639.5L668.1,636.8L671.9,635.4L673.3,632.6L675.7,628.3L673.7,625.7M681.7,564.8L677.8,560.8L672.6,559.4L671,553.7L671.2,550.5L668.4,549.5L661.3,539.5L659.5,534.3L658.2,532.6L656,525.3L663.5,526.3L665.7,527.4L668,527.2L672.1,521.3L678.4,513.7L680.9,513L681.8,509.8L685.9,506.2L691.1,504.9L691.4,508.4L697.1,508.2L700.2,510.1L701.5,512.4L704.7,513L708.1,516L707.4,527.6L705.6,533.9L704.9,540.7L705.8,543.4L704.6,548.7L703.6,549.5L701.3,556L693.4,566.3M616.5,588.8L617.9,562.6L624.5,562.3L626.2,530L631.3,529.8L641.9,526.6L644.3,530.3L648.8,526.7L650.9,526.7L654.8,524.7L656,525.3M564.1,521.4L567.4,519.6L571.5,518.1L575.9,518.3L579.9,522.5L581,521.8L608.5,521.4L613.1,525.8L629.5,527.1L642.1,523.4L647.8,521.3L652.2,521.8L654.8,523.9L654.8,524.7M371.9,210.4L374.4,207.5L377.7,208.3L381.1,206.3L384.9,206.2L388.1,208.9L392.6,211.3L396.6,218.1L401,224.4L401.2,230.1L402.4,235.4L404.9,238L405.5,241.6L405.1,244.5L404.1,245L400.4,244.2L399.8,245.3L398.3,245.5L393.4,243.2L390.1,243.1L377.4,242.7L375.5,243.8L373.3,243.5L369.6,245M368.6,237.9L374.9,238.1L376.6,236.8L377.8,236.7L380.4,234.6L383.3,236.6L386.3,236.7L389.3,234.6L387.9,232L385.6,233.5L383.5,233.5L380.9,231.2L378.7,231.4L377.1,233.6L369.6,233.8M401,224.4L403.3,222.7L404.5,217.3L406.7,217.1L411.4,219.7L415.3,217.8L418,218.4L419,216.4L446.4,216.3L448,209.8L446.8,208.7L444,169.4L441.4,130.7L451.6,130.5L473.9,150L496.6,169.7L498.2,173.9L502.4,176.5L505.6,178L505.7,183.8L513.2,182.9L513.4,203.9L509.7,210L509.1,215.6L503.1,217.1L493.7,217.9L491.2,221.2L486.9,221.5L482.5,221.6L480.7,219.8L477,221.1L470.6,224.9L469.3,227.8L463.9,231.9L463,234.3L460.1,236.2L456.8,235L454.9,237.2L453.8,243.5L448.3,251.2L448.5,254.4L446.6,258.3L447,263.7L444.1,265.1L442.5,266.2L441.5,262.2L439.5,263.3L438.3,263.1L437,265.8L431.7,265.8L429.8,264.4L428.9,265.2L426.8,262.5L427.2,259.8L426.3,258.7L424.8,259.6L425.1,256.6L426.6,254.2L423.8,250.3L423,247.7L421.5,245.7L420.1,245.5L418.5,246.8L416.2,248L414.3,250L411.4,249.3L409.5,246.9L408.4,246.6L406.5,247.8L405.4,247.9L405.1,244.5M427.1,109.1L451.6,130.5M497.2,303.1L495.5,296.6L495.8,275.2L494.4,273.3L494.1,268.7L491.7,265.5L489.6,262.7L490.5,257.9L492.9,256.8L494.2,252.8L497.6,251.9L499.1,249.1L501.4,246.4L503.9,246.4L509.2,251.7L508.9,254.8L510.5,260.3L509.1,264L509.9,266.5L506.5,272.3L504.4,275.1L503.1,281L503.3,286.9L502.9,302M583.9,240.6L582,241.2L581.8,244.1L580.5,244.3L575.7,234.2L574.1,233.8L568.8,239L563.4,236.3L559.7,235.7L557.8,237L553.7,236.8L549.7,240.7L546.2,240.9L537.8,236.1L534.6,238.4L531.1,238.3L528.5,234.8L521.6,231.3L514.2,232.4L512.5,234.4L511.5,239.7L509.6,243.5L509.2,251.7M499.1,249.1L499.2,242.8L491.3,240.7L491.1,236.2L487.2,230.2L486.3,226L486.9,221.5M513.2,182.9L522.7,178.8L541.9,161L564.4,143.9L575.1,147.8L579,152.7L583.7,149.4M581.8,244.1L584.6,247.8L583.9,249.5L583.6,252.5L577.9,259.7L576.1,265.6L575.2,270.5L573.8,272.5L572.5,279.1L568.8,282.9L567.8,287.6L566.3,291.4L565.7,295.2L560.9,298.4L557,294.6L554.4,294.7L550.3,300.2L548.3,300.3L545,309.3L543.3,315.9M590.1,291.1L586.7,300.6L585.1,302.3L584.6,309.5L585.4,313.5L584.8,316.2L588.1,321.1L588.7,324.5L591.3,329.3L594.5,332.3L594.8,336.6L595.6,339.3L595.1,344.4L589.6,342.2L583.9,339.7L575.2,339.3L574.3,338.8L570.2,340L566,338.8L562.7,339.4L551.4,339.2M491.6,305.1L490.1,301.8L488.2,295.9L487.7,291.2L489.2,282.8L487.5,279.4L486.8,272.1L486.8,265.3L483.9,260.5L484.4,257.7L490.5,257.9M464.4,313.8L464.8,310.1L461.8,302.1L463.6,291.5L466.6,283.7L464.7,270.4L463.8,263.5L464,258.2L476,257.8L479,258.4L481.3,256.9L484.4,257.7M447,263.7L450.1,265.7L451.3,268.8L454.4,270.7L456.8,268.4L460,268L464.7,270.4M430.7,319.7L431.3,312L431.9,310.8L431.8,307.1L428.8,303.2L426.6,302.6L424.6,300L426.2,295.9L425.5,291.4L425.8,288.7L426.9,288.7L427.4,284.6L426.8,282.8L427.5,281.5L430.1,280.4L428.4,272.9L426.9,269.1L427.5,265.9L428.9,265.2M425.8,288.7L423.9,288.4L422.4,292.2L420.5,292.1L419.1,290.1L419.6,286.4L416.8,280.7L415,281.8L413.5,282L411.6,282.5L411.7,279.1L410.6,276.6L410.9,273.9L409.4,270L407.5,266.7L402,266.7L400.4,268.4L398.5,268.6L397.3,270.7L396.4,273.2L392.7,277.3M380,257.5L383.1,252.9L385.2,253.1L387,251.6L388.6,251.5L389.7,250.3L389.1,247.2L389.9,246.3L390.1,243.1M405,297.1L406.7,294.1L407.1,291.4L410.2,286.3L413.5,282M612.5,327.7L608,327.2L603.3,325.7L599.2,330.6L595.6,339.3M654.3,283.6L658.2,287.4L658.3,290.4L663,295.3L666,299.3L667.9,304.9L673.1,308.6L674.3,311.6M574.5,405.3L571.9,402.1L569.8,403.7L567,407.7M561.3,397.8L566.7,392.7L564.1,386.5L566.4,384.1L571.1,383L571.7,378.8L575.4,383.3L581.5,383.7L583.7,379.3L584.6,373.1L583.8,365.7L580.6,360.2L583.5,349.3L581.8,347.5L576.6,348.3L574.7,343.4L575.2,339.3M550.3,351.1L552.6,350.6L562.7,350.6L562.7,339.4M710.7,446.9L713.8,451L715.3,458.9L714,461.4L712.3,468.9L713.3,476.6L711,479.8L708.5,488.4L712,490.8L690.8,498.4L691.1,504.9M642.1,523.4L637.9,517.7L633.6,510.2L635,480.9L649.3,481L648.8,477.8L649.9,474.3L648.8,470L649.8,465.5L649.1,462.6M722.3,468.1L720.1,475.2L721.4,487.2L723.8,487L726.1,490L728.6,496.7L728.5,508.5L725.4,510.4L722.9,516.8L718.8,511.1L718.7,504.7L720.4,500.4L720.2,496.7L717.6,494.4L715.7,495.2L712,490.8M695.8,606.2L695.6,602.3L695,598.3M686,387.2L690.2,387.9L692.4,382.6L696.1,383.2M557.9,59.4L557.8,65.9L554.8,68.4L552.9,71.1L548.6,74.5L549.4,78L549,81.7L545.9,83.7L542.6,68.2L538.5,64.8L538.4,62.7L533,57.6L532.3,51.2L536,46.5L537.3,39.6L536,31.6L537.1,27.4M427.3,106.8L427.6,96.4L438.3,90L444.8,88.7L450.2,86.3L452.7,82L460.4,78.6L460.7,72.2L464.5,71.5L467.4,68.3L475.9,66.8L477.1,63.5L475.4,61.7L473.2,52.7L472.9,47.6L470.5,42.2M545.9,83.7L548.2,91.3L548.7,95.4L547.8,102.5L548.4,106.5L547.7,111.3L548.4,116.9L545.9,120.6L550,127L550.4,130.8L552.9,135.8L555.9,134.2L561.3,138.3L564.4,143.9M780.4,242.1L778.4,244.3L775.5,243.5L772.9,240.6L769.8,235.1L766.5,232.2L764.6,229L758.4,225.3L753.7,225.2L751.9,223.3L748,225.4L743.6,221.2L741.9,228.1L733.8,226.2M652.1,157.1L649.9,124.2L647.5,93L644.9,86L646.1,80.6L644.8,76.9L646.8,72.8M729.2,309L724.9,298.8L721.7,296.7L720.4,293L716.7,288.4L712.4,287.7L714.6,282.4L718.3,282.2L719.3,279.4M775.5,243.5L773.3,247.6L771.2,252L771.8,254.5L772.1,257.4L775.9,257.5L777.6,256.9L779.2,258.5L777.8,261.8L780.6,266.9L783.4,271.4L786.2,274.7L809.3,285.8L815.1,285.7M781.5,253.5L779.2,258.5M695.8,371.2L691.6,374.1L690,373.1M698.5,327.7L701.4,325.1L705.8,327.2L711.4,325.1L716.2,325.1L720.4,320.8" fill="none" stroke="#A8916A" stroke-width="0.75" stroke-linejoin="round" stroke-linecap="round"/>
   </g>
   <g class="mp-layer mp-roads"/>
-  <g class="mp-layer mp-places"/>
+  <g class="mp-layer mp-places">
+    <circle class="mp-place" data-name="Cairo" data-iso="EG" data-rank="1" data-pop="11893000" cx="687.496" cy="85.889" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Cairo</title>
+    </circle>
+    <circle class="mp-place" data-name="Lagos" data-iso="NG" data-rank="1" data-pop="9466000" cx="507.78" cy="300.246" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Lagos</title>
+    </circle>
+    <circle class="mp-place" data-name="Cape Town" data-iso="ZA" data-rank="1" data-pop="3215000" cx="601.918" cy="668.392" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Cape Town</title>
+    </circle>
+    <circle class="mp-place" data-name="Nairobi" data-iso="KE" data-rank="1" data-pop="3010000" cx="740.271" cy="372.57" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Nairobi</title>
+    </circle>
+    <circle class="mp-place" data-name="Kinshasa" data-iso="CD" data-rank="1" data-pop="7843000" cx="590.626" cy="401.093" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Kinshasa</title>
+    </circle>
+    <circle class="mp-place" data-name="Addis Ababa" data-iso="ET" data-rank="1" data-pop="3100000" cx="751.803" cy="276.096" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Addis Ababa</title>
+    </circle>
+    <circle class="mp-place" data-name="Dakar" data-iso="SN" data-rank="1" data-pop="2604000" cx="364.66" cy="223.468" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Dakar</title>
+    </circle>
+    <circle class="mp-place" data-name="Luanda" data-iso="AO" data-rank="1" data-pop="5172900" cx="575.78" cy="443.182" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Luanda</title>
+    </circle>
+    <circle class="mp-place" data-name="Khartoum" data-iso="SD" data-rank="1" data-pop="4754000" cx="706.533" cy="215.447" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Khartoum</title>
+    </circle>
+    <circle class="mp-place" data-name="Abidjan" data-iso="CI" data-rank="1" data-pop="3802000" cx="456.378" cy="310.73" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Abidjan</title>
+    </circle>
+    <circle class="mp-place" data-name="Algiers" data-iso="DZ" data-rank="1" data-pop="3354000" cx="503.436" cy="28.851" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Algiers</title>
+    </circle>
+    <circle class="mp-place" data-name="Dar es Salaam" data-iso="TZ" data-rank="1" data-pop="2930000" cx="756.434" cy="424.18" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Dar es Salaam</title>
+    </circle>
+    <circle class="mp-place" data-name="Tripoli" data-iso="LY" data-rank="1" data-pop="2189000" cx="568.835" cy="61.456" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Tripoli</title>
+    </circle>
+    <circle class="mp-place" data-name="Accra" data-iso="GH" data-rank="1" data-pop="2121000" cx="482.761" cy="308.59" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Accra</title>
+    </circle>
+    <circle class="mp-place" data-name="Monrovia" data-iso="LR" data-rank="1" data-pop="1041000" cx="409.391" cy="301.465" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Monrovia</title>
+    </circle>
+    <circle class="mp-place" data-name="Tunis" data-iso="TN" data-rank="1" data-pop="2412500" cx="548.233" cy="28.537" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Tunis</title>
+    </circle>
+    <circle class="mp-place" data-name="Rabat" data-iso="MA" data-rank="1" data-pop="1705000" cx="440.673" cy="51.83" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Rabat</title>
+    </circle>
+    <circle class="mp-place" data-name="Antananarivo" data-iso="MG" data-rank="1" data-pop="1697000" cx="806.156" cy="536.085" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Antananarivo</title>
+    </circle>
+    <circle class="mp-place" data-name="Yaounde" data-iso="CM" data-rank="1" data-pop="1611000" cx="564.269" cy="324.334" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Yaounde</title>
+    </circle>
+    <circle class="mp-place" data-name="Abuja" data-iso="NG" data-rank="1" data-pop="1576000" cx="536.053" cy="275.916" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Abuja</title>
+    </circle>
+    <circle class="mp-place" data-name="Harare" data-iso="ZW" data-rank="1" data-pop="1572000" cx="695.199" cy="526.069" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Harare</title>
+    </circle>
+    <circle class="mp-place" data-name="Bamako" data-iso="ML" data-rank="1" data-pop="1494000" cx="429.276" cy="242.532" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Bamako</title>
+    </circle>
+    <circle class="mp-place" data-name="Conakry" data-iso="GN" data-rank="1" data-pop="1494000" cx="389.756" cy="271.46" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Conakry</title>
+    </circle>
+    <circle class="mp-place" data-name="Lome" data-iso="TG" data-rank="1" data-pop="1452000" cx="492.745" cy="303.153" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Lome</title>
+    </circle>
+    <circle class="mp-place" data-name="Maputo" data-iso="MZ" data-rank="1" data-pop="1446000" cx="699.904" cy="599.315" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Maputo</title>
+    </circle>
+    <circle class="mp-place" data-name="Kampala" data-iso="UG" data-rank="1" data-pop="1420000" cx="710.86" cy="357.58" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Kampala</title>
+    </circle>
+    <circle class="mp-place" data-name="Brazzaville" data-iso="CG" data-rank="1" data-pop="1355000" cx="590.42" cy="400.432" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Brazzaville</title>
+    </circle>
+    <circle class="mp-place" data-name="Pretoria" data-iso="ZA" data-rank="1" data-pop="1338000" cx="671.236" cy="597.116" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Pretoria</title>
+    </circle>
+    <circle class="mp-place" data-name="Lusaka" data-iso="ZM" data-rank="1" data-pop="1328000" cx="677.569" cy="504.073" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Lusaka</title>
+    </circle>
+    <circle class="mp-place" data-name="Ouagadougou" data-iso="BF" data-rank="1" data-pop="1149000" cx="473.779" cy="245.119" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Ouagadougou</title>
+    </circle>
+    <circle class="mp-place" data-name="Mogadishu" data-iso="SO" data-rank="1" data-pop="1100000" cx="799.664" cy="341.186" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Mogadishu</title>
+    </circle>
+    <circle class="mp-place" data-name="Ndjamena" data-iso="TD" data-rank="1" data-pop="989000" cx="587.807" cy="247.501" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Ndjamena</title>
+    </circle>
+    <circle class="mp-place" data-name="Niamey" data-iso="NE" data-rank="1" data-pop="915000" cx="498.79" cy="234.523" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Niamey</title>
+    </circle>
+    <circle class="mp-place" data-name="Bangui" data-iso="CF" data-rank="1" data-pop="831925" cx="613.161" cy="319.675" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Bangui</title>
+    </circle>
+    <circle class="mp-place" data-name="Freetown" data-iso="SL" data-rank="1" data-pop="827000" cx="392.709" cy="281.341" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Freetown</title>
+    </circle>
+    <circle class="mp-place" data-name="Cotonou" data-iso="BJ" data-rank="1" data-pop="762000" cx="500.951" cy="301.013" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Cotonou</title>
+    </circle>
+    <circle class="mp-place" data-name="Nouakchott" data-iso="MR" data-rank="1" data-pop="742144" cx="375.812" cy="192.592" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Nouakchott</title>
+    </circle>
+    <circle class="mp-place" data-name="Lilongwe" data-iso="MW" data-rank="1" data-pop="646750" cx="715.887" cy="490.895" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Lilongwe</title>
+    </circle>
+    <circle class="mp-place" data-name="Asmara" data-iso="ER" data-rank="1" data-pop="620802" cx="750.419" cy="217.806" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Asmara</title>
+    </circle>
+    <circle class="mp-place" data-name="Libreville" data-iso="GA" data-rank="1" data-pop="578156" cx="550.052" cy="356.954" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Libreville</title>
+    </circle>
+    <circle class="mp-place" data-name="Hargeysa" data-rank="1" data-pop="477876" cx="788.69" cy="271.214" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Hargeysa</title>
+    </circle>
+    <circle class="mp-place" data-name="Bloemfontein" data-iso="ZA" data-rank="1" data-pop="463064" cx="655.575" cy="627.14" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Bloemfontein</title>
+    </circle>
+    <circle class="mp-place" data-name="Bissau" data-iso="GW" data-rank="1" data-pop="403339" cx="376.91" cy="249.817" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Bissau</title>
+    </circle>
+    <circle class="mp-place" data-name="Maseru" data-iso="LS" data-rank="1" data-pop="361324" cx="663.604" cy="628.853" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Maseru</title>
+    </circle>
+    <circle class="mp-place" data-name="Windhoek" data-iso="NA" data-rank="1" data-pop="268132" cx="598.713" cy="569.137" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Windhoek</title>
+    </circle>
+    <circle class="mp-place" data-name="Gaborone" data-iso="BW" data-rank="1" data-pop="208411" cx="656.585" cy="587.709" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Gaborone</title>
+    </circle>
+    <circle class="mp-place" data-name="Yamoussoukro" data-iso="CI" data-rank="1" data-pop="206499" cx="447.715" cy="296.762" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Yamoussoukro</title>
+    </circle>
+    <circle class="mp-place" data-name="Malabo" data-iso="GQ" data-rank="1" data-pop="155963" cx="545.299" cy="325.444" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Malabo</title>
+    </circle>
+    <circle class="mp-place" data-name="Djibouti" data-iso="DJ" data-rank="1" data-pop="923000" cx="781.417" cy="252.318" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Djibouti</title>
+    </circle>
+    <circle class="mp-place" data-name="Kigali" data-iso="RW" data-rank="1" data-pop="860000" cx="693.26" cy="378.848" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Kigali</title>
+    </circle>
+    <circle class="mp-place" data-name="Bujumbura" data-iso="BI" data-rank="1" data-pop="331700" cx="688.29" cy="392.187" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Bujumbura</title>
+    </circle>
+    <circle class="mp-place" data-name="Mbabane" data-iso="SZ" data-rank="1" data-pop="90138" cx="689.99" cy="602.53" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Mbabane</title>
+    </circle>
+    <circle class="mp-place" data-name="Banjul" data-iso="GM" data-rank="1" data-pop="43094" cx="370.409" cy="235.121" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Banjul</title>
+    </circle>
+    <circle class="mp-place" data-name="Johannesburg" data-iso="ZA" data-rank="2" data-pop="3435000" cx="669.581" cy="601.216" r="2.2" fill="#2B2B29" stroke="none">
+      <title>Johannesburg</title>
+    </circle>
+    <circle class="mp-place" data-name="Casablanca" data-iso="MA" data-rank="2" data-pop="3181000" cx="435.579" cy="55.42" r="2.2" fill="#2B2B29" stroke="none">
+      <title>Casablanca</title>
+    </circle>
+  </g>
   <g class="mp-layer mp-labels"/>
   <g class="mp-layer mp-annotations"/>
   <g class="mp-layer mp-furniture"/>

@@ -89,6 +89,12 @@ export interface MapperOptions {
   readonly title?: string;
   /** ISO codes to mark with `.is-highlighted`. */
   readonly highlight?: readonly string[];
+  /**
+   * How far down the settlement ranking to draw. 1 is capitals and the largest
+   * cities, 2 adds everything over a million, 3 adds the rest.
+   * @default 2
+   */
+  readonly placeRank?: 1 | 2 | 3;
   /** Bundled theme name, a path to a `.css` file, or a stylesheet. */
   readonly theme?: string;
   /**

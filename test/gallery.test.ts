@@ -47,6 +47,38 @@ const GALLERY: ReadonlyArray<readonly [string, MapperOptions]> = [
     { region: "south-america", projection: "orthographic", theme: "atlas", size: [800, 800] },
   ],
   [
+    "west-europe-cities",
+    {
+      region: "west-europe",
+      detail: "50m",
+      projection: "conic-conformal",
+      theme: "atlas",
+      title: "Western Europe: major cities and rivers",
+    },
+  ],
+  [
+    "france-rivers",
+    {
+      region: ["FR"],
+      detail: "50m",
+      projection: "conic-conformal",
+      theme: "minimal",
+      palette: "sand",
+      placeRank: 3,
+      size: [800, 800],
+    },
+  ],
+  [
+    "europe-no-water",
+    {
+      region: "europe",
+      projection: "conic-conformal",
+      theme: "minimal",
+      layers: { hydro: false, places: false },
+      size: [900, 900],
+    },
+  ],
+  [
     "italy-brand-tokens",
     {
       region: ["IT"],

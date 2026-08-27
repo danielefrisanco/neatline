@@ -63,6 +63,20 @@ export type {
 const DEFAULT_SIZE: Size = [1000, 1000];
 const DEFAULT_PADDING = 24;
 
+/** Dot size by rank. A theme can override `r` in CSS; this is the fallback. */
+const PLACE_RADIUS: Readonly<Record<1 | 2 | 3, number>> = { 1: 3.2, 2: 2.2, 3: 1.5 };
+
+type Box = readonly [number, number, number, number];
+
+function boxOf(geometry: unknown): Box {
+  const [[west, south], [east, north]] = geoBounds(geometry as never);
+  return [west, south, east, north];
+}
+
+function overlaps(a: Box, b: Box): boolean {
+  return a[0] <= b[2] && a[2] >= b[0] && a[1] <= b[3] && a[3] >= b[1];
+}
+
 /** Does a feature's bounding box overlap the requested one? */
 function intersectsBBox(country: CountryFeature, bbox: BBox): boolean {
   const [[west, south], [east, north]] = geoBounds(country.geometry as never);
@@ -277,6 +291,68 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   // Highlight names are collected even when the layer is off, so the accessible
   // description stays true to what was asked for.
   if (wants("land")) content.set("land", land);
+
+  // Water is matched against the countries actually drawn, not the framed
+  // rectangle. A lake carries no country of its own, and filtering on the
+  // viewport alone floats Scandinavian lakes over open sea on a map whose
+  // northern edge stops at Denmark.
+  if (wants("hydro")) {
+    const drawnBoxes = frame.countries.map((c) => boxOf(c.geometry));
+    const water: SvgNode[] = [];
+    for (const kind of ["lake", "river"] as const) {
+      const collection = world.water(kind) as { features: readonly unknown[] };
+      const kept = collection.features.filter((f) => {
+        const box = boxOf(f);
+        return drawnBoxes.some((country) => overlaps(box, country));
+      });
+      if (kept.length === 0) continue;
+      const d = path({ type: "FeatureCollection", features: kept } as never);
+      if (!d) continue;
+      water.push(
+        el("path", {
+          class: "mp-water",
+          "data-kind": kind,
+          // A river is a line: with the default fill it renders as a blob.
+          fill: kind === "river" ? "none" : undefined,
+          d,
+        }),
+      );
+    }
+    if (water.length > 0) content.set("hydro", water);
+  }
+
+  if (wants("places")) {
+    const maxRank = options.placeRank ?? 2;
+    const drawn = new Set(frame.countries.map((c) => c.id));
+    const dots: SvgNode[] = [];
+    for (const place of world.places) {
+      if (place.rank > maxRank) continue;
+      // Tie a settlement to a country that is actually drawn, so a map of
+      // Western Europe does not sprout dots across North Africa.
+      if (place.iso !== null && !drawn.has(place.iso)) continue;
+      const point = projection([place.position[0], place.position[1]]);
+      if (point === null) continue;
+      const [x, y] = point;
+      if (x < 0 || x > width || y < 0 || y > height) continue;
+      dots.push(
+        el(
+          "circle",
+          {
+            class: "mp-place",
+            "data-name": place.name,
+            "data-iso": place.iso ?? undefined,
+            "data-rank": place.rank,
+            "data-pop": place.population,
+            cx: x,
+            cy: y,
+            r: PLACE_RADIUS[place.rank],
+          },
+          [el("title", {}, [text(place.name)])],
+        ),
+      );
+    }
+    if (dots.length > 0) content.set("places", dots);
+  }
 
   if (wants("borders")) {
     const borderGeometry =

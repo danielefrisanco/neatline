@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0fj1hn1" role="img" aria-label="Where we operate">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0361zqa" role="img" aria-label="Where we operate">
   <title>Where we operate</title>
   <style>
-    .mp.mp-t-0fj1hn1 {
+    .mp.mp-t-0361zqa {
       --bg: transparent;
       --land: #D8D8D2;
       --land-edge: #FFFFFF;
@@ -9,6 +9,7 @@
       --border-width: 0.75;
       --accent: #C2482F;
       --accent-edge: #FFFFFF;
+      --place: #2B2B29;
       --ink: #2B2B29;
       --ink-muted: #80807A;
       --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -20,44 +21,53 @@
       --anno-ink: #FFFFFF;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-0fj1hn1 .mp-bg {
+    .mp.mp-t-0361zqa .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-0fj1hn1 .mp-country {
+    .mp.mp-t-0361zqa .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: 0.5;
       stroke-linejoin: round;
     }
-    .mp.mp-t-0fj1hn1 .mp-country.is-highlighted {
+    .mp.mp-t-0361zqa .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-0fj1hn1 .mp-border {
+    .mp.mp-t-0361zqa .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-0fj1hn1 .mp-neighbour {
+    .mp.mp-t-0361zqa .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-0fj1hn1 .mp-water {
+    .mp.mp-t-0361zqa .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-0fj1hn1 .mp-road {
+    .mp.mp-t-0361zqa .mp-water[data-kind="river"] {
+      fill: none;
+      stroke: var(--water);
+      stroke-width: 0.8;
+    }
+    .mp.mp-t-0361zqa .mp-place {
+      fill: var(--place);
+      stroke: none;
+    }
+    .mp.mp-t-0361zqa .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-0fj1hn1 .mp-label {
+    .mp.mp-t-0361zqa .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
     }
-    .mp.mp-t-0fj1hn1 {
+    .mp.mp-t-0361zqa {
       --land: #0B5D3B;
       --land-edge: #F4F1E8;
       --bg: #F4F1E8;
@@ -67,14 +77,20 @@
   <rect class="mp-bg" x="0" y="0" width="600" height="800" fill="#F4F1E8"/>
   <g class="mp-layer mp-neighbours"/>
   <g class="mp-layer mp-land">
-    <path class="mp-country" data-iso="IT" data-name="Italy" d="M197.8,82.6L226.4,92.4L231.8,79.2L278.2,67.3L288.7,91.2L356.1,108.9L350.9,142.5L362.2,171.1L324.8,161.3L286.5,185.2L289.1,218.3L283.3,237.1L298.7,270.6L342.9,303.5L366.6,356.8L419,408.1L455.7,407.8L467.3,421.7L454,434.3L496.2,457L530.8,475.8L571.1,508.1L576,519.7L567.2,541.6L541.1,512.9L500.1,502.8L480.5,542.5L514.3,565.2L508.8,596.9L489.1,600.5L464,651.9L444.4,656.6L444.6,638.3L454.2,606L464.4,593.1L446.1,558L431.7,527.1L412.2,519.4L398.3,492.7L368,481.5L347.7,456.4L312.8,452.3L276,424L233,382.8L201,346L186.4,281.8L163.1,274.3L124.8,252.6L103.1,261.5L75.8,291.9L56.4,296.6L61.8,268.3L36.2,260L24,208.8L40.4,188.5L26.5,163.3L28.4,144.2L48.7,158.6L71.4,155.4L97.8,132.5L106,143.3L128.3,141.1L138.5,113.6L173.4,122.2L194.1,110.7ZM401,642.5L436.8,637.3L419.8,684.2L426.8,702.5L417,732.7L380.9,710.6L357,704.2L291.4,674.2L297.9,643.5L352.9,649ZM116.3,474.4L139.9,455.1L168,499.2L161.4,580.3L140,576.4L120.9,596.6L103.1,580.6L101.2,506.7L90.4,471.2Z" fill="#0B5D3B" stroke="#F4F1E8" stroke-width="0.5" stroke-linejoin="round">
+    <path class="mp-country" data-iso="IT" data-name="Italy" d="M197.8,120.7L226.4,130.4L231.8,117.3L278.2,105.4L288.7,129.3L356.1,147L350.9,180.5L362.2,209.2L324.8,199.4L286.5,223.3L289.1,256.4L283.3,275.2L298.7,308.7L342.9,341.6L366.6,394.9L419,446.2L455.7,445.9L467.3,459.8L454,472.4L496.2,495.1L530.8,513.9L571.1,546.2L576,557.7L567.2,579.7L541.1,551L500.1,540.8L480.5,580.6L514.3,603.2L508.8,635L489.1,638.6L464,690L444.4,694.6L444.6,676.3L454.2,644.1L464.4,631.2L446.1,596L431.7,565.1L412.2,557.4L398.3,530.8L368,519.5L347.7,494.4L312.8,490.4L276,462L233,420.9L201,384L186.4,319.9L163.1,312.4L124.8,290.7L103.1,299.6L75.8,330L56.4,334.7L61.8,306.4L36.2,298.1L24,246.9L40.4,226.6L26.5,201.3L28.4,182.3L48.7,196.7L71.4,193.5L97.8,170.5L106,181.3L128.3,179.2L138.5,151.6L173.4,160.3L194.1,148.8Z" fill="#0B5D3B" stroke="#F4F1E8" stroke-width="0.5" stroke-linejoin="round">
       <title>Italy</title>
     </path>
   </g>
-  <g class="mp-layer mp-hydro"/>
+  <g class="mp-layer mp-hydro">
+    <path class="mp-water" data-kind="river" fill="none" d="M93.7,39.4L108.8,45L149.2,33.1L210.4,-2.4L256,-12.3L273,-29.5L278.1,-26.7L288.5,-24.5L295.1,-21.6L302.1,-18.8L317.2,-10.2L334.1,-0.9L340.7,2.6L398.6,26.7L412.2,28.1L442.3,16.8L456,18.2L500.2,32.4L528.9,52.1L545.9,61.2L586.3,52.1L596.7,57.7L601.8,67.5L596.7,101.5L598.5,128.4L594.8,163.3L590.1,178.9L590.1,183.7L591.5,188.4L594.8,194.5L600,206.6L603.3,214L608.4,218.7L615.5,227.4L618.8,232.1L624,233.4L637.1,236.1L649.4,239.4L654.1,240.8L672.9,262L683.2,266L711.9,260.1L720.4,264.7L749.1,283.9L762.7,268L774.5,276.6L764.2,288.5L772.6,299L786.3,325.8L805.1,321.3L840.4,331.7L910,335.6L932.1,318L988.1,303.6L989.5,304.9L991.4,306.2L994.7,303.6L1005,299L1014.9,294.4L1020.1,293.1L1026.7,288.5L1025.3,282.5L1018.2,266L1023.4,234.8L1025.3,230.1L1031.9,222.7L1033.7,218L1040.3,220L1050.7,224.7L1055.9,228.7L1077.5,218L1099.6,228.7"/>
+  </g>
   <g class="mp-layer mp-borders" fill="none"/>
   <g class="mp-layer mp-roads"/>
-  <g class="mp-layer mp-places"/>
+  <g class="mp-layer mp-places">
+    <circle class="mp-place" data-name="Rome" data-iso="IT" data-rank="1" data-pop="3339000" cx="293.732" cy="449.864" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Rome</title>
+    </circle>
+  </g>
   <g class="mp-layer mp-labels"/>
   <g class="mp-layer mp-annotations"/>
   <g class="mp-layer mp-furniture"/>

@@ -25,11 +25,16 @@ interface Piece {
   readonly centroid: [number, number];
 }
 
-/** How many deviations from the typical distance before a piece is an outlier. */
-const OUTLIER_FACTOR = 4;
-/** Never clip closer than this (radians ≈ 17°), so compact regions stay whole. */
-const MIN_RADIUS = 0.3;
-/** Refuse to clip if it would discard this much of the region's land. */
+/**
+ * How far past its own core a piece may sit before it stops being part of the
+ * country as anyone pictures it.
+ */
+const REACH = 3;
+/** The share of a country's land that defines where its core ends. */
+const CORE_SHARE = 0.6;
+/** Never clip closer than this (radians ≈ 1.1°), so small countries stay whole. */
+const MIN_RADIUS = 0.02;
+/** Refuse to clip a country if it would discard this much of its land. */
 const MAX_AREA_LOSS = 0.4;
 
 /** Split MultiPolygons so an overseas department can be judged on its own. */
@@ -67,15 +72,6 @@ function explode(features: readonly CountryFeature[]): Piece[] {
   return pieces;
 }
 
-function median(values: readonly number[]): number {
-  if (values.length === 0) return 0;
-  const sorted = [...values].sort((a, b) => a - b);
-  const mid = sorted.length >> 1;
-  return sorted.length % 2 === 0
-    ? ((sorted[mid - 1] ?? 0) + (sorted[mid] ?? 0)) / 2
-    : (sorted[mid] ?? 0);
-}
-
 /**
  * The extent the camera should frame.
  *
@@ -101,43 +97,24 @@ function unchanged(features: readonly CountryFeature[]): FrameGeometry {
 }
 
 export function framingGeometry(features: readonly CountryFeature[]): FrameGeometry {
-  const pieces = explode(features);
-  if (pieces.length < 2) return unchanged(features);
-
-  const centre = geoCentroid({
-    type: "FeatureCollection",
-    features: features.map((f) => f.geometry),
-  } as never);
-  const distances = pieces.map((piece) => geoDistance(piece.centroid, centre));
-
-  const typical = median(distances);
-  const deviation = median(distances.map((d) => Math.abs(d - typical)));
-  const limit = Math.max(typical + OUTLIER_FACTOR * deviation, MIN_RADIUS);
-
-  const kept: Piece[] = [];
-  let keptArea = 0;
-  let totalArea = 0;
-  for (const [index, piece] of pieces.entries()) {
-    totalArea += piece.area;
-    if ((distances[index] ?? 0) <= limit) {
-      kept.push(piece);
-      keptArea += piece.area;
-    }
-  }
-
-  // A genuinely dispersed region — Oceania, or the world — is not an outlier
-  // problem, and clipping it would be the bug rather than the fix.
-  if (kept.length === 0 || keptArea < totalArea * (1 - MAX_AREA_LOSS)) {
-    return unchanged(features);
-  }
-
-  // Reassemble the surviving pieces back into one feature per country, so the
-  // emitter still writes a single path per country carrying its own id.
   const byCountry = new Map<string, { country: CountryFeature; rings: unknown[] }>();
-  for (const piece of kept) {
-    const entry = byCountry.get(piece.country.id) ?? { country: piece.country, rings: [] };
-    entry.rings.push(piece.coordinates);
-    byCountry.set(piece.country.id, entry);
+  let clipped = 0;
+
+  // Judged one country at a time, because "does this piece belong?" is a
+  // question about a country, not about a region. French Guiana is 15% of
+  // France by area and Patagonia is 14% of South America — no threshold on
+  // size can tell them apart. But Guiana is an outlier *within France*, while
+  // Patagonia is simply where Argentina is.
+  for (const country of features) {
+    const pieces = explode([country]);
+    if (pieces.length === 0) continue;
+
+    const kept = pieces.length < 2 ? pieces : core(pieces);
+    clipped += pieces.length - kept.length;
+
+    const entry = byCountry.get(country.id) ?? { country, rings: [] };
+    for (const piece of kept) entry.rings.push(piece.coordinates);
+    byCountry.set(country.id, entry);
   }
 
   const countries: FramedCountry[] = [...byCountry.values()].map(({ country, rings }) => ({
@@ -150,15 +127,51 @@ export function framingGeometry(features: readonly CountryFeature[]): FrameGeome
     },
   }));
 
+  if (countries.length === 0) return unchanged(features);
+
   const geometry = {
     type: "FeatureCollection" as const,
     features: countries.map((c) => c.geometry),
   };
 
-  return {
-    geometry,
-    bounds: geoBounds(geometry as never),
-    countries,
-    clipped: pieces.length - kept.length,
-  };
+  return { geometry, bounds: geoBounds(geometry as never), countries, clipped };
+}
+
+/**
+ * The pieces of one country that make up the country itself.
+ *
+ * Walk outward from the country's own centre until most of its land is behind
+ * you — that is its core, and its radius sets the scale. Anything sitting
+ * several times farther out than that is an overseas holding: still the same
+ * country, but not the shape the name brings to mind, and not what a reader
+ * expects a map of it to frame.
+ */
+function core(pieces: readonly Piece[]): Piece[] {
+  const centre = geoCentroid({
+    type: "FeatureCollection",
+    features: pieces.map((piece) => piece.geometry),
+  } as never) as [number, number];
+
+  const ranked = pieces
+    .map((piece) => ({ piece, distance: geoDistance(piece.centroid, centre) }))
+    .sort((a, b) => a.distance - b.distance);
+
+  const total = ranked.reduce((sum, entry) => sum + entry.piece.area, 0);
+  if (total <= 0) return [...pieces];
+
+  let behind = 0;
+  let radius = 0;
+  for (const entry of ranked) {
+    radius = entry.distance;
+    behind += entry.piece.area;
+    if (behind >= total * CORE_SHARE) break;
+  }
+
+  const limit = Math.max(radius * REACH, MIN_RADIUS);
+  const kept = ranked.filter((entry) => entry.distance <= limit);
+  const keptArea = kept.reduce((sum, entry) => sum + entry.piece.area, 0);
+
+  // A country that genuinely is an archipelago is not an outlier problem.
+  if (kept.length === 0 || keptArea < total * (1 - MAX_AREA_LOSS)) return [...pieces];
+  return kept.map((entry) => entry.piece);
 }
