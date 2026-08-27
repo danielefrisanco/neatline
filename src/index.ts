@@ -8,6 +8,7 @@ import { el, serialize, styleElement, text, type SvgElement, type SvgNode } from
 import { resolveTheme, type ResolvedTheme } from "./theme.js";
 import {
   BACKGROUND_CLASS,
+  DEFS_CLASS,
   HIGHLIGHT_CLASS,
   LAYER_CLASS,
   LAYERS,
@@ -34,6 +35,7 @@ export { PALETTE_NAMES, THEME_NAMES, THEMES, PALETTES } from "./theme.js";
 export { TOKENS, TOKEN_NAMES, isTokenName, type TokenSpec } from "./tokens.js";
 export {
   BACKGROUND_CLASS,
+  DEFS_CLASS,
   HIGHLIGHT_CLASS,
   LAYERS,
   LAYER_CLASS,
@@ -291,6 +293,10 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   const themed = await resolveTheme(options);
 
   const body: SvgNode[] = [
+    // Reserved and empty. Gradients, patterns and arrow markers are SVG
+    // elements rather than declarations, so a theme that needs one needs
+    // somewhere to put it.
+    el("defs", { class: DEFS_CLASS }),
     // `fill="none"` is structural, not stylistic. SVG's default fill is
     // black, so a full-canvas rectangle with no theme applied would paint
     // the entire map over — the document would render as a black square.

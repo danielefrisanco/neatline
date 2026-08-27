@@ -63,6 +63,7 @@
       --bg: #F4F1E8;
     }
   </style>
+  <defs class="mp-defs"/>
   <rect class="mp-bg" x="0" y="0" width="600" height="800" fill="#F4F1E8"/>
   <g class="mp-layer mp-neighbours"/>
   <g class="mp-layer mp-land">

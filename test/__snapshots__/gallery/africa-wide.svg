@@ -74,6 +74,7 @@
       --furniture-ink: #8A7C63;
     }
   </style>
+  <defs class="mp-defs"/>
   <rect class="mp-bg" x="0" y="0" width="1200" height="700" fill="#F6F1E7"/>
   <g class="mp-layer mp-neighbours"/>
   <g class="mp-layer mp-land">

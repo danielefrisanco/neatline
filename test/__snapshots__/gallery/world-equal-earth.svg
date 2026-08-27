@@ -59,6 +59,7 @@
       font-size: var(--label-size);
     }
   </style>
+  <defs class="mp-defs"/>
   <rect class="mp-bg" x="0" y="0" width="1200" height="620" fill="#A8C0CC"/>
   <g class="mp-layer mp-neighbours"/>
   <g class="mp-layer mp-land">

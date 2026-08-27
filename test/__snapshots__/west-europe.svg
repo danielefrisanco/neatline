@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" preserveAspectRatio="xMidYMid meet" class="mp" role="img" aria-label="Map of Western Europe">
   <title>Map of Western Europe</title>
+  <defs class="mp-defs"/>
   <rect class="mp-bg" x="0" y="0" width="1000" height="1000" fill="none"/>
   <g class="mp-layer mp-neighbours"/>
   <g class="mp-layer mp-land">

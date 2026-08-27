@@ -119,6 +119,17 @@ export const ROOT_CLASS = "mp";
 export const LAYER_CLASS = "mp-layer";
 /** Class on the canvas ground rectangle. */
 export const BACKGROUND_CLASS = "mp-bg";
+/**
+ * Class on the reserved `<defs>` block.
+ *
+ * Emitted empty. A stylesheet can express a great deal on its own — the raised
+ * relief look is `filter: drop-shadow(...)`, plain CSS, no markup needed — but
+ * gradients, patterns and the arrow markers a flow map needs are SVG elements,
+ * not declarations, and they have to be defined somewhere before they can be
+ * referenced. Claiming the slot now keeps that from becoming a structural
+ * change later.
+ */
+export const DEFS_CLASS = "mp-defs";
 /** Modifier added to any feature named in `highlight`. */
 export const HIGHLIGHT_CLASS = "is-highlighted";
 
@@ -131,6 +142,15 @@ export const RESERVED_CLASSES: readonly string[] = Object.freeze([
   "mp-pin",
   "mp-arrow",
   "mp-callout",
+  // Data-driven renderings of the land layer. A prism map extrudes each
+  // country by its value, so a country stops being one path and becomes a top
+  // face plus side walls — a different rendering of the same layer, not a new
+  // one, which is why these are class names rather than a layer slot.
+  "mp-prism",
+  "mp-prism-top",
+  "mp-prism-side",
+  "mp-flow",
+  "mp-symbol",
   "mp-credit",
   "mp-watermark",
   "mp-legend",

@@ -17,6 +17,19 @@ signature — themes in the wild depend on those names.
 
 Phase 4 — data pipeline.
 
+### Added
+
+- **A reserved `<defs>` block**, emitted empty ahead of everything drawn. A
+  stylesheet can express more than expected — the raised-landmass relief look is
+  `filter: drop-shadow(...)`, plain CSS with no markup — but gradients, patterns
+  and the arrow markers a flow map needs are SVG *elements*, not declarations,
+  and anything referenced by `url(#…)` needs a home that exists from v1
+- Reserved class names for data-driven renderings: `.mp-prism`, `.mp-prism-top`,
+  `.mp-prism-side`, `.mp-flow`, `.mp-symbol`. A prism map extrudes each country
+  by its value, so a country stops being one path and becomes a top face plus
+  side walls — a different rendering of the land layer rather than a new layer,
+  which is why these are classes and not a slot
+
 ## [0.3.0] — 2026-08-27
 
 Phase 3 — theming, palettes and layer control. Maps stop being wireframes.

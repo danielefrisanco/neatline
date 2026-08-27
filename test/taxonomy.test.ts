@@ -42,6 +42,14 @@ describe("document shape", () => {
     }
   });
 
+  // Gradients, patterns and arrow markers are SVG elements, not CSS
+  // declarations, so they need somewhere to be defined. The slot is claimed
+  // now because adding it later would be a structural change.
+  it("reserves a defs block ahead of everything drawn", () => {
+    expect(map.svg).toContain('<defs class="mp-defs"/>');
+    expect(map.svg.indexOf('class="mp-defs"')).toBeLessThan(map.svg.indexOf('class="mp-bg"'));
+  });
+
   it("carries the root class", () => {
     expect(map.svg).toContain(`class="mp"`);
   });
