@@ -20,12 +20,17 @@ await map.toFile("europe.svg", { theme: "minimal" });
 
 ## Status
 
-Early. **Phases 0–4 are complete** — the package builds under both ESM and CJS,
-resolves real geometry, emits the frozen document shape below, themes it, and
-carries lakes, rivers and cities. Labels arrive in Phase 6.
+Early, but complete enough to use. **Phases 0–6 are done** — the package builds
+under both ESM and CJS, resolves real geometry, emits the frozen document shape
+below, themes it, and carries lakes, rivers, cities and names.
 
-See the build plan for what is in scope, what is reserved, and what is
-deliberately out.
+**Not published to npm yet, and not on a schedule to be.** Install it from the
+repository. The class taxonomy below is the part that is meant to be stable; it
+is what a `1.0.0` would be promising, and it wants to sit still for a while
+before that promise is made.
+
+Reserved and out of scope: annotations (pins, arrows, callouts), a legend,
+roads, and terrain — each has its slot in the taxonomy and none is emitted.
 
 ## The class taxonomy
 

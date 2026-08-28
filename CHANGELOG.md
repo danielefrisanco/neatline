@@ -7,7 +7,8 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 **Pre-1.0 policy.** While on `0.x`, the minor bump carries breaking changes and
 the patch bump carries everything else — the public API is not yet stable.
-`1.0.0` is Phase 7, and from there normal semver applies.
+`1.0.0` is the publish, which is not scheduled; from there normal semver
+applies.
 
 **The class taxonomy is public API.** Renaming or reordering a class, a data
 attribute, or a token is a breaking change, exactly like changing a function
@@ -689,15 +690,26 @@ Phase 0 — scaffold. No geometry yet; the package builds, tests, and imports.
 Version targets for the remaining phases, so the roadmap and the release
 history stay the same document.
 
+The original table guessed one version per phase and was wrong from Phase 5
+onward — phases landed across several releases each, so Phase 5 shipped at
+`0.8.0` and Phase 6 at `0.10.0`, not `0.5.0` and `0.6.0`. The release history
+above is the record of what shipped; this table is only what is left.
+
 | Version | Phase | Ships |
 | --- | --- | --- |
-| `0.2.0` | 2 · Taxonomy & emitter | Class contract, node-tree emitter, highlighting |
-| `0.3.0` | 3 · Theming | Tokens, theme resolution, inline-styles pass |
-| `0.4.0` | 4 · Data pipeline | Bundled Natural Earth, topology simplification |
-| `0.5.0` | 5 · Presets | Five hand-tuned themes, light and dark |
-| `0.6.0` | 6 · Labels | Placement, rank thinning, curated overrides |
-| `1.0.0` | 7 · Ship | Stable taxonomy, published, documented |
+| `0.12.0` | 7 · Harden | Snapshot suite across region × projection × preset, README rebuilt on the taxonomy, semver policy written down |
+| `1.0.0` | — · Publish | npm publish with provenance. **Not scheduled.** |
 | `1.1.0` | 8 · Annotations | Pins, arrows, callouts, icons |
+
+**Publishing is a decision, not a phase.** Phase 7 was originally "Ship", which
+bundled *being ready to publish* with *publishing*. Those are different things
+and only the first one is engineering work, so they are split: Phase 7 does
+everything that has to be true before a `1.0.0` — the snapshot suite, the
+documentation, the written semver policy — and stops. The publish itself waits
+until it is asked for.
+
+Phase numbers 8 and 9 keep their meanings from the entries above, which refer
+to them by number.
 
 [Unreleased]: https://github.com/danielefrisanco/neatline/compare/v0.11.0...HEAD
 [0.11.0]: https://github.com/danielefrisanco/neatline/compare/v0.10.0...v0.11.0
