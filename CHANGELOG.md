@@ -16,6 +16,100 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
+Phase 8 opens here. `invert()` first, because it is the one thing in the phase
+nothing else can be built on top of.
+
+### Added
+
+- **`map.invert([x, y])`** — a point on the canvas as a coordinate, the inverse
+  of `project()`. `project()` is enough for anyone placing a pin by hand: they
+  know the coordinate and want the pixel. It is the wrong direction for anyone
+  placing one with a pointer, where the drop arrives in pixels and has to be
+  stored as lon/lat — store the pixel and the pin comes unstuck from the ground
+  the moment the region, the projection or the canvas size changes. The
+  annotation layer and the tool both rest on this.
+
+  It returns `null` for a pixel that is not on the map, and finding out whether
+  a pixel is on the map turned out to be the whole of the work. d3 clamps its
+  inverse trigonometry instead of failing, so a point past the edge of an
+  orthographic globe does not come back as nothing — it comes back as a
+  coordinate on the limb, and the corner of a canvas invents a place in the
+  Atlantic. So the answer is put back through the projection and checked
+  against the pixel it came from: a real point returns within a thousandth of
+  a unit, a clamped one misses by more than twenty.
+
+  Tested as a geometric property rather than as markup, which is what it is —
+  a round trip that closes in every projection, and a grid over a globe where
+  nothing invert() answers is a place the map would not put back.
+
+- **Ten gallery entries outside Western Europe.** Twelve of the thirty-two
+  existing entries were the same thirteen countries, which demonstrates that
+  the themes differ from one another and very little else. The additions are
+  South Asia, Southeast Asia, East Africa, the Middle East, the Nordics, Japan
+  and Korea, the Southern Cone, the Caribbean, South America and Central Asia —
+  each a region the presets do not cover, each carrying an option the gallery
+  exercised in one place or none.
+
+  The one that matters most is `east-africa-choropleth`: the gallery contained
+  no choropleth at all, every data map in it encoding quantity as height
+  instead. 0.7 shipped a choropleth that exported as a single flat colour with
+  the whole suite green, and until now nothing in the gallery would have caught
+  that happening again.
+
+  All ten were rendered with their stylesheets stripped and looked at. Five
+  were changed as a result: the Caribbean dropped Trinidad, which sits seven
+  degrees south of everything else and pushed its own label off the canvas; the
+  Nordics moved from a portrait canvas to a landscape one, Iceland to Finland
+  being 53° of longitude against 16° of latitude; and Southeast Asia moved off
+  the moss palette, which grounds its sea in stone grey-green on purpose and
+  washes out where three quarters of the frame is water.
+
+  The last two were geography rather than composition, and neither would have
+  failed a test. **Nassau was drawn in open sea**: at 110m the Bahamas simplify
+  to a handful of blobs and New Providence is not one of them, while the city
+  dot comes from a separate dataset at its true coordinate — so the Caribbean
+  renders at 50m. And **East Africa had a hole in the Horn**, because Somaliland
+  is one of the five features Natural Earth ships with no ISO code and the
+  hand-written region list did not carry its user-assigned `XS`. It is in the
+  region now and deliberately not in `values`: hatched instead, which is what
+  hatching is for.
+
+- **`npm run gallery`, a contact sheet of every snapshot.** Committing the SVGs
+  only half solves the problem the gallery exists for: a directory of forty-two
+  files is not something anyone opens either. This puts them all on one page, in
+  the browser, at a size where a flat choropleth or a black square is obvious at
+  a glance.
+
+  What each map is said to demonstrate is read back off the markup rather than
+  off the test that wrote it, so the page cannot claim a feature a file does not
+  contain. That distinction is not academic — the first version tested the whole
+  file and reported every feature on every map, because each bundled theme
+  carries rules for `data-bin` and `.is-highlighted` whether the map uses them
+  or not. Wrong in a way that looked right.
+
+  The output is untracked, the same bargain the plan gets: three megabytes of
+  inline SVG is a diff nobody can read, and the snapshots are the tracked thing.
+
+### Fixed
+
+- **A scattered country can carry its own name.** The fit test measured a name
+  against the width of the shape beneath the anchor, which is right for a
+  landmass and wrong for an archipelago: no single Philippine island is as wide
+  as the word *Philippines*, so the name was written into every document and
+  then hidden as unfittable — while every printed atlas sets it across the whole
+  group, over the water between the islands, because the group is the thing
+  being named.
+
+  So when a country is more than one piece and no piece can hold its name, the
+  room it has is now the reach of the group. **The anchor does not move**: it
+  stays on the largest island and the name overhangs from there, the way
+  *Portugal* overhangs into the Atlantic. Only the measurement changes, which
+  means this can reveal a name and can never relocate one.
+
+  It reveals Philippines on every map of Asia, and Angola, Chile, Fiji, Japan
+  and Indonesia on the world maps. Brunei and Timor-Leste stay hidden, which is
+  correct — they are genuinely too small, and that is what the test is for.
+
 ### Changed
 
 - **The Node floor is 20.** `engines` said `>=18` and nothing ever tested it.

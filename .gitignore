@@ -16,6 +16,12 @@ node_modules/
 /typefaces/
 /data/
 
+# The gallery contact sheet, built by `npm run gallery`. Every committed
+# snapshot inlined on one page — three megabytes of SVG, which is a diff nobody
+# can read, so it is generated on demand rather than tracked. The snapshots it
+# is built from are the tracked thing.
+/gallery.html
+
 # The build plan — the single source for the roadmap, kept beside the code so
 # it is not forgotten. Open it in a browser, or read the published copy at
 # https://claude.ai/code/artifact/1ad97eac-6e9c-4944-96fb-3e6530d9e83d

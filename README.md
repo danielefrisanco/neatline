@@ -138,6 +138,9 @@ map.svg              // geometry only — pair it with map.css yourself
 map.toString()       // complete, styled by its <style> block — for embedding
 await map.render()   // complete and portable — renders without CSS support
 await map.toFile(p)  // render(), written to disk
+
+map.project([lon, lat]) // a coordinate as a point on the canvas
+map.invert([x, y])      // a point on the canvas as a coordinate
 ```
 
 ### The presets
@@ -302,6 +305,35 @@ way a paper atlas handles it. Continental France, the lower 48 and mainland
 Portugal frame correctly, while Sicily, Sardinia, Indonesia's archipelago and
 New Zealand's two islands all stay whole, and a world map shows every last one
 of them.
+
+### Coordinates and pixels
+
+```ts
+const map = await neatline({ region: "west-europe" });
+
+const paris = map.project([2.35, 48.86]); // → [x, y], or null
+const ground = map.invert([500, 500]);    // → [lon, lat], or null
+```
+
+`project()` is how anything gets placed by hand: you know where the thing
+happened, and you want the point on the canvas to draw it at.
+
+`invert()` runs the other way, and it exists for the case where the pixel comes
+first — a drag, a click, a drop. **Store the coordinate, never the pixel.** A
+pixel is only meaningful for the exact region, projection and canvas size that
+produced it; the same map at another size, or reframed to a wider region, puts
+that pixel somewhere else entirely. A coordinate stays on the same ground
+forever.
+
+Both return `null` when there is no answer. For `invert()` that means the pixel
+is not on the map at all — the corners of a canvas fall outside an orthographic
+globe, and those corners are nowhere, not somewhere. It is worth checking:
+d3 clamps its inverse trigonometry rather than failing, so the raw projection
+would answer a corner with a coordinate on the limb, and a pin dropped off the
+edge of the world would come to rest in the Atlantic.
+
+On a globe the far hemisphere projects onto the same disc, so one pixel names
+two coordinates. `invert()` returns the one facing the reader.
 
 ### Relief without data
 
@@ -568,6 +600,25 @@ That matters twice over: Phase 2 shipped a map that rendered as a solid black
 square while every string assertion passed, and Phase 3 first shipped this
 gallery in a form that only renders where `<style>` is honoured. Every file here
 is now checked to carry visible paint with its stylesheet stripped out.
+
+```bash
+npm run gallery   # → gallery.html, every snapshot on one page
+```
+
+A directory of forty-two SVG files is not something anyone opens either, so
+`npm run gallery` builds a contact sheet: all of them inline, in the browser, at
+a size where a flat choropleth or a black square is obvious at a glance. What
+each map is said to demonstrate is **read back off the markup** rather than off
+the test that wrote it, so the page cannot claim a feature a file does not
+contain. The output is untracked — three megabytes of inline SVG is a diff
+nobody can read, and the snapshots are the tracked thing.
+
+One detail worth knowing if you put several maps in one page yourself: the
+stylesheets are safe, because each is scoped to a hash of itself, but the SVG
+**ids are not** — `mp-land-clip`, `mp-stripe` and `mp-relief` are constants, so
+every `url(#…)` resolves to whichever map came first. The gallery builder
+namespaces them per map; anyone embedding two maps on a page has to do the same
+until that is fixed.
 
 ## License
 
