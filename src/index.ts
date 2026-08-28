@@ -11,6 +11,7 @@ import { expandPreset, isRegionPreset, presetLabel } from "./regions.js";
 import { referencedFilters } from "./filters.js";
 import { referencedPatterns } from "./patterns.js";
 import { inlineStyles } from "./inline.js";
+import { hashCss, scopeIds, scopeIdsInNodes } from "./css.js";
 import { el, serialize, styleElement, text, type SvgElement, type SvgNode } from "./svg.js";
 import { resolveTheme, type ResolvedTheme } from "./theme.js";
 import {
@@ -554,7 +555,39 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
           features: frame.countries.map((c) => c.geometry),
         } as never)
       : null;
-  const LAND_CLIP_ID = "mp-land-clip";
+  /**
+   * What every id this document emits is namespaced by.
+   *
+   * The stylesheets have been scoped to a hash of themselves since Phase 3, so
+   * two maps could always share a page — but the *ids* were constants, and
+   * `url(#mp-land-clip)` resolves to whichever map the parser met first. Two
+   * maps in one document meant one of them wearing the other's clip path.
+   *
+   * Derived rather than counted, because the same input has to give the same
+   * output: a counter would make a map's bytes depend on how many maps were
+   * built before it.
+   *
+   * The subject has to be in the hash and not only the clip path. A map of
+   * France and a map of Italy on the same theme and canvas, neither of them
+   * drawing water, have no clip path between them — so hashing the stylesheet
+   * and the outline alone handed both the same scope, and both then defined
+   * `mp-stripe` under one name. Harmless in what it paints, since the two
+   * definitions are identical, and still two elements sharing an id in one
+   * document. Two maps that agree on every line below really are the same map,
+   * and a page holding it twice is holding one document twice.
+   */
+  const idScope = hashCss(
+    [
+      themed.css,
+      landClip ?? "",
+      `${width}x${height}`,
+      projectionName,
+      detail,
+      resolved.description,
+      frame.countries.map((country) => country.id).join(","),
+    ].join("\u0000"),
+  );
+  const LAND_CLIP_ID = `mp-land-clip-${idScope}`;
 
   // Names ride with their dots, so both are produced by the same walk — and a
   // name is never written for a settlement whose dot was filtered out.
@@ -743,13 +776,17 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     if (landClip !== null) {
       definitions.push(el("clipPath", { id: LAND_CLIP_ID }, [el("path", { d: landClip })]));
     }
-    definitions.push(...referencedPatterns(theme.css), ...referencedFilters(theme.css));
+    definitions.push(
+      ...referencedPatterns(theme.css, idScope),
+      ...referencedFilters(theme.css, idScope),
+    );
     const defs = el(DEFS_TAG, { class: DEFS_CLASS }, definitions);
     // The scope class rides on the root even when the stylesheet is served
     // separately, or `map.css` would have nothing to match against.
     const rootClass = theme.scope === null ? ROOT_CLASS : `${ROOT_CLASS} ${theme.scope}`;
     const children: SvgNode[] = [el("title", {}, [text(description)])];
-    if (withStyle && theme.css !== "") children.push(styleElement(theme.css));
+    // The reference and the definition move together, or neither moves.
+    if (withStyle && theme.css !== "") children.push(styleElement(scopeIds(theme.css, idScope)));
     children.push(defs, ...body);
 
     return el(
@@ -773,7 +810,13 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     // The stylesheet is kept alongside the flattened attributes rather than
     // dropped: a browser honours the CSS, a tool that ignores it honours the
     // attributes, and both resolve to the same paint.
-    const final = inline && theme.nodes.length > 0 ? inlineStyles(tree, theme.nodes).root : tree;
+    // The flattened attributes carry `url(#…)` too — a `filter` baked onto an
+    // element is the same reference the stylesheet made, and it has to point at
+    // this document's definition rather than at the name as authored.
+    const final =
+      inline && theme.nodes.length > 0
+        ? inlineStyles(tree, scopeIdsInNodes(theme.nodes, idScope), idScope).root
+        : tree;
     return serialize(final);
   }
 
@@ -811,7 +854,9 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
 
   return {
     svg,
-    css: themed.css,
+    // Scoped to match the document it belongs to. A stylesheet served beside a
+    // map has to name that map's definitions, not the authored ones.
+    css: scopeIds(themed.css, idScope),
 
     project: projectPoint,
 

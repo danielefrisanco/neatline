@@ -292,6 +292,34 @@ itself: `.mp.mp-t-k3f9a1z .mp-country`. Deterministic, so the same theme always
 produces the same class and output stays byte-identical; distinct, so two
 themes cannot collide.
 
+### So are the ids
+
+Stylesheets have been scoped to a hash of themselves since the beginning, which
+made it look as though two maps could already share a page. They could not. An
+`url(#…)` resolves against the whole document, and the SVG ids were constants —
+so with two maps on one page, every `url(#mp-land-clip)` found whichever map the
+parser reached first, and one map's rivers were clipped to the other's
+coastline, with nothing in either file to say so.
+
+Every id a map emits now carries a hash of that map:
+
+```
+<clipPath id="mp-land-clip-1y4m1b6">   <pattern id="mp-stripe-1y4m1b6">
+```
+
+**The name you write does not change.** A theme still says
+`filter: url(#mp-relief)` and `fill: url(#mp-stripe)`, which is what the docs
+above promise and what every stylesheet already says. Only the emitted pair
+moves, and it moves together: the id on the definition and the reference in the
+`css` shipped beside it. An id you invented yourself is left exactly as written —
+only the `mp-` names are namespaced.
+
+The hash is derived, never counted, because the same input has to give the same
+output: a counter would make a map's bytes depend on how many maps were built
+before it. Two maps that agree on theme, canvas, projection, detail and subject
+get the same scope, which is correct — they are the same map, and a page holding
+it twice is holding one document twice.
+
 ### How flattening works
 
 `inlineStyles` resolves the cascade and writes the computed paint onto each

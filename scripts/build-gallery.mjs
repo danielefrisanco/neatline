@@ -40,28 +40,10 @@ const FEATURES = [
 const escape = (s) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-/**
- * Namespace every id in one map.
- *
- * The stylesheets already cannot collide — each is scoped to a hash of itself,
- * which is why forty-two `<style>` blocks can share a page. The *ids* are still
- * constants, so without this every `url(#mp-land-clip)` on the page would
- * resolve to the first map's clip path and forty-one maps would have their
- * rivers clipped to somebody else's coastline.
- */
-function namespaceIds(svg, index) {
-  let out = svg;
-  for (const id of new Set([...svg.matchAll(/id="([^"]+)"/g)].map((m) => m[1]))) {
-    out = out.replaceAll(`id="${id}"`, `id="g${index}-${id}"`);
-    out = out.replaceAll(`url(#${id})`, `url(#g${index}-${id})`);
-  }
-  return out;
-}
-
 const files = (await readdir(DIR)).filter((f) => f.endsWith(".svg")).sort();
 const cards = [];
 
-for (const [index, file] of files.entries()) {
+for (const file of files) {
   const slug = file.replace(/\.svg$/, "");
   const raw = await readFile(`${DIR}/${file}`, "utf8");
 
@@ -76,7 +58,10 @@ for (const [index, file] of files.entries()) {
   const drawn = raw.replace(/<style>[\s\S]*?<\/style>/, "");
   const found = FEATURES.filter(([, test]) => test(drawn)).map(([name]) => name);
 
-  const svg = namespaceIds(raw, index)
+  // No id rewriting any more. The library namespaces every id it emits by a
+  // hash of the map, which is what this script used to have to do by hand —
+  // and doing it by hand only ever fixed the gallery, never anyone else's page.
+  const svg = raw
     .replace(/<svg([^>]*?)\swidth="[^"]*"/, "<svg$1")
     .replace(/<svg([^>]*?)\sheight="[^"]*"/, "<svg$1");
 

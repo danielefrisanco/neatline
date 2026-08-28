@@ -140,6 +140,48 @@ export function scopeCss(nodes: readonly CssNode[], scope: string): CssNode[] {
   );
 }
 
+/**
+ * The ids this library owns, as a prefix.
+ *
+ * A caller's own `url(#my-gradient)` is theirs and is left exactly as written.
+ * Only the built-in names get namespaced, because only those are emitted by the
+ * library and only those can therefore collide between two of its documents.
+ */
+const OWNED_ID = /url\(\s*#(mp-[\w-]*?)\s*\)/g;
+
+/**
+ * Namespace the built-in `url(#…)` references in a stylesheet.
+ *
+ * The SVG ids used to be constants while the stylesheets were properly scoped
+ * to a hash, so two maps in one HTML document shared `mp-land-clip`,
+ * `mp-stripe` and `mp-relief` — and every reference resolved to whichever map
+ * the parser reached first. That is one map's rivers clipped to another map's
+ * coastline, silently.
+ *
+ * The authored name does not change: a theme still says `filter:
+ * url(#mp-relief)`, which is what the docs promise and what every stylesheet in
+ * the wild already says. Only the emitted pair moves, together — the id on the
+ * definition and the reference in the stylesheet shipped beside it.
+ */
+export function scopeIds(css: string, scope: string): string {
+  return css.replace(OWNED_ID, (_, id: string) => `url(#${id}-${scope})`);
+}
+
+/** The same rewrite, applied to parsed nodes — what the flattening pass reads. */
+export function scopeIdsInNodes(nodes: readonly CssNode[], scope: string): CssNode[] {
+  return nodes.map((node) =>
+    node.kind === "rule"
+      ? {
+          ...node,
+          declarations: node.declarations.map((d) => ({
+            ...d,
+            value: scopeIds(d.value, scope),
+          })),
+        }
+      : node,
+  );
+}
+
 export function serializeCss(nodes: readonly CssNode[]): string {
   const lines: string[] = [];
   let openAt: string | null = null;

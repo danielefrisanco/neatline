@@ -21,6 +21,38 @@ nothing else can be built on top of. Then pins, which are where the annotation
 API gets decided: arrows, callouts and icons all have to say *where*, and
 whatever shape the pin takes, the other three copy it.
 
+### Fixed
+
+- **Two maps can share a document.** The stylesheets have been scoped to a hash
+  of themselves since Phase 3, which made this look as though it already worked.
+  It did not: an `url(#…)` resolves against the whole document and the SVG ids
+  were constants, so with two maps on a page every `url(#mp-land-clip)` found
+  whichever map the parser reached first — one map's rivers clipped to another
+  map's coastline, and nothing in either file to say so. This was the one item
+  marked *blocking* for the web tool's live preview.
+
+  Every id a map emits is now namespaced by a hash of that map: `mp-land-clip`,
+  `mp-stripe`, `mp-relief`, `mp-relief-soft`, and the `mp-shadow-n` filters the
+  flattening pass generates.
+
+  **The authored name does not change.** A theme still writes
+  `filter: url(#mp-relief)`, which is what the docs promise and what every
+  stylesheet in the wild already says; only the emitted pair moves, together —
+  the id on the definition, the reference in `map.css`, and the reference baked
+  onto a presentation attribute when styles are flattened. An id the caller
+  invented is left exactly as written.
+
+  The hash is derived rather than counted, so a map's bytes never depend on how
+  many maps were built before it. It covers the stylesheet, the land outline,
+  the canvas, the projection, the detail tier and the subject — the last of
+  those because a map of France and a map of Italy on one theme, neither drawing
+  water, have no clip path to tell them apart and were handing the same name to
+  two different documents.
+
+- **`scripts/build-gallery.mjs` no longer rewrites ids by hand.** It has been
+  namespacing every id in every snapshot since the contact sheet was added,
+  which fixed the gallery and nobody else's page. The library does it now.
+
 ### Changed
 
 - **`--anno` has its own shade in every preset**, instead of being a copy of

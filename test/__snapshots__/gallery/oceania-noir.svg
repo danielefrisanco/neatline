@@ -185,7 +185,7 @@
       fill: var(--accent-side);
     }
     .mp.mp-t-0v6qnkk .mp-hatch {
-      fill: url(#mp-stripe);
+      fill: url(#mp-stripe-05etxkx);
       stroke: none;
     }
     .mp.mp-t-0v6qnkk .mp-hatch-line {
@@ -260,7 +260,7 @@
     }
   </style>
   <defs class="mp-defs">
-    <pattern id="mp-stripe" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <pattern id="mp-stripe-05etxkx" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
       <path class="mp-hatch-line" d="M0,0 V7" fill="none" stroke="#6C7681" stroke-width="1.2"/>
     </pattern>
   </defs>
