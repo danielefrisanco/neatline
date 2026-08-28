@@ -571,5 +571,20 @@ is now checked to carry visible paint with its stylesheet stripped out.
 
 ## License
 
-MIT. Geometry comes from [Natural Earth](https://www.naturalearthdata.com/),
-which is public domain and carries no attribution requirement.
+MIT — see [LICENSE](LICENSE).
+
+**A map made with this carries no attribution obligation, and that is
+deliberate.** The users this is built for are publishers, so the geometry was
+kept on public-domain sources on purpose rather than by luck.
+
+| What | Source | Licence | Attribution |
+| --- | --- | --- | --- |
+| Country polygons, coastlines | [Natural Earth](https://www.naturalearthdata.com/) via `world-atlas` | Public domain / ISC | None |
+| Lakes, rivers | Natural Earth via `sane-topojson` | Public domain / MIT | None |
+| Populated places | Natural Earth, vendored under `vendor/` | Public domain | None |
+| Projection maths | `d3-geo` | ISC | None |
+
+If a source that *does* require attribution is ever added — Eurostat GISCO or
+OpenStreetMap are the two that would tempt it — the credit has to be rendered
+by the emitter rather than left to the caller, because the person downloading
+an SVG from a browser has nowhere else to put it.

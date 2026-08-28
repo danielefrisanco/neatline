@@ -16,6 +16,47 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
+## [0.12.0] — 2026-08-28
+
+Phase 7 — harden. Nothing new to look at; everything here is about the library
+being safe to hand to someone else.
+
+This phase was called **Ship** and it bundled two different things: being ready
+to publish, and publishing. Only the first is engineering work, so they split.
+Publishing is now an unscheduled `1.0.0` and nothing downstream waits on it.
+
+### Added
+
+- **The cross product, as invariants rather than as pictures.** Nine regions by
+  five projections by five themes is 225 maps. Committing 225 snapshots means
+  nobody ever opens one, which is the exact failure this project has had three
+  times. So the gallery stays curated and human-sized, and the combinations
+  nobody will look at are checked for the things that can be stated as facts:
+  it renders, it draws land, every coordinate is finite, the land is on the
+  canvas, the same input gives the same output, and every token resolves.
+  153 new assertions in about five seconds.
+- **A contract lock.** The policy at the top of this file says a class, a data
+  attribute or a token is public API. A policy stated only in prose gets broken
+  by accident — someone tidies a name, the suite stays green, and every theme
+  in the wild stops matching. `test/contract.test.ts` snapshots the layers,
+  reserved classes, tokens and preset names, plus a separate assertion on paint
+  order, which a snapshot of names alone cannot catch.
+- **A `LICENSE` file.** `package.json` has declared MIT since Phase 0 and the
+  text was never there.
+- **A licence table in the README**, naming every source and its obligation.
+  A map made with this carries no attribution requirement, which is deliberate
+  rather than lucky, and worth writing down before a source that *does* require
+  one is ever added.
+
+### Notes
+
+- One invariant is weaker than it looks and is kept anyway: *the land is on the
+  canvas* passes for every combination today, including Mercator at the poles,
+  because framing solves through `fitExtent` and clamps. It is a regression
+  guard for a framing change, not a bug it caught.
+- "README built around the class taxonomy" was already true — the taxonomy has
+  been the second section since Phase 3.
+
 ## [0.11.0] — 2026-08-28
 
 The library is called **neatline**. `mapper` was taken on npm, and it named the
@@ -697,7 +738,6 @@ above is the record of what shipped; this table is only what is left.
 
 | Version | Phase | Ships |
 | --- | --- | --- |
-| `0.12.0` | 7 · Harden | Snapshot suite, README rebuilt on the taxonomy, semver policy, licence and repo furniture |
 | `0.13.0` | 8 · Annotations | `invert()`, annotations layer, inlined icons, legend, ocean layer, a brighter palette |
 | `0.14.0` | 9 · Routes | Roads and rail — bundling the data, and the class it needs |
 | `1.0.0` | — · Publish | npm publish with provenance. **Not scheduled.** |
@@ -718,7 +758,8 @@ and grew to carry the legend, the ocean layer and a brighter palette — each is
 something the tool needs and none is large alone. Routes split out of it because
 that one is gated on acquiring data, not on drawing it.
 
-[Unreleased]: https://github.com/danielefrisanco/neatline/compare/v0.11.0...HEAD
+[Unreleased]: https://github.com/danielefrisanco/neatline/compare/v0.12.0...HEAD
+[0.12.0]: https://github.com/danielefrisanco/neatline/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/danielefrisanco/neatline/compare/v0.10.0...v0.11.0
 [0.7.0]: https://github.com/danielefrisanco/neatline/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/danielefrisanco/neatline/compare/v0.5.0...v0.6.0

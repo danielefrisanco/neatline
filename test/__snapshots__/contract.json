@@ -1,0 +1,185 @@
+{
+  "root": "mp",
+  "background": "mp-bg",
+  "defs": "mp-defs",
+  "highlight": "is-highlighted",
+  "layerClass": "mp-layer",
+  "layers": [
+    {
+      "name": "graticule",
+      "className": "mp-graticule",
+      "feature": "mp-grid",
+      "status": "reserved"
+    },
+    {
+      "name": "neighbours",
+      "className": "mp-neighbours",
+      "feature": "mp-neighbour",
+      "status": "live"
+    },
+    {
+      "name": "land",
+      "className": "mp-land",
+      "feature": "mp-country",
+      "status": "live"
+    },
+    {
+      "name": "terrain",
+      "className": "mp-terrain",
+      "feature": "mp-cover",
+      "status": "reserved"
+    },
+    {
+      "name": "hydro",
+      "className": "mp-hydro",
+      "feature": "mp-water",
+      "status": "live"
+    },
+    {
+      "name": "borders",
+      "className": "mp-borders",
+      "feature": "mp-border",
+      "status": "live"
+    },
+    {
+      "name": "roads",
+      "className": "mp-roads",
+      "feature": "mp-road",
+      "status": "reserved"
+    },
+    {
+      "name": "places",
+      "className": "mp-places",
+      "feature": "mp-place",
+      "status": "live"
+    },
+    {
+      "name": "labels",
+      "className": "mp-labels",
+      "feature": "mp-label",
+      "status": "live"
+    },
+    {
+      "name": "annotations",
+      "className": "mp-annotations",
+      "feature": "mp-anno",
+      "status": "reserved"
+    },
+    {
+      "name": "furniture",
+      "className": "mp-furniture",
+      "feature": "mp-credit",
+      "status": "reserved"
+    }
+  ],
+  "reserved": [
+    "mp-anno",
+    "mp-arrow",
+    "mp-callout",
+    "mp-compass",
+    "mp-credit",
+    "mp-flow",
+    "mp-hatch",
+    "mp-hatch-line",
+    "mp-legend",
+    "mp-pin",
+    "mp-prism",
+    "mp-prism-side",
+    "mp-prism-top",
+    "mp-scale",
+    "mp-symbol",
+    "mp-watermark"
+  ],
+  "tokens": [
+    "--bg (live)",
+    "--land (live)",
+    "--land-edge (live)",
+    "--land-edge-width (live)",
+    "--border (live)",
+    "--border-width (live)",
+    "--border-dash (live)",
+    "--accent (live)",
+    "--accent-edge (live)",
+    "--bin-1 (live)",
+    "--bin-2 (live)",
+    "--bin-3 (live)",
+    "--bin-4 (live)",
+    "--bin-5 (live)",
+    "--fill-1 (live)",
+    "--fill-2 (live)",
+    "--fill-3 (live)",
+    "--fill-4 (live)",
+    "--fill-5 (live)",
+    "--fill-6 (live)",
+    "--prism-side (live)",
+    "--accent-side (live)",
+    "--place (live)",
+    "--ink (live)",
+    "--ink-muted (live)",
+    "--font (live)",
+    "--label-size (live)",
+    "--place-label-size (live)",
+    "--label-track (live)",
+    "--label-weight (live)",
+    "--label-advance (live)",
+    "--label-halo (live)",
+    "--label-halo-width (live)",
+    "--stripe (live)",
+    "--stripe-width (live)",
+    "--water (live)",
+    "--water-width (live)",
+    "--road (reserved)",
+    "--graticule (reserved)",
+    "--graticule-width (reserved)",
+    "--equator (reserved)",
+    "--desert (reserved)",
+    "--forest (reserved)",
+    "--mountain (reserved)",
+    "--glacier (reserved)",
+    "--sea-ink (reserved)",
+    "--neighbour (live)",
+    "--anno (reserved)",
+    "--anno-ink (reserved)",
+    "--furniture-ink (reserved)"
+  ],
+  "presets": {
+    "themes": [
+      "minimal",
+      "atlas",
+      "noir",
+      "blueprint",
+      "contrast"
+    ],
+    "palettes": [
+      "sand",
+      "slate",
+      "moss",
+      "dusk"
+    ],
+    "typefaces": [
+      "humanist",
+      "serif",
+      "grotesk",
+      "condensed",
+      "mono"
+    ],
+    "projections": [
+      "mercator",
+      "equal-earth",
+      "orthographic",
+      "conic-conformal",
+      "albers"
+    ],
+    "regions": [
+      "world",
+      "west-europe",
+      "europe",
+      "north-america",
+      "south-america",
+      "africa",
+      "asia",
+      "oceania",
+      "antarctica"
+    ]
+  }
+}
