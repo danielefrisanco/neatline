@@ -6,14 +6,15 @@ on:
   pull_request:
 
 jobs:
-  # The development toolchain. vitest 4 depends on rolldown, which imports
-  # `styleText` from node:util — added in Node 20.12 — so the suite cannot run
-  # on 18 at all. vitest declares `^20 || ^22 || >=24`; this matches it.
   check:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
+        # Node 20 is the floor `engines` promises and the floor vitest needs —
+        # vitest 4 depends on rolldown, which imports `styleText` from
+        # node:util, added in 20.12. Keeping the two in step means CI is
+        # testing the claim the package actually makes.
         node: ["20", "22"]
     steps:
       - uses: actions/checkout@v4
@@ -25,27 +26,3 @@ jobs:
       # Builds the data, typechecks, tests, builds both module systems, and
       # verifies every export path resolves — the same gate as `prepublishOnly`.
       - run: npm run check
-
-  # What the package promises consumers, which is a different claim from what
-  # building it requires. `engines` says >=18, and nothing tested that until
-  # this job: build on a Node the toolchain supports, then import and render on
-  # 18 with no toolchain involved. If this fails, either the code or the
-  # `engines` field is wrong — and the honest fix is usually the field.
-  runtime:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: npm
-      - run: npm ci
-      - run: npm run build:data
-      - run: npm run build
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "18"
-      - name: Import and render the built package on the oldest supported Node
-        run: |
-          node --version
-          node scripts/verify-exports.mjs

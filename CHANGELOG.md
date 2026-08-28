@@ -16,18 +16,17 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
-### Fixed
+### Changed
 
-- **CI ran the test suite on Node 18, which cannot run it.** `vitest` 4 depends
-  on `rolldown`, which imports `styleText` from `node:util` — added in Node
-  20.12 — so the suite failed at startup before a single test ran. `vitest`
-  declares `^20 || ^22 || >=24`; CI now matches it.
-- **`engines: ">=18"` was never tested, and it is a different claim.** What the
-  toolchain needs to *build* this and what a consumer needs to *run* it are two
-  separate things, and only the first one required Node 20. CI now proves the
-  second: build on Node 20, then import the built package on Node 18 and render
-  a real map with no toolchain present. The shipped code uses no post-18 API and
-  targets ES2022, so the field stands — but it stands on evidence now.
+- **The Node floor is 20.** `engines` said `>=18` and nothing ever tested it.
+  It could not be tested either: `vitest` 4 depends on `rolldown`, which imports
+  `styleText` from `node:util` — added in Node 20.12 — so the suite failed at
+  startup on 18 before a single test ran. Rather than keep an untested promise
+  alive with a separate build-then-run-on-18 job, the floor moves to 20, which
+  is what the toolchain needs and what CI actually exercises. Node 18 left
+  maintenance in April 2025.
+
+  Breaking in principle; nothing is published, so nobody is on it.
 
 
 ## [0.12.0] — 2026-08-28
