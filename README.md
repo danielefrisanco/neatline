@@ -1,4 +1,4 @@
-# mapper
+# neatline
 
 Generate standalone, CSS-themeable SVG maps from a region and a stylesheet.
 
@@ -6,9 +6,9 @@ No tile server, no fonts pipeline, no API key, no runtime model call.
 Same input, byte-identical output.
 
 ```ts
-import { mapper } from "mapper";
+import { neatline } from "neatline";
 
-const map = await mapper({
+const map = await neatline({
   region: "west-europe",
   projection: "conic-conformal",
   highlight: ["FR", "DE", "BE"],
@@ -33,8 +33,11 @@ The real public API is the shape of the document, not the function signature.
 Every theme anyone writes is a set of selectors against these names, so they are
 versioned like a function signature and change only on a major.
 
-The root is `<svg class="mp">`. Inside it, a `.mp-bg` rectangle covers the
-canvas, then eight layer groups in **fixed paint order**, bottom to top:
+The root is `<svg class="mp">` — `mp` for *map*, not for the library, which is
+why the prefix survived the rename from `mapper` and will survive the next one.
+
+Inside it, a `.mp-bg` rectangle covers the canvas, then eight layer groups in
+**fixed paint order**, bottom to top:
 
 | Layer group | Feature class | Data attributes | Carries |
 |---|---|---|---|
@@ -70,7 +73,7 @@ cost about thirty bytes and buy a stable stack for the life of v1.
 The taxonomy is also readable at runtime, so tooling never has to hard-code it:
 
 ```ts
-import { LAYERS } from "mapper";
+import { LAYERS } from "neatline";
 
 LAYERS.map((layer) => layer.className);
 // ["mp-neighbours", "mp-land", "mp-hydro", "mp-borders", ...]
@@ -117,7 +120,7 @@ Three inputs, applied in cascade order. There is no merge step, no schema and
 no validation layer, because the cascade already does that work.
 
 ```ts
-const map = await mapper({
+const map = await neatline({
   region: "west-europe",
   theme: "atlas",              // structure: weights, dashes, type
   palette: "dusk",             // colour only, applied over the theme
@@ -156,7 +159,7 @@ dash or the type:
 Type is a category you pick, the same way colour is:
 
 ```ts
-await mapper({ region: "west-europe", theme: "atlas", typeface: "serif" });
+await neatline({ region: "west-europe", theme: "atlas", typeface: "serif" });
 ```
 
 | | |
@@ -222,7 +225,7 @@ Bundled themes are `minimal` and `atlas`; bundled palettes are `dusk` and
 passed inline. The files ship too, for linking or forking:
 
 ```ts
-import "mapper/themes/atlas.css";
+import "neatline/themes/atlas.css";
 ```
 
 ### Tokens
@@ -318,7 +321,7 @@ See `west-europe-relief.svg` in the gallery.
 ### Colour by value
 
 ```ts
-await mapper({
+await neatline({
   region: "west-europe",
   values: { DE: 4460, FR: 3050, IT: 2250, ES: 1620, PT: 290 },
   bins: 5,
@@ -343,7 +346,7 @@ number it happened to fall into.
 ### Colour without data
 
 ```ts
-await mapper({ region: "africa", fill: "political" });
+await neatline({ region: "africa", fill: "political" });
 ```
 
 Every country gets a colour none of its neighbours has, written out as
@@ -362,7 +365,7 @@ something with its colour, and two encodings on one fill is one of them lying.
 ### Hatching
 
 ```ts
-await mapper({
+await neatline({
   region: "europe",
   highlight: [...members],
   stripe: ["AL", "BA", "MD", "ME", "MK", "RS", "UA"],
@@ -382,7 +385,7 @@ where it is used.
 ### Height as quantity
 
 ```ts
-await mapper({
+await neatline({
   region: "west-europe",
   extrude: { values: { DE: 4460, FR: 3050, IT: 2250, ES: 1620 }, height: 150 },
 });
@@ -437,7 +440,7 @@ a river is on land.
 ### Neighbours
 
 ```ts
-await mapper({ region: "west-europe", neighbours: true });
+await neatline({ region: "west-europe", neighbours: true });
 ```
 
 The surrounding countries, drawn beneath the region as context. Never labelled,
@@ -457,9 +460,9 @@ Hamburg, Munich, Lyon, Marseille, Turin and Barcelona). Every dot also carries
 Country and settlement names, on by default.
 
 ```ts
-await mapper({ region: "west-europe", theme: "atlas" });     // names included
-await mapper({ region: "west-europe", labelRank: 2 });       // name more cities
-await mapper({ region: "west-europe", layers: { labels: false } });  // none
+await neatline({ region: "west-europe", theme: "atlas" });     // names included
+await neatline({ region: "west-europe", labelRank: 2 });       // name more cities
+await neatline({ region: "west-europe", layers: { labels: false } });  // none
 ```
 
 `labelRank` decides how far down the settlement ranking to *name* the dots that
@@ -519,7 +522,7 @@ The bundled data is English. `names` replaces the name of anything the map
 labels — keys are ISO codes for countries and settlement names for cities:
 
 ```ts
-await mapper({
+await neatline({
   region: "west-europe",
   names: { DE: "Deutschland", FR: "Frankreich", Munich: "München" },
 });
@@ -533,7 +536,7 @@ does not ship.
 ### Choosing layers
 
 ```ts
-await mapper({ region: "west-europe", layers: { borders: false } });
+await neatline({ region: "west-europe", layers: { borders: false } });
 ```
 
 This empties `.mp-borders`; it never removes the group. The stack is a fixed

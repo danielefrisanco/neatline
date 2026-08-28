@@ -71,7 +71,7 @@ export type Region =
   | { readonly bbox: BBox }
   | GeoJsonFeatureCollection;
 
-export interface MapperOptions {
+export interface MapOptions {
   /** Preset name, ISO 3166-1 alpha-2 codes, a bounding box, or raw GeoJSON. */
   readonly region: Region;
   /** @default "50m" */

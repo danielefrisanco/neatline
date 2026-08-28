@@ -92,7 +92,7 @@ export async function loadWorld(detail: Detail): Promise<World> {
     bundle = JSON.parse(await readFile(url, "utf8")) as Bundle;
   } catch {
     throw new Error(
-      `mapper: could not read bundled data for detail "${detail}". ` +
+      `neatline: could not read bundled data for detail "${detail}". ` +
         `Run \`npm run build:data\` to regenerate it.`,
     );
   }

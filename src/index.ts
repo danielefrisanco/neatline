@@ -25,7 +25,7 @@ import { loadWorld, type CountryFeature } from "./topology.js";
 import type {
   BBox,
   GeoJsonFeatureCollection,
-  MapperOptions,
+  MapOptions,
   MapResult,
   Point,
   Position,
@@ -65,7 +65,7 @@ export type {
   BBox,
   Detail,
   GeoJsonFeatureCollection,
-  MapperOptions,
+  MapOptions,
   MapResult,
   Point,
   Position,
@@ -169,7 +169,7 @@ function readCustomFeature(raw: unknown): CountryFeature {
 function resolveRegion(region: Region, all: readonly CountryFeature[]): ResolvedRegion {
   if (typeof region === "string") {
     if (!isRegionPreset(region)) {
-      throw new Error(`mapper: unknown region preset "${region}"`);
+      throw new Error(`neatline: unknown region preset "${region}"`);
     }
     const codes = expandPreset(region);
     const features = codes === null ? all : pick(codes, all);
@@ -243,7 +243,7 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
   ) {
     const features = (region as GeoJsonFeatureCollection).features.map(readCustomFeature);
     if (features.length === 0) {
-      throw new Error("mapper: region FeatureCollection is empty");
+      throw new Error("neatline: region FeatureCollection is empty");
     }
     return {
       features,
@@ -253,7 +253,7 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
     };
   }
 
-  throw new Error("mapper: region must be a preset name, code list, bbox, or GeoJSON");
+  throw new Error("neatline: region must be a preset name, code list, bbox, or GeoJSON");
 }
 
 function pick(codes: readonly string[], all: readonly CountryFeature[]): CountryFeature[] {
@@ -262,7 +262,7 @@ function pick(codes: readonly string[], all: readonly CountryFeature[]): Country
     const resolved = resolveId(code);
     if (resolved === null) {
       throw new Error(
-        `mapper: unrecognised country code "${code}". ` +
+        `neatline: unrecognised country code "${code}". ` +
           `Expected ISO 3166-1 alpha-2 ("FR"), numeric ("250"), or a user-assigned code ("XK").`,
       );
     }
@@ -277,7 +277,7 @@ function pick(codes: readonly string[], all: readonly CountryFeature[]): Country
  * Async because geometry is loaded per region rather than bundled wholesale —
  * the full dataset is 8 MB, so shipping it to every consumer is not an option.
  */
-export async function mapper(options: MapperOptions): Promise<MapResult> {
+export async function neatline(options: MapOptions): Promise<MapResult> {
   const detail = options.detail ?? "50m";
   const projectionName = options.projection ?? "equal-earth";
   const [width, height] = options.size ?? DEFAULT_SIZE;
@@ -288,7 +288,7 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   const { frame } = resolved;
 
   if (resolved.features.length === 0) {
-    throw new Error("mapper: region resolved to no countries");
+    throw new Error("neatline: region resolved to no countries");
   }
 
   /**
@@ -309,7 +309,7 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   for (const code of options.highlight ?? []) {
     const code2 = resolveId(code);
     if (code2 === null) {
-      throw new Error(`mapper: unrecognised highlight code "${code}"`);
+      throw new Error(`neatline: unrecognised highlight code "${code}"`);
     }
     highlighted.add(code2);
   }
@@ -318,7 +318,7 @@ export async function mapper(options: MapperOptions): Promise<MapResult> {
   for (const code of options.stripe ?? []) {
     const code2 = resolveId(code);
     if (code2 === null) {
-      throw new Error(`mapper: unrecognised stripe code "${code}"`);
+      throw new Error(`neatline: unrecognised stripe code "${code}"`);
     }
     striped.add(code2);
   }

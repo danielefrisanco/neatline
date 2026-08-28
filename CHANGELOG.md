@@ -15,6 +15,33 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
+## [0.11.0] — 2026-08-28
+
+The library is called **neatline**. `mapper` was taken on npm, and it named the
+machine rather than the thing it makes — a neatline is the ruled border drawn
+around a finished map, which is closer to what this produces.
+
+**Breaking**, under the pre-1.0 policy. Nothing about the output changed: every
+map this version renders is byte-identical to what `0.10.0` rendered. What
+changed is what you type.
+
+### Changed
+
+- `mapper()` is now `neatline()`, and the package is `neatline`.
+- `MapperOptions` is now `MapOptions`, which pairs with the `MapResult` it has
+  always returned.
+- Error messages are prefixed `neatline:` instead of `mapper:`.
+- Subpath imports follow the package: `neatline/themes/atlas.css`,
+  `neatline/palettes/moss.css`, `neatline/typefaces/condensed.css`.
+
+### Unchanged
+
+- **The whole class taxonomy.** `mp` is short for *map*, not for the old
+  package name, so every selector any theme has ever written still matches.
+  `mp-` also stays clear of `nl-`, which would have read as the ISO code for
+  the Netherlands sitting in a document full of `data-iso` attributes.
+- Every token, data attribute, layer name and paint order.
+
 ## [0.10.0] — 2026-08-27
 
 Names. Country and settlement labels, the layer slot reserved since Phase 2.
@@ -417,7 +444,7 @@ Phase 3 — theming, palettes and layer control. Maps stop being wireframes.
 
 ### Added
 
-- **`theme`, `palette` and `tokens` on `MapperOptions`.** Applied in that
+- **`theme`, `palette` and `tokens` on `MapOptions`.** Applied in that
   order, and the ordering *is* the implementation — a palette beats a theme and
   an override beats a palette because each is a later declaration. No merge
   logic, no schema, no validation layer
@@ -472,7 +499,7 @@ Phase 3 — theming, palettes and layer control. Maps stop being wireframes.
 ### Notes
 
 - Theme stylesheets are authored as strings in `src/` rather than read from
-  disk, so `mapper()` stays isomorphic. Reading a `.css` at call time would make
+  disk, so `neatline()` stays isomorphic. Reading a `.css` at call time would make
   the library Node-only, which is the constraint Phase 4 exists to remove
 - `<style>` content is emitted raw, and wrapped in CDATA only when it contains
   `&` or `<`. Escaping is wrong there: an HTML parser treats style content as
@@ -557,7 +584,7 @@ policy the class taxonomy is public API.
 
 ## [0.1.0] — 2026-08-27
 
-Phase 1 — geometry core. `mapper()` now produces real maps.
+Phase 1 — geometry core. `neatline()` now produces real maps.
 
 ### Added
 
@@ -579,7 +606,7 @@ Phase 1 — geometry core. `mapper()` now produces real maps.
 
 ### Changed
 
-- **`mapper()` is now async.** The full dataset is 8 MB across detail tiers, so
+- **`neatline()` is now async.** The full dataset is 8 MB across detail tiers, so
   geometry has to be loaded per region rather than bundled wholesale. Deciding
   this now avoids a breaking change later
 - Dropped the Phase 0 tests that asserted the absence of geometry
@@ -629,7 +656,7 @@ Phase 0 — scaffold. No geometry yet; the package builds, tests, and imports.
   tiers, render options, `MapResult`. Every option is plain, JSON-serialisable
   data; no callbacks anywhere, which is what will let an editor UI drive the
   same API later
-- `mapper()` stub emitting a valid, correctly sized, empty document
+- `neatline()` stub emitting a valid, correctly sized, empty document
 - vitest with SVG file snapshots — snapshots land in `test/__snapshots__/` as
   real `.svg` files that open in a browser, so geometry regressions are visible
   rather than a string diff
@@ -644,13 +671,13 @@ Phase 0 — scaffold. No geometry yet; the package builds, tests, and imports.
 - **npm, not pnpm.** pnpm is not installed on the dev machine and there is no
   workspace to gain from it. One command to switch if that changes.
 - **No default export.** Mixing it with named exports forces CJS consumers to
-  write `.default`; the API is `mapper({...})` regardless.
+  write `.default`; the API is `neatline({...})` regardless.
 - **Snapshots as `.svg` files** rather than `.snap`, for a library whose output
   is meant to be looked at.
 
 ### Known
 
-- The npm name `mapper` is taken (v0.2.5), as is `svg-mapper`. A real name is
+- The npm name `neatline` is taken (v0.2.5), as is `svg-neatline`. A real name is
   needed before `1.0.0`; a scoped name is the zero-effort fallback. Nothing is
   blocked until publish.
 - One `low` audit advisory remains in the esbuild dev-server chain —
@@ -672,13 +699,14 @@ history stay the same document.
 | `1.0.0` | 7 · Ship | Stable taxonomy, published, documented |
 | `1.1.0` | 8 · Annotations | Pins, arrows, callouts, icons |
 
-[Unreleased]: https://github.com/danielefrisanco/mapper/compare/v0.7.0...HEAD
-[0.7.0]: https://github.com/danielefrisanco/mapper/compare/v0.6.0...v0.7.0
-[0.6.0]: https://github.com/danielefrisanco/mapper/compare/v0.5.0...v0.6.0
-[0.5.0]: https://github.com/danielefrisanco/mapper/compare/v0.4.0...v0.5.0
-[0.4.0]: https://github.com/danielefrisanco/mapper/compare/v0.3.1...v0.4.0
-[0.3.1]: https://github.com/danielefrisanco/mapper/compare/v0.3.0...v0.3.1
-[0.3.0]: https://github.com/danielefrisanco/mapper/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/danielefrisanco/mapper/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/danielefrisanco/mapper/releases/tag/v0.1.0
-[0.0.1]: https://github.com/danielefrisanco/mapper/releases/tag/v0.0.1
+[Unreleased]: https://github.com/danielefrisanco/neatline/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/danielefrisanco/neatline/compare/v0.10.0...v0.11.0
+[0.7.0]: https://github.com/danielefrisanco/neatline/compare/v0.6.0...v0.7.0
+[0.6.0]: https://github.com/danielefrisanco/neatline/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/danielefrisanco/neatline/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/danielefrisanco/neatline/compare/v0.3.1...v0.4.0
+[0.3.1]: https://github.com/danielefrisanco/neatline/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/danielefrisanco/neatline/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/danielefrisanco/neatline/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/danielefrisanco/neatline/releases/tag/v0.1.0
+[0.0.1]: https://github.com/danielefrisanco/neatline/releases/tag/v0.0.1

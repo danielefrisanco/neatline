@@ -61,7 +61,7 @@ export const EMPTY_THEME: ResolvedTheme = { css: "", scope: null, nodes: [] };
 function assertEmbeddable(css: string, source: string): void {
   if (/<\/\s*style/i.test(css) || css.includes("<!--")) {
     throw new Error(
-      `mapper: ${source} contains a sequence that cannot be embedded in a <style> element ` +
+      `neatline: ${source} contains a sequence that cannot be embedded in a <style> element ` +
         `("</style" or "<!--"). Remove it, or apply the stylesheet externally.`,
     );
   }
@@ -88,13 +88,13 @@ async function readStylesheet(reference: string, kind: Kind): Promise<string> {
     try {
       return await readFile(reference, "utf8");
     } catch {
-      throw new Error(`mapper: could not read ${kind} stylesheet "${reference}"`);
+      throw new Error(`neatline: could not read ${kind} stylesheet "${reference}"`);
     }
   }
 
   const known = Object.keys(table).join(", ");
   throw new Error(
-    `mapper: unknown ${kind} "${reference}". ` +
+    `neatline: unknown ${kind} "${reference}". ` +
       `Expected one of: ${known} — or a path to a .css file, or a stylesheet.`,
   );
 }

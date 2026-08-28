@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { mapper, type MapperOptions } from "../src/index.js";
+import { neatline, type MapOptions } from "../src/index.js";
 
 /**
  * A gallery, not a checksum.
@@ -10,7 +10,7 @@ import { mapper, type MapperOptions } from "../src/index.js";
  * something a person can open, and so the spread of themes, palettes,
  * projections and canvas shapes is visible at a glance rather than inferred.
  */
-const GALLERY: ReadonlyArray<readonly [string, MapperOptions]> = [
+const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
   [
     "west-europe-minimal",
     { region: "west-europe", projection: "conic-conformal", theme: "minimal" },
@@ -333,7 +333,7 @@ const GALLERY: ReadonlyArray<readonly [string, MapperOptions]> = [
 
 describe("gallery", () => {
   it.each(GALLERY)("renders %s", async (name, options) => {
-    const map = await mapper({ detail: "110m", ...options });
+    const map = await neatline({ detail: "110m", ...options });
     // `render()`, not `toString()`: these files exist to be opened, and many
     // viewers ignore <style>. The stylesheet still ships inside them.
     await expect(await map.render()).toMatchFileSnapshot(
@@ -344,7 +344,7 @@ describe("gallery", () => {
   // Every file in the gallery has to survive a reader that ignores stylesheets,
   // or the gallery cannot do the one job it exists for.
   it.each(GALLERY)("gives %s paint a viewer can see without css", async (_name, options) => {
-    const map = await mapper({ detail: "110m", ...options });
+    const map = await neatline({ detail: "110m", ...options });
     const artifact = await map.render();
     const withoutStyle = artifact.replace(/<style>[\s\S]*?<\/style>/, "");
     // An extruded map draws prisms rather than flat countries, so either
@@ -355,7 +355,7 @@ describe("gallery", () => {
   });
 
   it("keeps the small stylesheet-only form available", async () => {
-    const map = await mapper({ region: ["FR"], detail: "110m", theme: "atlas" });
+    const map = await neatline({ region: ["FR"], detail: "110m", theme: "atlas" });
     const small = map.toString();
     const portable = await map.render();
     expect(small).not.toContain('fill="#F2EAD8"');
