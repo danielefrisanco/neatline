@@ -248,6 +248,23 @@ export interface MapResult {
    */
   project(position: Position): Point | null;
   /**
+   * Turn a point in SVG user units back into a coordinate.
+   *
+   * The inverse of `project()`, and the hook a pointer needs. Placing a pin by
+   * hand is a `project()` problem — the author knows the coordinate and wants
+   * the pixel. Dragging one is this problem, and it runs the other way: the
+   * drop arrives in pixels and has to be stored as lon/lat, or the pin comes
+   * unstuck from the ground the moment the region, the projection or the
+   * canvas size changes.
+   *
+   * Returns `null` for a pixel that is not on the globe at all — the canvas
+   * corners outside an orthographic disc are nowhere, not somewhere. Where the
+   * globe folds, the answer is the near side: the far hemisphere projects onto
+   * the same disc, so one pixel names two coordinates and this returns the one
+   * facing the reader.
+   */
+  invert(point: Point): Position | null;
+  /**
    * The complete document, styled by its stylesheet alone.
    *
    * This is the form to embed in a page: the browser applies the `<style>`

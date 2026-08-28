@@ -76,6 +76,15 @@ export type {
   Size,
 } from "./types.js";
 
+/**
+ * How far a round trip may drift before a pixel counts as off the map, in user
+ * units. Measured across every region and projection, a point that is really
+ * on the map returns within 0.001; a pixel past an orthographic limb returns
+ * more than 20 away. Anything in that gap does as a threshold, and a tenth of
+ * a unit is invisible on any canvas this library draws.
+ */
+const INVERT_TOLERANCE = 0.1;
+
 const DEFS_TAG = "defs";
 
 const DEFAULT_SIZE: Size = [1000, 1000];
@@ -731,6 +740,32 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     project(position: Position): Point | null {
       const projected = projection([position[0], position[1]]);
       return projected === null ? null : [projected[0], projected[1]];
+    },
+
+    invert(point: Point): Position | null {
+      // Optional on d3's projection type. Every projection in the table has
+      // an inverse, but the table is a lookup precisely so composites can be
+      // registered later, and a composite need not have one.
+      const inverse = projection.invert;
+      if (inverse === undefined) return null;
+      const position = inverse.call(projection, [point[0], point[1]]);
+      if (position === null) return null;
+      if (!Number.isFinite(position[0]) || !Number.isFinite(position[1])) return null;
+
+      // Then make the projection confirm its own answer. d3 clamps its inverse
+      // trigonometry instead of failing, so a pixel off the edge of an
+      // orthographic globe does not come back as nothing — it comes back as a
+      // coordinate on the limb, and the corner of the canvas invents a place
+      // in the Atlantic. The only reliable test of whether a pixel is on the
+      // map is whether the map puts it back where it was found: a real point
+      // returns within a thousandth of a unit, and a clamped one misses by
+      // twenty units or more.
+      const back = projection([position[0], position[1]]);
+      if (back === null) return null;
+      if (Math.abs(back[0] - point[0]) > INVERT_TOLERANCE) return null;
+      if (Math.abs(back[1] - point[1]) > INVERT_TOLERANCE) return null;
+
+      return [position[0], position[1]];
     },
 
     toString() {

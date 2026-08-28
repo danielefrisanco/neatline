@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { neatline } from "../src/index.js";
+import { neatline, PROJECTION_NAMES } from "../src/index.js";
+import type { Position } from "../src/index.js";
 
 describe("geometry", () => {
   it("draws the region", async () => {
@@ -134,6 +135,111 @@ describe("project", () => {
       neatline({ region: "west-europe", detail: "110m" }),
     ]);
     expect(twice[0]!.project([2.35, 48.86])).toEqual(twice[1]!.project([2.35, 48.86]));
+  });
+});
+
+/**
+ * The inverse, which the annotation layer and the tool both rest on. These are
+ * geometric properties rather than assertions about the document: `invert` adds
+ * no markup, so there is nothing to look at, and a round trip that closes is
+ * the whole of what it promises.
+ */
+describe("invert", () => {
+  // A coordinate that goes out through project() and comes back through
+  // invert() has to be the same coordinate, in every projection. Anything less
+  // and a dragged pin drifts a little further from where it was dropped every
+  // time the map is rebuilt.
+  it("round-trips a coordinate through every projection", async () => {
+    const paris: Position = [2.35, 48.86];
+    for (const projection of PROJECTION_NAMES) {
+      const map = await neatline({
+        region: "west-europe",
+        detail: "110m",
+        projection,
+        size: [1000, 1000],
+      });
+      const back = map.invert(map.project(paris)!);
+      expect(back, projection).not.toBeNull();
+      expect(back![0]).toBeCloseTo(paris[0], 6);
+      expect(back![1]).toBeCloseTo(paris[1], 6);
+    }
+  });
+
+  // The reason it exists. A drop happens in pixels; storing those pixels would
+  // detach the pin from the ground the moment anything about the framing
+  // changes. Stored as lon/lat it stays on the same piece of Europe at another
+  // size, in another projection.
+  it("keeps a dropped pin on the same ground when the map is reframed", async () => {
+    const dropped = await neatline({ region: "west-europe", detail: "110m", size: [1000, 1000] });
+    const ground = dropped.invert([500, 500]);
+    expect(ground).not.toBeNull();
+
+    const reframed = await neatline({
+      region: "west-europe",
+      detail: "110m",
+      projection: "conic-conformal",
+      size: [640, 480],
+    });
+    const again = reframed.project(ground!)!;
+    expect(again[0]).toBeGreaterThan(0);
+    expect(again[0]).toBeLessThan(640);
+    expect(again[1]).toBeGreaterThan(0);
+    expect(again[1]).toBeLessThan(480);
+    // Same ground, different pixels: the round trip closes in the second map
+    // too, which is what makes the stored coordinate portable at all.
+    expect(reframed.invert(again)![0]).toBeCloseTo(ground![0], 6);
+    expect(reframed.invert(again)![1]).toBeCloseTo(ground![1], 6);
+  });
+
+  // A pixel in the corner of an orthographic canvas is not a place, and d3
+  // will not say so on its own: it clamps its inverse trigonometry, so the
+  // corner answers with a coordinate on the limb rather than with nothing.
+  // Storing that would put a pin in the Atlantic because someone dropped it
+  // outside the globe.
+  it("returns null for a pixel that is not on the globe", async () => {
+    const globe = await neatline({
+      region: "world",
+      detail: "110m",
+      projection: "orthographic",
+      size: [1000, 1000],
+    });
+    expect(globe.invert([500, 500])).not.toBeNull();
+    expect(globe.invert([2, 2])).toBeNull();
+    expect(globe.invert([998, 998])).toBeNull();
+  });
+
+  // The general form of the same promise, which does not depend on knowing
+  // where the limb falls: whatever invert() does answer, the map has to put
+  // back where it was found. A grid over a globe crosses the limb in every
+  // direction, so it covers both sides of the only hard case there is.
+  it("never answers with a place the map would not put back", async () => {
+    const globe = await neatline({
+      region: "world",
+      detail: "110m",
+      projection: "orthographic",
+      size: [1000, 1000],
+    });
+
+    let onGlobe = 0;
+    let offGlobe = 0;
+    for (let x = 0; x <= 1000; x += 50) {
+      for (let y = 0; y <= 1000; y += 50) {
+        const position = globe.invert([x, y]);
+        if (position === null) {
+          offGlobe += 1;
+          continue;
+        }
+        onGlobe += 1;
+        const back = globe.project(position)!;
+        expect(back[0]).toBeCloseTo(x, 2);
+        expect(back[1]).toBeCloseTo(y, 2);
+      }
+    }
+
+    // Neither half is allowed to be empty, or the loop above proves nothing:
+    // a disc inscribed in a square leaves real corners outside it.
+    expect(onGlobe).toBeGreaterThan(100);
+    expect(offGlobe).toBeGreaterThan(20);
   });
 });
 
