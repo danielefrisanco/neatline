@@ -31,6 +31,7 @@ before that promise is made.
 
 Reserved and out of scope: annotations (pins, arrows, callouts), a legend,
 roads, and terrain — each has its slot in the taxonomy and none is emitted.
+[PLAN.md](PLAN.md) says when each arrives and what it is waiting on.
 
 ## The class taxonomy
 

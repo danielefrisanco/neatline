@@ -697,9 +697,14 @@ above is the record of what shipped; this table is only what is left.
 
 | Version | Phase | Ships |
 | --- | --- | --- |
-| `0.12.0` | 7 · Harden | Snapshot suite across region × projection × preset, README rebuilt on the taxonomy, semver policy written down |
+| `0.12.0` | 7 · Harden | Snapshot suite, README rebuilt on the taxonomy, semver policy, licence and repo furniture |
+| `0.13.0` | 8 · Annotations | `invert()`, annotations layer, inlined icons, legend, ocean layer, a brighter palette |
+| `0.14.0` | 9 · Routes | Roads and rail — bundling the data, and the class it needs |
 | `1.0.0` | — · Publish | npm publish with provenance. **Not scheduled.** |
-| `1.1.0` | 8 · Annotations | Pins, arrows, callouts, icons |
+| — | 10 · Tool | The web app the library exists to feed |
+
+See [PLAN.md](PLAN.md) for what each of those means and why they are in that
+order.
 
 **Publishing is a decision, not a phase.** Phase 7 was originally "Ship", which
 bundled *being ready to publish* with *publishing*. Those are different things
@@ -708,8 +713,10 @@ everything that has to be true before a `1.0.0` — the snapshot suite, the
 documentation, the written semver policy — and stops. The publish itself waits
 until it is asked for.
 
-Phase numbers 8 and 9 keep their meanings from the entries above, which refer
-to them by number.
+Phase 8 keeps its meaning from the entries above, which refer to it by number,
+and grew to carry the legend, the ocean layer and a brighter palette — each is
+something the tool needs and none is large alone. Routes split out of it because
+that one is gated on acquiring data, not on drawing it.
 
 [Unreleased]: https://github.com/danielefrisanco/neatline/compare/v0.11.0...HEAD
 [0.11.0]: https://github.com/danielefrisanco/neatline/compare/v0.10.0...v0.11.0
