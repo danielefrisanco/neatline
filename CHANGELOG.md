@@ -743,8 +743,9 @@ above is the record of what shipped; this table is only what is left.
 | `1.0.0` | — · Publish | npm publish with provenance. **Not scheduled.** |
 | — | 10 · Tool | The web app the library exists to feed |
 
-See [PLAN.md](PLAN.md) for what each of those means and why they are in that
-order.
+See the [build plan](https://claude.ai/code/artifact/1ad97eac-6e9c-4944-96fb-3e6530d9e83d) for what each of those means and why they are in
+that order. It is the single source for the roadmap; this table is only the
+version ledger.
 
 **Publishing is a decision, not a phase.** Phase 7 was originally "Ship", which
 bundled *being ready to publish* with *publishing*. Those are different things

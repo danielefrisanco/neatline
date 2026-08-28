@@ -16,8 +16,11 @@ node_modules/
 /typefaces/
 /data/
 
-# The build plan, kept next to the code so it is not forgotten.
-# Published at https://claude.ai/code/artifact/1ad97eac-6e9c-4944-96fb-3e6530d9e83d
-# Untracked deliberately: it is a 75 KB single-file page, and the artifact is
-# the canonical copy. PLAN.md carries the tracked summary.
+# The build plan — the single source for the roadmap, kept beside the code so
+# it is not forgotten. Open it in a browser, or read the published copy at
+# https://claude.ai/code/artifact/1ad97eac-6e9c-4944-96fb-3e6530d9e83d
+#
+# Untracked on purpose: the published page is canonical, and a 75 KB single-file
+# HTML page in git produces a diff nobody can read. There is deliberately no
+# second Markdown copy — two plans drift.
 neatline-plan.html
