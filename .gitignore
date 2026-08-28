@@ -1,12 +1,20 @@
 node_modules/
-dist/
-coverage/
 *.tsbuildinfo
 .DS_Store
-themes/
-palettes/
-data/
-typefaces/
+
+# Build output, all of it at the repository root.
+#
+# These need the leading slash. Without it, `themes/` matches a directory of
+# that name at ANY depth — including `src/themes/`, which is where the themes
+# are actually written. That is how five themes, four palettes and five
+# typefaces stayed out of the repository entirely: they were on disk, they
+# built locally, and `git add -A` silently skipped them every time.
+/dist/
+/coverage/
+/themes/
+/palettes/
+/typefaces/
+/data/
 
 # The build plan, kept next to the code so it is not forgotten.
 # Published at https://claude.ai/code/artifact/1ad97eac-6e9c-4944-96fb-3e6530d9e83d
