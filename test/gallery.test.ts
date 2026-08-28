@@ -329,6 +329,185 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       title: "Where we operate",
     },
   ],
+
+  // Ten maps outside Western Europe. Twelve of the entries above are the same
+  // thirteen countries, which proves the themes differ from one another and
+  // very little else: framing, label thinning and political fill all behave
+  // differently on a region that is mostly water, or mostly desert, or sits at
+  // a latitude where the parallels crowd. Each of these is a region the presets
+  // do not cover, and each carries an option the gallery was exercising in only
+  // one place or none.
+
+  // Neighbours somewhere the context is bigger than the subject. In Western
+  // Europe the surrounding countries are peers; here China sits behind the
+  // whole northern edge, so this is the map that shows whether context stays
+  // context.
+  [
+    "south-asia-neighbours",
+    {
+      region: ["IN", "PK", "NP", "BD", "LK", "BT"],
+      projection: "conic-conformal",
+      theme: "atlas",
+      neighbours: true,
+      size: [900, 900],
+      title: "South Asia, with its neighbours",
+    },
+  ],
+  // A region that is mostly sea. The camera is fitted to land, so an
+  // archipelago is the case where it can drift out into open water and frame
+  // nothing at all. Atlas rather than moss: moss grounds its sea in stone
+  // grey-green on purpose, which is right for a walking map of a continent and
+  // washes out where three quarters of the frame is water.
+  [
+    "southeast-asia-cities",
+    {
+      region: ["ID", "MY", "TH", "VN", "PH", "KH", "LA", "MM", "BN", "TL"],
+      projection: "equal-earth",
+      theme: "atlas",
+      size: [1100, 700],
+      placeRank: 2,
+      title: "Southeast Asia",
+    },
+  ],
+  // The gallery had no choropleth in it at all: every data map above encodes
+  // its quantity as height. 0.7 shipped a choropleth that exported as one flat
+  // colour with the whole suite green, which is precisely the failure a file
+  // someone opens is here to catch.
+  //
+  // Somaliland is XS, one of the five features Natural Earth ships with no ISO
+  // code at all. Leaving it out does not leave it blank — it leaves a hole in
+  // the Horn, because Somalia's polygon stops at a border the map is not
+  // drawing. It is in the region and deliberately not in `values`: hatched
+  // instead, which is what hatching is for — the thing that is not a quantity.
+  //
+  // Moss, and not by preference: on sand the lightest bin is #F1E8D5 against a
+  // #F6F1E7 ground, and `--land-edge` is the ground colour exactly, so a
+  // low-value country on a coast has neither a fill nor an outline that
+  // separates it from the sea. Eritrea simply disappeared. Slate is worse.
+  // Moss gives the lightest bin a ground to sit on and draws a real coastline.
+  [
+    "east-africa-choropleth",
+    {
+      region: ["ET", "KE", "TZ", "UG", "RW", "BI", "SS", "SO", "XS", "DJ", "ER"],
+      projection: "equal-earth",
+      theme: "minimal",
+      palette: "moss",
+      size: [900, 900],
+      values: {
+        ET: 126, KE: 55, TZ: 65, UG: 47, RW: 14,
+        BI: 13, SS: 11, SO: 18, DJ: 1.1, ER: 3.7,
+      },
+      bins: 5,
+      stripe: ["XS"],
+      title: "East Africa by population, in millions",
+    },
+  ],
+  // Political fill has to keep neighbours distinct without a palette built for
+  // the region. Sixteen countries in a ring is a harder graph than Europe's.
+  [
+    "middle-east-political",
+    {
+      region: ["TR", "SY", "LB", "IL", "PS", "JO", "IQ", "IR", "SA", "YE", "OM", "AE", "QA", "KW", "EG"],
+      projection: "conic-conformal",
+      theme: "atlas",
+      fill: "political",
+      size: [1000, 800],
+      title: "The Middle East",
+    },
+  ],
+  // High latitude, where the standard parallels have to be chosen from the
+  // region or Norway stretches past recognition.
+  [
+    "nordics-dusk",
+    {
+      region: ["SE", "NO", "FI", "DK", "IS"],
+      projection: "conic-conformal",
+      theme: "minimal",
+      palette: "dusk",
+      size: [1100, 700],
+      title: "The Nordics",
+    },
+  ],
+  // Three countries, two of them narrow and one of them islands — the smallest
+  // region in the gallery that is still more than one country.
+  [
+    "japan-korea-highlight",
+    {
+      region: ["JP", "KR", "KP"],
+      projection: "conic-conformal",
+      theme: "noir",
+      highlight: ["JP"],
+      size: [800, 900],
+      title: "Japan",
+    },
+  ],
+  // Extrusion away from the region it was built on, and over a long thin
+  // country where the side walls are most of what you see.
+  [
+    "southern-cone-prism",
+    {
+      region: ["AR", "CL", "UY", "PY", "BO"],
+      projection: "conic-conformal",
+      theme: "atlas",
+      size: [800, 1000],
+      extrude: { values: { AR: 646, CL: 335, UY: 77, PY: 43, BO: 45 }, height: 120 },
+      title: "The Southern Cone by GDP",
+    },
+  ],
+  // Small islands and nothing else, none large enough to anchor a camera on
+  // its own. Trinidad belongs to the Caribbean and is deliberately not here:
+  // it sits seven degrees south of the rest, so including it empties half the
+  // canvas and pushes its own label off the edge. A region is what frames
+  // together, not what a continent list says.
+  //
+  // 50m, and not for the detail: at 110m the Bahamas simplify down to a few
+  // blobs that New Providence is not one of, so Nassau — a real coordinate
+  // from a separate dataset — is drawn in open sea. Small islands are where a
+  // simplified coastline and an exact point stop agreeing with each other.
+  [
+    "caribbean-islands",
+    {
+      region: ["CU", "HT", "DO", "JM", "BS", "PR"],
+      detail: "50m",
+      projection: "mercator",
+      theme: "minimal",
+      palette: "moss",
+      size: [1100, 600],
+      placeRank: 1,
+      title: "The Caribbean",
+    },
+  ],
+  // The `names` override doing what it shipped for: the same map in the
+  // language the region speaks, without the library carrying a name table.
+  [
+    "south-america-espanol",
+    {
+      region: "south-america",
+      projection: "equal-earth",
+      theme: "minimal",
+      palette: "sand",
+      size: [800, 1000],
+      names: {
+        BR: "Brasil", PE: "Perú", BO: "Bolivia", GF: "Guayana Francesa",
+        SR: "Surinam", FK: "Islas Malvinas",
+      },
+      title: "América del Sur",
+    },
+  ],
+  // Landlocked, and the one map here that Phase 8d is aimed at: with no
+  // coastline in frame, `--bg` is not the sea — it is showing through every
+  // gap between countries that the region does not draw. This is the before
+  // shot for the ocean layer.
+  [
+    "central-asia-inland",
+    {
+      region: ["KZ", "UZ", "TM", "TJ", "KG", "AF", "MN"],
+      projection: "conic-conformal",
+      theme: "contrast",
+      size: [1100, 700],
+      title: "Central Asia",
+    },
+  ],
 ];
 
 describe("gallery", () => {

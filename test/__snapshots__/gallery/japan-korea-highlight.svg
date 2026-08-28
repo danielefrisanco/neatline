@@ -1,0 +1,286 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900" width="800" height="900" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1j8vhym" role="img" aria-label="Japan">
+  <title>Japan</title>
+  <style>
+    .mp.mp-t-1j8vhym {
+      --bg: #0B0E11;
+      --land: #232B33;
+      --land-edge: #3E4A55;
+      --land-edge-width: 0.6;
+      --border: #7C8894;
+      --border-width: 0.7;
+      --border-dash: none;
+      --accent: #D8A657;
+      --accent-edge: #0B0E11;
+      --bin-1: #262E36;
+      --bin-2: #3D3826;
+      --bin-3: #625432;
+      --bin-4: #96793C;
+      --bin-5: #D8A657;
+      --fill-1: #232B33;
+      --fill-2: #2E3942;
+      --fill-3: #394650;
+      --fill-4: #44525E;
+      --fill-5: #4F5F6C;
+      --fill-6: #5A6C7A;
+      --prism-side: #10161B;
+      --accent-side: #8F6D38;
+      --place: #E4E7EA;
+      --ink: #E4E7EA;
+      --ink-muted: #7A848F;
+      --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      --label-size: 13;
+      --place-label-size: 11;
+      --label-track: 0.3;
+      --label-weight: 500;
+      --label-advance: 0.58;
+      --label-halo: #0B0E11;
+      --label-halo-width: 2.6;
+      --stripe: #6C7681;
+      --stripe-width: 1.2;
+      --water: #3A6379;
+      --water-width: 0.9;
+      --graticule: #232A31;
+      --graticule-width: 0.4;
+      --equator: #39434C;
+      --desert: #2A2620;
+      --forest: #1E2A22;
+      --mountain: #262A2E;
+      --glacier: #2E363C;
+      --sea-ink: #5E7386;
+      --road: #8A6A33;
+      --neighbour: #171E25;
+      --anno: #D8A657;
+      --anno-ink: #0B0E11;
+      --furniture-ink: #7A848F;
+    }
+    .mp.mp-t-1j8vhym .mp-bg {
+      fill: var(--bg);
+    }
+    .mp.mp-t-1j8vhym .mp-neighbour {
+      fill: var(--neighbour);
+      stroke: none;
+    }
+    .mp.mp-t-1j8vhym .mp-country {
+      fill: var(--land);
+      stroke: var(--land-edge);
+      stroke-width: var(--land-edge-width);
+      stroke-linejoin: round;
+    }
+    .mp.mp-t-1j8vhym .mp-country[data-bin="1"] {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-1j8vhym .mp-country[data-bin="2"] {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-1j8vhym .mp-country[data-bin="3"] {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-1j8vhym .mp-country[data-bin="4"] {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-1j8vhym .mp-country[data-bin="5"] {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-1j8vhym .mp-country[data-fill="1"] {
+      fill: var(--fill-1);
+    }
+    .mp.mp-t-1j8vhym .mp-country[data-fill="2"] {
+      fill: var(--fill-2);
+    }
+    .mp.mp-t-1j8vhym .mp-country[data-fill="3"] {
+      fill: var(--fill-3);
+    }
+    .mp.mp-t-1j8vhym .mp-country[data-fill="4"] {
+      fill: var(--fill-4);
+    }
+    .mp.mp-t-1j8vhym .mp-country[data-fill="5"] {
+      fill: var(--fill-5);
+    }
+    .mp.mp-t-1j8vhym .mp-country[data-fill="6"] {
+      fill: var(--fill-6);
+    }
+    .mp.mp-t-1j8vhym .mp-country.is-highlighted {
+      fill: var(--accent);
+      stroke: var(--accent-edge);
+    }
+    .mp.mp-t-1j8vhym .mp-water[data-kind="lake"] {
+      fill: var(--water);
+      stroke: none;
+    }
+    .mp.mp-t-1j8vhym .mp-water[data-kind="river"] {
+      fill: none;
+      stroke: var(--water);
+      stroke-width: var(--water-width);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .mp.mp-t-1j8vhym .mp-border {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: var(--border-width);
+      stroke-dasharray: var(--border-dash);
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+    .mp.mp-t-1j8vhym .mp-road {
+      fill: none;
+      stroke: var(--road);
+    }
+    .mp.mp-t-1j8vhym .mp-place {
+      fill: var(--place);
+      stroke: none;
+    }
+    .mp.mp-t-1j8vhym .mp-prism-top {
+      fill: var(--land);
+      stroke: var(--land-edge);
+      stroke-width: var(--land-edge-width);
+    }
+    .mp.mp-t-1j8vhym .mp-prism-side {
+      fill: var(--prism-side);
+      stroke: none;
+    }
+    .mp.mp-t-1j8vhym .mp-prism-edge {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: var(--border-width);
+      stroke-dasharray: var(--border-dash);
+    }
+    .mp.mp-t-1j8vhym .mp-prism[data-bin="1"] .mp-prism-top {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-1j8vhym .mp-prism[data-bin="2"] .mp-prism-top {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-1j8vhym .mp-prism[data-bin="3"] .mp-prism-top {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-1j8vhym .mp-prism[data-bin="4"] .mp-prism-top {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-1j8vhym .mp-prism[data-bin="5"] .mp-prism-top {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-1j8vhym .mp-prism[data-fill="1"] .mp-prism-top {
+      fill: var(--fill-1);
+    }
+    .mp.mp-t-1j8vhym .mp-prism[data-fill="2"] .mp-prism-top {
+      fill: var(--fill-2);
+    }
+    .mp.mp-t-1j8vhym .mp-prism[data-fill="3"] .mp-prism-top {
+      fill: var(--fill-3);
+    }
+    .mp.mp-t-1j8vhym .mp-prism[data-fill="4"] .mp-prism-top {
+      fill: var(--fill-4);
+    }
+    .mp.mp-t-1j8vhym .mp-prism[data-fill="5"] .mp-prism-top {
+      fill: var(--fill-5);
+    }
+    .mp.mp-t-1j8vhym .mp-prism[data-fill="6"] .mp-prism-top {
+      fill: var(--fill-6);
+    }
+    .mp.mp-t-1j8vhym .mp-prism.is-highlighted .mp-prism-top {
+      fill: var(--accent);
+    }
+    .mp.mp-t-1j8vhym .mp-prism.is-highlighted .mp-prism-side {
+      fill: var(--accent-side);
+    }
+    .mp.mp-t-1j8vhym .mp-hatch {
+      fill: url(#mp-stripe);
+      stroke: none;
+    }
+    .mp.mp-t-1j8vhym .mp-hatch-line {
+      fill: none;
+      stroke: var(--stripe);
+      stroke-width: var(--stripe-width);
+    }
+    .mp.mp-t-1j8vhym .mp-label {
+      fill: var(--ink);
+      font-family: var(--font);
+      font-size: var(--label-size);
+      font-weight: var(--label-weight);
+      letter-spacing: var(--label-track);
+      stroke: var(--label-halo);
+      stroke-width: var(--label-halo-width);
+      stroke-linejoin: round;
+      paint-order: stroke;
+    }
+    .mp.mp-t-1j8vhym .mp-label[data-kind="place"] {
+      fill: var(--ink-muted);
+      font-size: var(--place-label-size);
+    }
+    .mp.mp-t-1j8vhym .mp-label.is-highlighted {
+      font-weight: 700;
+    }
+    .mp.mp-t-1j8vhym .mp-label[data-fit="0"] {
+      display: none;
+    }
+    @media (prefers-color-scheme: dark) {
+      .mp.mp-t-1j8vhym {
+        --bg: #050709;
+        --land: #1B222A;
+        --land-edge: #333E48;
+        --border: #6B7681;
+        --place: #D6DADE;
+        --ink: #D6DADE;
+        --label-halo: #050709;
+        --neighbour: #10161C;
+        --prism-side: #0A0F13;
+        --accent-side: #7C5E30;
+        --stripe: #5C6570;
+      }
+    }
+  </style>
+  <defs class="mp-defs">
+    <pattern id="mp-stripe" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path class="mp-hatch-line" d="M0,0 V7" fill="none" stroke="#6C7681" stroke-width="1.2"/>
+    </pattern>
+  </defs>
+  <rect class="mp-bg" x="0" y="0" width="800" height="900" fill="#0B0E11"/>
+  <g class="mp-layer mp-graticule"/>
+  <g class="mp-layer mp-neighbours"/>
+  <g class="mp-layer mp-land">
+    <path class="mp-country" data-iso="KP" data-name="North Korea" d="M264.4,267.3L264.4,267.3L264.4,267.3ZM259.9,258.8L264.4,267.3L251.2,263.8L235.2,279.1L223.7,294.6L223.1,328.6L204.1,337.9L197.1,345.9L182.7,358.9L158.1,365L141.4,376.4L138.5,396.8L133.9,401.6L147.9,410.4L167.1,432.6L161,443.7L145.1,445.6L118.6,445.8L102.4,465.7L85.9,462.5L83.2,466.6L66,456L60.6,464.3L49.4,467.1L48.9,458.1L39.8,452.7L30.6,444.2L43,424.6L52.3,420L49.9,411.1L61.9,386.7L60.3,378.8L39.6,371.3L24,356.8L56.7,329.9L98.5,308.5L125.8,277.3L141.2,293.5L171.7,297.6L168,272.3L223.4,255.5L238.8,229.8Z" fill="#232B33" stroke="#3E4A55" stroke-width="0.6" stroke-linejoin="round">
+      <title>North Korea</title>
+    </path>
+    <path class="mp-country" data-iso="KR" data-name="South Korea" d="M83.2,466.6L85.9,462.5L102.4,465.7L118.6,445.8L145.1,445.6L161,443.7L167.1,432.6L195.6,490.4L202.9,521.6L200.1,576.1L184,601.2L148.2,607.8L115.7,625L80.3,626.1L78.3,599.9L88.6,565.2L76.5,514.6L105.2,509.3Z" fill="#232B33" stroke="#3E4A55" stroke-width="0.6" stroke-linejoin="round">
+      <title>South Korea</title>
+    </path>
+    <path class="mp-country is-highlighted" data-iso="JP" data-name="Japan" d="M664.6,404.7L634.1,454.6L637.8,503.3L626,541.9L634.1,565.1L616.1,599.6L567.6,624.4L499.3,629.7L444.2,684.8L417.7,666.7L415.9,631.3L347.9,641.2L300.9,662.5L254.9,661.7L293.7,698.1L264,777.9L236.9,796.7L218,777.3L230.2,735L205.5,719.8L191.2,686.4L229.4,673.9L251.3,645.1L291.6,622L320.8,590.6L397.7,577.5L438.8,587.1L477.5,502.4L503.2,524.4L556.7,475.2L577.1,455.9L597.1,396.9L588,344.2L601.4,313.4L638.5,302.4L662.9,366.4ZM740.5,170.5L762.3,147.9L776,199.9L726.3,218.4L700.2,268.2L642.7,240.3L627.2,293.3L588,296.4L580.5,249.7L595.7,212.3L632.2,207.3L637.5,141L644.7,103.3L688.2,149.4L715.6,162.8ZM308.8,683.6L331.4,655.9L353.6,661.7L370,642L398.7,652.4L403.6,668.7L381.3,697.3L365.1,682L344.6,692.7L333.6,720.3L307.9,706.1Z" fill="#D8A657" stroke="#0B0E11" stroke-width="0.6" stroke-linejoin="round">
+      <title>Japan</title>
+    </path>
+  </g>
+  <g class="mp-layer mp-terrain"/>
+  <g class="mp-layer mp-hydro"/>
+  <g class="mp-layer mp-borders" fill="none">
+    <path class="mp-border" data-kind="intl" d="M167.1,432.6L161,443.7L145.1,445.6L118.6,445.8L102.4,465.7L85.9,462.5L83.2,466.6" fill="none" stroke="#7C8894" stroke-width="0.7" stroke-dasharray="none" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <g class="mp-layer mp-roads"/>
+  <g class="mp-layer mp-places">
+    <circle class="mp-place" data-name="Tokyo" data-iso="JP" data-rank="1" data-pop="35676000" cx="595.266" cy="574.734" r="3.2" fill="#E4E7EA" stroke="none">
+      <title>Tokyo</title>
+    </circle>
+    <circle class="mp-place" data-name="Osaka" data-iso="JP" data-rank="1" data-pop="11294000" cx="432.436" cy="626.702" r="3.2" fill="#E4E7EA" stroke="none">
+      <title>Osaka</title>
+    </circle>
+    <circle class="mp-place" data-name="Seoul" data-iso="KR" data-rank="1" data-pop="9796000" cx="113.108" cy="477.948" r="3.2" fill="#E4E7EA" stroke="none">
+      <title>Seoul</title>
+    </circle>
+    <circle class="mp-place" data-name="Pyongyang" data-iso="KP" data-rank="1" data-pop="3300000" cx="73.437" cy="405.274" r="3.2" fill="#E4E7EA" stroke="none">
+      <title>Pyongyang</title>
+    </circle>
+    <circle class="mp-place" data-name="Kyoto" data-iso="JP" data-rank="2" data-pop="1805000" cx="441.805" cy="610.485" r="2.2" fill="#E4E7EA" stroke="none">
+      <title>Kyoto</title>
+    </circle>
+  </g>
+  <g class="mp-layer mp-labels">
+    <text class="mp-label" data-kind="country" data-iso="KP" data-rank="2" x="128.3" y="357.6" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">North Korea</text>
+    <text class="mp-label" data-kind="country" data-iso="KR" data-rank="2" x="139.6" y="534.7" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">South Korea</text>
+    <text class="mp-label is-highlighted" data-kind="country" data-iso="JP" data-rank="1" x="477.7" y="563.9" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="700" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Japan</text>
+    <text class="mp-label" data-kind="place" data-iso="JP" data-rank="1" data-capital="" x="601.5" y="574.7" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Tokyo</text>
+    <text class="mp-label" data-kind="place" data-iso="JP" data-rank="1" x="438.6" y="626.7" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Osaka</text>
+    <text class="mp-label" data-kind="place" data-iso="KR" data-rank="1" data-capital="" x="119.3" y="477.9" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Seoul</text>
+    <text class="mp-label" data-kind="place" data-iso="KP" data-rank="1" data-capital="" x="79.6" y="405.3" text-anchor="start" dominant-baseline="central" fill="#7A848F" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">Pyongyang</text>
+  </g>
+  <g class="mp-layer mp-annotations"/>
+  <g class="mp-layer mp-furniture"/>
+</svg>

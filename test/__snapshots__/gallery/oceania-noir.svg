@@ -305,11 +305,11 @@
       <tspan x="787.5" dy="-7.1">New</tspan>
       <tspan x="787.5" dy="14.3">Caledonia</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="SB" data-rank="3" x="713.1" y="124.5" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke" display="none">
+    <text class="mp-label" data-kind="country" data-iso="SB" data-rank="2" x="713.1" y="124.5" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">
       <tspan x="713.1" dy="-7.1">Solomon</tspan>
       <tspan x="713.1" dy="14.3">Is.</tspan>
     </text>
-    <text class="mp-label" data-kind="country" data-iso="NZ" data-rank="3" x="803.9" y="754.1" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">
+    <text class="mp-label" data-kind="country" data-iso="NZ" data-rank="2" x="803.9" y="754.1" text-anchor="middle" dominant-baseline="central" fill="#E4E7EA" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0.3" stroke="#0B0E11" stroke-width="2.6" stroke-linejoin="round" paint-order="stroke">
       <tspan x="803.9" dy="-7.1">New</tspan>
       <tspan x="803.9" dy="14.3">Zealand</tspan>
     </text>

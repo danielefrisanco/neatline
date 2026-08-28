@@ -199,6 +199,31 @@ function spanAt(ring: Ring, [x, y]: readonly [number, number]): number {
   return 0;
 }
 
+/**
+ * How much room the name has if the whole country counts, not just the shape
+ * under the anchor — islands and the water between them included.
+ *
+ * Measured to the nearer side, exactly as `spanAt` does, so the two numbers
+ * mean the same thing and can be compared.
+ */
+function reachAt(
+  rings: readonly Ring[],
+  [x]: readonly [number, number],
+  canvasWidth: number,
+): number {
+  let minX = Infinity;
+  let maxX = -Infinity;
+  for (const ring of rings) {
+    const [left, , right] = ringBox(ring);
+    if (left < minX) minX = left;
+    if (right > maxX) maxX = right;
+  }
+  minX = Math.max(minX, 0);
+  maxX = Math.min(maxX, canvasWidth);
+  if (!(maxX > minX) || x < minX || x > maxX) return 0;
+  return 2 * Math.min(x - minX, maxX - x);
+}
+
 interface Anchor {
   readonly point: [number, number];
   readonly span: number;
@@ -250,7 +275,22 @@ function anchorOf(
 
   const deepest = interior(largest);
   const span = spanAt(largest, deepest);
-  return span > settled.span ? { point: deepest, span, ring: largest } : settled;
+  const best = span > settled.span ? { point: deepest, span, ring: largest } : settled;
+  if (best.span >= needed || considered.length < 2) return best;
+
+  // A scattered country is not a small one, and the fit test cannot tell them
+  // apart: it measures a name against the shape beneath it, so "Philippines"
+  // is hidden because no single island is as wide as the word — while every
+  // printed atlas sets it across the whole group, over the water between the
+  // islands, because the group is the thing being named.
+  //
+  // So when a country is more than one piece and no piece can hold its name,
+  // the room it has is the reach of the group. The anchor does not move: it
+  // stays on the largest island, and the name overhangs from there the way
+  // "Portugal" overhangs into the Atlantic. Only the measurement changes, so
+  // this can reveal a name and can never relocate one.
+  const reach = reachAt(considered, best.point, width);
+  return reach > best.span ? { ...best, span: reach } : best;
 }
 
 interface Lines {

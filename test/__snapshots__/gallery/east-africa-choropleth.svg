@@ -1,0 +1,402 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" width="900" height="900" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1qbeo77" role="img" aria-label="East Africa by population, in millions">
+  <title>East Africa by population, in millions</title>
+  <style>
+    .mp.mp-t-1qbeo77 {
+      --bg: transparent;
+      --land: #D8D8D2;
+      --land-edge: #FFFFFF;
+      --land-edge-width: 0.5;
+      --border: #94948C;
+      --border-width: 0.75;
+      --border-dash: none;
+      --accent: #C2482F;
+      --accent-edge: #FFFFFF;
+      --bin-1: #EDEDE8;
+      --bin-2: #C6CFC5;
+      --bin-3: #9CAFA3;
+      --bin-4: #6E857A;
+      --bin-5: #435850;
+      --fill-1: #B9C7B4;
+      --fill-2: #DFCBA8;
+      --fill-3: #A9BECF;
+      --fill-4: #D3AFB4;
+      --fill-5: #C9C49A;
+      --fill-6: #B6ADC6;
+      --prism-side: #29352F;
+      --accent-side: #8A3320;
+      --place: #2B2B29;
+      --ink: #2B2B29;
+      --ink-muted: #80807A;
+      --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      --label-size: 13;
+      --place-label-size: 11;
+      --label-track: 0;
+      --label-weight: 500;
+      --label-advance: 0.58;
+      --label-halo: #FFFFFF;
+      --label-halo-width: 2.4;
+      --stripe: #6E6E68;
+      --stripe-width: 1.6;
+      --water: #8FB0C4;
+      --water-width: 1.1;
+      --graticule: #C9C9C3;
+      --graticule-width: 0.4;
+      --equator: #A8A8A0;
+      --desert: #E8DFC4;
+      --forest: #B9C9B0;
+      --mountain: #CFC6B6;
+      --glacier: #F2F4F5;
+      --sea-ink: #7E96A6;
+      --road: #B08A3E;
+      --neighbour: #F0F0EE;
+      --anno: #C2482F;
+      --anno-ink: #FFFFFF;
+      --furniture-ink: #80807A;
+    }
+    .mp.mp-t-1qbeo77 .mp-bg {
+      fill: var(--bg);
+    }
+    .mp.mp-t-1qbeo77 .mp-neighbour {
+      fill: var(--neighbour);
+      stroke: none;
+    }
+    .mp.mp-t-1qbeo77 .mp-country {
+      fill: var(--land);
+      stroke: var(--land-edge);
+      stroke-width: var(--land-edge-width);
+      stroke-linejoin: round;
+    }
+    .mp.mp-t-1qbeo77 .mp-country[data-bin="1"] {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-1qbeo77 .mp-country[data-bin="2"] {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-1qbeo77 .mp-country[data-bin="3"] {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-1qbeo77 .mp-country[data-bin="4"] {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-1qbeo77 .mp-country[data-bin="5"] {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-1qbeo77 .mp-country[data-fill="1"] {
+      fill: var(--fill-1);
+    }
+    .mp.mp-t-1qbeo77 .mp-country[data-fill="2"] {
+      fill: var(--fill-2);
+    }
+    .mp.mp-t-1qbeo77 .mp-country[data-fill="3"] {
+      fill: var(--fill-3);
+    }
+    .mp.mp-t-1qbeo77 .mp-country[data-fill="4"] {
+      fill: var(--fill-4);
+    }
+    .mp.mp-t-1qbeo77 .mp-country[data-fill="5"] {
+      fill: var(--fill-5);
+    }
+    .mp.mp-t-1qbeo77 .mp-country[data-fill="6"] {
+      fill: var(--fill-6);
+    }
+    .mp.mp-t-1qbeo77 .mp-country.is-highlighted {
+      fill: var(--accent);
+      stroke: var(--accent-edge);
+    }
+    .mp.mp-t-1qbeo77 .mp-water[data-kind="lake"] {
+      fill: var(--water);
+      stroke: none;
+    }
+    .mp.mp-t-1qbeo77 .mp-water[data-kind="river"] {
+      fill: none;
+      stroke: var(--water);
+      stroke-width: var(--water-width);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .mp.mp-t-1qbeo77 .mp-border {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: var(--border-width);
+      stroke-dasharray: var(--border-dash);
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+    .mp.mp-t-1qbeo77 .mp-road {
+      fill: none;
+      stroke: var(--road);
+    }
+    .mp.mp-t-1qbeo77 .mp-place {
+      fill: var(--place);
+      stroke: none;
+    }
+    .mp.mp-t-1qbeo77 .mp-prism-top {
+      fill: var(--land);
+      stroke: var(--land-edge);
+      stroke-width: var(--land-edge-width);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism-side {
+      fill: var(--prism-side);
+      stroke: none;
+    }
+    .mp.mp-t-1qbeo77 .mp-prism-edge {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: var(--border-width);
+      stroke-dasharray: var(--border-dash);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism[data-bin="1"] .mp-prism-top {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism[data-bin="2"] .mp-prism-top {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism[data-bin="3"] .mp-prism-top {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism[data-bin="4"] .mp-prism-top {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism[data-bin="5"] .mp-prism-top {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism[data-fill="1"] .mp-prism-top {
+      fill: var(--fill-1);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism[data-fill="2"] .mp-prism-top {
+      fill: var(--fill-2);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism[data-fill="3"] .mp-prism-top {
+      fill: var(--fill-3);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism[data-fill="4"] .mp-prism-top {
+      fill: var(--fill-4);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism[data-fill="5"] .mp-prism-top {
+      fill: var(--fill-5);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism[data-fill="6"] .mp-prism-top {
+      fill: var(--fill-6);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism.is-highlighted .mp-prism-top {
+      fill: var(--accent);
+    }
+    .mp.mp-t-1qbeo77 .mp-prism.is-highlighted .mp-prism-side {
+      fill: var(--accent-side);
+    }
+    .mp.mp-t-1qbeo77 .mp-hatch {
+      fill: url(#mp-stripe);
+      stroke: none;
+    }
+    .mp.mp-t-1qbeo77 .mp-hatch-line {
+      fill: none;
+      stroke: var(--stripe);
+      stroke-width: var(--stripe-width);
+    }
+    .mp.mp-t-1qbeo77 .mp-label {
+      fill: var(--ink);
+      font-family: var(--font);
+      font-size: var(--label-size);
+      font-weight: var(--label-weight);
+      letter-spacing: var(--label-track);
+      stroke: var(--label-halo);
+      stroke-width: var(--label-halo-width);
+      stroke-linejoin: round;
+      paint-order: stroke;
+    }
+    .mp.mp-t-1qbeo77 .mp-label[data-kind="place"] {
+      fill: var(--ink-muted);
+      font-size: var(--place-label-size);
+    }
+    .mp.mp-t-1qbeo77 .mp-label.is-highlighted {
+      font-weight: 700;
+    }
+    .mp.mp-t-1qbeo77 .mp-label[data-fit="0"] {
+      display: none;
+    }
+    @media (prefers-color-scheme: dark) {
+      .mp.mp-t-1qbeo77 {
+        --land: #2E3134;
+        --land-edge: #16181A;
+        --border: #6E747A;
+        --accent: #E2694A;
+        --accent-edge: #16181A;
+        --bin-1: #24272A;
+        --bin-2: #2F3A36;
+        --bin-3: #3F5049;
+        --bin-4: #55685E;
+        --bin-5: #7A9184;
+        --fill-1: #364039;
+        --fill-2: #453D2F;
+        --fill-3: #2F3B45;
+        --fill-4: #443338;
+        --fill-5: #41402E;
+        --fill-6: #383345;
+        --prism-side: #14181A;
+        --accent-side: #9C4832;
+        --place: #DCDCD6;
+        --ink: #DCDCD6;
+        --ink-muted: #85898D;
+        --label-halo: #1A1D1F;
+        --stripe: #9A9A94;
+        --water: #4C7A96;
+        --neighbour: #202325;
+        --anno: #E2694A;
+        --anno-ink: #16181A;
+        --furniture-ink: #85898D;
+      }
+    }
+    .mp.mp-t-1qbeo77 {
+      --bg: #D9DCD0;
+      --land: #EDEBDD;
+      --land-edge: #B7B8A4;
+      --border: #5E6350;
+      --accent: #A8582C;
+      --accent-edge: #EDEBDD;
+      --bin-1: #F1EFE2;
+      --bin-2: #D6DCBE;
+      --bin-3: #AFC195;
+      --bin-4: #7E9A6C;
+      --bin-5: #4C6B45;
+      --fill-1: #E3E4C8;
+      --fill-2: #C9D9C2;
+      --fill-3: #EBD9BE;
+      --fill-4: #D8C9D2;
+      --fill-5: #E7CFC0;
+      --fill-6: #C2D2D6;
+      --prism-side: #3A4232;
+      --accent-side: #74381A;
+      --place: #33372A;
+      --ink: #33372A;
+      --ink-muted: #6E735E;
+      --label-halo: #EDEBDD;
+      --stripe: #6E735E;
+      --water: #6E93A0;
+      --graticule: #C3C6B6;
+      --equator: #9BA08A;
+      --desert: #E8DDBC;
+      --forest: #BCCFAE;
+      --mountain: #D5CDB8;
+      --glacier: #EEF3F2;
+      --sea-ink: #62808C;
+      --road: #A8582C;
+      --neighbour: #E2E1D2;
+      --anno: #A8582C;
+      --anno-ink: #EDEBDD;
+      --furniture-ink: #6E735E;
+    }
+  </style>
+  <defs class="mp-defs">
+    <clipPath id="mp-land-clip">
+      <path d="M373.4,566.4L377,569.6L454.7,628.3L456.1,645.1L486.9,673.8L477,709.3L478.2,725.6L491.9,736.2L492.5,743.6L486.6,761L487.8,769.7L486.4,783.4L493.8,801.4L502.6,829.6L510.3,835.9L493.3,852.5L470.2,863.6L457.4,863.1L449.8,871.7L435.1,872.4L429.5,876L404,868L388,870.3L382,831.4L374.7,818.1L370.4,810.1L349.5,804.8L337.4,796.2L323.8,791.3L315.3,786.5L306.3,779.2L294.6,743L282.1,727L277.8,710.2L279.8,695.3L275.9,668.8L284.7,667.4L292.5,657L300.7,641.9L306,635.9L305.8,626.5L301.1,620L299.9,608.6L306,605L307.3,588L298.8,571.7L306.3,568.3L329.8,568.6ZM538,587.5L525.3,563.7L525,458.6L543.7,425.9L549.5,416.8L563.2,416.3L582.2,395.9L610,394.7L669.8,308.4L684.5,284.4L693.9,266.8L693.7,251.9L693.3,223L693.2,211.2L693.4,210.8L700.2,210.2L709.9,205.9L721.1,203.1L731,193.3L739,193.2L739.6,201.1L738,217.7L738.3,232.7L733.9,243.1L728.4,274.1L718.5,306.1L705.6,342.8L687.7,385L669.6,417.2L644.5,456.5L623.2,479.9L591.2,508.6L571.2,530.5L547.8,565.5L542.8,580.7ZM486.9,673.8L456.1,645.1L454.7,628.3L377,569.6L373.4,566.4L373.2,535.8L379.3,524.1L389.9,505L397.7,483.9L388.2,450.8L385.8,436.4L375.7,416.3L388.8,399.2L403.3,380.2L414.5,385L414.5,401.2L421.8,410.6L436.7,410.6L463.8,435.1L470.5,435.4L475.5,434.6L480.3,437.9L494.5,440.2L500.8,428.2L520.4,416.1L529,425.9L543.7,425.9L525,458.6L525.3,563.7L538,587.5L522.9,599.1L517.7,611.1L509.6,613.2L506.5,633.5L499.7,645.2L495.5,664.3ZM299.9,608.6L301.1,620L305.8,626.5L306,635.9L300.7,641.9L292.5,657L284.7,667.4L275.9,668.8L274.4,634L269,620.9L282,623.1L288.5,606.7ZM427.9,125L425.6,113.7L434.8,72.1L436.9,53.3L443.5,44.7L458.9,40L469.5,24L481.7,56.6L487.6,82.5L499.2,96.3L528.1,123.1L539.9,139.2L551.5,155.6L558.2,165.4L568.6,174L562.3,180.9L553.2,178.5L545.9,169.3L537.1,152.6L527.7,143.4L522.2,133.6L503.8,122.2L489.3,121.9L484.2,116L471.8,122.6L459,109.8L452.4,130.9ZM669.8,308.4L610,394.7L582.2,395.9L563.2,416.3L549.5,416.8L543.7,425.9L529,425.9L520.4,416.1L500.8,428.2L494.5,440.2L480.3,437.9L475.5,434.6L470.5,435.4L463.8,435.1L436.7,410.6L421.8,410.6L414.5,401.2L414.5,385L403.3,380.2L390.8,348.8L381,342.2L377.4,330.7L366.6,316.7L353.5,314.6L360.8,298.3L372.1,297.6L375.4,288.8L375.1,263L381.5,233.1L391.6,225L393.8,213.4L403,191.6L415.8,177.5L424.4,149.4L427.9,125L452.4,130.9L459,109.8L471.8,122.6L484.2,116L489.3,121.9L503.8,122.2L522.2,133.6L527.7,143.4L537.1,152.6L545.9,169.3L553.2,178.5L545.8,191.1L538.7,204.4L540.4,212.3L540.8,221L552.7,221.5L557.8,219.5L562.5,224.6L557.9,234.7L565.9,250.5L573.8,264.3L582,274.5L652,308.6ZM553.2,178.5L562.3,180.9L568.6,174L573.7,182.8L573.1,194.6L561.1,201.5L570.2,209.3L562.5,224.6L557.8,219.5L552.7,221.5L540.8,221L540.4,212.3L538.7,204.4L545.8,191.1ZM693.4,210.8L693.2,211.2L693.3,223L693.7,251.9L693.9,266.8L684.5,284.4L669.8,308.4L652,308.6L582,274.5L573.8,264.3L565.9,250.5L557.9,234.7L562.5,224.6L570.2,209.3L577.2,214.5L581.4,226.4L591.1,238.4L601.6,238.5L621.6,231.1L644.7,227.8L663.3,218.9L673.8,217L681.3,211.7ZM373.4,566.4L329.8,568.6L306.3,568.3L298.8,571.7L286,580.6L280.8,577.7L280.9,555.9L285.9,544.9L287.1,521.7L291.7,508.3L299.8,493.3L308.1,485.6L315,475.3L306.4,471.4L307.7,437.7L316.6,429.8L330.2,436.3L347.4,429.6L362.5,429.6L375.7,416.3L385.8,436.4L388.2,450.8L397.7,483.9L389.9,505L379.3,524.1L373.2,535.8ZM298.8,571.7L307.3,588L306,605L299.9,608.6L288.5,606.7L282,623.1L269,620.9L271,605.1L273.9,602.9L274.6,585.7L280.8,577.7L286,580.6ZM307.7,437.7L289,418.5L284,406.2L272,412.3L262.1,410.4L256.3,415.3L246.8,411.8L233.9,388L230.6,378.9L214.7,367.5L209.4,350.2L200.6,337.8L186.4,322.8L186.3,313.5L174.8,301.9L160.4,290.7L167,287.5L174.3,282.1L180.2,256.5L186.2,243.2L201.5,239.3L205.1,247.2L215.9,263.9L221.7,266.4L229.4,261.5L244.8,262.4L247.6,268.4L268.8,268.4L269.6,262.4L280.6,257L282.9,248.7L291,242.8L308.7,259.5L319.7,256.5L330.4,235.9L342.1,220.2L340.5,203L335.4,194.7L348.2,193.2L349.7,186.9L359.5,188.8L356.8,209.9L359.3,230.5L370.2,241.8L372.7,251.6L372.2,265.9L375.2,266.5L375.4,288.8L372.1,297.6L360.8,298.3L353.5,314.6L366.6,316.7L377.4,330.7L381,342.2L390.8,348.8L403.3,380.2L388.8,399.2L375.7,416.3L362.5,429.6L347.4,429.6L330.2,436.3L316.6,429.8Z"/>
+    </clipPath>
+    <pattern id="mp-stripe" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path class="mp-hatch-line" d="M0,0 V7" fill="none" stroke="#6E735E" stroke-width="1.6"/>
+    </pattern>
+  </defs>
+  <rect class="mp-bg" x="0" y="0" width="900" height="900" fill="#D9DCD0"/>
+  <g class="mp-layer mp-graticule"/>
+  <g class="mp-layer mp-neighbours"/>
+  <g class="mp-layer mp-land">
+    <path class="mp-country" data-iso="TZ" data-name="Tanzania" data-bin="5" data-value="65" d="M373.4,566.4L377,569.6L454.7,628.3L456.1,645.1L486.9,673.8L477,709.3L478.2,725.6L491.9,736.2L492.5,743.6L486.6,761L487.8,769.7L486.4,783.4L493.8,801.4L502.6,829.6L510.3,835.9L493.3,852.5L470.2,863.6L457.4,863.1L449.8,871.7L435.1,872.4L429.5,876L404,868L388,870.3L382,831.4L374.7,818.1L370.4,810.1L349.5,804.8L337.4,796.2L323.8,791.3L315.3,786.5L306.3,779.2L294.6,743L282.1,727L277.8,710.2L279.8,695.3L275.9,668.8L284.7,667.4L292.5,657L300.7,641.9L306,635.9L305.8,626.5L301.1,620L299.9,608.6L306,605L307.3,588L298.8,571.7L306.3,568.3L329.8,568.6Z" fill="#4C6B45" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Tanzania</title>
+    </path>
+    <path class="mp-country" data-iso="SO" data-name="Somalia" data-bin="3" data-value="18" d="M538,587.5L525.3,563.7L525,458.6L543.7,425.9L549.5,416.8L563.2,416.3L582.2,395.9L610,394.7L669.8,308.4L684.5,284.4L693.9,266.8L693.7,251.9L693.3,223L693.2,211.2L693.4,210.8L700.2,210.2L709.9,205.9L721.1,203.1L731,193.3L739,193.2L739.6,201.1L738,217.7L738.3,232.7L733.9,243.1L728.4,274.1L718.5,306.1L705.6,342.8L687.7,385L669.6,417.2L644.5,456.5L623.2,479.9L591.2,508.6L571.2,530.5L547.8,565.5L542.8,580.7Z" fill="#AFC195" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Somalia</title>
+    </path>
+    <path class="mp-country" data-iso="KE" data-name="Kenya" data-bin="4" data-value="55" d="M486.9,673.8L456.1,645.1L454.7,628.3L377,569.6L373.4,566.4L373.2,535.8L379.3,524.1L389.9,505L397.7,483.9L388.2,450.8L385.8,436.4L375.7,416.3L388.8,399.2L403.3,380.2L414.5,385L414.5,401.2L421.8,410.6L436.7,410.6L463.8,435.1L470.5,435.4L475.5,434.6L480.3,437.9L494.5,440.2L500.8,428.2L520.4,416.1L529,425.9L543.7,425.9L525,458.6L525.3,563.7L538,587.5L522.9,599.1L517.7,611.1L509.6,613.2L506.5,633.5L499.7,645.2L495.5,664.3Z" fill="#7E9A6C" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Kenya</title>
+    </path>
+    <path class="mp-country" data-iso="BI" data-name="Burundi" data-bin="2" data-value="13" d="M299.9,608.6L301.1,620L305.8,626.5L306,635.9L300.7,641.9L292.5,657L284.7,667.4L275.9,668.8L274.4,634L269,620.9L282,623.1L288.5,606.7Z" fill="#D6DCBE" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Burundi</title>
+    </path>
+    <path class="mp-country" data-iso="ER" data-name="Eritrea" data-bin="1" data-value="3.7" d="M427.9,125L425.6,113.7L434.8,72.1L436.9,53.3L443.5,44.7L458.9,40L469.5,24L481.7,56.6L487.6,82.5L499.2,96.3L528.1,123.1L539.9,139.2L551.5,155.6L558.2,165.4L568.6,174L562.3,180.9L553.2,178.5L545.9,169.3L537.1,152.6L527.7,143.4L522.2,133.6L503.8,122.2L489.3,121.9L484.2,116L471.8,122.6L459,109.8L452.4,130.9Z" fill="#F1EFE2" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Eritrea</title>
+    </path>
+    <path class="mp-country" data-iso="ET" data-name="Ethiopia" data-bin="5" data-value="126" d="M669.8,308.4L610,394.7L582.2,395.9L563.2,416.3L549.5,416.8L543.7,425.9L529,425.9L520.4,416.1L500.8,428.2L494.5,440.2L480.3,437.9L475.5,434.6L470.5,435.4L463.8,435.1L436.7,410.6L421.8,410.6L414.5,401.2L414.5,385L403.3,380.2L390.8,348.8L381,342.2L377.4,330.7L366.6,316.7L353.5,314.6L360.8,298.3L372.1,297.6L375.4,288.8L375.1,263L381.5,233.1L391.6,225L393.8,213.4L403,191.6L415.8,177.5L424.4,149.4L427.9,125L452.4,130.9L459,109.8L471.8,122.6L484.2,116L489.3,121.9L503.8,122.2L522.2,133.6L527.7,143.4L537.1,152.6L545.9,169.3L553.2,178.5L545.8,191.1L538.7,204.4L540.4,212.3L540.8,221L552.7,221.5L557.8,219.5L562.5,224.6L557.9,234.7L565.9,250.5L573.8,264.3L582,274.5L652,308.6Z" fill="#4C6B45" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Ethiopia</title>
+    </path>
+    <path class="mp-country" data-iso="DJ" data-name="Djibouti" data-bin="1" data-value="1.1" d="M553.2,178.5L562.3,180.9L568.6,174L573.7,182.8L573.1,194.6L561.1,201.5L570.2,209.3L562.5,224.6L557.8,219.5L552.7,221.5L540.8,221L540.4,212.3L538.7,204.4L545.8,191.1Z" fill="#F1EFE2" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Djibouti</title>
+    </path>
+    <path class="mp-country" data-iso="XS" data-name="Somaliland" data-stripe="" d="M693.4,210.8L693.2,211.2L693.3,223L693.7,251.9L693.9,266.8L684.5,284.4L669.8,308.4L652,308.6L582,274.5L573.8,264.3L565.9,250.5L557.9,234.7L562.5,224.6L570.2,209.3L577.2,214.5L581.4,226.4L591.1,238.4L601.6,238.5L621.6,231.1L644.7,227.8L663.3,218.9L673.8,217L681.3,211.7Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Somaliland</title>
+    </path>
+    <path class="mp-country" data-iso="UG" data-name="Uganda" data-bin="4" data-value="47" d="M373.4,566.4L329.8,568.6L306.3,568.3L298.8,571.7L286,580.6L280.8,577.7L280.9,555.9L285.9,544.9L287.1,521.7L291.7,508.3L299.8,493.3L308.1,485.6L315,475.3L306.4,471.4L307.7,437.7L316.6,429.8L330.2,436.3L347.4,429.6L362.5,429.6L375.7,416.3L385.8,436.4L388.2,450.8L397.7,483.9L389.9,505L379.3,524.1L373.2,535.8Z" fill="#7E9A6C" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Uganda</title>
+    </path>
+    <path class="mp-country" data-iso="RW" data-name="Rwanda" data-bin="3" data-value="14" d="M298.8,571.7L307.3,588L306,605L299.9,608.6L288.5,606.7L282,623.1L269,620.9L271,605.1L273.9,602.9L274.6,585.7L280.8,577.7L286,580.6Z" fill="#AFC195" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Rwanda</title>
+    </path>
+    <path class="mp-country" data-iso="SS" data-name="S. Sudan" data-bin="2" data-value="11" d="M307.7,437.7L289,418.5L284,406.2L272,412.3L262.1,410.4L256.3,415.3L246.8,411.8L233.9,388L230.6,378.9L214.7,367.5L209.4,350.2L200.6,337.8L186.4,322.8L186.3,313.5L174.8,301.9L160.4,290.7L167,287.5L174.3,282.1L180.2,256.5L186.2,243.2L201.5,239.3L205.1,247.2L215.9,263.9L221.7,266.4L229.4,261.5L244.8,262.4L247.6,268.4L268.8,268.4L269.6,262.4L280.6,257L282.9,248.7L291,242.8L308.7,259.5L319.7,256.5L330.4,235.9L342.1,220.2L340.5,203L335.4,194.7L348.2,193.2L349.7,186.9L359.5,188.8L356.8,209.9L359.3,230.5L370.2,241.8L372.7,251.6L372.2,265.9L375.2,266.5L375.4,288.8L372.1,297.6L360.8,298.3L353.5,314.6L366.6,316.7L377.4,330.7L381,342.2L390.8,348.8L403.3,380.2L388.8,399.2L375.7,416.3L362.5,429.6L347.4,429.6L330.2,436.3L316.6,429.8Z" fill="#D6DCBE" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>S. Sudan</title>
+    </path>
+    <path class="mp-hatch" data-iso="XS" d="M693.4,210.8L693.2,211.2L693.3,223L693.7,251.9L693.9,266.8L684.5,284.4L669.8,308.4L652,308.6L582,274.5L573.8,264.3L565.9,250.5L557.9,234.7L562.5,224.6L570.2,209.3L577.2,214.5L581.4,226.4L591.1,238.4L601.6,238.5L621.6,231.1L644.7,227.8L663.3,218.9L673.8,217L681.3,211.7Z" fill="url(#mp-stripe)" stroke="none"/>
+  </g>
+  <g class="mp-layer mp-terrain"/>
+  <g class="mp-layer mp-hydro" clip-path="url(#mp-land-clip)">
+    <path class="mp-water" data-kind="lake" fill="#6E93A0" d="M377.2,569.3L366.3,582.2L359.4,595.2L368,605.3L355.6,612.5L353.2,609.4L341,610.8L331,617.2L325.6,606.2L329.4,586L330.1,569L328.6,557.4L338.6,540.7L351.7,536.6L360.9,529.4L372.5,534.9L378.7,548.2ZM307.7,786.1L300.8,784.1L302.3,772.6L296,764.9L293.6,749.4L280.5,733.8L272.7,713.1L276.5,700.7L271,684.6L274.7,638.5L282.5,666.5L281.7,680L285.6,684.6L285,696.4L288.9,707.9L284.2,718.9L301.2,738.4L303.7,756L316.2,790.1L312.4,792.1ZM403.4,948.9L402.6,952L394.9,941.2L391.1,948.6L388.2,942.3L388.1,931.5L383.4,923.3L383.4,911.1L377.1,890L383.2,874.3L381.6,839.7L373.9,821.1L376.2,812.5L386.9,828L389.3,857.7L396.1,868.6L390.9,896.2L394.9,932.7L398.7,933.5ZM442.8,198.2L440.5,193.1L445.2,187.4L451.1,189.4L450.5,199.1L447.3,202.2Z" stroke="none"/>
+    <path class="mp-water" data-kind="river" fill="none" d="M358.5,531.5L357.9,526.8L351.7,501.1L350.2,499.7L346.3,496.5L343.1,494.5L340.1,492.5L337.8,490.8L336.3,490.5L336.3,489.3L338.6,483L339.3,478.9L337.2,475.2L332.4,473.2L327.7,472.6L325.6,473.7L321.7,474.9L319.4,475.8L320,472.6L321.7,469.7L320.9,465.9L320.9,461.9L320.9,454.1L323.3,445.8L327.2,440L333.4,434.8L327.2,423L324,413.5L324,403.7L327.3,382.4L325.9,368L315.1,342.1L307.5,330L303,321.4L299.9,311.9L297,291.8L296.2,282.6L297.8,273.7L301.7,268L307.8,266.6L314.9,267.7L318.7,268L323.2,266.6L328.5,261.4L337.1,250L338.6,244.8L337.2,238.8L338,234.5L346.4,218.8L348,208.8L349.8,193.9L350.5,176L349.9,165.7L347.7,155.5L340.9,133.6L339.5,123.9L345,90.8L346.8,82L349.8,74.4L355.1,67.9L362.7,62.2L368,55.5L372.7,47.6L375.1,36.3L375.1,26.2L374.3,18.6L369.2,1.5L364.8,-15.6L359.6,-16.7L355.2,-15.3L349.1,-11.1L337.7,2L324.8,19.7L321,22.5L317.8,23.1L314.1,21.7L311.2,18L308.1,12.4L304,-4.7L301.2,-27.4L305.9,-34.3L306.8,-37.4L302.4,-46.9L301.6,-50.5L307.8,-61.4L317.8,-77L325.4,-90.5L332.2,-100L336.8,-104.9L346.5,-108L349.4,-111.3L352.6,-117.4L354.8,-125.4L355.7,-133.7L355.8,-142.7L356,-158.4L355.3,-167.5L350.3,-179.2L349,-187.2L352.8,-194.5L353.7,-197.8L352.1,-200.3L341.1,-201.3L333.9,-211.2L324.9,-227.7L320.5,-233.1L317.8,-239.1L315.7,-245.9L315.9,-253.2L314.6,-259.4L315.3,-264.2L323,-287.1L324.6,-296.7L324.9,-309.3L324,-332.7L321.5,-346.5" stroke="#6E93A0" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g class="mp-layer mp-borders" fill="none">
+    <path class="mp-border" data-kind="intl" d="M275.9,668.8L284.7,667.4L292.5,657L300.7,641.9L306,635.9L305.8,626.5L301.1,620L299.9,608.6L306,605L307.3,588L298.8,571.7L306.3,568.3L329.8,568.6L373.4,566.4L377,569.6L454.7,628.3L456.1,645.1L486.9,673.8M538,587.5L525.3,563.7L525,458.6L543.7,425.9L549.5,416.8L563.2,416.3L582.2,395.9L610,394.7L669.8,308.4L684.5,284.4L693.9,266.8L693.7,251.9L693.3,223L693.2,211.2L693.4,210.8M373.4,566.4L373.2,535.8L379.3,524.1L389.9,505L397.7,483.9L388.2,450.8L385.8,436.4L375.7,416.3L388.8,399.2L403.3,380.2L414.5,385L414.5,401.2L421.8,410.6L436.7,410.6L463.8,435.1L470.5,435.4L475.5,434.6L480.3,437.9L494.5,440.2L500.8,428.2L520.4,416.1L529,425.9L543.7,425.9M269,620.9L282,623.1L288.5,606.7L299.9,608.6M568.6,174L562.3,180.9L553.2,178.5L545.9,169.3L537.1,152.6L527.7,143.4L522.2,133.6L503.8,122.2L489.3,121.9L484.2,116L471.8,122.6L459,109.8L452.4,130.9L427.9,125M403.3,380.2L390.8,348.8L381,342.2L377.4,330.7L366.6,316.7L353.5,314.6L360.8,298.3L372.1,297.6L375.4,288.8M553.2,178.5L545.8,191.1L538.7,204.4L540.4,212.3L540.8,221L552.7,221.5L557.8,219.5L562.5,224.6L557.9,234.7L565.9,250.5L573.8,264.3L582,274.5L652,308.6L669.8,308.4M570.2,209.3L562.5,224.6M298.8,571.7L286,580.6L280.8,577.7M307.7,437.7L316.6,429.8L330.2,436.3L347.4,429.6L362.5,429.6L375.7,416.3" fill="none" stroke="#5E6350" stroke-width="0.75" stroke-dasharray="none" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <g class="mp-layer mp-roads"/>
+  <g class="mp-layer mp-places">
+    <circle class="mp-place" data-name="Nairobi" data-iso="KE" data-rank="1" data-pop="3010000" cx="435.768" cy="575.94" r="3.2" fill="#33372A" stroke="none">
+      <title>Nairobi</title>
+    </circle>
+    <circle class="mp-place" data-name="Addis Ababa" data-iso="ET" data-rank="1" data-pop="3100000" cx="475.965" cy="278.743" r="3.2" fill="#33372A" stroke="none">
+      <title>Addis Ababa</title>
+    </circle>
+    <circle class="mp-place" data-name="Dar es Salaam" data-iso="TZ" data-rank="1" data-pop="2930000" cx="488.164" cy="734.926" r="3.2" fill="#33372A" stroke="none">
+      <title>Dar es Salaam</title>
+    </circle>
+    <circle class="mp-place" data-name="Kampala" data-iso="UG" data-rank="1" data-pop="1420000" cx="345.075" cy="529.762" r="3.2" fill="#33372A" stroke="none">
+      <title>Kampala</title>
+    </circle>
+    <circle class="mp-place" data-name="Mogadishu" data-iso="SO" data-rank="1" data-pop="1100000" cx="618.885" cy="479.26" r="3.2" fill="#33372A" stroke="none">
+      <title>Mogadishu</title>
+    </circle>
+    <circle class="mp-place" data-name="Asmara" data-iso="ER" data-rank="1" data-pop="620802" cx="480.635" cy="99.176" r="3.2" fill="#33372A" stroke="none">
+      <title>Asmara</title>
+    </circle>
+    <circle class="mp-place" data-name="Hargeysa" data-rank="1" data-pop="477876" cx="590.167" cy="263.704" r="3.2" fill="#33372A" stroke="none">
+      <title>Hargeysa</title>
+    </circle>
+    <circle class="mp-place" data-name="Djibouti" data-iso="DJ" data-rank="1" data-pop="923000" cx="570.269" cy="205.495" r="3.2" fill="#33372A" stroke="none">
+      <title>Djibouti</title>
+    </circle>
+    <circle class="mp-place" data-name="Kigali" data-iso="RW" data-rank="1" data-pop="860000" cx="291.072" cy="595.28" r="3.2" fill="#33372A" stroke="none">
+      <title>Kigali</title>
+    </circle>
+    <circle class="mp-place" data-name="Bujumbura" data-iso="BI" data-rank="1" data-pop="331700" cx="276.206" cy="636.37" r="3.2" fill="#33372A" stroke="none">
+      <title>Bujumbura</title>
+    </circle>
+  </g>
+  <g class="mp-layer mp-labels">
+    <text class="mp-label" data-kind="country" data-iso="TZ" data-rank="1" x="391.6" y="718.9" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Tanzania</text>
+    <text class="mp-label" data-kind="country" data-iso="SO" data-rank="1" x="625.8" y="402.5" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Somalia</text>
+    <text class="mp-label" data-kind="country" data-iso="KE" data-rank="1" x="456.7" y="521.8" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kenya</text>
+    <text class="mp-label" data-kind="country" data-iso="BI" data-rank="3" x="288.4" y="617.6" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Burundi</text>
+    <text class="mp-label" data-kind="country" data-iso="ER" data-rank="2" x="460.3" y="82.8" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Eritrea</text>
+    <text class="mp-label" data-kind="country" data-iso="ET" data-rank="1" x="494.3" y="308.6" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ethiopia</text>
+    <text class="mp-label" data-kind="country" data-iso="DJ" data-rank="3" x="551.8" y="190.6" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Djibouti</text>
+    <text class="mp-label" data-kind="country" data-iso="XS" data-rank="1" x="636.2" y="239.9" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Somaliland</text>
+    <text class="mp-label" data-kind="country" data-iso="UG" data-rank="1" x="340.3" y="501.6" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Uganda</text>
+    <text class="mp-label" data-kind="country" data-iso="RW" data-rank="3" x="292.6" y="593" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Rwanda</text>
+    <text class="mp-label" data-kind="country" data-iso="SS" data-rank="1" x="294.7" y="329" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">S. Sudan</text>
+    <text class="mp-label" data-kind="place" data-iso="KE" data-rank="1" data-capital="" x="442" y="575.9" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Nairobi</text>
+    <text class="mp-label" data-kind="place" data-iso="ET" data-rank="1" data-capital="" x="482.2" y="278.7" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Addis Ababa</text>
+    <text class="mp-label" data-kind="place" data-iso="TZ" data-rank="1" data-capital="" x="494.4" y="734.9" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dar es Salaam</text>
+    <text class="mp-label" data-kind="place" data-iso="UG" data-rank="1" data-capital="" x="351.3" y="529.8" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kampala</text>
+    <text class="mp-label" data-kind="place" data-iso="SO" data-rank="1" data-capital="" x="625.1" y="479.3" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Mogadishu</text>
+    <text class="mp-label" data-kind="place" data-iso="ER" data-rank="1" data-capital="" x="486.8" y="99.2" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Asmara</text>
+    <text class="mp-label" data-kind="place" data-rank="1" data-capital="" x="596.4" y="263.7" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Hargeysa</text>
+    <text class="mp-label" data-kind="place" data-iso="DJ" data-rank="1" data-capital="" x="576.5" y="205.5" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Djibouti</text>
+    <text class="mp-label" data-kind="place" data-iso="RW" data-rank="1" data-capital="" x="297.3" y="595.3" text-anchor="start" dominant-baseline="central" data-fit="0" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Kigali</text>
+    <text class="mp-label" data-kind="place" data-iso="BI" data-rank="1" data-capital="" x="282.4" y="636.4" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bujumbura</text>
+  </g>
+  <g class="mp-layer mp-annotations"/>
+  <g class="mp-layer mp-furniture"/>
+</svg>

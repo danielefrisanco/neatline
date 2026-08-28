@@ -358,7 +358,7 @@
   </g>
   <g class="mp-layer mp-labels">
     <text class="mp-label" data-kind="country" data-iso="AR" data-rank="2" x="337.2" y="526.1" text-anchor="middle" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="13" font-weight="400" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Argentina</text>
-    <text class="mp-label" data-kind="country" data-iso="CL" data-rank="3" x="282.3" y="419.8" text-anchor="middle" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="13" font-weight="400" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Chile</text>
+    <text class="mp-label" data-kind="country" data-iso="CL" data-rank="2" x="282.3" y="419.8" text-anchor="middle" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="13" font-weight="400" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Chile</text>
     <text class="mp-label" data-kind="country" data-iso="FK" data-rank="3" x="390.8" y="734.9" text-anchor="middle" dominant-baseline="central" fill="#3A342A" font-family="ui-serif, Georgia, &quot;Times New Roman&quot;, serif" font-size="13" font-weight="400" letter-spacing="0.2" stroke="#F2EAD8" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">
       <tspan x="390.8" dy="-7.1">Falkland</tspan>
       <tspan x="390.8" dy="14.3">Is.</tspan>
