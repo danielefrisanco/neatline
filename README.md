@@ -29,8 +29,9 @@ repository. The class taxonomy below is the part that is meant to be stable; it
 is what a `1.0.0` would be promising, and it wants to sit still for a while
 before that promise is made.
 
-Reserved and out of scope: annotations (pins, arrows, callouts), a legend,
-roads, and terrain — each has its slot in the taxonomy and none is emitted.
+Reserved and out of scope: arrows, icons, a legend, roads, and terrain — each
+has its slot in the taxonomy and none is emitted. Pins and callouts are the
+annotations that have landed.
 The [build plan](https://claude.ai/code/artifact/1ad97eac-6e9c-4944-96fb-3e6530d9e83d) says when each arrives and what it is waiting on.
 
 ## The class taxonomy
@@ -54,12 +55,16 @@ Inside it, a `.mp-bg` rectangle covers the canvas, then eight layer groups in
 | `.mp-roads` | `.mp-road` | `data-kind` | *Reserved* · motorway, trunk, primary |
 | `.mp-places` | `.mp-place` | `data-name`, `data-iso`, `data-rank`, `data-pop` | Settlement dots, ranked 1–3 |
 | `.mp-labels` | `.mp-label` | `data-kind`, `data-rank`, `data-fit`, `data-iso`, `data-capital` | Country and settlement names |
-| `.mp-annotations` | `.mp-anno` | `data-id` | *Reserved* · pins, arrows, callouts |
+| `.mp-annotations` | `.mp-anno` | `data-id`, `data-kind`, `data-fit` | Pins and callouts · arrows reserved |
 | `.mp-furniture` | `.mp-credit` | `data-anchor` | *Reserved* · credits, watermarks, legends |
 
 `.is-highlighted` is a modifier on any feature named in `highlight`.
-`.mp-pin`, `.mp-arrow`, `.mp-callout`, `.mp-watermark`, `.mp-legend`,
-`.mp-scale` and `.mp-compass` are claimed but not yet emitted.
+A pin is a `.mp-anno.mp-pin` group holding a `.mp-pin-mark` circle and, where
+it has one, a `.mp-label` carrying `data-kind="pin"`. A callout is a
+`.mp-anno.mp-callout` group holding a `.mp-callout-leader` path, a
+`.mp-callout-box` rect and a `.mp-label` carrying `data-kind="callout"`.
+`.mp-arrow`, `.mp-watermark`, `.mp-legend`, `.mp-scale` and `.mp-compass` are
+claimed but not yet emitted.
 
 Every layer but the last is geographic — its contents move when the projection
 or region changes. `.mp-furniture` is the exception: a credit line or watermark
@@ -256,6 +261,8 @@ every theme in the wild.
 | `--water` / `--water-width` | Lakes and rivers |
 | `--place` | Settlement dots |
 | `--neighbour` | Context countries |
+| `--anno` | The mark a pin is drawn with, and a callout's box and leader |
+| `--anno-ink` | A caption set on a callout's box |
 | `--ink` / `--ink-muted` | Country names / settlement names |
 | `--font` / `--label-size` / `--place-label-size` | Type |
 | `--label-halo` / `--label-halo-width` | The casing drawn behind label text |
@@ -484,6 +491,116 @@ await neatline({ region: "west-europe", neighbours: true });
 The surrounding countries, drawn beneath the region as context. Never labelled,
 never highlighted, and **excluded from the camera** — so turning context on
 cannot move your subject. Styled from `--neighbour`.
+
+### Marks
+
+```ts
+await neatline({
+  region: "west-europe",
+  highlight: ["FR"],
+  pins: [
+    { at: [4.84, 45.76], label: "Lyon", kind: "site" },
+    { at: [5.37, 43.30], label: "Marseille", offset: [0, 18] },
+    { at: [9.99, 53.55], label: "Hamburg", id: "h1", offset: [-14, -4] },
+  ],
+});
+```
+
+A dot where the thing happened, and a word saying what it was. Pins render into
+`.mp-annotations`, above every geographic layer and below the furniture.
+
+`at` is a coordinate, `[lon, lat]`, and **never a pixel**. A pixel is only
+meaningful for the exact region, projection and canvas size that produced it, so
+a map reframed or resized detaches every mark placed in pixels. Where a mark is
+placed with a pointer, [`invert()`](#coordinates-and-pixels) is what turns the
+drop back into a coordinate to store. This is the shape arrows, callouts and
+icons will copy — they all have to say *where*, and they will all say it this
+way.
+
+`label` sets text beside the mark; omit it and the pin is a mark and nothing
+else. `id` becomes `data-id`, which is how an editor finds the node it drew
+again. `kind` becomes `data-kind` for a theme to style — free text rather than
+an enumeration, because the icon vocabularies that will supply the conventional
+values have not landed yet. `offset` moves the **label**, in user units, never
+the mark: a negative `dx` anchors the text at its far end so it does not run
+back across the mark it was moved away from.
+
+Marks are **excluded from the camera**, exactly as neighbours are. Placing one
+never moves the map out from under the marks already placed.
+
+**Two things can go wrong with a pin, and they get two different answers.**
+
+A coordinate on the far side of a globe is *dropped*. It has no pixel of its
+own, but it is handed one anyway — the far hemisphere projects onto the same
+disc as the near one, so a pin at 160°W lands squarely on Angola on an
+Africa-centred orthographic, and nothing about the markup would say it was
+wrong. They are caught by round trip: `invert()` answers with the near side by
+construction, so a coordinate that comes back as itself was visible and one that
+comes back as somewhere else was not.
+
+A coordinate that survives that but lands outside the canvas is *drawn*,
+carrying `data-fit="0"`. It is a real place the camera simply is not pointed at,
+and that is a fact about the map rather than an error — so the document states
+it and the stylesheet acts on it, the same bargain a name too big for its
+country gets. The bundled themes hide it.
+
+A coordinate that cannot be one at all throws, and a latitude past 90 is told
+what it probably was:
+
+```
+neatline: pins[0].at has a latitude of 102.35, which is outside [-90, 90] —
+coordinates are [lon, lat], not [lat, lon]
+```
+
+The mark is `--anno`, cased in `--label-halo` — the same casing its label gets.
+The casing is not decoration: every bundled preset sets `--anno` to the same
+value as `--accent`, so a pin dropped on a highlighted country is drawn in the
+country's own colour, and a region plus a highlight plus a marker is exactly the
+map this layer exists to make.
+
+### Captions
+
+```ts
+await neatline({
+  region: "europe",
+  pins: [{ at: [30.73, 46.48], label: "Odesa" }],
+  callouts: [
+    {
+      at: [30.73, 46.48],
+      text: "Grain exports resumed here in July, under a corridor agreement that lapsed in November",
+      offset: [-96, -150],
+      width: 190,
+    },
+  ],
+});
+```
+
+A callout says `where` exactly as a pin does — same `at`, same guards, same
+`data-fit`. What differs is which half carries the meaning. A pin says *there is
+something here* and the mark is the subject; a callout says *this sentence is
+about here*, and the words are the subject while the line only points.
+
+That is why a callout has a box and a pin does not. A single word can sit on a
+coastline behind a halo; a sentence cannot. The box is filled from `--anno` and
+the caption is set in `--anno-ink` — the one piece of text on the map drawn with
+no casing at all, because it already has a ground of its own.
+
+`offset` places the **corner of the box nearest the point**, and the box grows
+away from there — so the sign of the offset is the direction the box goes, and
+the leader always lands on a corner you can predict. `width` is the widest the
+caption sets before it wraps (default 180 user units); the wrap is greedy, and a
+single word longer than the column is left long rather than hyphenated.
+
+There is no mark at the anchor. The leader already ends there, and a caller who
+wants a dot as well adds a pin at the same coordinate — which is the composition
+the whole layer is built for, rather than a second way to draw one circle.
+
+**One caveat worth knowing.** SVG cannot measure text outside a browser, so the
+box is sized from `--label-advance` and `--label-track`, which is an estimate.
+It rounds up by 30% — measured as the worst case a real caption runs across the
+bundled stacks — so a box is sometimes a little wider than it strictly needs to
+be. That is the right way round: a box slightly too wide costs whitespace, and a
+box too narrow prints the caption out through its own side.
 
 ### Cities
 

@@ -1,5 +1,6 @@
 import { geoBounds, geoContains, geoPath } from "d3-geo";
 import { assignBins, DEFAULT_BINS } from "./bins.js";
+import { calloutLayer, pinLayer } from "./annotations.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
 import { countryLabels, labelLayer, labelSizes, placeLabel, type LabelBox, type Placed } from "./labels.js";
@@ -63,10 +64,12 @@ export {
 
 export type {
   BBox,
+  Callout,
   Detail,
   GeoJsonFeatureCollection,
   MapOptions,
   MapResult,
+  Pin,
   Point,
   Position,
   ProjectionName,
@@ -153,10 +156,10 @@ function degrees(value: number, negative: string, positive: string): string {
 }
 
 /** "France", "France and Germany", "France, Germany and Italy", then a count. */
-function listNames(names: readonly string[]): string {
+function listNames(names: readonly string[], noun = "countries"): string {
   if (names.length === 0) return "";
   if (names.length === 1) return names[0] as string;
-  if (names.length > 3) return `${names.length} countries`;
+  if (names.length > 3) return `${names.length} ${noun}`;
   return `${names.slice(0, -1).join(", ")} and ${names[names.length - 1] as string}`;
 }
 
@@ -364,6 +367,39 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
 
   const projection = createProjection(projectionName, frame, width, height, padding, headroom);
   const path = geoPath(projection).digits(1);
+
+  function projectPoint(position: Position): Point | null {
+    const projected = projection([position[0], position[1]]);
+    if (projected === null) return null;
+    if (!Number.isFinite(projected[0]) || !Number.isFinite(projected[1])) return null;
+    return [projected[0], projected[1]];
+  }
+
+  function invertPoint(point: Point): Position | null {
+    // Optional on d3's projection type. Every projection in the table has
+    // an inverse, but the table is a lookup precisely so composites can be
+    // registered later, and a composite need not have one.
+    const inverse = projection.invert;
+    if (inverse === undefined) return null;
+    const position = inverse.call(projection, [point[0], point[1]]);
+    if (position === null) return null;
+    if (!Number.isFinite(position[0]) || !Number.isFinite(position[1])) return null;
+
+    // Then make the projection confirm its own answer. d3 clamps its inverse
+    // trigonometry instead of failing, so a pixel off the edge of an
+    // orthographic globe does not come back as nothing — it comes back as a
+    // coordinate on the limb, and the corner of the canvas invents a place
+    // in the Atlantic. The only reliable test of whether a pixel is on the
+    // map is whether the map puts it back where it was found: a real point
+    // returns within a thousandth of a unit, and a clamped one misses by
+    // twenty units or more.
+    const back = projection([position[0], position[1]]);
+    if (back === null) return null;
+    if (Math.abs(back[0] - point[0]) > INVERT_TOLERANCE) return null;
+    if (Math.abs(back[1] - point[1]) > INVERT_TOLERANCE) return null;
+
+    return [position[0], position[1]];
+  }
 
   // Resolved before the layers rather than after, because the label fit test
   // has to know what size the text will actually be set at.
@@ -632,7 +668,47 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     }
   }
 
-  const description = options.title ?? describe(resolved.description, highlightedNames);
+  /**
+   * Annotations, above every geographic layer and below the furniture.
+   *
+   * Built last of the geographic layers and deliberately after the camera is
+   * settled: a pin is placed on the map, never the other way round. Adding one
+   * outside the frame must not pull the view towards it, or every mark already
+   * placed shifts under the reader — the same rule `neighbours` follows for the
+   * same reason.
+   */
+  const pins = options.pins ?? [];
+  const callouts = options.callouts ?? [];
+  // Built even when the layer is switched off, so a coordinate that cannot be
+  // one is still rejected rather than quietly ignored: turning a layer off
+  // controls what is drawn, never whether the options were valid.
+  const marks =
+    pins.length === 0
+      ? { nodes: [], labels: [] }
+      : pinLayer(pins, projectPoint, invertPoint, [width, height]);
+  // Captions last, so a box is never drawn under a mark it sits beside.
+  const captions =
+    callouts.length === 0
+      ? { nodes: [], labels: [] }
+      : calloutLayer(
+          callouts,
+          projectPoint,
+          invertPoint,
+          [width, height],
+          sizes.place,
+          sizes.advance,
+          sizes.track,
+        );
+  const annotated = wants("annotations");
+  const drawn = [...marks.nodes, ...captions.nodes];
+  if (annotated && drawn.length > 0) content.set("annotations", drawn);
+
+  const description = options.title
+    ?? describe(
+      resolved.description,
+      highlightedNames,
+      annotated ? [...marks.labels, ...captions.labels] : [],
+    );
 
   const body: SvgNode[] = [
     // `fill="none"` is structural, not stylistic. SVG's default fill is
@@ -737,36 +813,9 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     svg,
     css: themed.css,
 
-    project(position: Position): Point | null {
-      const projected = projection([position[0], position[1]]);
-      return projected === null ? null : [projected[0], projected[1]];
-    },
+    project: projectPoint,
 
-    invert(point: Point): Position | null {
-      // Optional on d3's projection type. Every projection in the table has
-      // an inverse, but the table is a lookup precisely so composites can be
-      // registered later, and a composite need not have one.
-      const inverse = projection.invert;
-      if (inverse === undefined) return null;
-      const position = inverse.call(projection, [point[0], point[1]]);
-      if (position === null) return null;
-      if (!Number.isFinite(position[0]) || !Number.isFinite(position[1])) return null;
-
-      // Then make the projection confirm its own answer. d3 clamps its inverse
-      // trigonometry instead of failing, so a pixel off the edge of an
-      // orthographic globe does not come back as nothing — it comes back as a
-      // coordinate on the limb, and the corner of the canvas invents a place
-      // in the Atlantic. The only reliable test of whether a pixel is on the
-      // map is whether the map puts it back where it was found: a real point
-      // returns within a thousandth of a unit, and a clamped one misses by
-      // twenty units or more.
-      const back = projection([position[0], position[1]]);
-      if (back === null) return null;
-      if (Math.abs(back[0] - point[0]) > INVERT_TOLERANCE) return null;
-      if (Math.abs(back[1] - point[1]) > INVERT_TOLERANCE) return null;
-
-      return [position[0], position[1]];
-    },
+    invert: invertPoint,
 
     toString() {
       return complete;
@@ -785,8 +834,29 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
 
 
 
-function describe(base: string, highlightedNames: readonly string[]): string {
-  return highlightedNames.length === 0
-    ? base
-    : `${base}, highlighting ${listNames(highlightedNames)}`;
+/**
+ * The accessible name, when the caller did not write one.
+ *
+ * It can only ever describe what the options say, which is why `title` exists —
+ * a map *about* something needs the caller to name the something. But a map
+ * carrying marks is no longer only a map of a region, and a description that
+ * stopped at the geography would leave a screen reader with no idea the marks
+ * were there.
+ *
+ * `marked` is what the annotation layer actually drew and not what was asked
+ * for. A pin on the far side of a globe is dropped and one off the canvas is
+ * hidden, and naming either would describe a map that is not on the screen.
+ * Unlabelled marks are not named either: they have no words to offer, and a
+ * count of them is a number nobody can act on.
+ */
+function describe(
+  base: string,
+  highlightedNames: readonly string[],
+  marked: readonly string[],
+): string {
+  const clauses = [
+    highlightedNames.length === 0 ? null : `highlighting ${listNames(highlightedNames)}`,
+    marked.length === 0 ? null : `marking ${listNames(marked, "places")}`,
+  ].filter((clause): clause is string => clause !== null);
+  return clauses.length === 0 ? base : `${base}, ${clauses.join(", ")}`;
 }

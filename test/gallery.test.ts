@@ -508,6 +508,69 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       title: "Central Asia",
     },
   ],
+  // The map Phase 8 exists to make: a region, a highlight, and marks where the
+  // things happened. Pins are the one layer whose failure is invisible in the
+  // markup — a mark drawn at a plausible pixel on the wrong ground reads as
+  // correct — so the gallery has to carry one that can be looked at.
+  //
+  // The pin on Paris is the case that matters most: it sits on the highlighted
+  // country, where --anno and --accent are the same colour in every preset, and
+  // only the casing keeps it visible.
+  [
+    "west-europe-pins",
+    {
+      region: "west-europe",
+      projection: "conic-conformal",
+      theme: "minimal",
+      palette: "sand",
+      highlight: ["FR"],
+      // Deliberately not capitals. A pin on a city the map already names draws
+      // the name twice, in two weights, a few units apart — the caller's choice
+      // to make, but it reads as a rendering fault at gallery size, and the
+      // gallery exists so that a fault is obvious at a glance.
+      pins: [
+        { at: [4.84, 45.76], label: "Lyon", kind: "site" },
+        { at: [5.37, 43.3], label: "Marseille", offset: [0, 18] },
+        { at: [9.19, 45.46], label: "Milan", id: "milan" },
+        { at: [9.99, 53.55], label: "Hamburg", offset: [-14, -4] },
+      ],
+      title: "Four marks, two of them on the highlighted country",
+    },
+  ],
+  // The phase deliverable, whole: region, highlight, marker, captioned callout.
+  // The callout is the one annotation with a ground of its own, so this is also
+  // the only entry where --anno-ink is doing anything.
+  [
+    "europe-callouts",
+    {
+      region: "europe",
+      projection: "conic-conformal",
+      theme: "noir",
+      size: [1100, 800],
+      highlight: ["UA"],
+      // The bundled name is the older transliteration; this is what the
+      // `names` override is for, and it renames the dot and the label together.
+      names: { Kiev: "Kyiv" },
+      // Odesa, at Odesa's coordinates — the grain port the caption is about.
+      pins: [{ at: [30.73, 46.48], label: "Odesa", kind: "port", offset: [12, 12] }],
+      callouts: [
+        {
+          at: [30.73, 46.48],
+          text: "Grain exports resumed here in July, under a corridor agreement that lapsed in November",
+          offset: [-96, -150],
+          width: 190,
+          id: "corridor",
+        },
+        {
+          at: [-3.7, 40.42],
+          text: "Set to the left of its point",
+          offset: [-40, 60],
+          kind: "aside",
+        },
+      ],
+      title: "A captioned callout, and a mark it shares a coordinate with",
+    },
+  ],
 ];
 
 describe("gallery", () => {

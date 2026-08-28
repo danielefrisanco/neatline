@@ -17,9 +17,145 @@ signature — themes in the wild depend on those names.
 ## [Unreleased]
 
 Phase 8 opens here. `invert()` first, because it is the one thing in the phase
-nothing else can be built on top of.
+nothing else can be built on top of. Then pins, which are where the annotation
+API gets decided: arrows, callouts and icons all have to say *where*, and
+whatever shape the pin takes, the other three copy it.
+
+### Changed
+
+- **`--anno` has its own shade in every preset**, instead of being a copy of
+  `--accent`. All nine shipped the two byte-for-byte identical, which was
+  harmless while nothing consumed `--anno` and wrong the moment something did:
+  on a map with a highlight *and* an annotation — which is the map this whole
+  layer exists to make — the pin, the leader line and the balloon were drawn in
+  the highlighted country's own colour and sank into it. Light presets take a
+  deeper shade of the same family and dark ones a lifted shade, so an annotation
+  still reads as part of the design rather than as a clash.
+
+  The casing added with the pins hid half of this: a mark cased in `--label-halo`
+  survives a colour it matches, and a callout's box and leader do not. Both are
+  now held by a preset test asserting `--anno` differs from `--accent` *and* from
+  `--label-halo`, in light and in dark, for every theme and palette.
+
+- **A callout's box is outlined in `--anno-ink`**, so the balloon has an edge on
+  any ground it lands on rather than relying on its fill alone.
+
+- **`--anno-ink` is live**, and only inside a callout. The comment left on it a
+  day ago said it would start doing something "when a callout has a box to put
+  ink inside", and that is exactly what happened: the box is filled from
+  `--anno`, the caption is set in `--anno-ink`, and every preset has been
+  carrying a value that contrasts against `--anno` since Phase 3. A pin's label
+  still takes `--ink`, because it sits beside its mark rather than inside it.
+
+- **`LabelSizes` carries `track`.** `--label-track` was read by nothing, and the
+  width estimator ignored letter-spacing entirely — which is fine for the label
+  fit test, since it errs low on purpose, and wrong for anything that has to
+  draw a box around text. The country and settlement labels are unchanged; only
+  the callout consumes it.
+
+- **The `annotations` layer is `live`** rather than `reserved`, `mp-pin-mark`
+  joins the class list, and `--anno` moves from `reserved` to `live`. All three
+  are additive — no name changed and no layer moved, so every theme already
+  written keeps working — but the contract snapshot locks the status of each,
+  and it fails on purpose until someone says the change was meant.
+
+- **`--anno-ink` stays reserved, and its meaning is written down.** It was the
+  obvious fill for a pin's label and would have been invisible: every preset
+  sets it to the same value as `--label-halo`, because what it was authored to
+  mean is the ink drawn *on top of* a mark, legible against `--anno`. A pin's
+  label sits beside the mark rather than inside it, so it takes `--ink` like
+  every other name on the map. This starts doing something when a callout has a
+  box to put ink inside.
+
+- **`RESERVED_CLASSES` says what it actually holds.** It was documented as
+  "claimed but not built" and stopped being that when the first prism was drawn:
+  `mp-prism-top` and `mp-hatch-line` are emitted on every extruded and hatched
+  map and are still in the list. The rule it really follows is that `LAYERS`
+  names one feature class per layer and everything else a document can contain
+  is named here, built or not.
 
 ### Added
+
+- **`callouts` — a caption tied to a coordinate by a leader line.** The second
+  annotation primitive, and it says `where` the way the first one does: same
+  `at`, same validation, same round-trip guard against the far side of a globe,
+  same `data-fit`. That was the point of settling the pin first.
+
+  It is a separate primitive rather than an option on the pin because the two
+  differ in which half carries the meaning. A pin says *there is something here*
+  and the mark is the subject; a callout says *this sentence is about here*, and
+  the words are. Hence the box: a single word can sit on a coastline behind a
+  halo and a sentence cannot. There is deliberately no mark at the anchor — the
+  leader already ends there, and a caller who wants a dot adds a pin at the same
+  coordinate, which is the composition this layer exists for.
+
+  `offset` places the corner of the box nearest the point and the box grows away
+  from it, so the sign of the offset is the direction the box goes and the leader
+  always lands on a corner the caller can predict. `width` sets the column the
+  caption wraps in; the wrap is greedy rather than the even-split search the
+  country labels use, because that one is balancing two lines of a name and this
+  one is setting a sentence in a column.
+
+  **The box is sized from an estimate, and the estimate had to be taught two
+  things.** SVG cannot measure text outside a browser, so the width comes from
+  `--label-advance` — which the label engine tunes to read *low*, because a name
+  that does not fit is hidden and over-reading would hide names that fit. A box
+  fails the other way: under-read and the caption prints out through the side,
+  which is what the first render did. So the callout rounds the estimate up by
+  30%, measured with `getComputedTextLength()` across the three bundled stacks at
+  weights 400, 500 and 700, where a realistic caption runs at most 1.28× the
+  estimate. And it adds `--label-track`, which nothing had been reading: `noir`
+  sets it to 0.3, and over a twenty-character line that is six units the box was
+  not accounting for. Both are held by a test that computes the bound from an
+  independently measured constant, so lowering either fails.
+
+- **`pins`, and the annotation layer stops being empty.** A mark at a
+  coordinate, optionally with a word beside it, rendered into the
+  `.mp-annotations` group reserved since Phase 2. `{ at: [lon, lat], label?,
+  id?, kind?, offset? }` — `at` is the locator the rest of the layer will
+  inherit, and it is a coordinate rather than a pixel for the reason `invert()`
+  exists at all: a pixel is only meaningful for the exact region, projection and
+  canvas size that produced it.
+
+  `at` deliberately takes nothing but a coordinate. Accepting an ISO code or a
+  settlement name would be convenient and is cheap to add later — widening an
+  option breaks no caller, which is the same bargain `neighbours` took — while
+  deciding now what `at: "Springfield"` means would settle a question no real
+  map has asked yet.
+
+  Two things go wrong with a pin, and they turned out to need two different
+  answers. **A coordinate on the far side of a globe is dropped.** It has no
+  pixel of its own and gets one anyway: the far hemisphere projects onto the
+  same disc as the near one, so a pin at 160°W 10°S lands at [369, 491] on an
+  Africa-centred orthographic, which is Angola. This is the `invert()` clamping
+  problem running the other way, and it is worse, because `invert()` at least
+  produces a coordinate someone might sanity-check while this produces a mark
+  that simply looks right. The guard is the same round trip: `invert()` answers
+  with the near side by construction, so a coordinate that comes back as itself
+  was visible. Measured over five projections, nine regions and a 9° grid, a
+  visible coordinate returns within 3.6e-11 degrees and a hidden one misses by
+  at least 0.09 — an empty band nine orders of magnitude wide, and the threshold
+  sits in the middle of it.
+
+  **A coordinate that survives that but lands off the canvas is drawn**, marked
+  `data-fit="0"`. It is a real place the camera is not pointed at, which is a
+  fact rather than an error — so the engine states it and the stylesheet acts on
+  it, exactly as it does for a name too big for its country.
+
+  Out-of-range coordinates throw rather than being dropped quietly, the way an
+  unrecognised `highlight` code does. A latitude past 90 is told what it
+  probably was, because `[lat, lon]` is the mistake that actually happens.
+
+  The accessible description names the marks — but only the ones a reader can
+  see. A pin dropped for being behind the globe, or hidden for being off the
+  canvas, is not in the description, because it is not on the map.
+
+- **`--anno` is live**, and the mark is cased in `--label-halo`. Found by
+  rendering and looking: every bundled preset sets `--anno` to the same value as
+  `--accent`, so the first pin dropped on a highlighted country was drawn in the
+  country's own colour and vanished — on the exact map this layer exists to
+  make. The casing is the one the label beside it already gets, so a mark reads
+  against any ground and the two are separated from the map the same way.
 
 - **`map.invert([x, y])`** — a point on the canvas as a coordinate, the inverse
   of `project()`. `project()` is enough for anyone placing a pin by hand: they
@@ -41,6 +177,20 @@ nothing else can be built on top of.
   Tested as a geometric property rather than as markup, which is what it is —
   a round trip that closes in every projection, and a grid over a globe where
   nothing invert() answers is a place the map would not put back.
+
+- **A gallery entry carrying the whole phase deliverable** — region, highlight,
+  marker and a captioned callout, on one map. Two things came out of rendering
+  it and looking, neither of which any assertion would have caught: the caption
+  overflowed its box, which is what turned up the tracking bug; and the entry
+  labelled a pin "Odesa corridor" while sitting on Kyiv's coordinates, which is
+  the kind of error a committed snapshot of a real place should not ship.
+
+- **A gallery entry with marks on it.** Pins are the layer whose failure is
+  least visible in the markup, so the contact sheet carries one that can be
+  looked at, and `npm run gallery` detects it. Its pins are deliberately not
+  capitals: a pin on a city the map already names writes the name twice, a few
+  units apart in two weights, which is the caller's choice to make and reads as
+  a rendering fault at gallery size.
 
 - **Ten gallery entries outside Western Europe.** Twelve of the thirty-two
   existing entries were the same thirteen countries, which demonstrates that

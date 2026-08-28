@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 600" width="1100" height="600" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1qbeo77" role="img" aria-label="The Caribbean">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 600" width="1100" height="600" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0ls2rq4" role="img" aria-label="The Caribbean">
   <title>The Caribbean</title>
   <style>
-    .mp.mp-t-1qbeo77 {
+    .mp.mp-t-0ls2rq4 {
       --bg: transparent;
       --land: #D8D8D2;
       --land-edge: #FFFFFF;
@@ -49,72 +49,72 @@
       --sea-ink: #7E96A6;
       --road: #B08A3E;
       --neighbour: #F0F0EE;
-      --anno: #C2482F;
+      --anno: #8E2F1C;
       --anno-ink: #FFFFFF;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-1qbeo77 .mp-bg {
+    .mp.mp-t-0ls2rq4 .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-1qbeo77 .mp-neighbour {
+    .mp.mp-t-0ls2rq4 .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-1qbeo77 .mp-country {
+    .mp.mp-t-0ls2rq4 .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-1qbeo77 .mp-country[data-bin="1"] {
+    .mp.mp-t-0ls2rq4 .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-1qbeo77 .mp-country[data-bin="2"] {
+    .mp.mp-t-0ls2rq4 .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-1qbeo77 .mp-country[data-bin="3"] {
+    .mp.mp-t-0ls2rq4 .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-1qbeo77 .mp-country[data-bin="4"] {
+    .mp.mp-t-0ls2rq4 .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-1qbeo77 .mp-country[data-bin="5"] {
+    .mp.mp-t-0ls2rq4 .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-1qbeo77 .mp-country[data-fill="1"] {
+    .mp.mp-t-0ls2rq4 .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-1qbeo77 .mp-country[data-fill="2"] {
+    .mp.mp-t-0ls2rq4 .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-1qbeo77 .mp-country[data-fill="3"] {
+    .mp.mp-t-0ls2rq4 .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-1qbeo77 .mp-country[data-fill="4"] {
+    .mp.mp-t-0ls2rq4 .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-1qbeo77 .mp-country[data-fill="5"] {
+    .mp.mp-t-0ls2rq4 .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-1qbeo77 .mp-country[data-fill="6"] {
+    .mp.mp-t-0ls2rq4 .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-1qbeo77 .mp-country.is-highlighted {
+    .mp.mp-t-0ls2rq4 .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-1qbeo77 .mp-water[data-kind="lake"] {
+    .mp.mp-t-0ls2rq4 .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-1qbeo77 .mp-water[data-kind="river"] {
+    .mp.mp-t-0ls2rq4 .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-1qbeo77 .mp-border {
+    .mp.mp-t-0ls2rq4 .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -122,78 +122,78 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-1qbeo77 .mp-road {
+    .mp.mp-t-0ls2rq4 .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-1qbeo77 .mp-place {
+    .mp.mp-t-0ls2rq4 .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-1qbeo77 .mp-prism-top {
+    .mp.mp-t-0ls2rq4 .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-1qbeo77 .mp-prism-side {
+    .mp.mp-t-0ls2rq4 .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-1qbeo77 .mp-prism-edge {
+    .mp.mp-t-0ls2rq4 .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-1qbeo77 .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-0ls2rq4 .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-1qbeo77 .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-0ls2rq4 .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-1qbeo77 .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-0ls2rq4 .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-1qbeo77 .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-0ls2rq4 .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-1qbeo77 .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-0ls2rq4 .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-1qbeo77 .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-0ls2rq4 .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-1qbeo77 .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-0ls2rq4 .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-1qbeo77 .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-0ls2rq4 .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-1qbeo77 .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-0ls2rq4 .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-1qbeo77 .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-0ls2rq4 .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-1qbeo77 .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-0ls2rq4 .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-1qbeo77 .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-0ls2rq4 .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-1qbeo77 .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-0ls2rq4 .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-1qbeo77 .mp-hatch {
+    .mp.mp-t-0ls2rq4 .mp-hatch {
       fill: url(#mp-stripe);
       stroke: none;
     }
-    .mp.mp-t-1qbeo77 .mp-hatch-line {
+    .mp.mp-t-0ls2rq4 .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-1qbeo77 .mp-label {
+    .mp.mp-t-0ls2rq4 .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
@@ -204,18 +204,47 @@
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-1qbeo77 .mp-label[data-kind="place"] {
+    .mp.mp-t-0ls2rq4 .mp-label[data-kind="place"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
     }
-    .mp.mp-t-1qbeo77 .mp-label.is-highlighted {
+    .mp.mp-t-0ls2rq4 .mp-label.is-highlighted {
       font-weight: 700;
     }
-    .mp.mp-t-1qbeo77 .mp-label[data-fit="0"] {
+    .mp.mp-t-0ls2rq4 .mp-label[data-fit="0"] {
+      display: none;
+    }
+    .mp.mp-t-0ls2rq4 .mp-pin-mark {
+      fill: var(--anno);
+      stroke: var(--label-halo);
+      stroke-width: var(--label-halo-width);
+    }
+    .mp.mp-t-0ls2rq4 .mp-label[data-kind="pin"] {
+      font-size: var(--place-label-size);
+      font-weight: 700;
+    }
+    .mp.mp-t-0ls2rq4 .mp-callout-leader {
+      fill: none;
+      stroke: var(--anno);
+      stroke-width: 1.25;
+      stroke-linecap: round;
+    }
+    .mp.mp-t-0ls2rq4 .mp-callout-box {
+      fill: var(--anno);
+      stroke: var(--anno-ink);
+      stroke-width: 1;
+    }
+    .mp.mp-t-0ls2rq4 .mp-label[data-kind="callout"] {
+      fill: var(--anno-ink);
+      font-size: var(--place-label-size);
+      font-weight: 500;
+      stroke: none;
+    }
+    .mp.mp-t-0ls2rq4 .mp-anno[data-fit="0"] {
       display: none;
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-1qbeo77 {
+      .mp.mp-t-0ls2rq4 {
         --land: #2E3134;
         --land-edge: #16181A;
         --border: #6E747A;
@@ -241,12 +270,12 @@
         --stripe: #9A9A94;
         --water: #4C7A96;
         --neighbour: #202325;
-        --anno: #E2694A;
+        --anno: #F79A78;
         --anno-ink: #16181A;
         --furniture-ink: #85898D;
       }
     }
-    .mp.mp-t-1qbeo77 {
+    .mp.mp-t-0ls2rq4 {
       --bg: #D9DCD0;
       --land: #EDEBDD;
       --land-edge: #B7B8A4;
@@ -281,7 +310,7 @@
       --sea-ink: #62808C;
       --road: #A8582C;
       --neighbour: #E2E1D2;
-      --anno: #A8582C;
+      --anno: #71361A;
       --anno-ink: #EDEBDD;
       --furniture-ink: #6E735E;
     }

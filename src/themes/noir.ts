@@ -67,7 +67,7 @@ export const noir = compose({
   --sea-ink: #5E7386;
   --road: #8A6A33;
   --neighbour: #171E25;
-  --anno: #D8A657;
+  --anno: #E5762B;
   --anno-ink: #0B0E11;
   --furniture-ink: #7A848F;`,
   dark: `

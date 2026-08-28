@@ -70,7 +70,7 @@ export const contrast = compose({
   --sea-ink: #000000;
   --road: #000000;
   --neighbour: #E8E8E8;
-  --anno: #000000;
+  --anno: #4A4A4A;
   --anno-ink: #FFFFFF;
   --furniture-ink: #000000;`,
   dark: `
@@ -99,7 +99,7 @@ export const contrast = compose({
   --label-halo: #000000;
   --water: #FFFFFF;
   --neighbour: #171717;
-  --anno: #FFFFFF;
+  --anno: #B8B8B8;
   --anno-ink: #000000;
   --stripe: #FFFFFF;
   --furniture-ink: #FFFFFF;`,

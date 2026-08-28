@@ -35,7 +35,7 @@ export const sand = `
   --sea-ink: #6F98A6;
   --road: #A8916A;
   --neighbour: #EFE7D6;
-  --anno: #3E6B5A;
+  --anno: #24463A;
   --anno-ink: #F6F1E7;
   --furniture-ink: #8A7C63;
 }

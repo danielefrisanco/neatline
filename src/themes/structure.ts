@@ -123,6 +123,93 @@ ${rules((n) => `.mp .mp-prism[data-fill="${n}"] .mp-prism-top { fill: var(--fill
 .mp .mp-label.is-highlighted { font-weight: 700; }
 
 .mp .mp-label[data-fit="0"] { display: none; }
+
+/*
+ * The annotation layer.
+ *
+ * The pin's label is a .mp-label, so it arrives already carrying the type
+ * stack, the tracking and the casing — the halo is the whole difference
+ * between a name that reads over a coastline and one that dissolves into it,
+ * and a class of its own would have had to restate all of it. It is set at the
+ * settlement size and bold: an annotation is the point of the map, so it
+ * out-ranks a city name drawn at the same size.
+ *
+ * It is deliberately NOT filled with --anno-ink, which is the obvious guess
+ * and would be invisible. Every bundled preset sets --anno-ink to the same
+ * value as --label-halo — white on minimal and contrast, #F2EAD8 on atlas,
+ * #0B0E11 on noir — because what it was authored to mean is the ink drawn on
+ * top of a mark, legible against --anno. Filling text with it and casing that
+ * text in --label-halo paints white on white. So it stays reserved until a
+ * callout has a box to put ink inside, and a pin's label takes --ink, like
+ * every other name on the map.
+ */
+/*
+ * The mark is cased, and it has to be. Every bundled preset sets --anno to the
+ * same value as --accent — deliberately, so a marked map and a highlighted one
+ * agree — which means a pin dropped on a highlighted country is drawn in the
+ * country's own colour and disappears. That is not a hypothetical: a region,
+ * a highlight and a marker is the map this whole layer exists to make.
+ *
+ * So the mark gets the same casing its label gets, from the same two tokens.
+ * A pin then reads against any ground the map can put under it, including an
+ * accent-coloured country, and the mark and the word beside it are separated
+ * from the map in the same way rather than in two different ways.
+ */
+.mp .mp-pin-mark {
+  fill: var(--anno);
+  stroke: var(--label-halo);
+  stroke-width: var(--label-halo-width);
+}
+
+.mp .mp-label[data-kind="pin"] {
+  font-size: var(--place-label-size);
+  font-weight: 700;
+}
+
+/*
+ * The callout: a leader line, a filled box, and the caption inside it.
+ *
+ * The caption is the one piece of text on the map that does NOT take the halo.
+ * Every other label is set over whatever the geography put beneath it and needs
+ * casing to survive; this one is set on a solid box of its own, where a halo
+ * would only fatten the glyphs against a ground already doing the work. So the
+ * stroke is turned off and the fill comes from --anno-ink, which is the value
+ * every preset has carried since Phase 3 for exactly this.
+ */
+.mp .mp-callout-leader {
+  fill: none;
+  stroke: var(--anno);
+  /* A literal rather than a token. --border-width is a hairline on most
+     presets and a leader drawn at it disappears, and no token in the
+     vocabulary means "the weight of a pointing line". Adding one is a contract
+     change nobody has asked for, and widening later breaks no theme. */
+  stroke-width: 1.25;
+  stroke-linecap: round;
+}
+
+/* Outlined in its own ink, so the balloon has an edge on any ground it lands
+   on — including a highlighted country, which is the one place a fill alone
+   cannot be relied on to separate it. */
+.mp .mp-callout-box {
+  fill: var(--anno);
+  stroke: var(--anno-ink);
+  stroke-width: 1;
+}
+
+.mp .mp-label[data-kind="callout"] {
+  fill: var(--anno-ink);
+  font-size: var(--place-label-size);
+  font-weight: 500;
+  stroke: none;
+}
+
+/*
+ * A pin whose coordinate falls outside the canvas. The mark is mostly off the
+ * edge already; this stops the sliver of it that overlaps from reading as a
+ * mark of its own. Same bargain the labels take — the engine states the fact,
+ * the stylesheet decides what to do about it.
+ */
+.mp .mp-anno[data-fit="0"] { display: none; }
 `.trim();
 
 export interface ThemeParts {

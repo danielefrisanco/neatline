@@ -63,7 +63,7 @@
       "name": "annotations",
       "className": "mp-annotations",
       "feature": "mp-anno",
-      "status": "reserved"
+      "status": "live"
     },
     {
       "name": "furniture",
@@ -76,6 +76,8 @@
     "mp-anno",
     "mp-arrow",
     "mp-callout",
+    "mp-callout-box",
+    "mp-callout-leader",
     "mp-compass",
     "mp-credit",
     "mp-flow",
@@ -83,6 +85,7 @@
     "mp-hatch-line",
     "mp-legend",
     "mp-pin",
+    "mp-pin-mark",
     "mp-prism",
     "mp-prism-side",
     "mp-prism-top",
@@ -138,8 +141,8 @@
     "--glacier (reserved)",
     "--sea-ink (reserved)",
     "--neighbour (live)",
-    "--anno (reserved)",
-    "--anno-ink (reserved)",
+    "--anno (live)",
+    "--anno-ink (live)",
     "--furniture-ink (reserved)"
   ],
   "presets": {

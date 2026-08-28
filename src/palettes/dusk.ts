@@ -45,7 +45,7 @@ export const dusk = `
   --sea-ink: #5A7386;
   --road: #C08A4A;
   --neighbour: #17222D;
-  --anno: #E0794B;
+  --anno: #F2A077;
   --anno-ink: #0E1620;
   --furniture-ink: #7B8B9C;
 }

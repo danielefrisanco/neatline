@@ -108,6 +108,37 @@ describe.each(themes)("theme %s", (name, css) => {
    * specificity, so the later one wins outright. Highlight is the caller naming
    * a country; a band is a number it fell into — so highlight has to be last.
    */
+  /**
+   * An annotation has to stay visible on a highlighted country.
+   *
+   * Every preset shipped `--anno` as a byte-for-byte copy of `--accent`, which
+   * was harmless for as long as nothing consumed it and wrong the moment
+   * something did: a pin dropped on a highlighted country was drawn in that
+   * country's own colour, and a callout's balloon and leader line merged into
+   * the land beneath them. A region, a highlight and a mark is the map this
+   * layer exists to make, so it is the one combination that must not collide.
+   *
+   * `--label-halo` is checked one step down for the same reason: the pin's mark
+   * is cased in it, and a mark whose fill matches its casing is not there.
+   */
+  it.each([
+    ["light", light],
+    ["dark", dark],
+  ])("keeps an annotation distinct from a highlight in %s", (which, read) => {
+    // A dark block only overrides, so the value in force is light under it.
+    const values = new Map([...light(css), ...(which === "dark" ? read(css) : [])]);
+    const anno = values.get("--anno");
+    expect(anno, `${name} sets no --anno`).toBeDefined();
+    expect(
+      anno,
+      `${name} ${which}: --anno is the accent, so a mark on a highlight vanishes`,
+    ).not.toBe(values.get("--accent"));
+    expect(
+      anno,
+      `${name} ${which}: --anno is the label halo, so a pin's casing vanishes`,
+    ).not.toBe(values.get("--label-halo"));
+  });
+
   it("lets a highlight beat a band", () => {
     const selectors = rules(css).map((r) => r.selector.trim());
     const highlighted = selectors.indexOf(".mp .mp-country.is-highlighted");
@@ -128,6 +159,18 @@ describe.each(palettes)("palette %s", (name, css) => {
   it("covers the whole colour vocabulary", () => {
     const defined = light(css);
     expect([...LIVE_COLOURS].filter((token) => !defined.has(token))).toEqual([]);
+  });
+
+  it("keeps an annotation distinct from a highlight", () => {
+    // A palette recolours the whole vocabulary, so it can reintroduce the
+    // collision the themes were just cleared of.
+    const defined = light(css);
+    expect(defined.get("--anno"), `${name}: --anno is the accent`).not.toBe(
+      defined.get("--accent"),
+    );
+    expect(defined.get("--anno"), `${name}: --anno is the label halo`).not.toBe(
+      defined.get("--label-halo"),
+    );
   });
 
   it("carries no structure", () => {

@@ -65,15 +65,27 @@ export interface LabelSizes {
   readonly place: number;
   /** How wide the chosen face runs, as a fraction of the size. */
   readonly advance: number;
+  /**
+   * Letter-spacing, in user units per character.
+   *
+   * Read for the annotation layer, which has to size a box around a caption and
+   * therefore cannot ignore the tracking the way the fit test does. `noir` sets
+   * it to 0.3, which over a twenty-character line is six units the box would
+   * otherwise not have accounted for — and a caption printed through the side
+   * of its own box is exactly what that looked like.
+   */
+  readonly track: number;
 }
 
-function declared(css: string, token: string, fallback: number): number {
+function declared(css: string, token: string, fallback: number, allowZero = false): number {
   const pattern = new RegExp(`${token}\\s*:\\s*([\\d.]+)`, "g");
   let size = fallback;
   let match: RegExpExecArray | null;
   while ((match = pattern.exec(css)) !== null) {
     const value = Number(match[1]);
-    if (Number.isFinite(value) && value > 0) size = value;
+    // A size of zero is a broken stylesheet and the fallback is kinder. Tracking
+    // of zero is the commonest value there is, so it has to be allowed through.
+    if (Number.isFinite(value) && (value > 0 || (allowZero && value === 0))) size = value;
   }
   return size;
 }
@@ -93,6 +105,7 @@ export function labelSizes(css: string): LabelSizes {
     country,
     place: declared(css, "--place-label-size", country),
     advance: declared(css, "--label-advance", ADVANCE),
+    track: declared(css, "--label-track", 0, true),
   };
 }
 
@@ -100,7 +113,15 @@ function round(value: number): number {
   return Math.round(value * 10) / 10;
 }
 
-function textWidth(name: string, size: number, advance: number): number {
+/**
+ * Estimated width of a string, in user units.
+ *
+ * Exported because the annotation layer has to size a callout's box around its
+ * caption, and two estimators would drift: this one is the whole meaning of
+ * `--label-advance`, the channel by which a stylesheet tells the geometry how
+ * wide its own face runs.
+ */
+export function textWidth(name: string, size: number, advance: number): number {
   return name.length * size * advance;
 }
 

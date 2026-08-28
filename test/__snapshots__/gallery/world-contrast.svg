@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1x1orql" role="img" aria-label="Map of the world">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1qx6ida" role="img" aria-label="Map of the world">
   <title>Map of the world</title>
   <style>
-    .mp.mp-t-1x1orql {
+    .mp.mp-t-1qx6ida {
       --bg: #E8E8E8;
       --land: #FFFFFF;
       --land-edge: #000000;
@@ -49,72 +49,72 @@
       --sea-ink: #000000;
       --road: #000000;
       --neighbour: #E8E8E8;
-      --anno: #000000;
+      --anno: #4A4A4A;
       --anno-ink: #FFFFFF;
       --furniture-ink: #000000;
     }
-    .mp.mp-t-1x1orql .mp-bg {
+    .mp.mp-t-1qx6ida .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-1x1orql .mp-neighbour {
+    .mp.mp-t-1qx6ida .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-1x1orql .mp-country {
+    .mp.mp-t-1qx6ida .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-1x1orql .mp-country[data-bin="1"] {
+    .mp.mp-t-1qx6ida .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-1x1orql .mp-country[data-bin="2"] {
+    .mp.mp-t-1qx6ida .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-1x1orql .mp-country[data-bin="3"] {
+    .mp.mp-t-1qx6ida .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-1x1orql .mp-country[data-bin="4"] {
+    .mp.mp-t-1qx6ida .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-1x1orql .mp-country[data-bin="5"] {
+    .mp.mp-t-1qx6ida .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-1x1orql .mp-country[data-fill="1"] {
+    .mp.mp-t-1qx6ida .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-1x1orql .mp-country[data-fill="2"] {
+    .mp.mp-t-1qx6ida .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-1x1orql .mp-country[data-fill="3"] {
+    .mp.mp-t-1qx6ida .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-1x1orql .mp-country[data-fill="4"] {
+    .mp.mp-t-1qx6ida .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-1x1orql .mp-country[data-fill="5"] {
+    .mp.mp-t-1qx6ida .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-1x1orql .mp-country[data-fill="6"] {
+    .mp.mp-t-1qx6ida .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-1x1orql .mp-country.is-highlighted {
+    .mp.mp-t-1qx6ida .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-1x1orql .mp-water[data-kind="lake"] {
+    .mp.mp-t-1qx6ida .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-1x1orql .mp-water[data-kind="river"] {
+    .mp.mp-t-1qx6ida .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-1x1orql .mp-border {
+    .mp.mp-t-1qx6ida .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -122,78 +122,78 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-1x1orql .mp-road {
+    .mp.mp-t-1qx6ida .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-1x1orql .mp-place {
+    .mp.mp-t-1qx6ida .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-1x1orql .mp-prism-top {
+    .mp.mp-t-1qx6ida .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-1x1orql .mp-prism-side {
+    .mp.mp-t-1qx6ida .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-1x1orql .mp-prism-edge {
+    .mp.mp-t-1qx6ida .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-1x1orql .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-1qx6ida .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-1x1orql .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-1qx6ida .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-1x1orql .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-1qx6ida .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-1x1orql .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-1qx6ida .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-1x1orql .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-1qx6ida .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-1x1orql .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-1qx6ida .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-1x1orql .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-1qx6ida .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-1x1orql .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-1qx6ida .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-1x1orql .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-1qx6ida .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-1x1orql .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-1qx6ida .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-1x1orql .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-1qx6ida .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-1x1orql .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-1qx6ida .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-1x1orql .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-1qx6ida .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-1x1orql .mp-hatch {
+    .mp.mp-t-1qx6ida .mp-hatch {
       fill: url(#mp-stripe);
       stroke: none;
     }
-    .mp.mp-t-1x1orql .mp-hatch-line {
+    .mp.mp-t-1qx6ida .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-1x1orql .mp-label {
+    .mp.mp-t-1qx6ida .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
@@ -204,23 +204,52 @@
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-1x1orql .mp-label[data-kind="place"] {
+    .mp.mp-t-1qx6ida .mp-label[data-kind="place"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
     }
-    .mp.mp-t-1x1orql .mp-label.is-highlighted {
+    .mp.mp-t-1qx6ida .mp-label.is-highlighted {
       font-weight: 700;
     }
-    .mp.mp-t-1x1orql .mp-label[data-fit="0"] {
+    .mp.mp-t-1qx6ida .mp-label[data-fit="0"] {
       display: none;
     }
-    .mp.mp-t-1x1orql .mp-water[data-kind="lake"] {
+    .mp.mp-t-1qx6ida .mp-pin-mark {
+      fill: var(--anno);
+      stroke: var(--label-halo);
+      stroke-width: var(--label-halo-width);
+    }
+    .mp.mp-t-1qx6ida .mp-label[data-kind="pin"] {
+      font-size: var(--place-label-size);
+      font-weight: 700;
+    }
+    .mp.mp-t-1qx6ida .mp-callout-leader {
+      fill: none;
+      stroke: var(--anno);
+      stroke-width: 1.25;
+      stroke-linecap: round;
+    }
+    .mp.mp-t-1qx6ida .mp-callout-box {
+      fill: var(--anno);
+      stroke: var(--anno-ink);
+      stroke-width: 1;
+    }
+    .mp.mp-t-1qx6ida .mp-label[data-kind="callout"] {
+      fill: var(--anno-ink);
+      font-size: var(--place-label-size);
+      font-weight: 500;
+      stroke: none;
+    }
+    .mp.mp-t-1qx6ida .mp-anno[data-fit="0"] {
+      display: none;
+    }
+    .mp.mp-t-1qx6ida .mp-water[data-kind="lake"] {
       fill: var(--bg);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-1x1orql {
+      .mp.mp-t-1qx6ida {
         --bg: #171717;
         --land: #000000;
         --land-edge: #FFFFFF;
@@ -246,7 +275,7 @@
         --label-halo: #000000;
         --water: #FFFFFF;
         --neighbour: #171717;
-        --anno: #FFFFFF;
+        --anno: #B8B8B8;
         --anno-ink: #000000;
         --stripe: #FFFFFF;
         --furniture-ink: #FFFFFF;

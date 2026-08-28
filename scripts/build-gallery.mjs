@@ -33,6 +33,8 @@ const FEATURES = [
   ["names", (s) => s.includes('data-kind="country"')],
   ["cities", (s) => s.includes('data-kind="place"')],
   ["water", (s) => s.includes('class="mp-water"')],
+  ["pins", (s) => s.includes('class="mp-anno mp-pin"')],
+  ["callouts", (s) => s.includes('class="mp-anno mp-callout"')],
 ];
 
 const escape = (s) =>

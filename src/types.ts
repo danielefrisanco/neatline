@@ -71,6 +71,100 @@ export type Region =
   | { readonly bbox: BBox }
   | GeoJsonFeatureCollection;
 
+/**
+ * A mark at a coordinate — the first of the annotation primitives, and the one
+ * that settles the shape of the rest.
+ *
+ * Arrows, callouts and icons all have to say *where*, and they all say it the
+ * way this does: `at`, in lon/lat, GeoJSON order. Storing the coordinate
+ * rather than the pixel is the whole discipline of the layer — a pixel is only
+ * meaningful for the exact region, projection and canvas size that produced
+ * it, so a map reframed or resized detaches every mark placed in pixels. Where
+ * a mark is placed with a pointer, `invert()` is what turns the drop back into
+ * a coordinate to store.
+ *
+ * Annotations are excluded from the camera, exactly as `neighbours` is:
+ * placing a mark never moves the map out from under the marks already placed.
+ *
+ * ```ts
+ * pins: [
+ *   { at: [2.35, 48.86], label: "Paris", kind: "capital" },
+ *   { at: [30.52, 50.45], label: "Kyiv", id: "k1", offset: [-10, 0] },
+ * ]
+ * ```
+ */
+export interface Pin {
+  /** Where the mark goes, in `[lon, lat]`. */
+  readonly at: Position;
+  /** Text set beside the mark. Omitted, the pin is a mark and nothing else. */
+  readonly label?: string;
+  /**
+   * The caller's handle on this pin, written out as `data-id`.
+   *
+   * What an editor uses to find the node it just drew again — which is why the
+   * taxonomy reserved `data-id` on the annotation layer and nowhere else.
+   */
+  readonly id?: string;
+  /**
+   * What kind of thing this is, written out as `data-kind` for a theme to
+   * style — `"capital"`, `"airport"`, `"conflict"`.
+   *
+   * Free text rather than an enumeration, because the vocabulary is not
+   * settled: the icon sets arrive later in this phase and their names become
+   * the conventional values. A theme can style any of them today.
+   */
+  readonly kind?: string;
+  /**
+   * Move the *label* off the mark, in user units, `[dx, dy]`.
+   *
+   * Never the mark, which stays on its coordinate — that is what a pin is for.
+   * A negative `dx` anchors the text at its far end, so a label pushed left
+   * does not run back across the mark it was moved away from.
+   */
+  readonly offset?: Point;
+}
+
+/**
+ * A caption tied to a coordinate by a leader line.
+ *
+ * The difference from a [`Pin`](#Pin) is which half is the subject. A pin says
+ * *there is something here* and the mark carries the meaning; a callout says
+ * *this sentence is about here*, and the words carry it while the line does
+ * nothing but point. That is why a callout has a box and a pin does not — a
+ * word can sit on a coastline behind a halo, and a sentence cannot.
+ *
+ * It says `where` exactly as a pin does, because everything in this layer
+ * does: `at`, in `[lon, lat]`.
+ *
+ * ```ts
+ * callouts: [
+ *   { at: [30.52, 50.45], text: "Grain exports resumed here in July", offset: [60, -70] },
+ * ]
+ * ```
+ */
+export interface Callout {
+  /** The coordinate the leader line points at. */
+  readonly at: Position;
+  /** The caption. Wrapped to `width`; blank lines and runs of spaces collapse. */
+  readonly text: string;
+  /**
+   * Where the box goes relative to the point, in user units, `[dx, dy]`.
+   *
+   * The offset lands the corner of the box nearest the point, and the box
+   * extends away from there — so a negative `dx` puts the box to the left of
+   * what it describes and a negative `dy` puts it above.
+   *
+   * @default [40, -40]
+   */
+  readonly offset?: Point;
+  /** Widest the caption may set before it wraps, in user units. @default 180 */
+  readonly width?: number;
+  /** The caller's handle, written out as `data-id`. */
+  readonly id?: string;
+  /** What kind of thing this is, written out as `data-kind` for a theme. */
+  readonly kind?: string;
+}
+
 export interface MapOptions {
   /** Preset name, ISO 3166-1 alpha-2 codes, a bounding box, or raw GeoJSON. */
   readonly region: Region;
@@ -175,6 +269,29 @@ export interface MapOptions {
    * @default 1
    */
   readonly labelRank?: 1 | 2 | 3;
+  /**
+   * Marks placed on the map at a coordinate.
+   *
+   * The journalist's actual need: a dot where the thing happened, and a word
+   * saying what it was. Rendered into the `.mp-annotations` layer, above every
+   * geographic layer and below the furniture.
+   *
+   * A pin the projection cannot place at all — the far side of an orthographic
+   * globe — is dropped, because the only alternative is to draw it at a
+   * coordinate nobody asked for. A pin that lands outside the canvas is
+   * emitted carrying `data-fit="0"`: it has a place, the camera is simply not
+   * looking at it, and the stylesheet decides what to do about that.
+   */
+  readonly pins?: readonly Pin[];
+  /**
+   * Captions tied to a coordinate by a leader line.
+   *
+   * A pin names a place; a callout says something about one. Drawn into the
+   * same `.mp-annotations` layer, above the pins, and subject to the same two
+   * rules: a coordinate behind a globe is dropped, and one the camera is not
+   * pointed at is drawn carrying `data-fit="0"`.
+   */
+  readonly callouts?: readonly Callout[];
   /** Bundled theme name, a path to a `.css` file, or a stylesheet. */
   readonly theme?: string;
   /**

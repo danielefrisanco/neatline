@@ -124,7 +124,7 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     name: "annotations",
     className: "mp-annotations",
     feature: "mp-anno",
-    status: "reserved",
+    status: "live",
     carries: "Pins, arrows and callouts — the top of the geographic stack",
   },
   {
@@ -157,14 +157,33 @@ export const DEFS_CLASS = "mp-defs";
 export const HIGHLIGHT_CLASS = "is-highlighted";
 
 /**
- * Feature classes claimed but not built. Naming them here keeps a future layer
- * from colliding with a name a theme already relies on.
+ * Every feature class that is not a layer's own.
+ *
+ * The list was first written as "claimed but not built", and it stopped being
+ * that the moment a prism was drawn: `mp-prism-top` and `mp-hatch-line` are
+ * emitted on every extruded and hatched map and are still listed here. The
+ * rule it actually follows — and the more useful one — is that `LAYERS` names
+ * one feature class per layer, and everything else a document can contain is
+ * named here, built or not. The pin and callout classes join on those terms:
+ * pins and callouts are live, and none of them is the annotation layer's feature
+ * class, which is `mp-anno`.
+ *
+ * Naming them keeps a future layer from colliding with a name a theme already
+ * relies on, which is the reason the list exists either way.
  */
 export const RESERVED_CLASSES: readonly string[] = Object.freeze([
   "mp-anno",
+  // A pin is a group: the mark sits at the coordinate, and the label sits
+  // beside it carrying `mp-label`, because a name on a map wants the type,
+  // the tracking and above all the halo that rule already provides.
   "mp-pin",
+  "mp-pin-mark",
   "mp-arrow",
+  // A callout is a group too: a leader line from the coordinate to the corner
+  // of a box, and the caption set inside it on `mp-label`.
   "mp-callout",
+  "mp-callout-leader",
+  "mp-callout-box",
   // Data-driven renderings of the land layer. A prism map extrudes each
   // country by its value, so a country stops being one path and becomes a top
   // face plus side walls — a different rendering of the same layer, not a new
