@@ -7,3 +7,9 @@ themes/
 palettes/
 data/
 typefaces/
+
+# The build plan, kept next to the code so it is not forgotten.
+# Published at https://claude.ai/code/artifact/1ad97eac-6e9c-4944-96fb-3e6530d9e83d
+# Untracked deliberately: it is a 75 KB single-file page, and the artifact is
+# the canonical copy. PLAN.md carries the tracked summary.
+neatline-plan.html

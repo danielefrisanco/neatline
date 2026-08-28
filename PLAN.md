@@ -1,5 +1,13 @@
 # Build plan
 
+**The full plan is a published page:**
+<https://claude.ai/code/artifact/1ad97eac-6e9c-4944-96fb-3e6530d9e83d>
+
+A copy of it sits in this directory as `neatline-plan.html`, untracked — open it
+in a browser. It is gitignored on purpose: it is a 75 KB single-file page and
+the published version is canonical, so a tracked copy would only drift. This
+file is the tracked summary — the parts worth having in a diff.
+
 What is being built, in what order, and why each thing waits for the one before
 it. The [CHANGELOG](CHANGELOG.md) is the record of what shipped; this is the
 record of what is intended.
@@ -73,8 +81,11 @@ ships `ocean` and `coastlines` objects that the data bundle currently discards;
 it keeps only countries, lakes, rivers and places. Adding `ocean` gives a real
 sea that stops at the shoreline.
 
-This wants its own layer at the bottom of the stack, below `neighbours`, with
-its own token. It is a taxonomy change, so it is breaking under the policy.
+This wants its own layer at the very bottom of the stack, below `graticule`,
+with its own token — and going at the bottom is what makes it **additive rather
+than breaking**. The policy calls renaming or reordering a class breaking;
+adding a layer beneath everything reorders nothing above it, which is the same
+bargain furniture got by being reserved at the very top.
 
 ### Brighter palette — one file
 
