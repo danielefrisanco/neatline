@@ -1,0 +1,550 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 900" width="1000" height="900" preserveAspectRatio="xMidYMid meet" class="mp mp-t-1lxvzb4" role="img" aria-label="Seven marks, six of which name an icon">
+  <title>Seven marks, six of which name an icon</title>
+  <style>
+    .mp.mp-t-1lxvzb4 {
+      --bg: transparent;
+      --land: #D8D8D2;
+      --land-edge: #FFFFFF;
+      --land-edge-width: 0.5;
+      --border: #94948C;
+      --border-width: 0.75;
+      --border-dash: none;
+      --accent: #C2482F;
+      --accent-edge: #FFFFFF;
+      --bin-1: #EDEDE8;
+      --bin-2: #C6CFC5;
+      --bin-3: #9CAFA3;
+      --bin-4: #6E857A;
+      --bin-5: #435850;
+      --fill-1: #B9C7B4;
+      --fill-2: #DFCBA8;
+      --fill-3: #A9BECF;
+      --fill-4: #D3AFB4;
+      --fill-5: #C9C49A;
+      --fill-6: #B6ADC6;
+      --prism-side: #29352F;
+      --accent-side: #8A3320;
+      --place: #2B2B29;
+      --ink: #2B2B29;
+      --ink-muted: #80807A;
+      --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      --label-size: 13;
+      --place-label-size: 11;
+      --label-track: 0;
+      --label-weight: 500;
+      --label-advance: 0.58;
+      --label-halo: #FFFFFF;
+      --label-halo-width: 2.4;
+      --stripe: #6E6E68;
+      --stripe-width: 1.6;
+      --water: #8FB0C4;
+      --water-width: 1.1;
+      --graticule: #C9C9C3;
+      --graticule-width: 0.4;
+      --equator: #A8A8A0;
+      --desert: #E8DFC4;
+      --forest: #B9C9B0;
+      --mountain: #CFC6B6;
+      --glacier: #F2F4F5;
+      --sea-ink: #7E96A6;
+      --road: #B08A3E;
+      --neighbour: #F0F0EE;
+      --anno: #8E2F1C;
+      --anno-ink: #FFFFFF;
+      --furniture-ink: #80807A;
+    }
+    .mp.mp-t-1lxvzb4 .mp-bg {
+      fill: var(--bg);
+    }
+    .mp.mp-t-1lxvzb4 .mp-neighbour {
+      fill: var(--neighbour);
+      stroke: none;
+    }
+    .mp.mp-t-1lxvzb4 .mp-country {
+      fill: var(--land);
+      stroke: var(--land-edge);
+      stroke-width: var(--land-edge-width);
+      stroke-linejoin: round;
+    }
+    .mp.mp-t-1lxvzb4 .mp-country[data-bin="1"] {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-1lxvzb4 .mp-country[data-bin="2"] {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-1lxvzb4 .mp-country[data-bin="3"] {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-1lxvzb4 .mp-country[data-bin="4"] {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-1lxvzb4 .mp-country[data-bin="5"] {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-1lxvzb4 .mp-country[data-fill="1"] {
+      fill: var(--fill-1);
+    }
+    .mp.mp-t-1lxvzb4 .mp-country[data-fill="2"] {
+      fill: var(--fill-2);
+    }
+    .mp.mp-t-1lxvzb4 .mp-country[data-fill="3"] {
+      fill: var(--fill-3);
+    }
+    .mp.mp-t-1lxvzb4 .mp-country[data-fill="4"] {
+      fill: var(--fill-4);
+    }
+    .mp.mp-t-1lxvzb4 .mp-country[data-fill="5"] {
+      fill: var(--fill-5);
+    }
+    .mp.mp-t-1lxvzb4 .mp-country[data-fill="6"] {
+      fill: var(--fill-6);
+    }
+    .mp.mp-t-1lxvzb4 .mp-country.is-highlighted {
+      fill: var(--accent);
+      stroke: var(--accent-edge);
+    }
+    .mp.mp-t-1lxvzb4 .mp-water[data-kind="lake"] {
+      fill: var(--water);
+      stroke: none;
+    }
+    .mp.mp-t-1lxvzb4 .mp-water[data-kind="river"] {
+      fill: none;
+      stroke: var(--water);
+      stroke-width: var(--water-width);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .mp.mp-t-1lxvzb4 .mp-border {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: var(--border-width);
+      stroke-dasharray: var(--border-dash);
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+    .mp.mp-t-1lxvzb4 .mp-road {
+      fill: none;
+      stroke: var(--road);
+    }
+    .mp.mp-t-1lxvzb4 .mp-place {
+      fill: var(--place);
+      stroke: none;
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism-top {
+      fill: var(--land);
+      stroke: var(--land-edge);
+      stroke-width: var(--land-edge-width);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism-side {
+      fill: var(--prism-side);
+      stroke: none;
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism-edge {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: var(--border-width);
+      stroke-dasharray: var(--border-dash);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism[data-bin="1"] .mp-prism-top {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism[data-bin="2"] .mp-prism-top {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism[data-bin="3"] .mp-prism-top {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism[data-bin="4"] .mp-prism-top {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism[data-bin="5"] .mp-prism-top {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism[data-fill="1"] .mp-prism-top {
+      fill: var(--fill-1);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism[data-fill="2"] .mp-prism-top {
+      fill: var(--fill-2);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism[data-fill="3"] .mp-prism-top {
+      fill: var(--fill-3);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism[data-fill="4"] .mp-prism-top {
+      fill: var(--fill-4);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism[data-fill="5"] .mp-prism-top {
+      fill: var(--fill-5);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism[data-fill="6"] .mp-prism-top {
+      fill: var(--fill-6);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism.is-highlighted .mp-prism-top {
+      fill: var(--accent);
+    }
+    .mp.mp-t-1lxvzb4 .mp-prism.is-highlighted .mp-prism-side {
+      fill: var(--accent-side);
+    }
+    .mp.mp-t-1lxvzb4 .mp-hatch {
+      fill: url(#mp-stripe-1a6pmcx);
+      stroke: none;
+    }
+    .mp.mp-t-1lxvzb4 .mp-hatch-line {
+      fill: none;
+      stroke: var(--stripe);
+      stroke-width: var(--stripe-width);
+    }
+    .mp.mp-t-1lxvzb4 .mp-label {
+      fill: var(--ink);
+      font-family: var(--font);
+      font-size: var(--label-size);
+      font-weight: var(--label-weight);
+      letter-spacing: var(--label-track);
+      stroke: var(--label-halo);
+      stroke-width: var(--label-halo-width);
+      stroke-linejoin: round;
+      paint-order: stroke;
+    }
+    .mp.mp-t-1lxvzb4 .mp-label[data-kind="place"] {
+      fill: var(--ink-muted);
+      font-size: var(--place-label-size);
+    }
+    .mp.mp-t-1lxvzb4 .mp-label.is-highlighted {
+      font-weight: 700;
+    }
+    .mp.mp-t-1lxvzb4 .mp-label[data-fit="0"] {
+      display: none;
+    }
+    .mp.mp-t-1lxvzb4 .mp-pin-mark {
+      fill: var(--anno);
+      stroke: var(--label-halo);
+      stroke-width: var(--label-halo-width);
+    }
+    .mp.mp-t-1lxvzb4 .mp-icon {
+      fill: var(--anno-ink);
+      stroke: none;
+    }
+    .mp.mp-t-1lxvzb4 .mp-label[data-kind="pin"] {
+      font-size: var(--place-label-size);
+      font-weight: 700;
+    }
+    .mp.mp-t-1lxvzb4 .mp-arrow-line {
+      fill: none;
+      stroke: var(--anno);
+      stroke-width: 2;
+      stroke-linecap: round;
+      marker-end: url(#mp-arrowhead-1a6pmcx);
+    }
+    .mp.mp-t-1lxvzb4 .mp-arrow-head {
+      fill: var(--anno);
+      stroke: none;
+    }
+    .mp.mp-t-1lxvzb4 .mp-callout-leader {
+      fill: none;
+      stroke: var(--anno);
+      stroke-width: 1.25;
+      stroke-linecap: round;
+    }
+    .mp.mp-t-1lxvzb4 .mp-callout-box {
+      fill: var(--anno);
+      stroke: var(--anno-ink);
+      stroke-width: 1;
+    }
+    .mp.mp-t-1lxvzb4 .mp-label[data-kind="callout"] {
+      fill: var(--anno-ink);
+      font-size: var(--place-label-size);
+      font-weight: 500;
+      stroke: none;
+    }
+    .mp.mp-t-1lxvzb4 .mp-anno[data-fit="0"] {
+      display: none;
+    }
+    .mp.mp-t-1lxvzb4 .mp-credit, .mp.mp-t-1lxvzb4 .mp-scale-label, .mp.mp-t-1lxvzb4 .mp-compass-label {
+      fill: var(--furniture-ink);
+      font-family: var(--font);
+      font-size: var(--place-label-size);
+      letter-spacing: var(--label-track);
+    }
+    .mp.mp-t-1lxvzb4 .mp-scale-bar {
+      fill: none;
+      stroke: var(--furniture-ink);
+      stroke-width: 1.5;
+    }
+    .mp.mp-t-1lxvzb4 .mp-compass-needle {
+      fill: var(--furniture-ink);
+    }
+    .mp.mp-t-1lxvzb4 .mp-watermark {
+      fill: var(--furniture-ink);
+      font-family: var(--font);
+      font-weight: 600;
+      letter-spacing: var(--label-track);
+      opacity: 0.18;
+    }
+    @media (prefers-color-scheme: dark) {
+      .mp.mp-t-1lxvzb4 {
+        --land: #2E3134;
+        --land-edge: #16181A;
+        --border: #6E747A;
+        --accent: #E2694A;
+        --accent-edge: #16181A;
+        --bin-1: #24272A;
+        --bin-2: #2F3A36;
+        --bin-3: #3F5049;
+        --bin-4: #55685E;
+        --bin-5: #7A9184;
+        --fill-1: #364039;
+        --fill-2: #453D2F;
+        --fill-3: #2F3B45;
+        --fill-4: #443338;
+        --fill-5: #41402E;
+        --fill-6: #383345;
+        --prism-side: #14181A;
+        --accent-side: #9C4832;
+        --place: #DCDCD6;
+        --ink: #DCDCD6;
+        --ink-muted: #85898D;
+        --label-halo: #1A1D1F;
+        --stripe: #9A9A94;
+        --water: #4C7A96;
+        --neighbour: #202325;
+        --anno: #F79A78;
+        --anno-ink: #16181A;
+        --furniture-ink: #85898D;
+      }
+    }
+    .mp.mp-t-1lxvzb4 {
+      --bg: #D9DCD0;
+      --land: #EDEBDD;
+      --land-edge: #B7B8A4;
+      --border: #5E6350;
+      --accent: #A8582C;
+      --accent-edge: #EDEBDD;
+      --bin-1: #F1EFE2;
+      --bin-2: #D6DCBE;
+      --bin-3: #AFC195;
+      --bin-4: #7E9A6C;
+      --bin-5: #4C6B45;
+      --fill-1: #E3E4C8;
+      --fill-2: #C9D9C2;
+      --fill-3: #EBD9BE;
+      --fill-4: #D8C9D2;
+      --fill-5: #E7CFC0;
+      --fill-6: #C2D2D6;
+      --prism-side: #3A4232;
+      --accent-side: #74381A;
+      --place: #33372A;
+      --ink: #33372A;
+      --ink-muted: #6E735E;
+      --label-halo: #EDEBDD;
+      --stripe: #6E735E;
+      --water: #6E93A0;
+      --graticule: #C3C6B6;
+      --equator: #9BA08A;
+      --desert: #E8DDBC;
+      --forest: #BCCFAE;
+      --mountain: #D5CDB8;
+      --glacier: #EEF3F2;
+      --sea-ink: #62808C;
+      --road: #A8582C;
+      --neighbour: #E2E1D2;
+      --anno: #71361A;
+      --anno-ink: #EDEBDD;
+      --furniture-ink: #6E735E;
+    }
+  </style>
+  <defs class="mp-defs">
+    <clipPath id="mp-land-clip-1a6pmcx">
+      <path d="M-1977.8,1307.9L-2028.8,1322.3L-2064.2,1339.4L-2091,1340.6L-2110.9,1327.2L-2106.5,1312.4L-2113.2,1303.3L-2133.6,1302.7L-2142.3,1280.5L-2118.9,1274L-2100.5,1260.5L-2079.8,1251L-2074,1216.9L-2054.2,1190.3L-2008,1177.1L-1999.7,1192L-1981.6,1223.8L-1970.7,1287.8ZM545.7,382.3L557.6,391.9L593.3,397.4L582,423.7L580,450.6L573.2,457.3L561.5,454.3L562.7,463.8L544.5,485.5L544.4,502.5L556.7,496.3L566.1,512.5L565.4,523.2L573.7,537.1L564.8,548.8L572.8,577.7L587.6,582L585.2,598.4L561.1,620.6L506.7,611.3L466.7,623.3L463.1,646L430.7,650.1L400,631.9L389.5,639.5L339.7,619.2L329.9,603.7L345.7,582.3L356.1,507.8L332.5,466.3L315.4,445.7L278.4,427.4L279,399.8L311.9,395L352.5,408.2L348,365.1L369.9,383L428,356.6L436.3,326L457.3,319L460.4,332.2L471.5,333.1L482.4,348.3L499.2,366.2L511.7,363.2L533.2,380.1L538.7,383.3ZM623.2,636.8L640.1,621.3L647,653.3L639.6,683.1L626.3,676.2L618.4,651.1ZM816.8,407.2L817.4,422.7L803.4,425.1L809.4,432.4L804.8,457.6L800.9,464.7L778.7,468.8L766.9,479.1L745.3,478.9L707.4,473.5L700.4,461.1L675.8,469.9L673.5,477.4L657.4,473.3L644.3,473.3L632.2,467.3L635.5,457.8L634.1,451.3L641.5,448.6L655.2,458.1L658,447.9L680.4,447.5L697.9,439L710.1,438.9L718.8,445.7L720.5,439.1L714.1,415.1L722.5,409.4L729.2,391.1L749,400.8L760.8,383.7L769.1,379.7L789.7,388.3L801,384.6L813.4,389.7L812.2,394.8ZM718.8,206.8L726.4,225.2L721.5,236.1L731.4,248.3L739.8,267.6L739.7,280.8L752.5,303.3L742.6,308.7L735.8,305.2L730.8,313.1L714.7,322.4L706.9,332.7L690.4,342.8L695.8,353.5L700.1,369L713.5,376.7L729.2,391.1L722.5,409.4L714.1,415.1L720.5,439.1L718.8,445.7L710.1,438.9L697.9,439L680.4,447.5L658,447.9L655.2,458.1L641.5,448.6L634.1,451.3L606.3,441.4L601.5,449.8L580,450.6L582,423.7L593.3,397.4L557.6,391.9L545.7,382.3L546.7,365.8L541.6,357.4L543.8,331.8L538.9,292.4L552.9,292L558.3,277.7L562.8,242.9L558.2,230.2L562.3,222.1L580.9,219.2L585.5,227.3L599.6,207.9L593.8,194L591.5,172.5L608.3,176.5L621.9,169.8L623.3,184.4L646.2,191.5L647.1,204.9L669,195.7L680.3,184.1L706.8,196.1ZM634.1,451.3L635.5,457.8L632.2,467.3L644.3,473.3L657.4,473.3L656.6,488.9L645.7,496.1L626.2,492.6L621.5,508.2L609.2,510.1L604.4,504.4L590.3,517.8L577.7,520.1L566.1,512.5L556.7,496.3L544.4,502.5L544.5,485.5L562.7,463.8L561.5,454.3L573.2,457.3L580,450.6L601.5,449.8L606.3,441.4ZM541.6,357.4L546.7,365.8L545.7,382.3L538.7,383.3L533.2,380.1L535.4,358.9ZM543.8,331.8L541.6,357.4L535.4,358.9L533.2,380.1L511.7,363.2L499.2,366.2L482.4,348.3L471.5,333.1L460.4,332.2L457.3,319L476.3,311.8L493.6,314.9L515.3,307L530.5,323.3ZM558.2,230.2L562.8,242.9L558.3,277.7L552.9,292L538.9,292.4L543.8,331.8L530.5,323.3L515.3,307L493.6,314.9L476.3,311.8L488.5,301.6L508.7,246L539.4,229.7ZM126.1,636.8L137.8,629L150,625.4L154,644.8L170.5,647.4L175.9,643.3L191.9,647L197.2,666.9L182.7,675.2L178.1,704.4L172.7,709.2L169,726.8L156,728L164.3,752.4L152.4,775.9L161,788.6L155.4,798.2L142.2,810.8L142.8,823.6L129.1,831.5L114.1,823.7L97.9,825.2L107.4,796.5L108.5,772.9L96,767.2L91.4,751.7L98.1,727.7L112,716.1L116.7,701.3L126.5,679.8L128.5,663.9L125.2,649.6ZM142.8,823.6L142.2,810.8L155.4,798.2L161,788.6L152.4,775.9L164.3,752.4L156,728L169,726.8L172.7,709.2L178.1,704.4L182.7,675.2L197.2,666.9L191.9,647L175.9,643.3L170.5,647.4L154,644.8L150,625.4L137.8,629L126.1,636.8L132.1,610.5L123.7,592.4L166.5,572L198.5,583.7L234.9,588.3L263.1,598.2L285.9,598.6L329.9,603.7L339.7,619.2L389.5,639.5L400,631.9L430.7,650.1L463.1,646L464.3,668L436.9,692.6L400.1,699.3L397,711.9L378.2,732L365.2,762.2L375.5,784.6L357.4,800.5L349.4,824.9L326,830.9L302.1,858.5L263.3,855.6L234.3,851.8L213.6,863.1L200.1,876L185.4,870.9L175.8,856.6L170.1,833.6ZM265.6,201L265.7,228.3L244,259.4L199.8,275.1L168.2,263.8L193.6,228.2L188.7,188.3L223.4,164.1L242.5,149.2L243.9,170L236.3,189.4L250,190.9ZM657.4,473.3L673.5,477.4L675.8,469.9L700.4,461.1L707.4,473.5L745.3,478.9L744.7,497.7L753,512.8L731.5,509.9L711.7,525.5L715,543.9L712.9,554.9L723.7,573.1L751.2,589.1L768.8,618.4L803.6,644.4L825.3,641L833.4,648.2L826.7,656.9L854,666.5L876.6,674.3L904.3,689.4L908.6,695.9L905.6,710.2L886.7,695.6L860.8,693.6L852.8,719.8L875.8,730.3L875.6,750.5L863.8,754.7L853.1,789.4L841.2,794.2L839.6,782.6L842.6,761.5L847.7,752.5L833.1,732.5L821.5,714.8L808.9,711.8L798.2,696.8L779,692.4L764.9,678.8L743.6,678.8L719.8,664.1L691.9,642.1L671.2,622L659.8,585.5L646,582.1L623.3,571.1L611.2,576.9L596.3,595.2L585.2,598.4L587.6,582L572.8,577.7L564.8,548.8L573.7,537.1L565.4,523.2L566.1,512.5L577.7,520.1L590.3,517.8L604.4,504.4L609.2,510.1L621.5,508.2L626.2,492.6L645.7,496.1L656.6,488.9ZM812.5,789.2L834.6,782.8L828.1,814.1L834.2,825.1L830.6,845.5L805.4,834.4L789.5,832.2L745.3,817.8L747.3,797.8L782.6,797.3ZM626,702.1L639.5,689.6L658.4,715.2L657.9,765.6L644.4,764.1L633.2,777.5L621.5,768.1L617.9,722.4L610.1,701.1ZM621.9,169.8L608.3,176.5L591.5,172.5L581.6,151.9L579.1,113L582,102.6L587.4,90.9L605.5,87.4L612,76.3L627.6,64.3L628.5,84L623.4,96.8L626.7,107.3L638.6,112.1L634.6,126.9L628,123.3L614.7,151.7ZM670.6,122.4L679.3,140.7L669.6,172.6L644.9,153.4L640.6,137.9ZM265.6,201L250,190.9L236.3,189.4L243.9,170L242.5,149.2L260.8,150.3L280.8,176.7ZM332.9,226.4L332.9,226.4L338.2,204.8L325.7,180.1L325.5,179.5L299.7,170L295.8,159.2L305.6,143.2L299.8,132L286.1,148.4L289.5,111.9L281.5,91.2L294.1,53L313.6,24L329.1,28.9L353.5,28.1L327.7,67.2L349,64.1L371.3,66.2L363.5,96.8L341.5,129.2L363.3,133.6L364.6,137.7L380.6,183.9L395.2,190.9L406.5,234.8L412.2,250L439.6,258.4L436,282.4L423.6,293L432.3,312.9L410.1,331.7L378.3,329.6L337,336.9L326.5,328.5L309,344.5L287.3,337.9L268.8,350.2L257,341.1L296.4,305.9L318.3,300.1L318.1,300L282.3,289.8L277.6,274.1L303,265.3L292.8,243.6L299.9,219.4Z"/>
+    </clipPath>
+    <pattern id="mp-stripe-1a6pmcx" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path class="mp-hatch-line" d="M0,0 V7" fill="none" stroke="#6E735E" stroke-width="1.6"/>
+    </pattern>
+    <marker id="mp-arrowhead-1a6pmcx" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path class="mp-arrow-head" d="M0,0 L10,5 L0,10 Z" fill="#71361A" stroke="none"/>
+    </marker>
+  </defs>
+  <rect class="mp-bg" x="0" y="0" width="1000" height="900" fill="#D9DCD0"/>
+  <g class="mp-layer mp-graticule"/>
+  <g class="mp-layer mp-neighbours"/>
+  <g class="mp-layer mp-land">
+    <path class="mp-country" data-iso="FR" data-name="France" d="M-1977.8,1307.9L-2028.8,1322.3L-2064.2,1339.4L-2091,1340.6L-2110.9,1327.2L-2106.5,1312.4L-2113.2,1303.3L-2133.6,1302.7L-2142.3,1280.5L-2118.9,1274L-2100.5,1260.5L-2079.8,1251L-2074,1216.9L-2054.2,1190.3L-2008,1177.1L-1999.7,1192L-1981.6,1223.8L-1970.7,1287.8ZM545.7,382.3L557.6,391.9L593.3,397.4L582,423.7L580,450.6L573.2,457.3L561.5,454.3L562.7,463.8L544.5,485.5L544.4,502.5L556.7,496.3L566.1,512.5L565.4,523.2L573.7,537.1L564.8,548.8L572.8,577.7L587.6,582L585.2,598.4L561.1,620.6L506.7,611.3L466.7,623.3L463.1,646L430.7,650.1L400,631.9L389.5,639.5L339.7,619.2L329.9,603.7L345.7,582.3L356.1,507.8L332.5,466.3L315.4,445.7L278.4,427.4L279,399.8L311.9,395L352.5,408.2L348,365.1L369.9,383L428,356.6L436.3,326L457.3,319L460.4,332.2L471.5,333.1L482.4,348.3L499.2,366.2L511.7,363.2L533.2,380.1L538.7,383.3ZM623.2,636.8L640.1,621.3L647,653.3L639.6,683.1L626.3,676.2L618.4,651.1Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>France</title>
+    </path>
+    <path class="mp-country" data-iso="AT" data-name="Austria" d="M816.8,407.2L817.4,422.7L803.4,425.1L809.4,432.4L804.8,457.6L800.9,464.7L778.7,468.8L766.9,479.1L745.3,478.9L707.4,473.5L700.4,461.1L675.8,469.9L673.5,477.4L657.4,473.3L644.3,473.3L632.2,467.3L635.5,457.8L634.1,451.3L641.5,448.6L655.2,458.1L658,447.9L680.4,447.5L697.9,439L710.1,438.9L718.8,445.7L720.5,439.1L714.1,415.1L722.5,409.4L729.2,391.1L749,400.8L760.8,383.7L769.1,379.7L789.7,388.3L801,384.6L813.4,389.7L812.2,394.8Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Austria</title>
+    </path>
+    <path class="mp-country" data-iso="DE" data-name="Germany" d="M718.8,206.8L726.4,225.2L721.5,236.1L731.4,248.3L739.8,267.6L739.7,280.8L752.5,303.3L742.6,308.7L735.8,305.2L730.8,313.1L714.7,322.4L706.9,332.7L690.4,342.8L695.8,353.5L700.1,369L713.5,376.7L729.2,391.1L722.5,409.4L714.1,415.1L720.5,439.1L718.8,445.7L710.1,438.9L697.9,439L680.4,447.5L658,447.9L655.2,458.1L641.5,448.6L634.1,451.3L606.3,441.4L601.5,449.8L580,450.6L582,423.7L593.3,397.4L557.6,391.9L545.7,382.3L546.7,365.8L541.6,357.4L543.8,331.8L538.9,292.4L552.9,292L558.3,277.7L562.8,242.9L558.2,230.2L562.3,222.1L580.9,219.2L585.5,227.3L599.6,207.9L593.8,194L591.5,172.5L608.3,176.5L621.9,169.8L623.3,184.4L646.2,191.5L647.1,204.9L669,195.7L680.3,184.1L706.8,196.1Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Germany</title>
+    </path>
+    <path class="mp-country" data-iso="CH" data-name="Switzerland" d="M634.1,451.3L635.5,457.8L632.2,467.3L644.3,473.3L657.4,473.3L656.6,488.9L645.7,496.1L626.2,492.6L621.5,508.2L609.2,510.1L604.4,504.4L590.3,517.8L577.7,520.1L566.1,512.5L556.7,496.3L544.4,502.5L544.5,485.5L562.7,463.8L561.5,454.3L573.2,457.3L580,450.6L601.5,449.8L606.3,441.4Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Switzerland</title>
+    </path>
+    <path class="mp-country" data-iso="LU" data-name="Luxembourg" d="M541.6,357.4L546.7,365.8L545.7,382.3L538.7,383.3L533.2,380.1L535.4,358.9Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Luxembourg</title>
+    </path>
+    <path class="mp-country" data-iso="BE" data-name="Belgium" d="M543.8,331.8L541.6,357.4L535.4,358.9L533.2,380.1L511.7,363.2L499.2,366.2L482.4,348.3L471.5,333.1L460.4,332.2L457.3,319L476.3,311.8L493.6,314.9L515.3,307L530.5,323.3Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Belgium</title>
+    </path>
+    <path class="mp-country" data-iso="NL" data-name="Netherlands" d="M558.2,230.2L562.8,242.9L558.3,277.7L552.9,292L538.9,292.4L543.8,331.8L530.5,323.3L515.3,307L493.6,314.9L476.3,311.8L488.5,301.6L508.7,246L539.4,229.7Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Netherlands</title>
+    </path>
+    <path class="mp-country" data-iso="PT" data-name="Portugal" d="M126.1,636.8L137.8,629L150,625.4L154,644.8L170.5,647.4L175.9,643.3L191.9,647L197.2,666.9L182.7,675.2L178.1,704.4L172.7,709.2L169,726.8L156,728L164.3,752.4L152.4,775.9L161,788.6L155.4,798.2L142.2,810.8L142.8,823.6L129.1,831.5L114.1,823.7L97.9,825.2L107.4,796.5L108.5,772.9L96,767.2L91.4,751.7L98.1,727.7L112,716.1L116.7,701.3L126.5,679.8L128.5,663.9L125.2,649.6Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Portugal</title>
+    </path>
+    <path class="mp-country" data-iso="ES" data-name="Spain" d="M142.8,823.6L142.2,810.8L155.4,798.2L161,788.6L152.4,775.9L164.3,752.4L156,728L169,726.8L172.7,709.2L178.1,704.4L182.7,675.2L197.2,666.9L191.9,647L175.9,643.3L170.5,647.4L154,644.8L150,625.4L137.8,629L126.1,636.8L132.1,610.5L123.7,592.4L166.5,572L198.5,583.7L234.9,588.3L263.1,598.2L285.9,598.6L329.9,603.7L339.7,619.2L389.5,639.5L400,631.9L430.7,650.1L463.1,646L464.3,668L436.9,692.6L400.1,699.3L397,711.9L378.2,732L365.2,762.2L375.5,784.6L357.4,800.5L349.4,824.9L326,830.9L302.1,858.5L263.3,855.6L234.3,851.8L213.6,863.1L200.1,876L185.4,870.9L175.8,856.6L170.1,833.6Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Spain</title>
+    </path>
+    <path class="mp-country" data-iso="IE" data-name="Ireland" d="M265.6,201L265.7,228.3L244,259.4L199.8,275.1L168.2,263.8L193.6,228.2L188.7,188.3L223.4,164.1L242.5,149.2L243.9,170L236.3,189.4L250,190.9Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Ireland</title>
+    </path>
+    <path class="mp-country" data-iso="IT" data-name="Italy" d="M657.4,473.3L673.5,477.4L675.8,469.9L700.4,461.1L707.4,473.5L745.3,478.9L744.7,497.7L753,512.8L731.5,509.9L711.7,525.5L715,543.9L712.9,554.9L723.7,573.1L751.2,589.1L768.8,618.4L803.6,644.4L825.3,641L833.4,648.2L826.7,656.9L854,666.5L876.6,674.3L904.3,689.4L908.6,695.9L905.6,710.2L886.7,695.6L860.8,693.6L852.8,719.8L875.8,730.3L875.6,750.5L863.8,754.7L853.1,789.4L841.2,794.2L839.6,782.6L842.6,761.5L847.7,752.5L833.1,732.5L821.5,714.8L808.9,711.8L798.2,696.8L779,692.4L764.9,678.8L743.6,678.8L719.8,664.1L691.9,642.1L671.2,622L659.8,585.5L646,582.1L623.3,571.1L611.2,576.9L596.3,595.2L585.2,598.4L587.6,582L572.8,577.7L564.8,548.8L573.7,537.1L565.4,523.2L566.1,512.5L577.7,520.1L590.3,517.8L604.4,504.4L609.2,510.1L621.5,508.2L626.2,492.6L645.7,496.1L656.6,488.9ZM812.5,789.2L834.6,782.8L828.1,814.1L834.2,825.1L830.6,845.5L805.4,834.4L789.5,832.2L745.3,817.8L747.3,797.8L782.6,797.3ZM626,702.1L639.5,689.6L658.4,715.2L657.9,765.6L644.4,764.1L633.2,777.5L621.5,768.1L617.9,722.4L610.1,701.1Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Italy</title>
+    </path>
+    <path class="mp-country" data-iso="DK" data-name="Denmark" d="M621.9,169.8L608.3,176.5L591.5,172.5L581.6,151.9L579.1,113L582,102.6L587.4,90.9L605.5,87.4L612,76.3L627.6,64.3L628.5,84L623.4,96.8L626.7,107.3L638.6,112.1L634.6,126.9L628,123.3L614.7,151.7ZM670.6,122.4L679.3,140.7L669.6,172.6L644.9,153.4L640.6,137.9Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>Denmark</title>
+    </path>
+    <path class="mp-country" data-iso="GB" data-name="United Kingdom" d="M265.6,201L250,190.9L236.3,189.4L243.9,170L242.5,149.2L260.8,150.3L280.8,176.7ZM332.9,226.4L332.9,226.4L338.2,204.8L325.7,180.1L325.5,179.5L299.7,170L295.8,159.2L305.6,143.2L299.8,132L286.1,148.4L289.5,111.9L281.5,91.2L294.1,53L313.6,24L329.1,28.9L353.5,28.1L327.7,67.2L349,64.1L371.3,66.2L363.5,96.8L341.5,129.2L363.3,133.6L364.6,137.7L380.6,183.9L395.2,190.9L406.5,234.8L412.2,250L439.6,258.4L436,282.4L423.6,293L432.3,312.9L410.1,331.7L378.3,329.6L337,336.9L326.5,328.5L309,344.5L287.3,337.9L268.8,350.2L257,341.1L296.4,305.9L318.3,300.1L318.1,300L282.3,289.8L277.6,274.1L303,265.3L292.8,243.6L299.9,219.4Z" fill="#EDEBDD" stroke="#B7B8A4" stroke-width="0.5" stroke-linejoin="round">
+      <title>United Kingdom</title>
+    </path>
+  </g>
+  <g class="mp-layer mp-terrain"/>
+  <g class="mp-layer mp-hydro" clip-path="url(#mp-land-clip-1a6pmcx)">
+    <path class="mp-water" data-kind="river" fill="none" d="M598.4,433.2L606.6,435.8L627.8,428.1L658.8,406.9L682.4,399.5L690.3,389.6L693.2,390.8L698.7,391.4L702.3,392.5L706.2,393.6L714.5,397.3L724,401.1L727.7,402.6L759.8,411.4L767.1,411.1L782.1,402.9L789.4,402.6L813.8,406.3L830.7,414.2L840.5,417.4L861,408.7L867.1,410.7L870.8,415.3L871.5,433.9L875.3,448.2L876.8,467.4L875.9,476.4L876.4,479L877.6,481.4L880.1,484.4L884.2,490.6L886.8,494.3L890.1,496.3L895,500.4L897.3,502.6L900.3,502.8L907.9,502.8L915,503.2L917.8,503.4L930.7,513L936.9,514L952.1,507.2L957.4,508.7L975.8,515.7L981.3,505.1L989,508.3L984.8,516.3L990.9,521L1002.2,534.2L1012.1,529L1033.4,529.8L1072.9,521.4L1082.5,508.1L1111,491L1112,491.5L1113.3,491.9L1114.6,489.9L1119.5,485.6L1124.2,481.4L1126.8,479.8L1129.6,476.2L1127.8,473.2L1121.1,465.4L1118.6,447.6L1118.8,444.8L1121.1,439.7L1121.3,436.9L1125.2,436.8L1131.5,437.6L1135,438.8L1144.7,429.3L1158.4,431.1" stroke="#6E93A0" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g class="mp-layer mp-borders" fill="none">
+    <path class="mp-border" data-kind="intl" d="M457.3,319L460.4,332.2L471.5,333.1L482.4,348.3L499.2,366.2L511.7,363.2L533.2,380.1L538.7,383.3L545.7,382.3L557.6,391.9L593.3,397.4L582,423.7L580,450.6L573.2,457.3L561.5,454.3L562.7,463.8L544.5,485.5L544.4,502.5L556.7,496.3L566.1,512.5L565.4,523.2L573.7,537.1L564.8,548.8L572.8,577.7L587.6,582L585.2,598.4M463.1,646L430.7,650.1L400,631.9L389.5,639.5L339.7,619.2L329.9,603.7M745.3,478.9L707.4,473.5L700.4,461.1L675.8,469.9L673.5,477.4L657.4,473.3L644.3,473.3L632.2,467.3L635.5,457.8L634.1,451.3L641.5,448.6L655.2,458.1L658,447.9L680.4,447.5L697.9,439L710.1,438.9L718.8,445.7L720.5,439.1L714.1,415.1L722.5,409.4L729.2,391.1M634.1,451.3L606.3,441.4L601.5,449.8L580,450.6M545.7,382.3L546.7,365.8L541.6,357.4L543.8,331.8L538.9,292.4L552.9,292L558.3,277.7L562.8,242.9L558.2,230.2M591.5,172.5L608.3,176.5L621.9,169.8M657.4,473.3L656.6,488.9L645.7,496.1L626.2,492.6L621.5,508.2L609.2,510.1L604.4,504.4L590.3,517.8L577.7,520.1L566.1,512.5M533.2,380.1L535.4,358.9L541.6,357.4M476.3,311.8L493.6,314.9L515.3,307L530.5,323.3L543.8,331.8M126.1,636.8L137.8,629L150,625.4L154,644.8L170.5,647.4L175.9,643.3L191.9,647L197.2,666.9L182.7,675.2L178.1,704.4L172.7,709.2L169,726.8L156,728L164.3,752.4L152.4,775.9L161,788.6L155.4,798.2L142.2,810.8L142.8,823.6M242.5,149.2L243.9,170L236.3,189.4L250,190.9L265.6,201" fill="none" stroke="#5E6350" stroke-width="0.75" stroke-dasharray="none" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+  <g class="mp-layer mp-roads"/>
+  <g class="mp-layer mp-places">
+    <circle class="mp-place" data-name="Paris" data-iso="FR" data-rank="1" data-pop="9904000" cx="451.346" cy="405.134" r="3.2" fill="#33372A" stroke="none">
+      <title>Paris</title>
+    </circle>
+    <circle class="mp-place" data-name="London" data-iso="GB" data-rank="1" data-pop="8567000" cx="395.768" cy="303.188" r="3.2" fill="#33372A" stroke="none">
+      <title>London</title>
+    </circle>
+    <circle class="mp-place" data-name="Rome" data-iso="IT" data-rank="1" data-pop="3339000" cx="729.571" cy="655.771" r="3.2" fill="#33372A" stroke="none">
+      <title>Rome</title>
+    </circle>
+    <circle class="mp-place" data-name="Madrid" data-iso="ES" data-rank="1" data-pop="5567000" cx="269.599" cy="712.971" r="3.2" fill="#33372A" stroke="none">
+      <title>Madrid</title>
+    </circle>
+    <circle class="mp-place" data-name="Berlin" data-iso="DE" data-rank="1" data-pop="3406000" cx="708.235" cy="255.122" r="3.2" fill="#33372A" stroke="none">
+      <title>Berlin</title>
+    </circle>
+    <circle class="mp-place" data-name="Vienna" data-iso="AT" data-rank="1" data-pop="2400000" cx="801.055" cy="406.781" r="3.2" fill="#33372A" stroke="none">
+      <title>Vienna</title>
+    </circle>
+    <circle class="mp-place" data-name="Amsterdam" data-iso="NL" data-rank="1" data-pop="1031000" cx="513.675" cy="273.913" r="3.2" fill="#33372A" stroke="none">
+      <title>Amsterdam</title>
+    </circle>
+    <circle class="mp-place" data-name="Lisbon" data-iso="PT" data-rank="1" data-pop="2812000" cx="102.49" cy="754.176" r="3.2" fill="#33372A" stroke="none">
+      <title>Lisbon</title>
+    </circle>
+    <circle class="mp-place" data-name="Brussels" data-iso="BE" data-rank="1" data-pop="1743000" cx="500.273" cy="331.216" r="3.2" fill="#33372A" stroke="none">
+      <title>Brussels</title>
+    </circle>
+    <circle class="mp-place" data-name="Kobenhavn" data-iso="DK" data-rank="1" data-pop="1085000" cx="676.318" cy="138.29" r="3.2" fill="#33372A" stroke="none">
+      <title>Kobenhavn</title>
+    </circle>
+    <circle class="mp-place" data-name="Dublin" data-iso="IE" data-rank="1" data-pop="1059000" cx="261.669" cy="220.34" r="3.2" fill="#33372A" stroke="none">
+      <title>Dublin</title>
+    </circle>
+    <circle class="mp-place" data-name="Bern" data-iso="CH" data-rank="1" data-pop="275329" cx="581.022" cy="477.078" r="3.2" fill="#33372A" stroke="none">
+      <title>Bern</title>
+    </circle>
+    <circle class="mp-place" data-name="Luxembourg" data-iso="LU" data-rank="1" data-pop="107260" cx="544.214" cy="376.775" r="3.2" fill="#33372A" stroke="none">
+      <title>Luxembourg</title>
+    </circle>
+    <circle class="mp-place" data-name="Geneva" data-iso="CH" data-rank="2" data-pop="1240000" cx="547.568" cy="504.794" r="2.2" fill="#33372A" stroke="none">
+      <title>Geneva</title>
+    </circle>
+    <circle class="mp-place" data-name="The Hague" data-iso="NL" data-rank="2" data-pop="1406000" cx="498.8" cy="284.249" r="2.2" fill="#33372A" stroke="none">
+      <title>The Hague</title>
+    </circle>
+  </g>
+  <g class="mp-layer mp-labels">
+    <text class="mp-label" data-kind="country" data-iso="FR" data-rank="1" x="449.1" y="491.8" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">France</text>
+    <text class="mp-label" data-kind="country" data-iso="AT" data-rank="2" x="746.6" y="436.6" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Austria</text>
+    <text class="mp-label" data-kind="country" data-iso="DE" data-rank="1" x="640.9" y="316.2" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Germany</text>
+    <text class="mp-label" data-kind="country" data-iso="CH" data-rank="2" x="597.9" y="462.8" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Switzerland</text>
+    <text class="mp-label" data-kind="country" data-iso="LU" data-rank="3" x="539.8" y="376" text-anchor="middle" dominant-baseline="central" data-fit="0" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke" display="none">Luxembourg</text>
+    <text class="mp-label" data-kind="country" data-iso="BE" data-rank="2" x="506.4" y="356.3" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Belgium</text>
+    <text class="mp-label" data-kind="country" data-iso="NL" data-rank="3" x="527.2" y="257.7" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Netherlands</text>
+    <text class="mp-label" data-kind="country" data-iso="PT" data-rank="2" x="127.8" y="728" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Portugal</text>
+    <text class="mp-label" data-kind="country" data-iso="ES" data-rank="1" x="270.9" y="698.6" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Spain</text>
+    <text class="mp-label" data-kind="country" data-iso="IE" data-rank="2" x="221.3" y="221" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ireland</text>
+    <text class="mp-label" data-kind="country" data-iso="IT" data-rank="1" x="720.9" y="599.1" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Italy</text>
+    <text class="mp-label" data-kind="country" data-iso="DK" data-rank="3" x="603.7" y="116" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Denmark</text>
+    <text class="mp-label" data-kind="country" data-iso="GB" data-rank="2" x="362.5" y="271.2" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">United Kingdom</text>
+    <text class="mp-label" data-kind="place" data-iso="FR" data-rank="1" data-capital="" x="457.5" y="405.1" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Paris</text>
+    <text class="mp-label" data-kind="place" data-iso="GB" data-rank="1" data-capital="" x="402" y="303.2" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">London</text>
+    <text class="mp-label" data-kind="place" data-iso="IT" data-rank="1" data-capital="" x="735.8" y="655.8" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Rome</text>
+    <text class="mp-label" data-kind="place" data-iso="ES" data-rank="1" data-capital="" x="275.8" y="713" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Madrid</text>
+    <text class="mp-label" data-kind="place" data-iso="DE" data-rank="1" data-capital="" x="714.4" y="255.1" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Berlin</text>
+    <text class="mp-label" data-kind="place" data-iso="AT" data-rank="1" data-capital="" x="807.3" y="406.8" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Vienna</text>
+    <text class="mp-label" data-kind="place" data-iso="NL" data-rank="1" data-capital="" x="519.9" y="273.9" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Amsterdam</text>
+    <text class="mp-label" data-kind="place" data-iso="PT" data-rank="1" data-capital="" x="108.7" y="754.2" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Lisbon</text>
+    <text class="mp-label" data-kind="place" data-iso="BE" data-rank="1" data-capital="" x="506.5" y="331.2" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Brussels</text>
+    <text class="mp-label" data-kind="place" data-iso="DK" data-rank="1" data-capital="" x="682.5" y="138.3" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Kobenhavn</text>
+    <text class="mp-label" data-kind="place" data-iso="IE" data-rank="1" data-capital="" x="267.9" y="220.3" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Dublin</text>
+    <text class="mp-label" data-kind="place" data-iso="CH" data-rank="1" data-capital="" x="587.2" y="477.1" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Bern</text>
+    <text class="mp-label" data-kind="place" data-iso="LU" data-rank="1" data-capital="" x="550.4" y="376.8" text-anchor="start" dominant-baseline="central" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Luxembourg</text>
+  </g>
+  <g class="mp-layer mp-annotations">
+    <g class="mp-anno mp-pin" data-kind="harbor" data-fit="1">
+      <title>Rotterdam</title>
+      <circle class="mp-pin-mark" cx="503.7" cy="290.3" r="10" fill="#71361A" stroke="#EDEBDD" stroke-width="2.4"/>
+      <g class="mp-icon" data-icon="harbor" transform="translate(497.7,284.3) scale(0.8)" fill="#EDEBDD" stroke="none">
+        <path d="M7.5,0C5.5,0,4,1.567,4,3.5c0.0024,1.5629,1.0397,2.902,2.5,3.3379v6.0391 c-0.9305-0.1647-1.8755-0.5496-2.6484-1.2695C2.7992,10.6273,2.002,9.0676,2.002,6.498c0.0077-0.5646-0.4531-1.0236-1.0176-1.0137 C0.4329,5.493-0.0076,5.9465,0,6.498c0,3.0029,1.0119,5.1955,2.4902,6.5723C3.9685,14.4471,5.8379,15,7.5,15 c1.6656,0,3.535-0.5596,5.0117-1.9395S14.998,9.4868,14.998,6.498c0.0648-1.3953-2.0628-1.3953-1.998,0 c0,2.553-0.7997,4.1149-1.8535,5.0996C10.3731,12.3203,9.4288,12.7084,8.5,12.875V6.8418C9.9607,6.4058,10.9986,5.0642,11,3.5 C11,1.567,9.5,0,7.5,0z M7.5,2C8.3284,2,9,2.6716,9,3.5S8.3284,5,7.5,5S6,4.3284,6,3.5S6.6716,2,7.5,2z"/>
+      </g>
+      <text class="mp-label" data-kind="pin" x="519.7" y="290.3" text-anchor="start" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="700" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Rotterdam</text>
+    </g>
+    <g class="mp-anno mp-pin" data-kind="airport" data-fit="1">
+      <title>Roissy</title>
+      <circle class="mp-pin-mark" cx="456.3" cy="399.5" r="10" fill="#71361A" stroke="#EDEBDD" stroke-width="2.4"/>
+      <g class="mp-icon" data-icon="airport" transform="translate(450.3,393.5) scale(0.8)" fill="#EDEBDD" stroke="none">
+        <path d="M15,6.8182L15,8.5l-6.5-1 l-0.3182,4.7727L11,14v1l-3.5-0.6818L4,15v-1l2.8182-1.7273L6.5,7.5L0,8.5V6.8182L6.5,4.5v-3c0,0,0-1.5,1-1.5s1,1.5,1,1.5v2.8182 L15,6.8182z"/>
+      </g>
+      <text class="mp-label" data-kind="pin" x="472.3" y="399.5" text-anchor="start" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="700" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Roissy</text>
+    </g>
+    <g class="mp-anno mp-pin" data-kind="industry" data-fit="1">
+      <title>Ludwigshafen</title>
+      <circle class="mp-pin-mark" cx="606.8" cy="381.5" r="10" fill="#71361A" stroke="#EDEBDD" stroke-width="2.4"/>
+      <g class="mp-icon" data-icon="industry" transform="translate(600.8,375.5) scale(0.8)" fill="#EDEBDD" stroke="none">
+        <path d="M14,1v12H1V8.72c0.0016-0.1419,0.0634-0.2764,0.17-0.37l3-3.22c0.2074-0.1823,0.5234-0.1618,0.7056,0.0456 C4.9568,5.268,5.0011,5.387,5,5.51v3l3.16-3.37c0.2025-0.1878,0.5188-0.1759,0.7066,0.0266C8.9532,5.2599,9.0009,5.3827,9,5.51V11h3 V1H14z"/>
+      </g>
+      <text class="mp-label" data-kind="pin" x="622.8" y="381.5" text-anchor="start" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="700" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Ludwigshafen</text>
+    </g>
+    <g class="mp-anno mp-pin" data-kind="windmill" data-fit="1">
+      <title>Burbo Bank</title>
+      <circle class="mp-pin-mark" cx="335" cy="226.7" r="10" fill="#71361A" stroke="#EDEBDD" stroke-width="2.4"/>
+      <g class="mp-icon" data-icon="windmill" transform="translate(329,220.7) scale(0.8)" fill="#EDEBDD" stroke="none">
+        <path d="M6,5L3.5,7.5l1,1L7,6V5.5L7.5,5L8,5.5V6l2.5,2.5l1-1L9,5H8.5L8,4.5L8.5,4H9l2.5-2.5l-1-1L8,3v0.5L7.5,4L7,3.5V3L4.5,0.5 l-1,1L6,4h0.5L7,4.5L6.5,5H6z M11.5,13h-1l-1-4l-2-2l-2,2l-1,4h-1C3.2239,13,3,13.2238,3,13.5C3,13.7761,3.2239,14,3.5,14h8 c0.2761,0,0.5-0.2239,0.5-0.5C12,13.2238,11.7761,13,11.5,13z M8,13H7v-1.5024C7,11.2228,7.2228,11,7.4976,11 C7.7751,11,8,11.2249,8,11.5024V13z"/>
+      </g>
+      <text class="mp-label" data-kind="pin" x="335" y="248.7" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="700" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Burbo Bank</text>
+    </g>
+    <g class="mp-anno mp-pin" data-kind="monument" data-fit="1">
+      <title>Firenze</title>
+      <circle class="mp-pin-mark" cx="689" cy="588.7" r="10" fill="#71361A" stroke="#EDEBDD" stroke-width="2.4"/>
+      <g class="mp-icon" data-icon="monument" transform="translate(683,582.7) scale(0.8)" fill="#EDEBDD" stroke="none">
+        <path d="M7.5,0L6,2.5v7h3v-7L7.5,0z M3,11.5 L3,15h9v-3.5L10.5,10h-6L3,11.5z"/>
+      </g>
+      <text class="mp-label" data-kind="pin" x="705" y="588.7" text-anchor="start" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="700" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Firenze</text>
+    </g>
+    <g class="mp-anno mp-pin" data-kind="danger" data-fit="1">
+      <title>Site B</title>
+      <circle class="mp-pin-mark" cx="537.4" cy="543.4" r="10" fill="#71361A" stroke="#EDEBDD" stroke-width="2.4"/>
+      <g class="mp-icon" data-icon="danger" transform="translate(531.4,537.4) scale(0.8)" fill="#EDEBDD" stroke="none">
+        <path d="M13.94,14.68c-0.0749,0.194-0.262,0.3215-0.47,0.32c-0.0595,0.0107-0.1205,0.0107-0.18,0L7.5,12.56L1.7,15 c-0.2572,0.1005-0.5472-0.0266-0.6476-0.2838C1.0516,14.7141,1.0508,14.7121,1.05,14.71c-0.1291-0.2441-0.0358-0.5467,0.2084-0.6757 C1.2845,14.0205,1.3118,14.009,1.34,14l4.85-2l-4.85-2C1.0758,9.9197,0.9267,9.6404,1.007,9.3762s0.3596-0.4133,0.6238-0.333 C1.6545,9.0504,1.6776,9.0594,1.7,9.07l5.8,2.41l5.8-2.41c0.2494-0.1185,0.5477-0.0124,0.6662,0.237 c0.1185,0.2494,0.0124,0.5477-0.237,0.6662C13.7068,9.9839,13.6837,9.9928,13.66,10L8.8,12l4.85,2 c0.2607,0.091,0.3983,0.3761,0.3074,0.6368C13.9523,14.6515,13.9465,14.6659,13.94,14.68z M12,4.23v0.45 c-0.0021,0.2129-0.0722,0.4196-0.2,0.59C11.2414,5.8883,10.6399,6.4664,10,7v1.16c0.0015,0.208-0.126,0.3951-0.32,0.47L7.52,9.5 H7.45L5.28,8.63C5.1016,8.5428,4.9917,8.3584,5,8.16V7C4.3528,6.4675,3.7446,5.8893,3.18,5.27C3.0593,5.0972,2.9963,4.8907,3,4.68 V4.23C3.1669,2.0117,4.8974,0.2307,7.11,0h0.36l0,0h0.39C10.0862,0.2131,11.8348,1.9997,12,4.23z M6,4c0-0.5523-0.4477-1-1-1 S4,3.4477,4,4s0.4477,1,1,1S6,4.5523,6,4z M7,7c0-0.2761-0.2239-0.5-0.5-0.5S6,6.7239,6,7v0.5C6,7.7761,6.2239,8,6.5,8 S7,7.7761,7,7.5V7z M9,7c0-0.2761-0.2239-0.5-0.5-0.5S8,6.7239,8,7v0.5C8,7.7761,8.2239,8,8.5,8S9,7.7761,9,7.5V7z M11,4 c0-0.5523-0.4477-1-1-1S9,3.4477,9,4s0.4477,1,1,1S11,4.5523,11,4z"/>
+      </g>
+      <text class="mp-label" data-kind="pin" x="537.4" y="565.4" text-anchor="middle" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="700" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Site B</text>
+    </g>
+    <g class="mp-anno mp-pin" data-kind="flooding" data-fit="1">
+      <title>No icon for this</title>
+      <circle class="mp-pin-mark" cx="350.2" cy="461.8" r="7" fill="#71361A" stroke="#EDEBDD" stroke-width="2.4"/>
+      <text class="mp-label" data-kind="pin" x="363.2" y="461.8" text-anchor="start" dominant-baseline="central" fill="#33372A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="700" letter-spacing="0" stroke="#EDEBDD" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">No icon for this</text>
+    </g>
+  </g>
+  <g class="mp-layer mp-furniture">
+    <text class="mp-credit" data-anchor="bottom-right" x="976" y="876" text-anchor="end" dominant-baseline="auto" fill="#6E735E" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" letter-spacing="0">Boundaries: Natural Earth · neatline</text>
+  </g>
+</svg>

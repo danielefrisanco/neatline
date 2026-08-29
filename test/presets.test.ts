@@ -108,6 +108,86 @@ describe.each(themes)("theme %s", (name, css) => {
    * specificity, so the later one wins outright. Highlight is the caller naming
    * a country; a band is a number it fell into — so highlight has to be last.
    */
+  /**
+   * An annotation has to stay visible on a highlighted country.
+   *
+   * Every preset shipped `--anno` as a byte-for-byte copy of `--accent`, which
+   * was harmless for as long as nothing consumed it and wrong the moment
+   * something did: a pin dropped on a highlighted country was drawn in that
+   * country's own colour, and a callout's balloon and leader line merged into
+   * the land beneath them. A region, a highlight and a mark is the map this
+   * layer exists to make, so it is the one combination that must not collide.
+   *
+   * `--label-halo` is checked one step down for the same reason: the pin's mark
+   * is cased in it, and a mark whose fill matches its casing is not there.
+   */
+  it.each([
+    ["light", light],
+    ["dark", dark],
+  ])("keeps an annotation distinct from a highlight in %s", (which, read) => {
+    // A dark block only overrides, so the value in force is light under it.
+    const values = new Map([...light(css), ...(which === "dark" ? read(css) : [])]);
+    const anno = values.get("--anno");
+    expect(anno, `${name} sets no --anno`).toBeDefined();
+    expect(
+      anno,
+      `${name} ${which}: --anno is the accent, so a mark on a highlight vanishes`,
+    ).not.toBe(values.get("--accent"));
+    expect(
+      anno,
+      `${name} ${which}: --anno is the label halo, so a pin's casing vanishes`,
+    ).not.toBe(values.get("--label-halo"));
+  });
+
+  /**
+   * A reserved token is still a value that has to work.
+   *
+   * Four of Phase 8's defects were one mistake wearing three names: a preset
+   * copying a neighbouring value into a token nothing consumed yet, where it
+   * sat unverified because nothing rendered it. `--anno` was `--accent`,
+   * `--anno-ink` was `--label-halo`, and `--label-track` was read by nobody at
+   * all. The tokens below are in exactly that position today — every preset
+   * sets all nine, and not one has ever been drawn.
+   *
+   * What cannot be checked is whether they look good. What can be checked is
+   * that each one differs from the thing it will be drawn against, because a
+   * tint the colour of its ground is not a tint. That is the whole of the
+   * mistake, and it is catchable years before the layer arrives.
+   */
+  const AGAINST: ReadonlyArray<readonly [string, string, string]> = [
+    // Land cover is tinted over the land, so it has to be visible on it.
+    ["--desert", "--land", "arid cover over the land it tints"],
+    ["--forest", "--land", "wooded cover over the land it tints"],
+    ["--mountain", "--land", "upland cover over the land it tints"],
+    ["--glacier", "--land", "ice over the land it sits on"],
+    // The grid is drawn at the very bottom, on the canvas ground.
+    ["--graticule", "--bg", "the grid over the ground it is drawn on"],
+    // A separate token from the grid is only worth having if it differs.
+    ["--equator", "--graticule", "the equator against the rest of the grid"],
+    // Sea names sit on the sea, which is the canvas.
+    ["--sea-ink", "--bg", "sea names over the sea"],
+    // Routes run over land.
+    ["--road", "--land", "routes over the land they cross"],
+    // Furniture is placed on the canvas, not on the map.
+    ["--furniture-ink", "--bg", "credits over the ground behind them"],
+  ];
+
+  it.each([
+    ["light", light],
+    ["dark", dark],
+  ])("keeps a reserved token apart from what it is drawn against in %s", (which, read) => {
+    const values = new Map([...light(css), ...(which === "dark" ? read(css) : [])]);
+    for (const [token, ground, what] of AGAINST) {
+      const value = values.get(token);
+      const under = values.get(ground);
+      if (value === undefined || under === undefined) continue;
+      // `transparent` is the page showing through, never a colour to clash with.
+      if (under === "transparent") continue;
+      expect(value, `${name} ${which}: ${token} is ${ground} — ${what} would be invisible`)
+        .not.toBe(under);
+    }
+  });
+
   it("lets a highlight beat a band", () => {
     const selectors = rules(css).map((r) => r.selector.trim());
     const highlighted = selectors.indexOf(".mp .mp-country.is-highlighted");
@@ -128,6 +208,18 @@ describe.each(palettes)("palette %s", (name, css) => {
   it("covers the whole colour vocabulary", () => {
     const defined = light(css);
     expect([...LIVE_COLOURS].filter((token) => !defined.has(token))).toEqual([]);
+  });
+
+  it("keeps an annotation distinct from a highlight", () => {
+    // A palette recolours the whole vocabulary, so it can reintroduce the
+    // collision the themes were just cleared of.
+    const defined = light(css);
+    expect(defined.get("--anno"), `${name}: --anno is the accent`).not.toBe(
+      defined.get("--accent"),
+    );
+    expect(defined.get("--anno"), `${name}: --anno is the label halo`).not.toBe(
+      defined.get("--label-halo"),
+    );
   });
 
   it("carries no structure", () => {

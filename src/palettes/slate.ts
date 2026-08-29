@@ -41,7 +41,7 @@ export const slate = `
   --sea-ink: #7F91A3;
   --road: #A98A4E;
   --neighbour: #E4E7EB;
-  --anno: #2D6E9E;
+  --anno: #134E75;
   --anno-ink: #FFFFFF;
   --furniture-ink: #6F7B89;
 }

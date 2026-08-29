@@ -78,9 +78,16 @@ export const TOKENS: readonly TokenSpec[] = Object.freeze([
   { name: "--glacier", status: "reserved", controls: "Ice and permanent snow" },
   { name: "--sea-ink", status: "reserved", controls: "Names of seas, gulfs and straits" },
   { name: "--neighbour", status: "live", controls: "Context countries drawn behind the region" },
-  { name: "--anno", status: "reserved", controls: "Pins, arrows, callouts — v1.1" },
-  { name: "--anno-ink", status: "reserved", controls: "Text on an annotation — v1.1" },
-  { name: "--furniture-ink", status: "reserved", controls: "Credit lines and legends — v2" },
+  { name: "--anno", status: "live", controls: "The mark a pin, arrow or callout is drawn with" },
+  // Live as of the callout, and only there. Every bundled preset sets this to
+  // the same value as `--label-halo`, which is exactly what it was authored to
+  // mean: ink drawn *on* an annotation, legible against `--anno`. That makes it
+  // right for a caption inside a filled box and wrong for a pin's label, which
+  // sits beside its mark and takes `--ink` like every other name on the map —
+  // filling that with this and casing it in `--label-halo` paints white on
+  // white.
+  { name: "--anno-ink", status: "live", controls: "Text drawn on an annotation, against --anno" },
+  { name: "--furniture-ink", status: "live", controls: "Credit lines, watermarks and legends, on the canvas" },
 ]);
 
 export const TOKEN_NAMES: readonly string[] = Object.freeze(TOKENS.map((t) => t.name));

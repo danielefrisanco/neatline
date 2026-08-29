@@ -63,30 +63,39 @@
       "name": "annotations",
       "className": "mp-annotations",
       "feature": "mp-anno",
-      "status": "reserved"
+      "status": "live"
     },
     {
       "name": "furniture",
       "className": "mp-furniture",
       "feature": "mp-credit",
-      "status": "reserved"
+      "status": "live"
     }
   ],
   "reserved": [
     "mp-anno",
     "mp-arrow",
+    "mp-arrow-head",
+    "mp-arrow-line",
     "mp-callout",
+    "mp-callout-box",
+    "mp-callout-leader",
     "mp-compass",
-    "mp-credit",
+    "mp-compass-label",
+    "mp-compass-needle",
     "mp-flow",
     "mp-hatch",
     "mp-hatch-line",
+    "mp-icon",
     "mp-legend",
     "mp-pin",
+    "mp-pin-mark",
     "mp-prism",
     "mp-prism-side",
     "mp-prism-top",
     "mp-scale",
+    "mp-scale-bar",
+    "mp-scale-label",
     "mp-symbol",
     "mp-watermark"
   ],
@@ -138,9 +147,9 @@
     "--glacier (reserved)",
     "--sea-ink (reserved)",
     "--neighbour (live)",
-    "--anno (reserved)",
-    "--anno-ink (reserved)",
-    "--furniture-ink (reserved)"
+    "--anno (live)",
+    "--anno-ink (live)",
+    "--furniture-ink (live)"
   ],
   "presets": {
     "themes": [

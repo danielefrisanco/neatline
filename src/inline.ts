@@ -46,6 +46,14 @@ const PRESENTATION = new Set([
   "paint-order",
   "vector-effect",
   "filter",
+  // Markers are presentation attributes in SVG 1.1, and they have to be here
+  // for the same reason `filter` is: a reader that ignores the stylesheet is
+  // exactly the reader the flattened form exists for, and an arrow that arrives
+  // without its head is a line. This project has shipped that failure twice —
+  // a choropleth flattened to one colour, a prism flattened to a silhouette.
+  "marker-start",
+  "marker-mid",
+  "marker-end",
   "r",
   "display",
   "visibility",
@@ -198,7 +206,7 @@ interface ShadowFilter {
   readonly element: SvgElement;
 }
 
-function shadowFilter(value: string, index: number): ShadowFilter | null {
+function shadowFilter(value: string, index: number, scope: string): ShadowFilter | null {
   const match = DROP_SHADOW.exec(value);
   if (match === null) return null;
 
@@ -219,7 +227,9 @@ function shadowFilter(value: string, index: number): ShadowFilter | null {
     if (rgba[4] !== undefined) floodOpacity = rgba[4];
   }
 
-  const id = `mp-shadow-${index}`;
+  // Namespaced like every other id this library emits, so two flattened maps
+  // in one document do not both claim `mp-shadow-1` for different shadows.
+  const id = `mp-shadow-${index}-${scope}`;
   return {
     id,
     element: el(
@@ -244,7 +254,11 @@ export interface InlineResult {
   readonly skipped: readonly string[];
 }
 
-export function inlineStyles(root: SvgElement, nodes: readonly CssNode[]): InlineResult {
+export function inlineStyles(
+  root: SvgElement,
+  nodes: readonly CssNode[],
+  scope: string,
+): InlineResult {
   const candidates: Candidate[] = [];
   const skipped: string[] = [];
   let order = 0;
@@ -309,7 +323,7 @@ export function inlineStyles(root: SvgElement, nodes: readonly CssNode[]): Inlin
     const shadow = painted["filter"];
     if (shadow !== undefined && shadow.includes("drop-shadow")) {
       const existing = filters.get(shadow);
-      const made = existing ?? shadowFilter(shadow, filters.size + 1);
+      const made = existing ?? shadowFilter(shadow, filters.size + 1, scope);
       if (made !== null) {
         filters.set(shadow, made);
         painted["filter"] = `url(#${made.id})`;

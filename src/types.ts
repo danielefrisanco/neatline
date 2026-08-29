@@ -1,3 +1,4 @@
+import type { Distortion } from "./distortion.js";
 import type { LayerName } from "./taxonomy.js";
 
 /**
@@ -70,6 +71,283 @@ export type Region =
   | readonly string[]
   | { readonly bbox: BBox }
   | GeoJsonFeatureCollection;
+
+/**
+ * A mark at a coordinate — the first of the annotation primitives, and the one
+ * that settles the shape of the rest.
+ *
+ * Arrows, callouts and icons all have to say *where*, and they all say it the
+ * way this does: `at`, in lon/lat, GeoJSON order. Storing the coordinate
+ * rather than the pixel is the whole discipline of the layer — a pixel is only
+ * meaningful for the exact region, projection and canvas size that produced
+ * it, so a map reframed or resized detaches every mark placed in pixels. Where
+ * a mark is placed with a pointer, `invert()` is what turns the drop back into
+ * a coordinate to store.
+ *
+ * Annotations are excluded from the camera, exactly as `neighbours` is:
+ * placing a mark never moves the map out from under the marks already placed.
+ *
+ * ```ts
+ * pins: [
+ *   { at: [2.35, 48.86], label: "Paris", kind: "capital" },
+ *   { at: [30.52, 50.45], label: "Kyiv", id: "k1", offset: [-10, 0] },
+ * ]
+ * ```
+ */
+export interface Pin {
+  /** Where the mark goes, in `[lon, lat]`. */
+  readonly at: Position;
+  /** Text set beside the mark. Omitted, the pin is a mark and nothing else. */
+  readonly label?: string;
+  /**
+   * The caller's handle on this pin, written out as `data-id`.
+   *
+   * What an editor uses to find the node it just drew again — which is why the
+   * taxonomy reserved `data-id` on the annotation layer and nowhere else.
+   */
+  readonly id?: string;
+  /**
+   * What kind of thing this is, written out as `data-kind` for a theme to
+   * style — `"capital"`, `"airport"`, `"conflict"`.
+   *
+   * Free text rather than an enumeration, because the vocabulary is not
+   * settled: the icon sets arrive later in this phase and their names become
+   * the conventional values. A theme can style any of them today.
+   */
+  readonly kind?: string;
+  /**
+   * Move the *label* off the mark, in user units, `[dx, dy]`.
+   *
+   * Never the mark, which stays on its coordinate — that is what a pin is for.
+   * A negative `dx` anchors the text at its far end, so a label pushed left
+   * does not run back across the mark it was moved away from.
+   */
+  readonly offset?: Point;
+}
+
+/**
+ * A caption tied to a coordinate by a leader line.
+ *
+ * The difference from a [`Pin`](#Pin) is which half is the subject. A pin says
+ * *there is something here* and the mark carries the meaning; a callout says
+ * *this sentence is about here*, and the words carry it while the line does
+ * nothing but point. That is why a callout has a box and a pin does not — a
+ * word can sit on a coastline behind a halo, and a sentence cannot.
+ *
+ * It says `where` exactly as a pin does, because everything in this layer
+ * does: `at`, in `[lon, lat]`.
+ *
+ * ```ts
+ * callouts: [
+ *   { at: [30.52, 50.45], text: "Grain exports resumed here in July", offset: [60, -70] },
+ * ]
+ * ```
+ */
+export interface Callout {
+  /** The coordinate the leader line points at. */
+  readonly at: Position;
+  /** The caption. Wrapped to `width`; blank lines and runs of spaces collapse. */
+  readonly text: string;
+  /**
+   * Where the box goes relative to the point, in user units, `[dx, dy]`.
+   *
+   * The offset lands the corner of the box nearest the point, and the box
+   * extends away from there — so a negative `dx` puts the box to the left of
+   * what it describes and a negative `dy` puts it above.
+   *
+   * @default [40, -40]
+   */
+  readonly offset?: Point;
+  /** Widest the caption may set before it wraps, in user units. @default 180 */
+  readonly width?: number;
+  /** The caller's handle, written out as `data-id`. */
+  readonly id?: string;
+  /** What kind of thing this is, written out as `data-kind` for a theme. */
+  readonly kind?: string;
+}
+
+/**
+ * A curve from one coordinate to another, with a head on the far end.
+ *
+ * The third primitive, and the first with two `at`s rather than one — so it is
+ * where the locator settled for the pin has to hold twice over. Both ends are
+ * validated the same way and both are guarded the same way: an arrow with one
+ * end on the far side of a globe is not drawn at all, because half an arrow
+ * points somewhere nobody asked about.
+ *
+ * ```ts
+ * arrows: [
+ *   { from: [30.73, 46.48], to: [32.5, 15.6], kind: "grain" },
+ * ]
+ * ```
+ */
+export interface Arrow {
+  /** Where the curve starts, in `[lon, lat]`. */
+  readonly from: Position;
+  /** Where it ends, and where the head goes. */
+  readonly to: Position;
+  /**
+   * How far the curve bows out from the straight line, as a fraction of the
+   * distance between the ends.
+   *
+   * The sign is the side it bows to, so flipping it is how a caller gets an
+   * arrow off a coastline or out from under a second arrow running the other
+   * way. `0` draws a straight line.
+   *
+   * @default 0.18
+   */
+  readonly bow?: number;
+  /** The caller's handle, written out as `data-id`. */
+  readonly id?: string;
+  /** What kind of thing this is, written out as `data-kind` for a theme. */
+  readonly kind?: string;
+}
+
+/**
+ * One of nine positions on the canvas.
+ *
+ * What `at` is to an annotation, this is to the furniture — and the difference
+ * between them is the whole reason furniture is a layer of its own. An
+ * annotation is somewhere on the ground and moves when the camera does. A
+ * credit line, a watermark, a legend or a scale bar is on the *paper*: it stays
+ * where it was put however the map is reframed.
+ *
+ * `"top"`, `"bottom"`, `"left"` and `"right"` name one axis and centre the
+ * other, which is what a reader means by them.
+ */
+export type Anchor =
+  | "top-left"
+  | "top"
+  | "top-right"
+  | "left"
+  | "centre"
+  | "right"
+  | "bottom-left"
+  | "bottom"
+  | "bottom-right";
+
+/**
+ * A line of text on the canvas — a source, a byline, a date.
+ *
+ * ```ts
+ * credit: "Source: Natural Earth"
+ * credit: { text: "Reuters graphics", anchor: "bottom-left" }
+ * ```
+ *
+ * Natural Earth is public domain and this library requires no attribution, so
+ * nothing here is an obligation the map imposes on you. It exists because a
+ * map that leaves a browser as a file has no surrounding page to carry a
+ * caption, and the credit has to come out of the generator or it does not
+ * exist at all.
+ */
+export interface Credit {
+  readonly text: string;
+  /** @default "bottom-right" */
+  readonly anchor?: Anchor;
+}
+
+/**
+ * A scale bar — a length on the paper labelled with the distance it means.
+ *
+ * ```ts
+ * scaleBar: true
+ * scaleBar: { anchor: "bottom-right", units: "mi" }
+ * ```
+ *
+ * **It is drawn only when the map can honestly carry one.** A bar claims that
+ * one length means one distance everywhere on the sheet, and no projection
+ * makes that true — it is only ever true *enough*, over a small enough extent.
+ * So the map is sampled and the bar appears when the largest local scale on the
+ * canvas is within `tolerance` of the smallest. The usual rule, that a bar
+ * suits the conformal and equal-area projections, is not used and is wrong:
+ * mercator is conformal and varies by 2.76 over Europe, while orthographic is
+ * neither and varies by 1.07 over India.
+ *
+ * `map.distortion()` reports the measurement, so a caller who gets no bar can
+ * see by how much they missed.
+ */
+export interface ScaleBar {
+  /** @default "bottom-left" */
+  readonly anchor?: Anchor;
+  /** Longest the bar may be, in user units. @default a quarter of the canvas */
+  readonly maxWidth?: number;
+  /** @default "km" */
+  readonly units?: "km" | "mi";
+  /**
+   * Largest ratio of local scales across the canvas that still earns a bar.
+   *
+   * @default 1.1
+   */
+  readonly tolerance?: number;
+}
+
+/**
+ * A north arrow.
+ *
+ * ```ts
+ * compass: true
+ * compass: { anchor: "top-left" }
+ * ```
+ *
+ * Refused the same way a scale bar is, and for the same reason: the arrow
+ * claims up is north everywhere on the sheet, which is a measurable property of
+ * the drawn frame rather than of the projection's family. It is the narrower of
+ * the two claims — a conic fitted to a region holds its scale to a few per cent
+ * while its meridians fan twenty degrees apart at the corners.
+ */
+/**
+ * A wordmark or a logo, stamped on the canvas.
+ *
+ * ```ts
+ * watermark: "DRAFT"
+ * watermark: { image: "./logo.svg", anchor: "bottom-right", width: 90 }
+ * ```
+ *
+ * **This is attribution, not protection.** A watermark on an SVG is a node in a
+ * file the reader can open, select and delete. It marks provenance; it cannot
+ * enforce anything, and nothing here is a rights mechanism. It exists for the
+ * same reason `credit` does — a map that leaves a browser as a file has no
+ * surrounding page to carry a mark.
+ *
+ * `text` and `image` are exclusive. A logo above a wordmark is a lockup, and a
+ * lockup's spacing and proportions belong to whoever owns the mark; a caller
+ * who has both passes the lockup as one image.
+ */
+export interface Watermark {
+  /** Words stamped on the canvas. */
+  readonly text?: string;
+  /**
+   * A logo: a `data:` URI, or — under Node — a path to a `.png`, `.jpg`,
+   * `.gif`, `.webp` or `.svg` file, which is read and embedded so the document
+   * stays standalone.
+   */
+  readonly image?: string;
+  /** @default "centre" */
+  readonly anchor?: Anchor;
+  /** Type size for `text`, in user units. @default a tenth of the shorter side */
+  readonly size?: number;
+  /**
+   * The box an `image` is fitted inside, in user units. The logo is scaled to
+   * fit and never stretched, so the box only has to be big enough.
+   *
+   * @default 120
+   */
+  readonly width?: number;
+  /** @default the same as `width` */
+  readonly height?: number;
+}
+
+export interface Compass {
+  /** @default "top-right" */
+  readonly anchor?: Anchor;
+  /**
+   * How far north may lean from straight up, in degrees, before the arrow is
+   * withheld.
+   *
+   * @default 5
+   */
+  readonly tolerance?: number;
+}
 
 export interface MapOptions {
   /** Preset name, ISO 3166-1 alpha-2 codes, a bounding box, or raw GeoJSON. */
@@ -175,6 +453,62 @@ export interface MapOptions {
    * @default 1
    */
   readonly labelRank?: 1 | 2 | 3;
+  /**
+   * Marks placed on the map at a coordinate.
+   *
+   * The journalist's actual need: a dot where the thing happened, and a word
+   * saying what it was. Rendered into the `.mp-annotations` layer, above every
+   * geographic layer and below the furniture.
+   *
+   * A pin the projection cannot place at all — the far side of an orthographic
+   * globe — is dropped, because the only alternative is to draw it at a
+   * coordinate nobody asked for. A pin that lands outside the canvas is
+   * emitted carrying `data-fit="0"`: it has a place, the camera is simply not
+   * looking at it, and the stylesheet decides what to do about that.
+   */
+  readonly pins?: readonly Pin[];
+  /**
+   * Captions tied to a coordinate by a leader line.
+   *
+   * A pin names a place; a callout says something about one. Drawn into the
+   * same `.mp-annotations` layer, above the pins, and subject to the same two
+   * rules: a coordinate behind a globe is dropped, and one the camera is not
+   * pointed at is drawn carrying `data-fit="0"`.
+   */
+  readonly callouts?: readonly Callout[];
+  /**
+   * Curves between two coordinates — trade, migration, supply lines.
+   *
+   * Drawn into `.mp-annotations` beneath the pins and callouts, since a
+   * connection is context for the marks rather than the other way round. Both
+   * ends take the same guards a pin's `at` does, and an arrow with either end
+   * behind a globe is dropped whole.
+   */
+  readonly arrows?: readonly Arrow[];
+  /**
+   * A line of text on the canvas — a source, a byline, a date.
+   *
+   * Rendered into `.mp-furniture`, the one layer that is not geographic: it is
+   * anchored to the canvas in fixed user units and does not move when the
+   * camera does. A bare string takes the default anchor.
+   */
+  readonly credit?: string | Credit;
+  /**
+   * A scale bar, drawn only if the map's own scale is uniform enough to mean
+   * anything. `true` takes the defaults; see {@link ScaleBar}.
+   */
+  readonly scaleBar?: boolean | ScaleBar;
+  /**
+   * A north arrow, drawn only if up is north across the whole canvas. `true`
+   * takes the defaults; see {@link Compass}.
+   */
+  readonly compass?: boolean | Compass;
+  /**
+   * A wordmark or a logo on the canvas. A bare string is text at the centre.
+   *
+   * Attribution, not protection — see {@link Watermark}.
+   */
+  readonly watermark?: string | Watermark;
   /** Bundled theme name, a path to a `.css` file, or a stylesheet. */
   readonly theme?: string;
   /**
@@ -281,6 +615,18 @@ export interface MapResult {
    * several ways without recomputing the geometry.
    */
   render(options?: RenderOptions): Promise<string>;
+  /**
+   * What the projection does to distance and direction across this canvas.
+   *
+   * Measured by sampling the drawn frame, not looked up from the projection's
+   * name. This is what decides whether a scale bar or a north arrow is drawn,
+   * and it is exposed because a refusal the caller cannot inspect is a bug
+   * report waiting to happen: asking for a bar and receiving none should be
+   * answerable with a number.
+   *
+   * Computed on first call and kept, so asking twice costs nothing.
+   */
+  distortion(): Distortion;
   /** Write `render()` output to disk. Node only. */
   toFile(path: string, options?: RenderOptions): Promise<void>;
 }

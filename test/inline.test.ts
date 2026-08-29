@@ -24,21 +24,25 @@ describe("flattening", () => {
   `);
 
   it("resolves a token to a literal value", () => {
-    const { root } = inlineStyles(tree, css);
+    const { root } = inlineStyles(tree, css, "test");
     const land = root.children[0];
     const plain = land?.kind === "element" ? land.children[0] : undefined;
     expect(plain?.kind === "element" && plain.attributes["fill"]).toBe("#eee");
   });
 
   it("lets the more specific selector win", () => {
-    const { root } = inlineStyles(tree, css);
+    const { root } = inlineStyles(tree, css, "test");
     const land = root.children[0];
     const highlighted = land?.kind === "element" ? land.children[1] : undefined;
     expect(highlighted?.kind === "element" && highlighted.attributes["fill"]).toBe("#c00");
   });
 
   it("inherits tokens from an ancestor", () => {
-    const { root } = inlineStyles(tree, parseCss(".mp.mp-t-x { --land: #abc; } .mp-country { fill: var(--land); }"));
+    const { root } = inlineStyles(
+      tree,
+      parseCss(".mp.mp-t-x { --land: #abc; } .mp-country { fill: var(--land); }"),
+      "test",
+    );
     const land = root.children[0];
     const plain = land?.kind === "element" ? land.children[0] : undefined;
     expect(plain?.kind === "element" && plain.attributes["fill"]).toBe("#abc");
@@ -48,6 +52,7 @@ describe("flattening", () => {
     const { root } = inlineStyles(
       el("svg", { class: "mp" }, [el("path", { class: "a" })]),
       parseCss(".a { fill: red; border-radius: 4px; }"),
+      "test",
     );
     const path = root.children[0];
     expect(path?.kind === "element" && path.attributes["fill"]).toBe("red");
@@ -55,7 +60,11 @@ describe("flattening", () => {
   });
 
   it("reports selectors it cannot honour instead of half-applying them", () => {
-    const { skipped } = inlineStyles(tree, parseCss(".mp > path:first-child { fill: red; }"));
+    const { skipped } = inlineStyles(
+      tree,
+      parseCss(".mp > path:first-child { fill: red; }"),
+      "test",
+    );
     expect(skipped.length).toBeGreaterThan(0);
   });
 
@@ -65,6 +74,7 @@ describe("flattening", () => {
     const { root } = inlineStyles(
       el("svg", { class: "mp" }, [el("path", { class: "a" })]),
       parseCss("@media (prefers-color-scheme: dark) { .a { fill: white; } }"),
+      "test",
     );
     const path = root.children[0];
     expect(path?.kind === "element" && path.attributes["fill"]).toBeUndefined();
@@ -74,6 +84,7 @@ describe("flattening", () => {
     const { root } = inlineStyles(
       el("svg", { class: "mp" }, [el("path", { class: "a" })]),
       parseCss(".a { fill: var(--missing, #0f0); }"),
+      "test",
     );
     const path = root.children[0];
     expect(path?.kind === "element" && path.attributes["fill"]).toBe("#0f0");
@@ -83,6 +94,7 @@ describe("flattening", () => {
     const { root } = inlineStyles(
       el("svg", { class: "mp" }, [el("title", {}, [text("Map")])]),
       parseCss(".mp { fill: red; }"),
+      "test",
     );
     const title = root.children[0];
     expect(title?.kind === "element" && title.children[0]?.kind).toBe("text");

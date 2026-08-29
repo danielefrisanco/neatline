@@ -508,6 +508,204 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       title: "Central Asia",
     },
   ],
+  // The map Phase 8 exists to make: a region, a highlight, and marks where the
+  // things happened. Pins are the one layer whose failure is invisible in the
+  // markup — a mark drawn at a plausible pixel on the wrong ground reads as
+  // correct — so the gallery has to carry one that can be looked at.
+  //
+  // The pin on Paris is the case that matters most: it sits on the highlighted
+  // country, where --anno and --accent are the same colour in every preset, and
+  // only the casing keeps it visible.
+  [
+    "west-europe-pins",
+    {
+      region: "west-europe",
+      projection: "conic-conformal",
+      theme: "minimal",
+      palette: "sand",
+      highlight: ["FR"],
+      // Deliberately not capitals. A pin on a city the map already names draws
+      // the name twice, in two weights, a few units apart — the caller's choice
+      // to make, but it reads as a rendering fault at gallery size, and the
+      // gallery exists so that a fault is obvious at a glance.
+      pins: [
+        { at: [4.84, 45.76], label: "Lyon", kind: "site" },
+        { at: [5.37, 43.3], label: "Marseille", offset: [0, 18] },
+        { at: [9.19, 45.46], label: "Milan", id: "milan" },
+        { at: [9.99, 53.55], label: "Hamburg", offset: [-14, -4] },
+      ],
+      title: "Four marks, two of them on the highlighted country",
+    },
+  ],
+  // The phase deliverable, whole: region, highlight, marker, captioned callout.
+  // The callout is the one annotation with a ground of its own, so this is also
+  // the only entry where --anno-ink is doing anything.
+  [
+    "europe-callouts",
+    {
+      region: "europe",
+      projection: "conic-conformal",
+      theme: "noir",
+      size: [1100, 800],
+      highlight: ["UA"],
+      // The bundled name is the older transliteration; this is what the
+      // `names` override is for, and it renames the dot and the label together.
+      names: { Kiev: "Kyiv" },
+      // Odesa, at Odesa's coordinates — the grain port the caption is about.
+      pins: [{ at: [30.73, 46.48], label: "Odesa", kind: "port", offset: [12, 12] }],
+      callouts: [
+        {
+          at: [30.73, 46.48],
+          text: "Grain exports resumed here in July, under a corridor agreement that lapsed in November",
+          offset: [-96, -150],
+          width: 190,
+          id: "corridor",
+        },
+        {
+          at: [-3.7, 40.42],
+          text: "Set to the left of its point",
+          offset: [-40, 60],
+          kind: "aside",
+        },
+      ],
+      title: "A captioned callout, and a mark it shares a coordinate with",
+    },
+  ],
+  // Arrows, which are the one annotation whose head lives in the defs block —
+  // so this is also the gallery's only check that a marker survives the
+  // flattening every snapshot is written through.
+  [
+    "europe-arrows",
+    {
+      region: "europe",
+      projection: "conic-conformal",
+      // Plain atlas, no palette. `slate` sets --land within a hair of --bg, so
+      // the land went flat against the sea and the arrows were the only thing
+      // with any contrast on the page — which is the open palette defect the
+      // plan records, and not something a gallery entry should be showing off.
+      theme: "atlas",
+      size: [1100, 800],
+      names: { Kiev: "Kyiv" },
+      pins: [{ at: [30.73, 46.48], label: "Odesa", kind: "port", offset: [12, 12] }],
+      arrows: [
+        { from: [30.73, 46.48], to: [-3.7, 40.42], kind: "grain" },
+        { from: [30.73, 46.48], to: [12.5, 41.9], bow: -0.18, kind: "grain" },
+        { from: [30.73, 46.48], to: [21.0, 52.23], bow: 0, kind: "grain" },
+      ],
+      title: "Three routes out of one port, one of them straight",
+    },
+  ],
+  // Icons, which are the reason `kind` is free text rather than an enumeration:
+  // the vocabulary's names are the conventional values, and `flooding` here
+  // names no icon and stays a plain mark rather than throwing or drawing a
+  // blank. Maki is CC0, so nothing in this file obliges anyone to credit it.
+  [
+    "west-europe-icons",
+    {
+      region: "west-europe",
+      projection: "conic-conformal",
+      // Not slate. That palette sets --land within a hair of --bg and the land
+      // goes flat against the sea; this is the third entry today that had to
+      // move off it, which is the open contrast defect the plan records under
+      // 8d earning its place there.
+      theme: "minimal",
+      palette: "moss",
+      size: [1000, 900],
+      labelRank: 1,
+      pins: [
+        { at: [4.48, 51.92], kind: "harbor", label: "Rotterdam" },
+        { at: [2.55, 49.01], kind: "airport", label: "Roissy" },
+        { at: [8.68, 49.42], kind: "industry", label: "Ludwigshafen" },
+        { at: [-3.0, 53.4], kind: "windmill", label: "Burbo Bank", offset: [0, 22] },
+        { at: [11.26, 43.77], kind: "monument", label: "Firenze" },
+        { at: [5.72, 45.19], kind: "danger", label: "Site B", offset: [0, 22] },
+        { at: [-1.55, 47.22], kind: "flooding", label: "No icon for this" },
+      ],
+      title: "Seven marks, six of which name an icon",
+      credit: "Boundaries: Natural Earth · neatline",
+    },
+  ],
+  // The furniture layer, which is the only one that is not geographic. The
+  // credit sits at a canvas position and stays there however the map beneath it
+  // is reframed — which is the whole reason it is a layer of its own.
+  [
+    "world-credited",
+    {
+      region: "world",
+      projection: "equal-earth",
+      theme: "atlas",
+      size: [1200, 640],
+      credit: { text: "Natural Earth · public domain", anchor: "bottom-left" },
+      title: "A credit line on the canvas, not on the ground",
+    },
+  ],
+  [
+    // A conic fitted to its region: scale uniform to three per cent, so the bar
+    // is drawn — and meridians fanning twenty degrees apart at the corners, so
+    // the arrow is not. Asking for both and getting one is the feature.
+    "west-europe-measured",
+    {
+      region: "west-europe",
+      projection: "conic-conformal",
+      theme: "atlas",
+      size: [900, 700],
+      scaleBar: true,
+      compass: true,
+      credit: "Distances true to 3% across this frame",
+      title: "A scale bar the frame has earned",
+    },
+  ],
+  [
+    // The mirror case, and the one the old rule got backwards. Mercator is
+    // conformal, so "a bar suits the conformal projections" would allow one
+    // here — where the same ruler reads nearly three times longer at the top of
+    // the frame than the bottom. No bar. But north is exactly up on every
+    // mercator ever drawn, at any extent, so the arrow stands.
+    "europe-mercator-north",
+    {
+      region: "europe",
+      projection: "mercator",
+      theme: "blueprint",
+      size: [900, 700],
+      scaleBar: true,
+      compass: true,
+      // Bottom-left: the bottom-right corner of this frame is Cyprus, and a
+      // credit laid over Nicosia reads as a rendering fault at gallery size.
+      credit: { text: "Scale varies 2.8:1 — no bar drawn", anchor: "bottom-left" },
+      title: "North is up, and nothing else is true",
+    },
+  ],
+  [
+    // Small enough that both claims hold at once, which is the only kind of map
+    // that carries the whole set: bar, arrow and credit, three corners apart.
+    "indonesia-furnished",
+    {
+      region: ["ID"],
+      projection: "conic-conformal",
+      theme: "minimal",
+      size: [1000, 600],
+      scaleBar: { units: "mi", anchor: "bottom-left" },
+      compass: { anchor: "top-left" },
+      credit: "neatline",
+      title: "Bar, arrow and credit, in three corners",
+    },
+  ],
+  [
+    // A watermark marks provenance and enforces nothing — it is a text node in
+    // a file the reader can open, select and delete. Drawn in the furniture
+    // layer, which is above everything, so it is a stamp rather than a texture.
+    "africa-provisional",
+    {
+      region: "africa",
+      projection: "albers",
+      theme: "atlas",
+      size: [900, 900],
+      watermark: "PROVISIONAL",
+      credit: "Boundaries as drawn are not authoritative",
+      compass: true,
+      title: "A watermark marks provenance, it does not enforce it",
+    },
+  ],
 ];
 
 describe("gallery", () => {

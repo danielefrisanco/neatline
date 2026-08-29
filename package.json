@@ -1,6 +1,6 @@
 {
   "name": "neatline",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "Generate standalone, CSS-themeable SVG maps from a region and a stylesheet.",
   "license": "MIT",
   "type": "module",
@@ -36,13 +36,15 @@
     "check": "npm run build:data && npm run typecheck && npm run test && npm run build && npm run verify:exports",
     "prepublishOnly": "npm run check",
     "build:data": "node scripts/build-data.mjs",
-    "gallery": "node scripts/build-gallery.mjs"
+    "gallery": "node scripts/build-gallery.mjs",
+    "build:icons": "node scripts/build-icons.mjs"
   },
   "dependencies": {
     "d3-geo": "^3.1.1",
     "topojson-client": "^3.1.0"
   },
   "devDependencies": {
+    "@mapbox/maki": "^8.2.0",
     "@types/d3-geo": "^3.1.0",
     "@types/node": "^22.10.2",
     "@types/topojson-client": "^3.1.5",

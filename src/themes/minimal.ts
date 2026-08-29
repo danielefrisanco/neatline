@@ -59,7 +59,7 @@ export const minimal = compose({
   --sea-ink: #7E96A6;
   --road: #B08A3E;
   --neighbour: #F0F0EE;
-  --anno: #C2482F;
+  --anno: #8E2F1C;
   --anno-ink: #FFFFFF;
   --furniture-ink: #80807A;`,
   dark: `
@@ -89,7 +89,7 @@ export const minimal = compose({
   --stripe: #9A9A94;
   --water: #4C7A96;
   --neighbour: #202325;
-  --anno: #E2694A;
+  --anno: #F79A78;
   --anno-ink: #16181A;
   --furniture-ink: #85898D;`,
 });

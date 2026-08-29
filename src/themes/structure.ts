@@ -123,6 +123,173 @@ ${rules((n) => `.mp .mp-prism[data-fill="${n}"] .mp-prism-top { fill: var(--fill
 .mp .mp-label.is-highlighted { font-weight: 700; }
 
 .mp .mp-label[data-fit="0"] { display: none; }
+
+/*
+ * The annotation layer.
+ *
+ * The pin's label is a .mp-label, so it arrives already carrying the type
+ * stack, the tracking and the casing — the halo is the whole difference
+ * between a name that reads over a coastline and one that dissolves into it,
+ * and a class of its own would have had to restate all of it. It is set at the
+ * settlement size and bold: an annotation is the point of the map, so it
+ * out-ranks a city name drawn at the same size.
+ *
+ * It is deliberately NOT filled with --anno-ink, which is the obvious guess
+ * and would be invisible. Every bundled preset sets --anno-ink to the same
+ * value as --label-halo — white on minimal and contrast, #F2EAD8 on atlas,
+ * #0B0E11 on noir — because what it was authored to mean is the ink drawn on
+ * top of a mark, legible against --anno. Filling text with it and casing that
+ * text in --label-halo paints white on white. So it stays reserved until a
+ * callout has a box to put ink inside, and a pin's label takes --ink, like
+ * every other name on the map.
+ */
+/*
+ * The mark is cased, and it has to be. Every bundled preset sets --anno to the
+ * same value as --accent — deliberately, so a marked map and a highlighted one
+ * agree — which means a pin dropped on a highlighted country is drawn in the
+ * country's own colour and disappears. That is not a hypothetical: a region,
+ * a highlight and a marker is the map this whole layer exists to make.
+ *
+ * So the mark gets the same casing its label gets, from the same two tokens.
+ * A pin then reads against any ground the map can put under it, including an
+ * accent-coloured country, and the mark and the word beside it are separated
+ * from the map in the same way rather than in two different ways.
+ */
+.mp .mp-pin-mark {
+  fill: var(--anno);
+  stroke: var(--label-halo);
+  stroke-width: var(--label-halo-width);
+}
+
+/* Ink drawn on the mark, which is what --anno-ink means. The glyph carries no
+   stroke of its own: Maki is drawn as solid shapes at this size and outlining
+   one closes its counters. */
+.mp .mp-icon { fill: var(--anno-ink); stroke: none; }
+
+.mp .mp-label[data-kind="pin"] {
+  font-size: var(--place-label-size);
+  font-weight: 700;
+}
+
+/*
+ * The arrow: a curve with a head on the far end.
+ *
+ * The head is a marker, which is an SVG element and therefore something a
+ * stylesheet cannot make for itself — so the theme names it and the definition
+ * is emitted, the same bargain the relief filter and the hatch pattern take.
+ * Its fill comes from a class rather than from the arrow, because a marker
+ * resolves colour where it sits, in the defs block, and not where it is used.
+ */
+.mp .mp-arrow-line {
+  fill: none;
+  stroke: var(--anno);
+  /* A literal, like the callout's leader and for the same reason: no token in
+     the vocabulary means "the weight of a drawn connection", and adding one is
+     a contract change nobody has asked for. */
+  stroke-width: 2;
+  stroke-linecap: round;
+  marker-end: url(#mp-arrowhead);
+}
+
+.mp .mp-arrow-head { fill: var(--anno); stroke: none; }
+
+/*
+ * The callout: a leader line, a filled box, and the caption inside it.
+ *
+ * The caption is the one piece of text on the map that does NOT take the halo.
+ * Every other label is set over whatever the geography put beneath it and needs
+ * casing to survive; this one is set on a solid box of its own, where a halo
+ * would only fatten the glyphs against a ground already doing the work. So the
+ * stroke is turned off and the fill comes from --anno-ink, which is the value
+ * every preset has carried since Phase 3 for exactly this.
+ */
+.mp .mp-callout-leader {
+  fill: none;
+  stroke: var(--anno);
+  /* A literal rather than a token. --border-width is a hairline on most
+     presets and a leader drawn at it disappears, and no token in the
+     vocabulary means "the weight of a pointing line". Adding one is a contract
+     change nobody has asked for, and widening later breaks no theme. */
+  stroke-width: 1.25;
+  stroke-linecap: round;
+}
+
+/* Outlined in its own ink, so the balloon has an edge on any ground it lands
+   on — including a highlighted country, which is the one place a fill alone
+   cannot be relied on to separate it. */
+.mp .mp-callout-box {
+  fill: var(--anno);
+  stroke: var(--anno-ink);
+  stroke-width: 1;
+}
+
+.mp .mp-label[data-kind="callout"] {
+  fill: var(--anno-ink);
+  font-size: var(--place-label-size);
+  font-weight: 500;
+  stroke: none;
+}
+
+/*
+ * A pin whose coordinate falls outside the canvas. The mark is mostly off the
+ * edge already; this stops the sliver of it that overlaps from reading as a
+ * mark of its own. Same bargain the labels take — the engine states the fact,
+ * the stylesheet decides what to do about it.
+ */
+.mp .mp-anno[data-fit="0"] { display: none; }
+
+/*
+ * The furniture layer: on the canvas, not on the map.
+ *
+ * Set at the settlement size rather than from a token of its own. A credit is
+ * small text and --place-label-size is the small text size a theme has already
+ * chosen, so a condensed face or a larger typeface carries the credit with it
+ * instead of leaving it behind. A theme that wants it smaller still says so in
+ * one rule.
+ */
+.mp .mp-credit,
+.mp .mp-scale-label,
+.mp .mp-compass-label {
+  fill: var(--furniture-ink);
+  font-family: var(--font);
+  font-size: var(--place-label-size);
+  letter-spacing: var(--label-track);
+}
+
+/*
+ * A scale bar is a rule with a tick rising at each end, and the ticks are the
+ * part that makes it a measurement — they say where it stops. Literal weight,
+ * for the same reason the callout's leader carries one: this is a rule about
+ * this mark, not a line on the map, and reading --border-width here would let a
+ * theme with heavy borders turn a measurement into a bar of paint.
+ */
+.mp .mp-scale-bar {
+  fill: none;
+  stroke: var(--furniture-ink);
+  stroke-width: 1.5;
+}
+
+.mp .mp-compass-needle {
+  fill: var(--furniture-ink);
+}
+
+/*
+ * A watermark is the one piece of furniture meant to sit *under* the reader's
+ * attention rather than in it, which is what the opacity is for — a mark of
+ * provenance should not compete with the map it marks.
+ *
+ * One rule for both forms. The type properties are inert on an <image> and a
+ * fill is inert on a logo, so a wordmark and a mark can share a selector rather
+ * than needing an element-qualified one, which the flattening pass would then
+ * have to be able to parse.
+ */
+.mp .mp-watermark {
+  fill: var(--furniture-ink);
+  font-family: var(--font);
+  font-weight: 600;
+  letter-spacing: var(--label-track);
+  opacity: 0.18;
+}
 `.trim();
 
 export interface ThemeParts {

@@ -1,5 +1,9 @@
 import { geoBounds, geoContains, geoPath } from "d3-geo";
 import { assignBins, DEFAULT_BINS } from "./bins.js";
+import { arrowLayer, calloutLayer, pinLayer } from "./annotations.js";
+import { compassLayer, creditLayer, scaleLayer } from "./furniture.js";
+import { measureDistortion, type Distortion } from "./distortion.js";
+import { watermarkLayer } from "./watermark.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
 import { countryLabels, labelLayer, labelSizes, placeLabel, type LabelBox, type Placed } from "./labels.js";
@@ -8,8 +12,10 @@ import { politicalFill } from "./political.js";
 import { createProjection } from "./projections.js";
 import { expandPreset, isRegionPreset, presetLabel } from "./regions.js";
 import { referencedFilters } from "./filters.js";
+import { referencedMarkers } from "./markers.js";
 import { referencedPatterns } from "./patterns.js";
 import { inlineStyles } from "./inline.js";
+import { hashCss, scopeIds, scopeIdsInNodes } from "./css.js";
 import { el, serialize, styleElement, text, type SvgElement, type SvgNode } from "./svg.js";
 import { resolveTheme, type ResolvedTheme } from "./theme.js";
 import {
@@ -40,6 +46,10 @@ export { PROJECTION_NAMES, isProjectionName } from "./projections.js";
 export { REGION_PRESETS, REGION_PRESET_NAMES, isRegionPreset } from "./regions.js";
 export { FILTER_NAMES } from "./filters.js";
 export { PATTERN_NAMES } from "./patterns.js";
+export { ANCHORS, isAnchor } from "./furniture.js";
+export type { Distortion } from "./distortion.js";
+export { ICONS, ICON_NAMES, ICON_GRID, isIconName } from "./icons.js";
+export { MARKER_NAMES } from "./markers.js";
 export {
   PALETTE_NAMES,
   THEME_NAMES,
@@ -62,18 +72,26 @@ export {
 } from "./taxonomy.js";
 
 export type {
+  Anchor,
+  Arrow,
   BBox,
+  Callout,
+  Compass,
+  Credit,
   Detail,
   GeoJsonFeatureCollection,
   MapOptions,
   MapResult,
+  Pin,
   Point,
   Position,
   ProjectionName,
   Region,
   RegionPreset,
   RenderOptions,
+  ScaleBar,
   Size,
+  Watermark,
 } from "./types.js";
 
 /**
@@ -153,10 +171,10 @@ function degrees(value: number, negative: string, positive: string): string {
 }
 
 /** "France", "France and Germany", "France, Germany and Italy", then a count. */
-function listNames(names: readonly string[]): string {
+function listNames(names: readonly string[], noun = "countries"): string {
   if (names.length === 0) return "";
   if (names.length === 1) return names[0] as string;
-  if (names.length > 3) return `${names.length} countries`;
+  if (names.length > 3) return `${names.length} ${noun}`;
   return `${names.slice(0, -1).join(", ")} and ${names[names.length - 1] as string}`;
 }
 
@@ -214,12 +232,21 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
           properties: {},
           geometry: {
             type: "Polygon",
+            // Wound so the *box* is the interior, not the rest of the planet.
+            // d3-geo reads a ring by the right-hand rule on the sphere, and the
+            // other winding describes the complement: `geoBounds` on it came
+            // back as the whole world and `geoArea` as 11.999 steradians of a
+            // 12.566-steradian globe. Every bbox map was framed to the entire
+            // planet — loudly on the conics, which fit a world extent to a
+            // scale of zero and projected every coordinate to NaN, and silently
+            // on the rest, which simply drew a world map when a region was
+            // asked for.
             coordinates: [
               [
                 [west, south],
-                [east, south],
-                [east, north],
                 [west, north],
+                [east, north],
+                [east, south],
                 [west, south],
               ],
             ],
@@ -364,6 +391,52 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
 
   const projection = createProjection(projectionName, frame, width, height, padding, headroom);
   const path = geoPath(projection).digits(1);
+
+  /**
+   * What this frame does to distance and direction, measured once.
+   *
+   * Sampling the canvas costs a few hundred projections, so it is taken only if
+   * something asks — a map with no scale bar, no north arrow and no caller
+   * reading `distortion()` never pays for it.
+   */
+  let measured: Distortion | null = null;
+  function distortion(): Distortion {
+    measured ??= measureDistortion(projectPoint, invertPoint, [width, height]);
+    return measured;
+  }
+
+  function projectPoint(position: Position): Point | null {
+    const projected = projection([position[0], position[1]]);
+    if (projected === null) return null;
+    if (!Number.isFinite(projected[0]) || !Number.isFinite(projected[1])) return null;
+    return [projected[0], projected[1]];
+  }
+
+  function invertPoint(point: Point): Position | null {
+    // Optional on d3's projection type. Every projection in the table has
+    // an inverse, but the table is a lookup precisely so composites can be
+    // registered later, and a composite need not have one.
+    const inverse = projection.invert;
+    if (inverse === undefined) return null;
+    const position = inverse.call(projection, [point[0], point[1]]);
+    if (position === null) return null;
+    if (!Number.isFinite(position[0]) || !Number.isFinite(position[1])) return null;
+
+    // Then make the projection confirm its own answer. d3 clamps its inverse
+    // trigonometry instead of failing, so a pixel off the edge of an
+    // orthographic globe does not come back as nothing — it comes back as a
+    // coordinate on the limb, and the corner of the canvas invents a place
+    // in the Atlantic. The only reliable test of whether a pixel is on the
+    // map is whether the map puts it back where it was found: a real point
+    // returns within a thousandth of a unit, and a clamped one misses by
+    // twenty units or more.
+    const back = projection([position[0], position[1]]);
+    if (back === null) return null;
+    if (Math.abs(back[0] - point[0]) > INVERT_TOLERANCE) return null;
+    if (Math.abs(back[1] - point[1]) > INVERT_TOLERANCE) return null;
+
+    return [position[0], position[1]];
+  }
 
   // Resolved before the layers rather than after, because the label fit test
   // has to know what size the text will actually be set at.
@@ -518,7 +591,39 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
           features: frame.countries.map((c) => c.geometry),
         } as never)
       : null;
-  const LAND_CLIP_ID = "mp-land-clip";
+  /**
+   * What every id this document emits is namespaced by.
+   *
+   * The stylesheets have been scoped to a hash of themselves since Phase 3, so
+   * two maps could always share a page — but the *ids* were constants, and
+   * `url(#mp-land-clip)` resolves to whichever map the parser met first. Two
+   * maps in one document meant one of them wearing the other's clip path.
+   *
+   * Derived rather than counted, because the same input has to give the same
+   * output: a counter would make a map's bytes depend on how many maps were
+   * built before it.
+   *
+   * The subject has to be in the hash and not only the clip path. A map of
+   * France and a map of Italy on the same theme and canvas, neither of them
+   * drawing water, have no clip path between them — so hashing the stylesheet
+   * and the outline alone handed both the same scope, and both then defined
+   * `mp-stripe` under one name. Harmless in what it paints, since the two
+   * definitions are identical, and still two elements sharing an id in one
+   * document. Two maps that agree on every line below really are the same map,
+   * and a page holding it twice is holding one document twice.
+   */
+  const idScope = hashCss(
+    [
+      themed.css,
+      landClip ?? "",
+      `${width}x${height}`,
+      projectionName,
+      detail,
+      resolved.description,
+      frame.countries.map((country) => country.id).join(","),
+    ].join("\u0000"),
+  );
+  const LAND_CLIP_ID = `mp-land-clip-${idScope}`;
 
   // Names ride with their dots, so both are produced by the same walk — and a
   // name is never written for a settlement whose dot was filtered out.
@@ -632,7 +737,85 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     }
   }
 
-  const description = options.title ?? describe(resolved.description, highlightedNames);
+  /**
+   * Annotations, above every geographic layer and below the furniture.
+   *
+   * Built last of the geographic layers and deliberately after the camera is
+   * settled: a pin is placed on the map, never the other way round. Adding one
+   * outside the frame must not pull the view towards it, or every mark already
+   * placed shifts under the reader — the same rule `neighbours` follows for the
+   * same reason.
+   */
+  const pins = options.pins ?? [];
+  const callouts = options.callouts ?? [];
+  const arrows = options.arrows ?? [];
+  // Built even when the layer is switched off, so a coordinate that cannot be
+  // one is still rejected rather than quietly ignored: turning a layer off
+  // controls what is drawn, never whether the options were valid.
+  const marks =
+    pins.length === 0
+      ? { nodes: [], labels: [] }
+      : pinLayer(pins, projectPoint, invertPoint, [width, height]);
+  // Captions last, so a box is never drawn under a mark it sits beside.
+  const captions =
+    callouts.length === 0
+      ? { nodes: [], labels: [] }
+      : calloutLayer(
+          callouts,
+          projectPoint,
+          invertPoint,
+          [width, height],
+          sizes.place,
+          sizes.advance,
+          sizes.track,
+        );
+  // Beneath the marks: a connection is context for them, not the reverse.
+  const flows =
+    arrows.length === 0
+      ? { nodes: [], labels: [] }
+      : arrowLayer(arrows, projectPoint, invertPoint, [width, height]);
+  const annotated = wants("annotations");
+  const drawn = [...flows.nodes, ...marks.nodes, ...captions.nodes];
+  if (annotated && drawn.length > 0) content.set("annotations", drawn);
+
+  /**
+   * Furniture, above everything, and the only layer that is not geographic.
+   *
+   * Placed from the canvas and the padding alone — it never touches the
+   * projection, which is the whole point of it being a layer of its own. A
+   * credit that moved when the camera did would be a caption on the ground.
+   */
+  if (wants("furniture")) {
+    const furniture: SvgNode[] = [];
+    if (options.credit !== undefined) {
+      const credit = typeof options.credit === "string" ? { text: options.credit } : options.credit;
+      furniture.push(...creditLayer(credit, [width, height], padding));
+    }
+    // A scale bar and a north arrow are the two pieces that make a claim about
+    // the ground, so both are gated on the same measurement of what this frame
+    // does to distance and direction. Taken once and shared.
+    if (options.scaleBar !== undefined && options.scaleBar !== false) {
+      const bar = options.scaleBar === true ? {} : options.scaleBar;
+      furniture.push(...scaleLayer(bar, [width, height], padding, sizes.place, distortion()));
+    }
+    if (options.compass !== undefined && options.compass !== false) {
+      const compass = options.compass === true ? {} : options.compass;
+      furniture.push(...compassLayer(compass, [width, height], padding, sizes.place, distortion()));
+    }
+    if (options.watermark !== undefined) {
+      const mark =
+        typeof options.watermark === "string" ? { text: options.watermark } : options.watermark;
+      furniture.push(...(await watermarkLayer(mark, [width, height], padding)));
+    }
+    if (furniture.length > 0) content.set("furniture", furniture);
+  }
+
+  const description = options.title
+    ?? describe(
+      resolved.description,
+      highlightedNames,
+      annotated ? [...marks.labels, ...captions.labels] : [],
+    );
 
   const body: SvgNode[] = [
     // `fill="none"` is structural, not stylistic. SVG's default fill is
@@ -667,13 +850,18 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     if (landClip !== null) {
       definitions.push(el("clipPath", { id: LAND_CLIP_ID }, [el("path", { d: landClip })]));
     }
-    definitions.push(...referencedPatterns(theme.css), ...referencedFilters(theme.css));
+    definitions.push(
+      ...referencedPatterns(theme.css, idScope),
+      ...referencedMarkers(theme.css, idScope),
+      ...referencedFilters(theme.css, idScope),
+    );
     const defs = el(DEFS_TAG, { class: DEFS_CLASS }, definitions);
     // The scope class rides on the root even when the stylesheet is served
     // separately, or `map.css` would have nothing to match against.
     const rootClass = theme.scope === null ? ROOT_CLASS : `${ROOT_CLASS} ${theme.scope}`;
     const children: SvgNode[] = [el("title", {}, [text(description)])];
-    if (withStyle && theme.css !== "") children.push(styleElement(theme.css));
+    // The reference and the definition move together, or neither moves.
+    if (withStyle && theme.css !== "") children.push(styleElement(scopeIds(theme.css, idScope)));
     children.push(defs, ...body);
 
     return el(
@@ -697,7 +885,13 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     // The stylesheet is kept alongside the flattened attributes rather than
     // dropped: a browser honours the CSS, a tool that ignores it honours the
     // attributes, and both resolve to the same paint.
-    const final = inline && theme.nodes.length > 0 ? inlineStyles(tree, theme.nodes).root : tree;
+    // The flattened attributes carry `url(#…)` too — a `filter` baked onto an
+    // element is the same reference the stylesheet made, and it has to point at
+    // this document's definition rather than at the name as authored.
+    const final =
+      inline && theme.nodes.length > 0
+        ? inlineStyles(tree, scopeIdsInNodes(theme.nodes, idScope), idScope).root
+        : tree;
     return serialize(final);
   }
 
@@ -735,38 +929,15 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
 
   return {
     svg,
-    css: themed.css,
+    // Scoped to match the document it belongs to. A stylesheet served beside a
+    // map has to name that map's definitions, not the authored ones.
+    css: scopeIds(themed.css, idScope),
 
-    project(position: Position): Point | null {
-      const projected = projection([position[0], position[1]]);
-      return projected === null ? null : [projected[0], projected[1]];
-    },
+    project: projectPoint,
 
-    invert(point: Point): Position | null {
-      // Optional on d3's projection type. Every projection in the table has
-      // an inverse, but the table is a lookup precisely so composites can be
-      // registered later, and a composite need not have one.
-      const inverse = projection.invert;
-      if (inverse === undefined) return null;
-      const position = inverse.call(projection, [point[0], point[1]]);
-      if (position === null) return null;
-      if (!Number.isFinite(position[0]) || !Number.isFinite(position[1])) return null;
+    invert: invertPoint,
 
-      // Then make the projection confirm its own answer. d3 clamps its inverse
-      // trigonometry instead of failing, so a pixel off the edge of an
-      // orthographic globe does not come back as nothing — it comes back as a
-      // coordinate on the limb, and the corner of the canvas invents a place
-      // in the Atlantic. The only reliable test of whether a pixel is on the
-      // map is whether the map puts it back where it was found: a real point
-      // returns within a thousandth of a unit, and a clamped one misses by
-      // twenty units or more.
-      const back = projection([position[0], position[1]]);
-      if (back === null) return null;
-      if (Math.abs(back[0] - point[0]) > INVERT_TOLERANCE) return null;
-      if (Math.abs(back[1] - point[1]) > INVERT_TOLERANCE) return null;
-
-      return [position[0], position[1]];
-    },
+    distortion,
 
     toString() {
       return complete;
@@ -785,8 +956,29 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
 
 
 
-function describe(base: string, highlightedNames: readonly string[]): string {
-  return highlightedNames.length === 0
-    ? base
-    : `${base}, highlighting ${listNames(highlightedNames)}`;
+/**
+ * The accessible name, when the caller did not write one.
+ *
+ * It can only ever describe what the options say, which is why `title` exists —
+ * a map *about* something needs the caller to name the something. But a map
+ * carrying marks is no longer only a map of a region, and a description that
+ * stopped at the geography would leave a screen reader with no idea the marks
+ * were there.
+ *
+ * `marked` is what the annotation layer actually drew and not what was asked
+ * for. A pin on the far side of a globe is dropped and one off the canvas is
+ * hidden, and naming either would describe a map that is not on the screen.
+ * Unlabelled marks are not named either: they have no words to offer, and a
+ * count of them is a number nobody can act on.
+ */
+function describe(
+  base: string,
+  highlightedNames: readonly string[],
+  marked: readonly string[],
+): string {
+  const clauses = [
+    highlightedNames.length === 0 ? null : `highlighting ${listNames(highlightedNames)}`,
+    marked.length === 0 ? null : `marking ${listNames(marked, "places")}`,
+  ].filter((clause): clause is string => clause !== null);
+  return clauses.length === 0 ? base : `${base}, ${clauses.join(", ")}`;
 }

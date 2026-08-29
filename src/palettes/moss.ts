@@ -41,7 +41,7 @@ export const moss = `
   --sea-ink: #62808C;
   --road: #A8582C;
   --neighbour: #E2E1D2;
-  --anno: #A8582C;
+  --anno: #71361A;
   --anno-ink: #EDEBDD;
   --furniture-ink: #6E735E;
 }

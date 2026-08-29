@@ -63,14 +63,18 @@ export const contrast = compose({
   --graticule: #8A8A8A;
   --graticule-width: 0.6;
   --equator: #000000;
-  --desert: #E0E0E0;
-  --forest: #C0C0C0;
-  --mountain: #A8A8A8;
-  --glacier: #FFFFFF;
+  /* Land cover has to clear white land above it and the grey sea beside it, so
+     the whole ramp lives below #D8 rather than reaching for white. Glacier was
+     #FFFFFF, which is exactly --land: ice drawn in the colour of the ground it
+     sits on is not a tint, it is nothing. Four evenly spaced greys instead. */
+  --desert: #C0C0C0;
+  --forest: #A8A8A8;
+  --mountain: #909090;
+  --glacier: #D8D8D8;
   --sea-ink: #000000;
   --road: #000000;
   --neighbour: #E8E8E8;
-  --anno: #000000;
+  --anno: #4A4A4A;
   --anno-ink: #FFFFFF;
   --furniture-ink: #000000;`,
   dark: `
@@ -98,8 +102,12 @@ export const contrast = compose({
   --ink-muted: #FFFFFF;
   --label-halo: #000000;
   --water: #FFFFFF;
+  /* Inherited #000000 from the light block, which is this theme's dark land —
+     a route drawn in the colour of the ground it crosses. Light enough to read
+     on black, and short of the white the water uses, so a road is not a river. */
+  --road: #C8C8C8;
   --neighbour: #171717;
-  --anno: #FFFFFF;
+  --anno: #B8B8B8;
   --anno-ink: #000000;
   --stripe: #FFFFFF;
   --furniture-ink: #FFFFFF;`,

@@ -62,7 +62,7 @@ export const blueprint = compose({
   --sea-ink: #8FB4D4;
   --road: #F5B841;
   --neighbour: #133F68;
-  --anno: #F5B841;
+  --anno: #EF8A3C;
   --anno-ink: #10395E;
   --furniture-ink: #8FB4D4;`,
   dark: `

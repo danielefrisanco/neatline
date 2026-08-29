@@ -72,25 +72,27 @@ function bevel(id: string, options: {
   );
 }
 
-const BUILTINS: Readonly<Record<string, () => SvgElement>> = Object.freeze({
+const BUILTINS: Readonly<Record<string, (scope: string) => SvgElement>> = Object.freeze({
   /** Land lifted off the sea: lit from the north-west, with a soft shadow. */
-  "mp-relief": () =>
-    bevel("mp-relief", { azimuth: 235, elevation: 45, surface: 3, blur: 3.5, shadow: 0.38 }),
+  "mp-relief": (scope: string) =>
+    bevel(`mp-relief-${scope}`, { azimuth: 235, elevation: 45, surface: 3, blur: 3.5, shadow: 0.38 }),
   /** The same, harder and shallower — reads at small sizes. */
-  "mp-relief-soft": () =>
-    bevel("mp-relief-soft", { azimuth: 235, elevation: 66, surface: 1.4, blur: 2, shadow: 0.2 }),
+  "mp-relief-soft": (scope: string) =>
+    bevel(`mp-relief-soft-${scope}`, { azimuth: 235, elevation: 66, surface: 1.4, blur: 2, shadow: 0.2 }),
 });
 
 export const FILTER_NAMES: readonly string[] = Object.freeze(Object.keys(BUILTINS));
 
 /** The built-in filters a stylesheet actually asks for, in a stable order. */
-export function referencedFilters(css: string): SvgElement[] {
+export function referencedFilters(css: string, scope: string): SvgElement[] {
   const wanted = new Set<string>();
+  // Matched against the css as authored. The scope is appended on the way out,
+  // never written by a theme — `url(#mp-relief)` is the name the docs promise.
   for (const match of css.matchAll(/url\(\s*#([A-Za-z_][\w-]*)\s*\)/g)) {
     const id = match[1];
     if (id !== undefined && id in BUILTINS) wanted.add(id);
   }
   return FILTER_NAMES.filter((name) => wanted.has(name)).map((name) =>
-    (BUILTINS[name] as () => SvgElement)(),
+    (BUILTINS[name] as (scope: string) => SvgElement)(scope),
   );
 }

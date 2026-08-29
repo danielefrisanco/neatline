@@ -29,8 +29,8 @@ repository. The class taxonomy below is the part that is meant to be stable; it
 is what a `1.0.0` would be promising, and it wants to sit still for a while
 before that promise is made.
 
-Reserved and out of scope: annotations (pins, arrows, callouts), a legend,
-roads, and terrain — each has its slot in the taxonomy and none is emitted.
+Reserved and out of scope: a legend, roads, and terrain — each has its slot in
+the taxonomy and none is emitted. Pins, callouts, arrows and icons have landed.
 The [build plan](https://claude.ai/code/artifact/1ad97eac-6e9c-4944-96fb-3e6530d9e83d) says when each arrives and what it is waiting on.
 
 ## The class taxonomy
@@ -54,12 +54,19 @@ Inside it, a `.mp-bg` rectangle covers the canvas, then eight layer groups in
 | `.mp-roads` | `.mp-road` | `data-kind` | *Reserved* · motorway, trunk, primary |
 | `.mp-places` | `.mp-place` | `data-name`, `data-iso`, `data-rank`, `data-pop` | Settlement dots, ranked 1–3 |
 | `.mp-labels` | `.mp-label` | `data-kind`, `data-rank`, `data-fit`, `data-iso`, `data-capital` | Country and settlement names |
-| `.mp-annotations` | `.mp-anno` | `data-id` | *Reserved* · pins, arrows, callouts |
-| `.mp-furniture` | `.mp-credit` | `data-anchor` | *Reserved* · credits, watermarks, legends |
+| `.mp-annotations` | `.mp-anno` | `data-id`, `data-kind`, `data-fit` | Pins, callouts and arrows |
+| `.mp-furniture` | `.mp-credit` | `data-anchor` | Credits, watermarks, scale bars, north arrows · legend reserved |
 
 `.is-highlighted` is a modifier on any feature named in `highlight`.
-`.mp-pin`, `.mp-arrow`, `.mp-callout`, `.mp-watermark`, `.mp-legend`,
-`.mp-scale` and `.mp-compass` are claimed but not yet emitted.
+A pin is a `.mp-anno.mp-pin` group holding a `.mp-pin-mark` circle and, where
+it has one, a `.mp-label` carrying `data-kind="pin"`. A callout is a
+`.mp-anno.mp-callout` group holding a `.mp-callout-leader` path, a
+`.mp-callout-box` rect and a `.mp-label` carrying `data-kind="callout"`.
+An arrow is a `.mp-anno.mp-arrow` group holding one `.mp-arrow-line` path, with
+its head drawn by a `.mp-arrow-head` marker in the defs block. A pin whose
+`kind` names an icon also carries a `.mp-icon` group, tagged `data-icon`.
+`.mp-watermark`, `.mp-legend`, `.mp-scale` and `.mp-compass` are claimed but
+not yet emitted.
 
 Every layer but the last is geographic — its contents move when the projection
 or region changes. `.mp-furniture` is the exception: a credit line or watermark
@@ -256,6 +263,9 @@ every theme in the wild.
 | `--water` / `--water-width` | Lakes and rivers |
 | `--place` | Settlement dots |
 | `--neighbour` | Context countries |
+| `--anno` | The mark a pin is drawn with, and a callout's box and leader |
+| `--anno-ink` | Ink on an annotation: a callout's caption, a pin's icon |
+| `--furniture-ink` | Text and marks on the canvas — a credit, a watermark, a scale bar, a north arrow |
 | `--ink` / `--ink-muted` | Country names / settlement names |
 | `--font` / `--label-size` / `--place-label-size` | Type |
 | `--label-halo` / `--label-halo-width` | The casing drawn behind label text |
@@ -284,6 +294,34 @@ So every rule is scoped to a class derived from a hash of the stylesheet
 itself: `.mp.mp-t-k3f9a1z .mp-country`. Deterministic, so the same theme always
 produces the same class and output stays byte-identical; distinct, so two
 themes cannot collide.
+
+### So are the ids
+
+Stylesheets have been scoped to a hash of themselves since the beginning, which
+made it look as though two maps could already share a page. They could not. An
+`url(#…)` resolves against the whole document, and the SVG ids were constants —
+so with two maps on one page, every `url(#mp-land-clip)` found whichever map the
+parser reached first, and one map's rivers were clipped to the other's
+coastline, with nothing in either file to say so.
+
+Every id a map emits now carries a hash of that map:
+
+```
+<clipPath id="mp-land-clip-1y4m1b6">   <pattern id="mp-stripe-1y4m1b6">
+```
+
+**The name you write does not change.** A theme still says
+`filter: url(#mp-relief)` and `fill: url(#mp-stripe)`, which is what the docs
+above promise and what every stylesheet already says. Only the emitted pair
+moves, and it moves together: the id on the definition and the reference in the
+`css` shipped beside it. An id you invented yourself is left exactly as written —
+only the `mp-` names are namespaced.
+
+The hash is derived, never counted, because the same input has to give the same
+output: a counter would make a map's bytes depend on how many maps were built
+before it. Two maps that agree on theme, canvas, projection, detail and subject
+get the same scope, which is correct — they are the same map, and a page holding
+it twice is holding one document twice.
 
 ### How flattening works
 
@@ -484,6 +522,350 @@ await neatline({ region: "west-europe", neighbours: true });
 The surrounding countries, drawn beneath the region as context. Never labelled,
 never highlighted, and **excluded from the camera** — so turning context on
 cannot move your subject. Styled from `--neighbour`.
+
+### Marks
+
+```ts
+await neatline({
+  region: "west-europe",
+  highlight: ["FR"],
+  pins: [
+    { at: [4.84, 45.76], label: "Lyon", kind: "site" },
+    { at: [5.37, 43.30], label: "Marseille", offset: [0, 18] },
+    { at: [9.99, 53.55], label: "Hamburg", id: "h1", offset: [-14, -4] },
+  ],
+});
+```
+
+A dot where the thing happened, and a word saying what it was. Pins render into
+`.mp-annotations`, above every geographic layer and below the furniture.
+
+`at` is a coordinate, `[lon, lat]`, and **never a pixel**. A pixel is only
+meaningful for the exact region, projection and canvas size that produced it, so
+a map reframed or resized detaches every mark placed in pixels. Where a mark is
+placed with a pointer, [`invert()`](#coordinates-and-pixels) is what turns the
+drop back into a coordinate to store. This is the shape arrows, callouts and
+icons will copy — they all have to say *where*, and they will all say it this
+way.
+
+`label` sets text beside the mark; omit it and the pin is a mark and nothing
+else. `id` becomes `data-id`, which is how an editor finds the node it drew
+again. `kind` becomes `data-kind` for a theme to style — free text rather than
+an enumeration, because the icon vocabularies that will supply the conventional
+values have not landed yet. `offset` moves the **label**, in user units, never
+the mark: a negative `dx` anchors the text at its far end so it does not run
+back across the mark it was moved away from.
+
+Marks are **excluded from the camera**, exactly as neighbours are. Placing one
+never moves the map out from under the marks already placed.
+
+**Two things can go wrong with a pin, and they get two different answers.**
+
+A coordinate on the far side of a globe is *dropped*. It has no pixel of its
+own, but it is handed one anyway — the far hemisphere projects onto the same
+disc as the near one, so a pin at 160°W lands squarely on Angola on an
+Africa-centred orthographic, and nothing about the markup would say it was
+wrong. They are caught by round trip: `invert()` answers with the near side by
+construction, so a coordinate that comes back as itself was visible and one that
+comes back as somewhere else was not.
+
+A coordinate that survives that but lands outside the canvas is *drawn*,
+carrying `data-fit="0"`. It is a real place the camera simply is not pointed at,
+and that is a fact about the map rather than an error — so the document states
+it and the stylesheet acts on it, the same bargain a name too big for its
+country gets. The bundled themes hide it.
+
+A coordinate that cannot be one at all throws, and a latitude past 90 is told
+what it probably was:
+
+```
+neatline: pins[0].at has a latitude of 102.35, which is outside [-90, 90] —
+coordinates are [lon, lat], not [lat, lon]
+```
+
+The mark is `--anno`, cased in `--label-halo` — the same casing its label gets.
+The casing is not decoration: every bundled preset sets `--anno` to the same
+value as `--accent`, so a pin dropped on a highlighted country is drawn in the
+country's own colour, and a region plus a highlight plus a marker is exactly the
+map this layer exists to make.
+
+### Captions
+
+```ts
+await neatline({
+  region: "europe",
+  pins: [{ at: [30.73, 46.48], label: "Odesa" }],
+  callouts: [
+    {
+      at: [30.73, 46.48],
+      text: "Grain exports resumed here in July, under a corridor agreement that lapsed in November",
+      offset: [-96, -150],
+      width: 190,
+    },
+  ],
+});
+```
+
+A callout says `where` exactly as a pin does — same `at`, same guards, same
+`data-fit`. What differs is which half carries the meaning. A pin says *there is
+something here* and the mark is the subject; a callout says *this sentence is
+about here*, and the words are the subject while the line only points.
+
+That is why a callout has a box and a pin does not. A single word can sit on a
+coastline behind a halo; a sentence cannot. The box is filled from `--anno` and
+the caption is set in `--anno-ink` — the one piece of text on the map drawn with
+no casing at all, because it already has a ground of its own.
+
+`offset` places the **corner of the box nearest the point**, and the box grows
+away from there — so the sign of the offset is the direction the box goes, and
+the leader always lands on a corner you can predict. `width` is the widest the
+caption sets before it wraps (default 180 user units); the wrap is greedy, and a
+single word longer than the column is left long rather than hyphenated.
+
+There is no mark at the anchor. The leader already ends there, and a caller who
+wants a dot as well adds a pin at the same coordinate — which is the composition
+the whole layer is built for, rather than a second way to draw one circle.
+
+**One caveat worth knowing.** SVG cannot measure text outside a browser, so the
+box is sized from `--label-advance` and `--label-track`, which is an estimate.
+It rounds up by 30% — measured as the worst case a real caption runs across the
+bundled stacks — so a box is sometimes a little wider than it strictly needs to
+be. That is the right way round: a box slightly too wide costs whitespace, and a
+box too narrow prints the caption out through its own side.
+
+### Furniture, and the canvas
+
+```ts
+await neatline({
+  region: "world",
+  credit: "Natural Earth · public domain",
+  // or: credit: { text: "Reuters graphics", anchor: "bottom-left" }
+});
+```
+
+`.mp-furniture` is **the one layer that is not geographic.** Everything in every
+other layer is somewhere on the ground and moves when the projection or the
+region changes. A credit line is on the *paper*: it belongs to one of nine
+canvas positions, in fixed user units, and stays there however the map beneath
+it is reframed.
+
+```
+top-left        top        top-right
+left           centre           right
+bottom-left    bottom    bottom-right
+```
+
+An anchor carries an alignment as well as a point, which is the half that is
+easy to forget: a credit anchored `bottom-right` is not text *placed at* the
+corner, it is text whose **end** sits there. Placed by coordinate alone, a long
+one runs off the canvas.
+
+The inset is the map's own `padding`, so furniture lines up with the margin the
+map was already drawn inside rather than inventing a second one. Styling comes
+from `--furniture-ink`.
+
+The credit deliberately **does not** appear in the accessible description. It
+says who made the map, which is not what the map is *of* — announcing it would
+put the byline ahead of the subject.
+
+Nothing here is an obligation this library imposes: Natural Earth is public
+domain, Maki is CC0, and neatline is MIT. `credit` exists because a map that
+leaves a browser as a file has no surrounding page to carry a caption, so the
+credit has to come out of the generator or it does not exist at all.
+
+### A scale bar and a north arrow, when the map has earned them
+
+```ts
+const map = await neatline({
+  region: ["FR"],
+  projection: "conic-conformal",
+  scaleBar: true,          // or { anchor, maxWidth, units: "km" | "mi", tolerance }
+  compass: true,           // or { anchor, tolerance }
+});
+
+map.distortion();          // { scale, north, kmPerUnit, samples }
+```
+
+These two are the only furniture that makes a claim about the **ground** rather
+than about the map's provenance. A credit line cannot be wrong. A bar reading
+`500 km` on a frame where 500 km is sometimes 80 units and sometimes 160 is
+simply false, and nothing in the markup says so.
+
+So neither is drawn on request alone. The canvas is sampled — a few hundred
+probes through `project` and `invert` — and the piece appears only if the claim
+holds:
+
+| | claims | drawn when | default |
+|---|---|---|---|
+| `scaleBar` | one length means one distance everywhere | largest local scale ÷ smallest ≤ `tolerance` | `1.1` |
+| `compass` | up is north everywhere | north leans ≤ `tolerance` degrees from up | `5` |
+
+**The usual rule — "a scale bar suits the conformal and equal-area
+projections" — is wrong in both directions, and this library does not use it.**
+Measured across the drawn frame:
+
+| region · projection | scale varies | north leans | gets |
+|---|---|---|---|
+| `europe` · mercator | 2.76 | 0.0° | arrow only |
+| `west-europe` · conic-conformal | 1.03 | 22.3° | bar only |
+| `CH` · mercator | 1.05 | 0.0° | both |
+| `world` · equal-earth | huge | 64.4° | neither |
+
+Mercator is conformal and varies by nearly three to one over Europe, so the old
+rule would permit a bar that lies. Orthographic is neither family and varies by
+1.07 over India, so the old rule would forbid one closer to true than the bar it
+just allowed. Honesty depends on the **extent**, not on the projection's family,
+and it is measurable — which is the same discipline the `invert()` round trip
+settled for annotations: measure the property, do not assert the category.
+
+`map.distortion()` reports the measurement, so asking for a bar and receiving
+none is answerable with a number rather than a guess. It is computed on first
+call and kept, and a map that never asks never pays for it.
+
+The bar's number is always a round one — 1, 2 or 5 times a power of ten — so the
+**width is derived from the number** rather than the number from the width. A
+bar reading 237 km is a bar nobody can step across a map.
+
+### Watermarks
+
+```ts
+await neatline({
+  region: "africa",
+  watermark: "PROVISIONAL",
+  // or: watermark: { image: "./logo.svg", anchor: "bottom-right", width: 90 }
+});
+```
+
+**A watermark is attribution, not protection.** It is a node in a file the
+reader can open, select and delete — it marks provenance and it cannot enforce
+anything. Nothing here is a rights mechanism, and a caller who needs one needs
+something other than a vector graphic.
+
+An `image` is **embedded**, not linked: a `data:` URI passes through untouched,
+and under Node a path to a `.png`, `.jpg`, `.gif`, `.webp` or `.svg` is read and
+base64'd into the document. The whole point of this library's output is that one
+file is the whole map, and a watermark referencing a logo on disk would stop
+working the moment the SVG was emailed to anyone. The `<image>` carries a plain
+SVG 2 `href` rather than a duplicate `xlink:href`, which would double the
+payload of the logo to satisfy renderers older than about 2019.
+
+You give a **box**, and the logo is fitted inside it — never stretched. The
+library has no way to measure an image's aspect ratio outside a browser, which
+is the same wall `--label-advance` exists to get around, so `width` and
+`height` bound the mark rather than setting it.
+
+`text` and `image` are exclusive. A logo above a wordmark is a lockup, and a
+lockup's spacing and proportions belong to whoever owns the mark; pass the
+lockup as one image.
+
+Styling is `--furniture-ink` at `opacity: 0.18` — one CSS rule changes it:
+
+```css
+.mp .mp-watermark { opacity: 0.4; }
+```
+
+### Furniture does not dodge itself
+
+The nine anchors are yours to assign, and nothing stops you putting a watermark
+and a scale bar in the same corner. The defaults are three different corners on
+purpose — `credit` bottom-right, `scaleBar` bottom-left, `compass` top-right,
+`watermark` centre — but there is no layout engine underneath them, and there is
+deliberately no auto-placement: where a mark of provenance sits is an editorial
+decision, not a packing problem.
+
+### Icons
+
+```ts
+import { ICON_NAMES } from "neatline";
+
+await neatline({
+  region: "west-europe",
+  pins: [
+    { at: [4.48, 51.92], kind: "harbor", label: "Rotterdam" },
+    { at: [2.55, 49.01], kind: "airport", label: "Roissy" },
+    { at: [-1.55, 47.22], kind: "flooding", label: "No icon for this" },
+  ],
+});
+```
+
+A pin's `kind` doubles as the icon name. There is no separate option, because
+the icon vocabulary's names *are* the conventional values for `kind` — that is
+what it was reserved for.
+
+**A `kind` that names no icon is not an error.** It stays a plain mark and keeps
+its `data-kind` for a theme to style, so a category of your own invention goes
+on working. `ICON_NAMES` is exported if you want to check first, and
+`isIconName()` if you want to ask.
+
+The set is **[Maki](https://github.com/mapbox/maki)**, which is **CC0** — public
+domain, no attribution obligation. That is the whole reason it is the set this
+library uses: anything under MIT or ISC would propagate a credit-line
+requirement into every map anyone generates, and quietly doing that to you is
+not something a map library should do. Nothing in your output credits anyone.
+
+Twenty-nine icons, grouped by what a map is usually saying:
+
+| | |
+|---|---|
+| Movement and logistics | `airport` `harbor` `rail` `ferry` `bus` `fuel` `bridge` |
+| Industry and energy | `industry` `warehouse` `dam` `windmill` `construction` |
+| Civic and public | `hospital` `police` `fire-station` `school` `bank` `embassy` `town-hall` |
+| Settlement | `town` `city` `village` |
+| Land and landmark | `mountain` `park` `lighthouse` `monument` |
+| Situation | `danger` `roadblock` `shelter` |
+
+Deliberately small: a vocabulary nobody can hold in their head is one where
+every author picks a different icon for the same thing.
+
+Maki covers what sits on the ground. It has no `oil`, `natural-gas`, `pipeline`
+or `mine` — the geopolitical half a news map runs on does not exist in any
+public-domain set, and drawing one to Maki's weight and grid is its own piece of
+work, not yet done.
+
+The glyph is inked from `--anno-ink` on a mark filled with `--anno`, and the
+mark grows to hold it. The path is **inlined into each pin** rather than
+referenced from a `<symbol>`: a `<use>` puts its content in a shadow tree, where
+a class-based fill is unreliable across renderers and unreachable by the
+flattening pass — and the flattened form exists precisely for the reader that
+ignores stylesheets.
+
+### Connections
+
+```ts
+await neatline({
+  region: "europe",
+  arrows: [
+    { from: [30.73, 46.48], to: [-3.7, 40.42], kind: "grain" },
+    { from: [30.73, 46.48], to: [12.5, 41.9], bow: -0.18 },
+    { from: [30.73, 46.48], to: [21.0, 52.23], bow: 0 },
+  ],
+});
+```
+
+Trade, migration, supply lines. The first primitive with two coordinates rather
+than one, so the guards a pin's `at` gets are applied twice — and an arrow with
+either end on the far side of a globe is dropped **whole**. Half an arrow is not
+a partial answer; it is a line pointing at somewhere the reader was never told
+about.
+
+`bow` is how far the curve leaves the straight line, as a fraction of the
+distance between the ends. Its **sign is the side it bows to**, which is how you
+get an arrow off a coastline or out from under a second arrow running the other
+way. `0` draws a straight line — a real `L`, not a curve that happens to be
+flat. It is a curve by default because two places on a map usually have
+something between them, and a straight chord runs through whatever is in the way
+and reads as a border or a route.
+
+Arrows are drawn **beneath** pins and callouts, because a connection is context
+for the things it connects rather than the other way round. `data-fit="0"` needs
+both ends on the canvas: an arrow whose destination is off the map has not said
+where it goes.
+
+The head is an SVG `<marker>`, which is markup rather than a declaration — so it
+lives in the defs block and the theme names it, exactly as the relief filter and
+the hatch pattern do. It is styled through `.mp-arrow-head` rather than
+inherited from the arrow, because a marker resolves colour where it *sits*, in
+the defs block, and not where it is used.
 
 ### Cities
 
