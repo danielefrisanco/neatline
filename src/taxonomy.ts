@@ -132,7 +132,7 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     className: "mp-furniture",
     feature: "mp-credit",
     status: "live",
-    carries: "Credit lines, watermarks, legends — placed on the canvas, not on the map",
+    carries: "Credits, scale bars, north arrows — placed on the canvas, not on the map",
   },
 ]);
 
@@ -208,8 +208,16 @@ export const RESERVED_CLASSES: readonly string[] = Object.freeze([
   "mp-symbol",
   "mp-watermark",
   "mp-legend",
+  // The two pieces of furniture that make a claim about the ground rather than
+  // about the map's provenance, which is why each is a group: a measurement
+  // needs its number beside it, and a theme has to be able to restyle the mark
+  // and the number apart.
   "mp-scale",
+  "mp-scale-bar",
+  "mp-scale-label",
   "mp-compass",
+  "mp-compass-needle",
+  "mp-compass-label",
 ]);
 
 export function layer(name: LayerName): LayerSpec {

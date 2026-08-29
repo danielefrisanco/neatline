@@ -127,6 +127,49 @@ whatever shape the pin takes, the other three copy it.
 
 ### Added
 
+- **`scaleBar` and `compass`, and the two claims a map has to earn.** These are
+  the only furniture that says something about the *ground* rather than about
+  who made the map. A credit line cannot be wrong. A bar reading `500 km` on a
+  frame where 500 km is sometimes 80 units and sometimes 160 is simply false,
+  and nothing in the markup says so.
+
+  So neither is drawn on request alone. The canvas is sampled — a few hundred
+  probes through `project` and `invert` — and the piece appears only if its
+  claim holds: `scaleBar` when the largest local scale over the smallest is
+  within `tolerance` (default `1.1`), `compass` when north leans no more than
+  `tolerance` degrees off vertical (default `5`).
+
+  **The rule this replaced was wrong in both directions, and it was this
+  project's own.** "A scale bar is meaningful only for the conformal and
+  equal-area projections" had never been measured. Mercator is conformal and
+  varies by **2.76** across a frame of Europe, so the rule would have permitted
+  a bar that lies by nearly three to one. Orthographic is neither family and
+  varies by **1.07** over India, so the rule would have forbidden one closer to
+  true than the bar it had just allowed. Honesty depends on the extent, not on
+  the projection's family — the same lesson the `invert()` round trip taught
+  earlier in this phase, which is that a category is not a measurement.
+
+  The two claims come apart, which is what no family rule can express:
+  `europe/mercator` gets an arrow and no bar; `west-europe/conic-conformal`
+  gets a bar and no arrow, its scale uniform to three per cent while its
+  meridians fan 22° apart at the corners.
+
+  The bar's number is always 1, 2 or 5 times a power of ten, so the width is
+  derived from the number rather than the number from the width — a bar reading
+  237 km is a bar nobody can step across a map. `units: "mi"` measures in miles.
+  Verified by laying the drawn length down in three places on each canvas and
+  asking the sphere how far that is: worst error 3.8% across eight maps.
+
+- **`map.distortion()`** — `{ scale, north, kmPerUnit, samples }`, measured on
+  first call and kept. A refusal a caller cannot inspect is a bug report waiting
+  to happen: asking for a scale bar and receiving none should be answerable with
+  a number. A map that never asks never pays for the sampling.
+
+- **`.mp-scale` and `.mp-compass` stop being reserved**, each a group holding
+  its mark and its number — `.mp-scale-bar` / `.mp-scale-label` and
+  `.mp-compass-needle` / `.mp-compass-label` — because a theme has to be able to
+  restyle the measurement and the text of it apart.
+
 - **`credit`, and the furniture layer stops being empty.** Phase 8c opens here.
   A line of text on the canvas — a source, a byline, a date — anchored to one of
   nine positions and styled from `--furniture-ink`. A bare string takes the

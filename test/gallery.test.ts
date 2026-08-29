@@ -639,6 +639,57 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       title: "A credit line on the canvas, not on the ground",
     },
   ],
+  [
+    // A conic fitted to its region: scale uniform to three per cent, so the bar
+    // is drawn — and meridians fanning twenty degrees apart at the corners, so
+    // the arrow is not. Asking for both and getting one is the feature.
+    "west-europe-measured",
+    {
+      region: "west-europe",
+      projection: "conic-conformal",
+      theme: "atlas",
+      size: [900, 700],
+      scaleBar: true,
+      compass: true,
+      credit: "Distances true to 3% across this frame",
+      title: "A scale bar the frame has earned",
+    },
+  ],
+  [
+    // The mirror case, and the one the old rule got backwards. Mercator is
+    // conformal, so "a bar suits the conformal projections" would allow one
+    // here — where the same ruler reads nearly three times longer at the top of
+    // the frame than the bottom. No bar. But north is exactly up on every
+    // mercator ever drawn, at any extent, so the arrow stands.
+    "europe-mercator-north",
+    {
+      region: "europe",
+      projection: "mercator",
+      theme: "blueprint",
+      size: [900, 700],
+      scaleBar: true,
+      compass: true,
+      // Bottom-left: the bottom-right corner of this frame is Cyprus, and a
+      // credit laid over Nicosia reads as a rendering fault at gallery size.
+      credit: { text: "Scale varies 2.8:1 — no bar drawn", anchor: "bottom-left" },
+      title: "North is up, and nothing else is true",
+    },
+  ],
+  [
+    // Small enough that both claims hold at once, which is the only kind of map
+    // that carries the whole set: bar, arrow and credit, three corners apart.
+    "indonesia-furnished",
+    {
+      region: ["ID"],
+      projection: "conic-conformal",
+      theme: "minimal",
+      size: [1000, 600],
+      scaleBar: { units: "mi", anchor: "bottom-left" },
+      compass: { anchor: "top-left" },
+      credit: "neatline",
+      title: "Bar, arrow and credit, in three corners",
+    },
+  ],
 ];
 
 describe("gallery", () => {

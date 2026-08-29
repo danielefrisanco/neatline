@@ -1,0 +1,349 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0dkihqe" role="img" aria-label="Bar, arrow and credit, in three corners">
+  <title>Bar, arrow and credit, in three corners</title>
+  <style>
+    .mp.mp-t-0dkihqe {
+      --bg: transparent;
+      --land: #D8D8D2;
+      --land-edge: #FFFFFF;
+      --land-edge-width: 0.5;
+      --border: #94948C;
+      --border-width: 0.75;
+      --border-dash: none;
+      --accent: #C2482F;
+      --accent-edge: #FFFFFF;
+      --bin-1: #EDEDE8;
+      --bin-2: #C6CFC5;
+      --bin-3: #9CAFA3;
+      --bin-4: #6E857A;
+      --bin-5: #435850;
+      --fill-1: #B9C7B4;
+      --fill-2: #DFCBA8;
+      --fill-3: #A9BECF;
+      --fill-4: #D3AFB4;
+      --fill-5: #C9C49A;
+      --fill-6: #B6ADC6;
+      --prism-side: #29352F;
+      --accent-side: #8A3320;
+      --place: #2B2B29;
+      --ink: #2B2B29;
+      --ink-muted: #80807A;
+      --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      --label-size: 13;
+      --place-label-size: 11;
+      --label-track: 0;
+      --label-weight: 500;
+      --label-advance: 0.58;
+      --label-halo: #FFFFFF;
+      --label-halo-width: 2.4;
+      --stripe: #6E6E68;
+      --stripe-width: 1.6;
+      --water: #8FB0C4;
+      --water-width: 1.1;
+      --graticule: #C9C9C3;
+      --graticule-width: 0.4;
+      --equator: #A8A8A0;
+      --desert: #E8DFC4;
+      --forest: #B9C9B0;
+      --mountain: #CFC6B6;
+      --glacier: #F2F4F5;
+      --sea-ink: #7E96A6;
+      --road: #B08A3E;
+      --neighbour: #F0F0EE;
+      --anno: #8E2F1C;
+      --anno-ink: #FFFFFF;
+      --furniture-ink: #80807A;
+    }
+    .mp.mp-t-0dkihqe .mp-bg {
+      fill: var(--bg);
+    }
+    .mp.mp-t-0dkihqe .mp-neighbour {
+      fill: var(--neighbour);
+      stroke: none;
+    }
+    .mp.mp-t-0dkihqe .mp-country {
+      fill: var(--land);
+      stroke: var(--land-edge);
+      stroke-width: var(--land-edge-width);
+      stroke-linejoin: round;
+    }
+    .mp.mp-t-0dkihqe .mp-country[data-bin="1"] {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-0dkihqe .mp-country[data-bin="2"] {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-0dkihqe .mp-country[data-bin="3"] {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-0dkihqe .mp-country[data-bin="4"] {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-0dkihqe .mp-country[data-bin="5"] {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-0dkihqe .mp-country[data-fill="1"] {
+      fill: var(--fill-1);
+    }
+    .mp.mp-t-0dkihqe .mp-country[data-fill="2"] {
+      fill: var(--fill-2);
+    }
+    .mp.mp-t-0dkihqe .mp-country[data-fill="3"] {
+      fill: var(--fill-3);
+    }
+    .mp.mp-t-0dkihqe .mp-country[data-fill="4"] {
+      fill: var(--fill-4);
+    }
+    .mp.mp-t-0dkihqe .mp-country[data-fill="5"] {
+      fill: var(--fill-5);
+    }
+    .mp.mp-t-0dkihqe .mp-country[data-fill="6"] {
+      fill: var(--fill-6);
+    }
+    .mp.mp-t-0dkihqe .mp-country.is-highlighted {
+      fill: var(--accent);
+      stroke: var(--accent-edge);
+    }
+    .mp.mp-t-0dkihqe .mp-water[data-kind="lake"] {
+      fill: var(--water);
+      stroke: none;
+    }
+    .mp.mp-t-0dkihqe .mp-water[data-kind="river"] {
+      fill: none;
+      stroke: var(--water);
+      stroke-width: var(--water-width);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .mp.mp-t-0dkihqe .mp-border {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: var(--border-width);
+      stroke-dasharray: var(--border-dash);
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+    .mp.mp-t-0dkihqe .mp-road {
+      fill: none;
+      stroke: var(--road);
+    }
+    .mp.mp-t-0dkihqe .mp-place {
+      fill: var(--place);
+      stroke: none;
+    }
+    .mp.mp-t-0dkihqe .mp-prism-top {
+      fill: var(--land);
+      stroke: var(--land-edge);
+      stroke-width: var(--land-edge-width);
+    }
+    .mp.mp-t-0dkihqe .mp-prism-side {
+      fill: var(--prism-side);
+      stroke: none;
+    }
+    .mp.mp-t-0dkihqe .mp-prism-edge {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: var(--border-width);
+      stroke-dasharray: var(--border-dash);
+    }
+    .mp.mp-t-0dkihqe .mp-prism[data-bin="1"] .mp-prism-top {
+      fill: var(--bin-1);
+    }
+    .mp.mp-t-0dkihqe .mp-prism[data-bin="2"] .mp-prism-top {
+      fill: var(--bin-2);
+    }
+    .mp.mp-t-0dkihqe .mp-prism[data-bin="3"] .mp-prism-top {
+      fill: var(--bin-3);
+    }
+    .mp.mp-t-0dkihqe .mp-prism[data-bin="4"] .mp-prism-top {
+      fill: var(--bin-4);
+    }
+    .mp.mp-t-0dkihqe .mp-prism[data-bin="5"] .mp-prism-top {
+      fill: var(--bin-5);
+    }
+    .mp.mp-t-0dkihqe .mp-prism[data-fill="1"] .mp-prism-top {
+      fill: var(--fill-1);
+    }
+    .mp.mp-t-0dkihqe .mp-prism[data-fill="2"] .mp-prism-top {
+      fill: var(--fill-2);
+    }
+    .mp.mp-t-0dkihqe .mp-prism[data-fill="3"] .mp-prism-top {
+      fill: var(--fill-3);
+    }
+    .mp.mp-t-0dkihqe .mp-prism[data-fill="4"] .mp-prism-top {
+      fill: var(--fill-4);
+    }
+    .mp.mp-t-0dkihqe .mp-prism[data-fill="5"] .mp-prism-top {
+      fill: var(--fill-5);
+    }
+    .mp.mp-t-0dkihqe .mp-prism[data-fill="6"] .mp-prism-top {
+      fill: var(--fill-6);
+    }
+    .mp.mp-t-0dkihqe .mp-prism.is-highlighted .mp-prism-top {
+      fill: var(--accent);
+    }
+    .mp.mp-t-0dkihqe .mp-prism.is-highlighted .mp-prism-side {
+      fill: var(--accent-side);
+    }
+    .mp.mp-t-0dkihqe .mp-hatch {
+      fill: url(#mp-stripe-0dmq2aw);
+      stroke: none;
+    }
+    .mp.mp-t-0dkihqe .mp-hatch-line {
+      fill: none;
+      stroke: var(--stripe);
+      stroke-width: var(--stripe-width);
+    }
+    .mp.mp-t-0dkihqe .mp-label {
+      fill: var(--ink);
+      font-family: var(--font);
+      font-size: var(--label-size);
+      font-weight: var(--label-weight);
+      letter-spacing: var(--label-track);
+      stroke: var(--label-halo);
+      stroke-width: var(--label-halo-width);
+      stroke-linejoin: round;
+      paint-order: stroke;
+    }
+    .mp.mp-t-0dkihqe .mp-label[data-kind="place"] {
+      fill: var(--ink-muted);
+      font-size: var(--place-label-size);
+    }
+    .mp.mp-t-0dkihqe .mp-label.is-highlighted {
+      font-weight: 700;
+    }
+    .mp.mp-t-0dkihqe .mp-label[data-fit="0"] {
+      display: none;
+    }
+    .mp.mp-t-0dkihqe .mp-pin-mark {
+      fill: var(--anno);
+      stroke: var(--label-halo);
+      stroke-width: var(--label-halo-width);
+    }
+    .mp.mp-t-0dkihqe .mp-icon {
+      fill: var(--anno-ink);
+      stroke: none;
+    }
+    .mp.mp-t-0dkihqe .mp-label[data-kind="pin"] {
+      font-size: var(--place-label-size);
+      font-weight: 700;
+    }
+    .mp.mp-t-0dkihqe .mp-arrow-line {
+      fill: none;
+      stroke: var(--anno);
+      stroke-width: 2;
+      stroke-linecap: round;
+      marker-end: url(#mp-arrowhead-0dmq2aw);
+    }
+    .mp.mp-t-0dkihqe .mp-arrow-head {
+      fill: var(--anno);
+      stroke: none;
+    }
+    .mp.mp-t-0dkihqe .mp-callout-leader {
+      fill: none;
+      stroke: var(--anno);
+      stroke-width: 1.25;
+      stroke-linecap: round;
+    }
+    .mp.mp-t-0dkihqe .mp-callout-box {
+      fill: var(--anno);
+      stroke: var(--anno-ink);
+      stroke-width: 1;
+    }
+    .mp.mp-t-0dkihqe .mp-label[data-kind="callout"] {
+      fill: var(--anno-ink);
+      font-size: var(--place-label-size);
+      font-weight: 500;
+      stroke: none;
+    }
+    .mp.mp-t-0dkihqe .mp-anno[data-fit="0"] {
+      display: none;
+    }
+    .mp.mp-t-0dkihqe .mp-credit, .mp.mp-t-0dkihqe .mp-scale-label, .mp.mp-t-0dkihqe .mp-compass-label {
+      fill: var(--furniture-ink);
+      font-family: var(--font);
+      font-size: var(--place-label-size);
+      letter-spacing: var(--label-track);
+    }
+    .mp.mp-t-0dkihqe .mp-scale-bar {
+      fill: none;
+      stroke: var(--furniture-ink);
+      stroke-width: 1.5;
+    }
+    .mp.mp-t-0dkihqe .mp-compass-needle {
+      fill: var(--furniture-ink);
+    }
+    @media (prefers-color-scheme: dark) {
+      .mp.mp-t-0dkihqe {
+        --land: #2E3134;
+        --land-edge: #16181A;
+        --border: #6E747A;
+        --accent: #E2694A;
+        --accent-edge: #16181A;
+        --bin-1: #24272A;
+        --bin-2: #2F3A36;
+        --bin-3: #3F5049;
+        --bin-4: #55685E;
+        --bin-5: #7A9184;
+        --fill-1: #364039;
+        --fill-2: #453D2F;
+        --fill-3: #2F3B45;
+        --fill-4: #443338;
+        --fill-5: #41402E;
+        --fill-6: #383345;
+        --prism-side: #14181A;
+        --accent-side: #9C4832;
+        --place: #DCDCD6;
+        --ink: #DCDCD6;
+        --ink-muted: #85898D;
+        --label-halo: #1A1D1F;
+        --stripe: #9A9A94;
+        --water: #4C7A96;
+        --neighbour: #202325;
+        --anno: #F79A78;
+        --anno-ink: #16181A;
+        --furniture-ink: #85898D;
+      }
+    }
+  </style>
+  <defs class="mp-defs">
+    <pattern id="mp-stripe-0dmq2aw" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path class="mp-hatch-line" d="M0,0 V7" fill="none" stroke="#6E6E68" stroke-width="1.6"/>
+    </pattern>
+    <marker id="mp-arrowhead-0dmq2aw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path class="mp-arrow-head" d="M0,0 L10,5 L0,10 Z" fill="#8E2F1C" stroke="none"/>
+    </marker>
+  </defs>
+  <rect class="mp-bg" x="0" y="0" width="1000" height="600" fill="transparent"/>
+  <g class="mp-layer mp-graticule"/>
+  <g class="mp-layer mp-neighbours"/>
+  <g class="mp-layer mp-land">
+    <path class="mp-country" data-iso="ID" data-name="Indonesia" d="M976,305.2L975.2,373L974.4,441L956.3,423.5L935.3,419L930.1,424.9L903.9,425.1L912.9,408.3L926.1,402.7L921,379.9L911.3,362.3L871.4,344.1L854.3,342.1L823.4,322.5L817.2,332.6L809.2,334.3L804.6,326.7L804.6,317.6L788.8,307.2L811.3,300L826.1,300.5L824.4,295L794,294.7L785.9,282.2L767.4,278.2L758.7,267.8L786.8,263L797.5,256.4L830.7,265.3L834,273.1L839.4,306.7L860.7,319.4L878.3,297.6L902.3,285.4L920.8,285.7L938.5,293.2L953.8,300.9ZM642.4,432.6L644.5,436.8L644.8,443.1L631.3,458.7L613.6,463.2L611.2,460.7L613,453.6L621.9,440.9ZM833.9,392.5L832.1,376.8L835.9,369.4L840.3,362.4L844.9,368.5L844.8,378.5ZM495.9,160.8L484,179.7L499.3,199.5L495.7,209.1L519.1,228.3L494.5,230.8L487.5,245L488.4,263.8L468.4,278.1L467.9,298.8L460,330.6L456.9,323.2L433.3,332.6L425.1,319.9L410.3,318.8L399.9,312.2L375.2,319.7L367.6,309.7L354.1,310.9L336.9,308.6L333.5,280.7L323.2,275L313,257.3L310.1,239.1L312.3,219.8L324.6,205.9L328.2,219.8L342.5,231.5L355.9,227.2L369.2,228.6L381.3,218L391.3,216.1L411,221.9L427.9,217.4L438.6,188.4L446.6,181.1L453.8,157.3L477.8,157.3ZM734.5,306.4L757.2,312.6L764.6,328.6L747.2,319.8L729.9,318L718.2,319.2L703.8,318.4L708.8,307ZM682.5,326.5L668.2,322.6L664.2,313.7L685.2,312.8L690.3,319.7ZM705.4,202.6L706.8,213.9L719.1,215.9L720.9,224.4L719.7,242.6L709,240.5L705.7,253.1L714.2,264.1L708.3,266.6L700,253.4L694.1,226.7L698.4,210.1ZM601,229.1L624.9,228.3L645.6,213.2L649.2,217.9L632.3,238.5L616.7,242.4L596.7,238.3L562,239.2L543.8,242.2L540.8,257.9L559.4,276.5L570.6,267.1L609.4,260.1L607.7,269.7L598.7,266.6L589.6,278.8L571.2,286.8L590.8,313.5L587.1,320.6L605.6,344.7L605.4,358.4L594.3,364.4L586.2,357.1L596.2,340.1L575.8,348.1L570.7,342.3L573.4,334.3L558.5,322.1L560.1,301.8L546.2,308.1L548,332.3L548.7,362.1L535.6,365.1L526.7,359L532.6,339.9L529.5,319.8L520.7,319.6L514.3,305.4L522.9,291.8L525.9,275.3L536.3,243.9L540.7,235.4L558.5,219.9L574.7,226.1ZM545.7,460.9L518.4,446.2L537.7,442.1L548.5,448.5L555.7,454.9L554.4,460.5ZM567.5,424.9L581.2,423.4L599.8,415.8L596.7,427.4L565.6,433.2L538.1,430.6L538.1,422.9L554.5,418.6ZM503.7,421.2L516.5,419.5L521.7,428.4L497.8,432.6L483.4,435.4L472.3,435.2L479.4,423.2L490.8,423L496.3,415.6ZM301.3,381.4L304.2,388.8L344,390.7L348.5,382L386.9,391.9L394.5,405.3L425.5,409.1L451,421.4L427.4,429.4L404.6,421.1L385.9,421.7L364.5,420.3L345.1,416.6L321.1,408.8L305.8,406.8L297.2,409.5L259.5,401.2L255.8,392.3L236.8,390.9L250.9,370.9L276,371.9L292.8,379.9ZM215,271.1L218.7,285.6L226,297.1L241.3,298.8L251.5,311.9L246.5,337.8L246,370L223,370.6L205.4,353.4L178.6,336.7L169.6,324.3L153.7,307.5L143.2,292.1L126.9,263.2L108.4,246.1L102.1,228.3L94.2,212.1L75.2,199.3L64,181.5L48.2,170.1L26,147.4L24,136.8L37.4,137.4L69.8,140.9L88.6,161.1L105,175.1L116.6,183.6L136.6,205.8L157.8,205.8L175.5,219.9L187.7,237.2L203.7,246.5L195.5,263.6L207.5,270.7Z" fill="#D8D8D2" stroke="#FFFFFF" stroke-width="0.5" stroke-linejoin="round">
+      <title>Indonesia</title>
+    </path>
+  </g>
+  <g class="mp-layer mp-terrain"/>
+  <g class="mp-layer mp-hydro"/>
+  <g class="mp-layer mp-borders" fill="none"/>
+  <g class="mp-layer mp-roads"/>
+  <g class="mp-layer mp-places">
+    <circle class="mp-place" data-name="Jakarta" data-iso="ID" data-rank="1" data-pop="9125000" cx="266.975" cy="376.49" r="3.2" fill="#2B2B29" stroke="none">
+      <title>Jakarta</title>
+    </circle>
+  </g>
+  <g class="mp-layer mp-labels">
+    <text class="mp-label" data-kind="country" data-iso="ID" data-rank="1" x="415.7" y="252.5" text-anchor="middle" dominant-baseline="central" fill="#2B2B29" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="13" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Indonesia</text>
+    <text class="mp-label" data-kind="place" data-iso="ID" data-rank="1" data-capital="" x="273.2" y="376.5" text-anchor="start" dominant-baseline="central" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" font-weight="500" letter-spacing="0" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke">Jakarta</text>
+  </g>
+  <g class="mp-layer mp-annotations"/>
+  <g class="mp-layer mp-furniture">
+    <text class="mp-credit" data-anchor="bottom-right" x="976" y="576" text-anchor="end" dominant-baseline="auto" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" letter-spacing="0">neatline</text>
+    <g class="mp-scale" data-anchor="bottom-left" data-distance="500" data-units="mi" transform="translate(24,556)">
+      <text class="mp-scale-label" x="75.9" y="0" text-anchor="middle" dominant-baseline="hanging" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" letter-spacing="0">500 mi</text>
+      <path class="mp-scale-bar" d="M0,14 V20 H151.7 V14" fill="none" stroke="#80807A" stroke-width="1.5"/>
+    </g>
+    <g class="mp-compass" data-anchor="top-left" transform="translate(24,24)">
+      <text class="mp-compass-label" x="9" y="0" text-anchor="middle" dominant-baseline="hanging" fill="#80807A" font-family="ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif" font-size="11" letter-spacing="0">N</text>
+      <path class="mp-compass-needle" d="M9,14 L17,40 L9,34 L1,40 Z" fill="#80807A"/>
+    </g>
+  </g>
+</svg>

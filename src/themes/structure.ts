@@ -247,11 +247,30 @@ ${rules((n) => `.mp .mp-prism[data-fill="${n}"] .mp-prism-top { fill: var(--fill
  * instead of leaving it behind. A theme that wants it smaller still says so in
  * one rule.
  */
-.mp .mp-credit {
+.mp .mp-credit,
+.mp .mp-scale-label,
+.mp .mp-compass-label {
   fill: var(--furniture-ink);
   font-family: var(--font);
   font-size: var(--place-label-size);
   letter-spacing: var(--label-track);
+}
+
+/*
+ * A scale bar is a rule with a tick rising at each end, and the ticks are the
+ * part that makes it a measurement — they say where it stops. Literal weight,
+ * for the same reason the callout's leader carries one: this is a rule about
+ * this mark, not a line on the map, and reading --border-width here would let a
+ * theme with heavy borders turn a measurement into a bar of paint.
+ */
+.mp .mp-scale-bar {
+  fill: none;
+  stroke: var(--furniture-ink);
+  stroke-width: 1.5;
+}
+
+.mp .mp-compass-needle {
+  fill: var(--furniture-ink);
 }
 `.trim();
 

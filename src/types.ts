@@ -1,3 +1,4 @@
+import type { Distortion } from "./distortion.js";
 import type { LayerName } from "./taxonomy.js";
 
 /**
@@ -245,6 +246,67 @@ export interface Credit {
   readonly anchor?: Anchor;
 }
 
+/**
+ * A scale bar — a length on the paper labelled with the distance it means.
+ *
+ * ```ts
+ * scaleBar: true
+ * scaleBar: { anchor: "bottom-right", units: "mi" }
+ * ```
+ *
+ * **It is drawn only when the map can honestly carry one.** A bar claims that
+ * one length means one distance everywhere on the sheet, and no projection
+ * makes that true — it is only ever true *enough*, over a small enough extent.
+ * So the map is sampled and the bar appears when the largest local scale on the
+ * canvas is within `tolerance` of the smallest. The usual rule, that a bar
+ * suits the conformal and equal-area projections, is not used and is wrong:
+ * mercator is conformal and varies by 2.76 over Europe, while orthographic is
+ * neither and varies by 1.07 over India.
+ *
+ * `map.distortion()` reports the measurement, so a caller who gets no bar can
+ * see by how much they missed.
+ */
+export interface ScaleBar {
+  /** @default "bottom-left" */
+  readonly anchor?: Anchor;
+  /** Longest the bar may be, in user units. @default a quarter of the canvas */
+  readonly maxWidth?: number;
+  /** @default "km" */
+  readonly units?: "km" | "mi";
+  /**
+   * Largest ratio of local scales across the canvas that still earns a bar.
+   *
+   * @default 1.1
+   */
+  readonly tolerance?: number;
+}
+
+/**
+ * A north arrow.
+ *
+ * ```ts
+ * compass: true
+ * compass: { anchor: "top-left" }
+ * ```
+ *
+ * Refused the same way a scale bar is, and for the same reason: the arrow
+ * claims up is north everywhere on the sheet, which is a measurable property of
+ * the drawn frame rather than of the projection's family. It is the narrower of
+ * the two claims — a conic fitted to a region holds its scale to a few per cent
+ * while its meridians fan twenty degrees apart at the corners.
+ */
+export interface Compass {
+  /** @default "top-right" */
+  readonly anchor?: Anchor;
+  /**
+   * How far north may lean from straight up, in degrees, before the arrow is
+   * withheld.
+   *
+   * @default 5
+   */
+  readonly tolerance?: number;
+}
+
 export interface MapOptions {
   /** Preset name, ISO 3166-1 alpha-2 codes, a bounding box, or raw GeoJSON. */
   readonly region: Region;
@@ -389,6 +451,16 @@ export interface MapOptions {
    * camera does. A bare string takes the default anchor.
    */
   readonly credit?: string | Credit;
+  /**
+   * A scale bar, drawn only if the map's own scale is uniform enough to mean
+   * anything. `true` takes the defaults; see {@link ScaleBar}.
+   */
+  readonly scaleBar?: boolean | ScaleBar;
+  /**
+   * A north arrow, drawn only if up is north across the whole canvas. `true`
+   * takes the defaults; see {@link Compass}.
+   */
+  readonly compass?: boolean | Compass;
   /** Bundled theme name, a path to a `.css` file, or a stylesheet. */
   readonly theme?: string;
   /**
@@ -495,6 +567,18 @@ export interface MapResult {
    * several ways without recomputing the geometry.
    */
   render(options?: RenderOptions): Promise<string>;
+  /**
+   * What the projection does to distance and direction across this canvas.
+   *
+   * Measured by sampling the drawn frame, not looked up from the projection's
+   * name. This is what decides whether a scale bar or a north arrow is drawn,
+   * and it is exposed because a refusal the caller cannot inspect is a bug
+   * report waiting to happen: asking for a bar and receiving none should be
+   * answerable with a number.
+   *
+   * Computed on first call and kept, so asking twice costs nothing.
+   */
+  distortion(): Distortion;
   /** Write `render()` output to disk. Node only. */
   toFile(path: string, options?: RenderOptions): Promise<void>;
 }

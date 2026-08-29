@@ -55,7 +55,7 @@ Inside it, a `.mp-bg` rectangle covers the canvas, then eight layer groups in
 | `.mp-places` | `.mp-place` | `data-name`, `data-iso`, `data-rank`, `data-pop` | Settlement dots, ranked 1–3 |
 | `.mp-labels` | `.mp-label` | `data-kind`, `data-rank`, `data-fit`, `data-iso`, `data-capital` | Country and settlement names |
 | `.mp-annotations` | `.mp-anno` | `data-id`, `data-kind`, `data-fit` | Pins, callouts and arrows |
-| `.mp-furniture` | `.mp-credit` | `data-anchor` | Credit lines · watermarks and legends reserved |
+| `.mp-furniture` | `.mp-credit` | `data-anchor` | Credits, scale bars, north arrows · watermarks and legends reserved |
 
 `.is-highlighted` is a modifier on any feature named in `highlight`.
 A pin is a `.mp-anno.mp-pin` group holding a `.mp-pin-mark` circle and, where
@@ -265,7 +265,7 @@ every theme in the wild.
 | `--neighbour` | Context countries |
 | `--anno` | The mark a pin is drawn with, and a callout's box and leader |
 | `--anno-ink` | Ink on an annotation: a callout's caption, a pin's icon |
-| `--furniture-ink` | Text on the canvas — a credit line |
+| `--furniture-ink` | Text and marks on the canvas — a credit line, a scale bar, a north arrow |
 | `--ink` / `--ink-muted` | Country names / settlement names |
 | `--font` / `--label-size` / `--place-label-size` | Type |
 | `--label-halo` / `--label-halo-width` | The casing drawn behind label text |
@@ -672,6 +672,59 @@ Nothing here is an obligation this library imposes: Natural Earth is public
 domain, Maki is CC0, and neatline is MIT. `credit` exists because a map that
 leaves a browser as a file has no surrounding page to carry a caption, so the
 credit has to come out of the generator or it does not exist at all.
+
+### A scale bar and a north arrow, when the map has earned them
+
+```ts
+const map = await neatline({
+  region: ["FR"],
+  projection: "conic-conformal",
+  scaleBar: true,          // or { anchor, maxWidth, units: "km" | "mi", tolerance }
+  compass: true,           // or { anchor, tolerance }
+});
+
+map.distortion();          // { scale, north, kmPerUnit, samples }
+```
+
+These two are the only furniture that makes a claim about the **ground** rather
+than about the map's provenance. A credit line cannot be wrong. A bar reading
+`500 km` on a frame where 500 km is sometimes 80 units and sometimes 160 is
+simply false, and nothing in the markup says so.
+
+So neither is drawn on request alone. The canvas is sampled — a few hundred
+probes through `project` and `invert` — and the piece appears only if the claim
+holds:
+
+| | claims | drawn when | default |
+|---|---|---|---|
+| `scaleBar` | one length means one distance everywhere | largest local scale ÷ smallest ≤ `tolerance` | `1.1` |
+| `compass` | up is north everywhere | north leans ≤ `tolerance` degrees from up | `5` |
+
+**The usual rule — "a scale bar suits the conformal and equal-area
+projections" — is wrong in both directions, and this library does not use it.**
+Measured across the drawn frame:
+
+| region · projection | scale varies | north leans | gets |
+|---|---|---|---|
+| `europe` · mercator | 2.76 | 0.0° | arrow only |
+| `west-europe` · conic-conformal | 1.03 | 22.3° | bar only |
+| `CH` · mercator | 1.05 | 0.0° | both |
+| `world` · equal-earth | huge | 64.4° | neither |
+
+Mercator is conformal and varies by nearly three to one over Europe, so the old
+rule would permit a bar that lies. Orthographic is neither family and varies by
+1.07 over India, so the old rule would forbid one closer to true than the bar it
+just allowed. Honesty depends on the **extent**, not on the projection's family,
+and it is measurable — which is the same discipline the `invert()` round trip
+settled for annotations: measure the property, do not assert the category.
+
+`map.distortion()` reports the measurement, so asking for a bar and receiving
+none is answerable with a number rather than a guess. It is computed on first
+call and kept, and a map that never asks never pays for it.
+
+The bar's number is always a round one — 1, 2 or 5 times a power of ten — so the
+**width is derived from the number** rather than the number from the width. A
+bar reading 237 km is a bar nobody can step across a map.
 
 ### Icons
 

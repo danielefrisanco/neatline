@@ -1,7 +1,8 @@
 import { geoBounds, geoContains, geoPath } from "d3-geo";
 import { assignBins, DEFAULT_BINS } from "./bins.js";
 import { arrowLayer, calloutLayer, pinLayer } from "./annotations.js";
-import { creditLayer } from "./furniture.js";
+import { compassLayer, creditLayer, scaleLayer } from "./furniture.js";
+import { measureDistortion, type Distortion } from "./distortion.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
 import { countryLabels, labelLayer, labelSizes, placeLabel, type LabelBox, type Placed } from "./labels.js";
@@ -45,6 +46,7 @@ export { REGION_PRESETS, REGION_PRESET_NAMES, isRegionPreset } from "./regions.j
 export { FILTER_NAMES } from "./filters.js";
 export { PATTERN_NAMES } from "./patterns.js";
 export { ANCHORS, isAnchor } from "./furniture.js";
+export type { Distortion } from "./distortion.js";
 export { ICONS, ICON_NAMES, ICON_GRID, isIconName } from "./icons.js";
 export { MARKER_NAMES } from "./markers.js";
 export {
@@ -73,6 +75,7 @@ export type {
   Arrow,
   BBox,
   Callout,
+  Compass,
   Credit,
   Detail,
   GeoJsonFeatureCollection,
@@ -85,6 +88,7 @@ export type {
   Region,
   RegionPreset,
   RenderOptions,
+  ScaleBar,
   Size,
 } from "./types.js";
 
@@ -385,6 +389,19 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
 
   const projection = createProjection(projectionName, frame, width, height, padding, headroom);
   const path = geoPath(projection).digits(1);
+
+  /**
+   * What this frame does to distance and direction, measured once.
+   *
+   * Sampling the canvas costs a few hundred projections, so it is taken only if
+   * something asks — a map with no scale bar, no north arrow and no caller
+   * reading `distortion()` never pays for it.
+   */
+  let measured: Distortion | null = null;
+  function distortion(): Distortion {
+    measured ??= measureDistortion(projectPoint, invertPoint, [width, height]);
+    return measured;
+  }
 
   function projectPoint(position: Position): Point | null {
     const projected = projection([position[0], position[1]]);
@@ -766,10 +783,24 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
    * projection, which is the whole point of it being a layer of its own. A
    * credit that moved when the camera did would be a caption on the ground.
    */
-  if (wants("furniture") && options.credit !== undefined) {
-    const credit = typeof options.credit === "string" ? { text: options.credit } : options.credit;
-    const line = creditLayer(credit, [width, height], padding);
-    if (line.length > 0) content.set("furniture", line);
+  if (wants("furniture")) {
+    const furniture: SvgNode[] = [];
+    if (options.credit !== undefined) {
+      const credit = typeof options.credit === "string" ? { text: options.credit } : options.credit;
+      furniture.push(...creditLayer(credit, [width, height], padding));
+    }
+    // A scale bar and a north arrow are the two pieces that make a claim about
+    // the ground, so both are gated on the same measurement of what this frame
+    // does to distance and direction. Taken once and shared.
+    if (options.scaleBar !== undefined && options.scaleBar !== false) {
+      const bar = options.scaleBar === true ? {} : options.scaleBar;
+      furniture.push(...scaleLayer(bar, [width, height], padding, sizes.place, distortion()));
+    }
+    if (options.compass !== undefined && options.compass !== false) {
+      const compass = options.compass === true ? {} : options.compass;
+      furniture.push(...compassLayer(compass, [width, height], padding, sizes.place, distortion()));
+    }
+    if (furniture.length > 0) content.set("furniture", furniture);
   }
 
   const description = options.title
@@ -898,6 +929,8 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     project: projectPoint,
 
     invert: invertPoint,
+
+    distortion,
 
     toString() {
       return complete;

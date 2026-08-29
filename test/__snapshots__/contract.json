@@ -81,6 +81,8 @@
     "mp-callout-box",
     "mp-callout-leader",
     "mp-compass",
+    "mp-compass-label",
+    "mp-compass-needle",
     "mp-flow",
     "mp-hatch",
     "mp-hatch-line",
@@ -92,6 +94,8 @@
     "mp-prism-side",
     "mp-prism-top",
     "mp-scale",
+    "mp-scale-bar",
+    "mp-scale-label",
     "mp-symbol",
     "mp-watermark"
   ],
