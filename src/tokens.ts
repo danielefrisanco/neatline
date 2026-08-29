@@ -87,7 +87,7 @@ export const TOKENS: readonly TokenSpec[] = Object.freeze([
   // filling that with this and casing it in `--label-halo` paints white on
   // white.
   { name: "--anno-ink", status: "live", controls: "Text drawn on an annotation, against --anno" },
-  { name: "--furniture-ink", status: "reserved", controls: "Credit lines and legends — v2" },
+  { name: "--furniture-ink", status: "live", controls: "Credit lines, watermarks and legends, on the canvas" },
 ]);
 
 export const TOKEN_NAMES: readonly string[] = Object.freeze(TOKENS.map((t) => t.name));

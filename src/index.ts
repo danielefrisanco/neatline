@@ -1,6 +1,7 @@
 import { geoBounds, geoContains, geoPath } from "d3-geo";
 import { assignBins, DEFAULT_BINS } from "./bins.js";
 import { arrowLayer, calloutLayer, pinLayer } from "./annotations.js";
+import { creditLayer } from "./furniture.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
 import { countryLabels, labelLayer, labelSizes, placeLabel, type LabelBox, type Placed } from "./labels.js";
@@ -43,6 +44,7 @@ export { PROJECTION_NAMES, isProjectionName } from "./projections.js";
 export { REGION_PRESETS, REGION_PRESET_NAMES, isRegionPreset } from "./regions.js";
 export { FILTER_NAMES } from "./filters.js";
 export { PATTERN_NAMES } from "./patterns.js";
+export { ANCHORS, isAnchor } from "./furniture.js";
 export { ICONS, ICON_NAMES, ICON_GRID, isIconName } from "./icons.js";
 export { MARKER_NAMES } from "./markers.js";
 export {
@@ -67,9 +69,11 @@ export {
 } from "./taxonomy.js";
 
 export type {
+  Anchor,
   Arrow,
   BBox,
   Callout,
+  Credit,
   Detail,
   GeoJsonFeatureCollection,
   MapOptions,
@@ -754,6 +758,19 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
   const annotated = wants("annotations");
   const drawn = [...flows.nodes, ...marks.nodes, ...captions.nodes];
   if (annotated && drawn.length > 0) content.set("annotations", drawn);
+
+  /**
+   * Furniture, above everything, and the only layer that is not geographic.
+   *
+   * Placed from the canvas and the padding alone — it never touches the
+   * projection, which is the whole point of it being a layer of its own. A
+   * credit that moved when the camera did would be a caption on the ground.
+   */
+  if (wants("furniture") && options.credit !== undefined) {
+    const credit = typeof options.credit === "string" ? { text: options.credit } : options.credit;
+    const line = creditLayer(credit, [width, height], padding);
+    if (line.length > 0) content.set("furniture", line);
+  }
 
   const description = options.title
     ?? describe(

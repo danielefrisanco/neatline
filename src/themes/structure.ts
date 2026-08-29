@@ -237,6 +237,22 @@ ${rules((n) => `.mp .mp-prism[data-fill="${n}"] .mp-prism-top { fill: var(--fill
  * the stylesheet decides what to do about it.
  */
 .mp .mp-anno[data-fit="0"] { display: none; }
+
+/*
+ * The furniture layer: on the canvas, not on the map.
+ *
+ * Set at the settlement size rather than from a token of its own. A credit is
+ * small text and --place-label-size is the small text size a theme has already
+ * chosen, so a condensed face or a larger typeface carries the credit with it
+ * instead of leaving it behind. A theme that wants it smaller still says so in
+ * one rule.
+ */
+.mp .mp-credit {
+  fill: var(--furniture-ink);
+  font-family: var(--font);
+  font-size: var(--place-label-size);
+  letter-spacing: var(--label-track);
+}
 `.trim();
 
 export interface ThemeParts {

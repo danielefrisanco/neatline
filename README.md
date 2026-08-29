@@ -55,7 +55,7 @@ Inside it, a `.mp-bg` rectangle covers the canvas, then eight layer groups in
 | `.mp-places` | `.mp-place` | `data-name`, `data-iso`, `data-rank`, `data-pop` | Settlement dots, ranked 1–3 |
 | `.mp-labels` | `.mp-label` | `data-kind`, `data-rank`, `data-fit`, `data-iso`, `data-capital` | Country and settlement names |
 | `.mp-annotations` | `.mp-anno` | `data-id`, `data-kind`, `data-fit` | Pins, callouts and arrows |
-| `.mp-furniture` | `.mp-credit` | `data-anchor` | *Reserved* · credits, watermarks, legends |
+| `.mp-furniture` | `.mp-credit` | `data-anchor` | Credit lines · watermarks and legends reserved |
 
 `.is-highlighted` is a modifier on any feature named in `highlight`.
 A pin is a `.mp-anno.mp-pin` group holding a `.mp-pin-mark` circle and, where
@@ -265,6 +265,7 @@ every theme in the wild.
 | `--neighbour` | Context countries |
 | `--anno` | The mark a pin is drawn with, and a callout's box and leader |
 | `--anno-ink` | Ink on an annotation: a callout's caption, a pin's icon |
+| `--furniture-ink` | Text on the canvas — a credit line |
 | `--ink` / `--ink-muted` | Country names / settlement names |
 | `--font` / `--label-size` / `--place-label-size` | Type |
 | `--label-halo` / `--label-halo-width` | The casing drawn behind label text |
@@ -631,6 +632,46 @@ It rounds up by 30% — measured as the worst case a real caption runs across th
 bundled stacks — so a box is sometimes a little wider than it strictly needs to
 be. That is the right way round: a box slightly too wide costs whitespace, and a
 box too narrow prints the caption out through its own side.
+
+### Furniture, and the canvas
+
+```ts
+await neatline({
+  region: "world",
+  credit: "Natural Earth · public domain",
+  // or: credit: { text: "Reuters graphics", anchor: "bottom-left" }
+});
+```
+
+`.mp-furniture` is **the one layer that is not geographic.** Everything in every
+other layer is somewhere on the ground and moves when the projection or the
+region changes. A credit line is on the *paper*: it belongs to one of nine
+canvas positions, in fixed user units, and stays there however the map beneath
+it is reframed.
+
+```
+top-left        top        top-right
+left           centre           right
+bottom-left    bottom    bottom-right
+```
+
+An anchor carries an alignment as well as a point, which is the half that is
+easy to forget: a credit anchored `bottom-right` is not text *placed at* the
+corner, it is text whose **end** sits there. Placed by coordinate alone, a long
+one runs off the canvas.
+
+The inset is the map's own `padding`, so furniture lines up with the margin the
+map was already drawn inside rather than inventing a second one. Styling comes
+from `--furniture-ink`.
+
+The credit deliberately **does not** appear in the accessible description. It
+says who made the map, which is not what the map is *of* — announcing it would
+put the byline ahead of the subject.
+
+Nothing here is an obligation this library imposes: Natural Earth is public
+domain, Maki is CC0, and neatline is MIT. `credit` exists because a map that
+leaves a browser as a file has no surrounding page to carry a caption, so the
+credit has to come out of the generator or it does not exist at all.
 
 ### Icons
 

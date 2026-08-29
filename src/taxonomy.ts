@@ -131,7 +131,7 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     name: "furniture",
     className: "mp-furniture",
     feature: "mp-credit",
-    status: "reserved",
+    status: "live",
     carries: "Credit lines, watermarks, legends — placed on the canvas, not on the map",
   },
 ]);
@@ -206,7 +206,6 @@ export const RESERVED_CLASSES: readonly string[] = Object.freeze([
   "mp-hatch-line",
   "mp-flow",
   "mp-symbol",
-  "mp-credit",
   "mp-watermark",
   "mp-legend",
   "mp-scale",

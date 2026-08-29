@@ -69,7 +69,7 @@
       "name": "furniture",
       "className": "mp-furniture",
       "feature": "mp-credit",
-      "status": "reserved"
+      "status": "live"
     }
   ],
   "reserved": [
@@ -81,7 +81,6 @@
     "mp-callout-box",
     "mp-callout-leader",
     "mp-compass",
-    "mp-credit",
     "mp-flow",
     "mp-hatch",
     "mp-hatch-line",
@@ -146,7 +145,7 @@
     "--neighbour (live)",
     "--anno (live)",
     "--anno-ink (live)",
-    "--furniture-ink (reserved)"
+    "--furniture-ink (live)"
   ],
   "presets": {
     "themes": [

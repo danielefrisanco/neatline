@@ -70,6 +70,10 @@ whatever shape the pin takes, the other three copy it.
 
 ### Changed
 
+- **The `furniture` layer is `live`**, `mp-credit` leaves `RESERVED_CLASSES`
+  because it is now a layer's own feature class, and `--furniture-ink` goes
+  live. Additive; no name changed and no layer moved.
+
 - **`--anno` has its own shade in every preset**, instead of being a copy of
   `--accent`. All nine shipped the two byte-for-byte identical, which was
   harmless while nothing consumed `--anno` and wrong the moment something did:
@@ -122,6 +126,28 @@ whatever shape the pin takes, the other three copy it.
   is named here, built or not.
 
 ### Added
+
+- **`credit`, and the furniture layer stops being empty.** Phase 8c opens here.
+  A line of text on the canvas — a source, a byline, a date — anchored to one of
+  nine positions and styled from `--furniture-ink`. A bare string takes the
+  default anchor; `{ text, anchor }` names one.
+
+  The anchor is to this layer what `at` is to the annotations: the one decision
+  the rest of it copies. A watermark, a legend, a scale bar and a north arrow
+  all have to answer *where on the canvas*, and they will all answer it this
+  way. It carries an alignment as well as a point, which is the half that is
+  easy to forget — a credit anchored `bottom-right` is text whose *end* sits
+  there, and placed by coordinate alone a long one runs off the canvas.
+
+  This is the only layer that is not geographic, and the test that matters says
+  so: the same credit on four maps of different regions under four different
+  projections lands on exactly the same pixel. The moment that fails, it has
+  stopped being furniture and become a caption on the ground.
+
+  Its inset is the map's own `padding`, so furniture lines up with the margin
+  the map was already drawn inside. It is deliberately absent from the
+  accessible description — a credit says who made the map, which is not what the
+  map is *of*.
 
 - **Icons: twenty-nine of Maki, inlined.** A pin's `kind` doubles as the icon
   name — no separate option, because the vocabulary's names *are* the

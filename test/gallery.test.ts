@@ -622,6 +622,21 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
         { at: [-1.55, 47.22], kind: "flooding", label: "No icon for this" },
       ],
       title: "Seven marks, six of which name an icon",
+      credit: "Boundaries: Natural Earth · neatline",
+    },
+  ],
+  // The furniture layer, which is the only one that is not geographic. The
+  // credit sits at a canvas position and stays there however the map beneath it
+  // is reframed — which is the whole reason it is a layer of its own.
+  [
+    "world-credited",
+    {
+      region: "world",
+      projection: "equal-earth",
+      theme: "atlas",
+      size: [1200, 640],
+      credit: { text: "Natural Earth · public domain", anchor: "bottom-left" },
+      title: "A credit line on the canvas, not on the ground",
     },
   ],
 ];

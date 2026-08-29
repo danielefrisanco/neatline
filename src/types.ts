@@ -202,6 +202,49 @@ export interface Arrow {
   readonly kind?: string;
 }
 
+/**
+ * One of nine positions on the canvas.
+ *
+ * What `at` is to an annotation, this is to the furniture — and the difference
+ * between them is the whole reason furniture is a layer of its own. An
+ * annotation is somewhere on the ground and moves when the camera does. A
+ * credit line, a watermark, a legend or a scale bar is on the *paper*: it stays
+ * where it was put however the map is reframed.
+ *
+ * `"top"`, `"bottom"`, `"left"` and `"right"` name one axis and centre the
+ * other, which is what a reader means by them.
+ */
+export type Anchor =
+  | "top-left"
+  | "top"
+  | "top-right"
+  | "left"
+  | "centre"
+  | "right"
+  | "bottom-left"
+  | "bottom"
+  | "bottom-right";
+
+/**
+ * A line of text on the canvas — a source, a byline, a date.
+ *
+ * ```ts
+ * credit: "Source: Natural Earth"
+ * credit: { text: "Reuters graphics", anchor: "bottom-left" }
+ * ```
+ *
+ * Natural Earth is public domain and this library requires no attribution, so
+ * nothing here is an obligation the map imposes on you. It exists because a
+ * map that leaves a browser as a file has no surrounding page to carry a
+ * caption, and the credit has to come out of the generator or it does not
+ * exist at all.
+ */
+export interface Credit {
+  readonly text: string;
+  /** @default "bottom-right" */
+  readonly anchor?: Anchor;
+}
+
 export interface MapOptions {
   /** Preset name, ISO 3166-1 alpha-2 codes, a bounding box, or raw GeoJSON. */
   readonly region: Region;
@@ -338,6 +381,14 @@ export interface MapOptions {
    * behind a globe is dropped whole.
    */
   readonly arrows?: readonly Arrow[];
+  /**
+   * A line of text on the canvas — a source, a byline, a date.
+   *
+   * Rendered into `.mp-furniture`, the one layer that is not geographic: it is
+   * anchored to the canvas in fixed user units and does not move when the
+   * camera does. A bare string takes the default anchor.
+   */
+  readonly credit?: string | Credit;
   /** Bundled theme name, a path to a `.css` file, or a stylesheet. */
   readonly theme?: string;
   /**
