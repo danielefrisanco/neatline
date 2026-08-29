@@ -1,3 +1,4 @@
+import { ICON_GRID, ICONS } from "./icons.js";
 import { textWidth } from "./labels.js";
 import { el, text, type SvgNode } from "./svg.js";
 import type { Arrow, Callout, Pin, Point, Position, Size } from "./types.js";
@@ -32,6 +33,18 @@ import type { Arrow, Callout, Pin, Point, Position, Size } from "./types.js";
  * rank-1 city dot. Seven leaves the mark reading as a mark.
  */
 const PIN_RADIUS = 7;
+
+/**
+ * Mark radius when the pin carries an icon, in user units.
+ *
+ * Bigger than a plain mark because it has to hold something. A 15-unit Maki
+ * glyph set at 12 needs about 17 units of clear diameter once the casing has
+ * taken 1.2 off each side, and ten gives that with a little air around it.
+ */
+const PIN_ICON_RADIUS = 10;
+
+/** How wide an icon is drawn, in user units. Maki's grid is 15. */
+const ICON_SIZE = 12;
 
 /**
  * How far a coordinate may move through a round trip before the pixel it was
@@ -133,9 +146,10 @@ function labelAt(
   x: number,
   y: number,
   offset: Point | undefined,
+  radius: number,
 ): { readonly x: number; readonly y: number; readonly anchor: string } {
   if (offset === undefined) {
-    return { x: x + PIN_RADIUS + PIN_GAP, y, anchor: "start" };
+    return { x: x + radius + PIN_GAP, y, anchor: "start" };
   }
   const [dx, dy] = offset;
   const anchor = dx < 0 ? "end" : dx > 0 ? "start" : "middle";
@@ -219,6 +233,14 @@ export function pinLayer(
     const children: SvgNode[] = [];
     if (onCanvas && pin.label !== undefined && pin.label !== "") labels.push(pin.label);
 
+    // `kind` doubles as the icon name, which is what the plan always intended:
+    // the vocabulary's names become the conventional values. A kind that names
+    // no icon is not an error — it stays a plain mark and keeps its `data-kind`
+    // for a theme to style, so a category of the caller's own invention still
+    // works.
+    const glyph = pin.kind === undefined ? undefined : ICONS[pin.kind];
+    const radius = glyph === undefined ? PIN_RADIUS : PIN_ICON_RADIUS;
+
     // A per-feature title is a hover tooltip, not an accessibility tree — the
     // root carries `role="img"`, so it is read once. Same bargain the country
     // paths take.
@@ -231,12 +253,33 @@ export function pinLayer(
         class: "mp-pin-mark",
         cx: round(x),
         cy: round(y),
-        r: PIN_RADIUS,
+        r: radius,
       }),
     );
 
+    if (glyph !== undefined) {
+      // Centred on the coordinate and scaled off Maki's own grid, so the icon
+      // set can change size in one constant. Filled from `--anno-ink`, which is
+      // exactly what that token was authored to mean: ink drawn *on* an
+      // annotation, legible against `--anno`.
+      const scale = ICON_SIZE / ICON_GRID;
+      children.push(
+        el(
+          "g",
+          {
+            class: "mp-icon",
+            "data-icon": pin.kind,
+            transform:
+              `translate(${round(x - ICON_SIZE / 2)},${round(y - ICON_SIZE / 2)}) ` +
+              `scale(${Math.round(scale * 1000) / 1000})`,
+          },
+          [el("path", { d: glyph })],
+        ),
+      );
+    }
+
     if (pin.label !== undefined && pin.label !== "") {
-      const at = labelAt(x, y, pin.offset);
+      const at = labelAt(x, y, pin.offset, radius);
       children.push(
         el(
           "text",

@@ -161,6 +161,11 @@ ${rules((n) => `.mp .mp-prism[data-fill="${n}"] .mp-prism-top { fill: var(--fill
   stroke-width: var(--label-halo-width);
 }
 
+/* Ink drawn on the mark, which is what --anno-ink means. The glyph carries no
+   stroke of its own: Maki is drawn as solid shapes at this size and outlining
+   one closes its counters. */
+.mp .mp-icon { fill: var(--anno-ink); stroke: none; }
+
 .mp .mp-label[data-kind="pin"] {
   font-size: var(--place-label-size);
   font-weight: 700;

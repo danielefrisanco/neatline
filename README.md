@@ -29,9 +29,8 @@ repository. The class taxonomy below is the part that is meant to be stable; it
 is what a `1.0.0` would be promising, and it wants to sit still for a while
 before that promise is made.
 
-Reserved and out of scope: icons, a legend, roads, and terrain — each has its
-slot in the taxonomy and none is emitted. Pins, callouts and arrows have
-landed.
+Reserved and out of scope: a legend, roads, and terrain — each has its slot in
+the taxonomy and none is emitted. Pins, callouts, arrows and icons have landed.
 The [build plan](https://claude.ai/code/artifact/1ad97eac-6e9c-4944-96fb-3e6530d9e83d) says when each arrives and what it is waiting on.
 
 ## The class taxonomy
@@ -64,7 +63,8 @@ it has one, a `.mp-label` carrying `data-kind="pin"`. A callout is a
 `.mp-anno.mp-callout` group holding a `.mp-callout-leader` path, a
 `.mp-callout-box` rect and a `.mp-label` carrying `data-kind="callout"`.
 An arrow is a `.mp-anno.mp-arrow` group holding one `.mp-arrow-line` path, with
-its head drawn by a `.mp-arrow-head` marker in the defs block.
+its head drawn by a `.mp-arrow-head` marker in the defs block. A pin whose
+`kind` names an icon also carries a `.mp-icon` group, tagged `data-icon`.
 `.mp-watermark`, `.mp-legend`, `.mp-scale` and `.mp-compass` are claimed but
 not yet emitted.
 
@@ -264,7 +264,7 @@ every theme in the wild.
 | `--place` | Settlement dots |
 | `--neighbour` | Context countries |
 | `--anno` | The mark a pin is drawn with, and a callout's box and leader |
-| `--anno-ink` | A caption set on a callout's box |
+| `--anno-ink` | Ink on an annotation: a callout's caption, a pin's icon |
 | `--ink` / `--ink-muted` | Country names / settlement names |
 | `--font` / `--label-size` / `--place-label-size` | Type |
 | `--label-halo` / `--label-halo-width` | The casing drawn behind label text |
@@ -631,6 +631,62 @@ It rounds up by 30% — measured as the worst case a real caption runs across th
 bundled stacks — so a box is sometimes a little wider than it strictly needs to
 be. That is the right way round: a box slightly too wide costs whitespace, and a
 box too narrow prints the caption out through its own side.
+
+### Icons
+
+```ts
+import { ICON_NAMES } from "neatline";
+
+await neatline({
+  region: "west-europe",
+  pins: [
+    { at: [4.48, 51.92], kind: "harbor", label: "Rotterdam" },
+    { at: [2.55, 49.01], kind: "airport", label: "Roissy" },
+    { at: [-1.55, 47.22], kind: "flooding", label: "No icon for this" },
+  ],
+});
+```
+
+A pin's `kind` doubles as the icon name. There is no separate option, because
+the icon vocabulary's names *are* the conventional values for `kind` — that is
+what it was reserved for.
+
+**A `kind` that names no icon is not an error.** It stays a plain mark and keeps
+its `data-kind` for a theme to style, so a category of your own invention goes
+on working. `ICON_NAMES` is exported if you want to check first, and
+`isIconName()` if you want to ask.
+
+The set is **[Maki](https://github.com/mapbox/maki)**, which is **CC0** — public
+domain, no attribution obligation. That is the whole reason it is the set this
+library uses: anything under MIT or ISC would propagate a credit-line
+requirement into every map anyone generates, and quietly doing that to you is
+not something a map library should do. Nothing in your output credits anyone.
+
+Twenty-nine icons, grouped by what a map is usually saying:
+
+| | |
+|---|---|
+| Movement and logistics | `airport` `harbor` `rail` `ferry` `bus` `fuel` `bridge` |
+| Industry and energy | `industry` `warehouse` `dam` `windmill` `construction` |
+| Civic and public | `hospital` `police` `fire-station` `school` `bank` `embassy` `town-hall` |
+| Settlement | `town` `city` `village` |
+| Land and landmark | `mountain` `park` `lighthouse` `monument` |
+| Situation | `danger` `roadblock` `shelter` |
+
+Deliberately small: a vocabulary nobody can hold in their head is one where
+every author picks a different icon for the same thing.
+
+Maki covers what sits on the ground. It has no `oil`, `natural-gas`, `pipeline`
+or `mine` — the geopolitical half a news map runs on does not exist in any
+public-domain set, and drawing one to Maki's weight and grid is its own piece of
+work, not yet done.
+
+The glyph is inked from `--anno-ink` on a mark filled with `--anno`, and the
+mark grows to hold it. The path is **inlined into each pin** rather than
+referenced from a `<symbol>`: a `<use>` puts its content in a shadow tree, where
+a class-based fill is unreliable across renderers and unreachable by the
+flattening pass — and the flattened form exists precisely for the reader that
+ignores stylesheets.
 
 ### Connections
 

@@ -178,6 +178,9 @@ export const RESERVED_CLASSES: readonly string[] = Object.freeze([
   // the tracking and above all the halo that rule already provides.
   "mp-pin",
   "mp-pin-mark",
+  // The glyph inside a mark. `data-icon` names which one, so a theme can style
+  // a single kind without knowing the path data.
+  "mp-icon",
   // An arrow is a group holding one curve; the head is a marker in the defs
   // block, and its fill comes from a class because a marker resolves colour
   // where it sits rather than where it is used.

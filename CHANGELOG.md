@@ -123,6 +123,37 @@ whatever shape the pin takes, the other three copy it.
 
 ### Added
 
+- **Icons: twenty-nine of Maki, inlined.** A pin's `kind` doubles as the icon
+  name — no separate option, because the vocabulary's names *are* the
+  conventional values for `kind`, which is what it was reserved for. A `kind`
+  naming no icon stays a plain mark and keeps its `data-kind`, so a caller's own
+  category goes on working rather than throwing or drawing a blank.
+
+  Maki is CC0. That is the reason it is the set: anything under MIT or ISC —
+  Tabler, Lucide, however good they look — propagates a credit-line requirement
+  into every map anyone generates, and a library that quietly does that to its
+  users is not one worth shipping. Nothing in the output credits anyone.
+
+  The glyph is inked from `--anno-ink` on a mark filled with `--anno`, and the
+  mark grows to hold it. The path is **inlined per pin** rather than referenced
+  from a `<symbol>`: a `<use>` puts its content in a shadow tree where a
+  class-based fill is unreliable across renderers and unreachable by the
+  flattening pass. Duplicating a few hundred bytes is much the cheaper mistake
+  than an icon that vanishes on export.
+
+  `scripts/build-icons.mjs` vendors the subset and the output is committed, so a
+  checkout builds without the icon package present. Its first run emitted every
+  path with XML character references intact — `&#xA;` where Maki carries a line
+  break inside a `d` attribute — which escapes on the way into the document and
+  arrives as literal text no path command recognises. Every icon would have
+  drawn as nothing. The script now decodes and then validates that each path
+  contains only characters a path command uses, and a test asserts the same of
+  the committed data.
+
+  Maki has 215 icons and covers what sits on the ground. It has no `oil`,
+  `natural-gas`, `pipeline` or `mine`, so the plan's claim that the geopolitical
+  half has to be drawn is now measured rather than asserted.
+
 - **`arrows` — a curve between two coordinates, with a head on the far end.**
   Trade, migration, supply lines. The third primitive, and the first with two
   `at`s rather than one, so the locator settled for the pin has to hold twice

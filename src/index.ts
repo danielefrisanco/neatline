@@ -43,6 +43,7 @@ export { PROJECTION_NAMES, isProjectionName } from "./projections.js";
 export { REGION_PRESETS, REGION_PRESET_NAMES, isRegionPreset } from "./regions.js";
 export { FILTER_NAMES } from "./filters.js";
 export { PATTERN_NAMES } from "./patterns.js";
+export { ICONS, ICON_NAMES, ICON_GRID, isIconName } from "./icons.js";
 export { MARKER_NAMES } from "./markers.js";
 export {
   PALETTE_NAMES,

@@ -595,6 +595,35 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       title: "Three routes out of one port, one of them straight",
     },
   ],
+  // Icons, which are the reason `kind` is free text rather than an enumeration:
+  // the vocabulary's names are the conventional values, and `flooding` here
+  // names no icon and stays a plain mark rather than throwing or drawing a
+  // blank. Maki is CC0, so nothing in this file obliges anyone to credit it.
+  [
+    "west-europe-icons",
+    {
+      region: "west-europe",
+      projection: "conic-conformal",
+      // Not slate. That palette sets --land within a hair of --bg and the land
+      // goes flat against the sea; this is the third entry today that had to
+      // move off it, which is the open contrast defect the plan records under
+      // 8d earning its place there.
+      theme: "minimal",
+      palette: "moss",
+      size: [1000, 900],
+      labelRank: 1,
+      pins: [
+        { at: [4.48, 51.92], kind: "harbor", label: "Rotterdam" },
+        { at: [2.55, 49.01], kind: "airport", label: "Roissy" },
+        { at: [8.68, 49.42], kind: "industry", label: "Ludwigshafen" },
+        { at: [-3.0, 53.4], kind: "windmill", label: "Burbo Bank", offset: [0, 22] },
+        { at: [11.26, 43.77], kind: "monument", label: "Firenze" },
+        { at: [5.72, 45.19], kind: "danger", label: "Site B", offset: [0, 22] },
+        { at: [-1.55, 47.22], kind: "flooding", label: "No icon for this" },
+      ],
+      title: "Seven marks, six of which name an icon",
+    },
+  ],
 ];
 
 describe("gallery", () => {

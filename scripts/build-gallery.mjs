@@ -36,6 +36,7 @@ const FEATURES = [
   ["pins", (s) => s.includes('class="mp-anno mp-pin"')],
   ["callouts", (s) => s.includes('class="mp-anno mp-callout"')],
   ["arrows", (s) => s.includes('class="mp-anno mp-arrow"')],
+  ["icons", (s) => s.includes('class="mp-icon"')],
 ];
 
 const escape = (s) =>
