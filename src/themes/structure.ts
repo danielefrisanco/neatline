@@ -167,6 +167,28 @@ ${rules((n) => `.mp .mp-prism[data-fill="${n}"] .mp-prism-top { fill: var(--fill
 }
 
 /*
+ * The arrow: a curve with a head on the far end.
+ *
+ * The head is a marker, which is an SVG element and therefore something a
+ * stylesheet cannot make for itself — so the theme names it and the definition
+ * is emitted, the same bargain the relief filter and the hatch pattern take.
+ * Its fill comes from a class rather than from the arrow, because a marker
+ * resolves colour where it sits, in the defs block, and not where it is used.
+ */
+.mp .mp-arrow-line {
+  fill: none;
+  stroke: var(--anno);
+  /* A literal, like the callout's leader and for the same reason: no token in
+     the vocabulary means "the weight of a drawn connection", and adding one is
+     a contract change nobody has asked for. */
+  stroke-width: 2;
+  stroke-linecap: round;
+  marker-end: url(#mp-arrowhead);
+}
+
+.mp .mp-arrow-head { fill: var(--anno); stroke: none; }
+
+/*
  * The callout: a leader line, a filled box, and the caption inside it.
  *
  * The caption is the one piece of text on the map that does NOT take the halo.

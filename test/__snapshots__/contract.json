@@ -75,6 +75,8 @@
   "reserved": [
     "mp-anno",
     "mp-arrow",
+    "mp-arrow-head",
+    "mp-arrow-line",
     "mp-callout",
     "mp-callout-box",
     "mp-callout-leader",

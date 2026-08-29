@@ -29,9 +29,9 @@ repository. The class taxonomy below is the part that is meant to be stable; it
 is what a `1.0.0` would be promising, and it wants to sit still for a while
 before that promise is made.
 
-Reserved and out of scope: arrows, icons, a legend, roads, and terrain — each
-has its slot in the taxonomy and none is emitted. Pins and callouts are the
-annotations that have landed.
+Reserved and out of scope: icons, a legend, roads, and terrain — each has its
+slot in the taxonomy and none is emitted. Pins, callouts and arrows have
+landed.
 The [build plan](https://claude.ai/code/artifact/1ad97eac-6e9c-4944-96fb-3e6530d9e83d) says when each arrives and what it is waiting on.
 
 ## The class taxonomy
@@ -55,7 +55,7 @@ Inside it, a `.mp-bg` rectangle covers the canvas, then eight layer groups in
 | `.mp-roads` | `.mp-road` | `data-kind` | *Reserved* · motorway, trunk, primary |
 | `.mp-places` | `.mp-place` | `data-name`, `data-iso`, `data-rank`, `data-pop` | Settlement dots, ranked 1–3 |
 | `.mp-labels` | `.mp-label` | `data-kind`, `data-rank`, `data-fit`, `data-iso`, `data-capital` | Country and settlement names |
-| `.mp-annotations` | `.mp-anno` | `data-id`, `data-kind`, `data-fit` | Pins and callouts · arrows reserved |
+| `.mp-annotations` | `.mp-anno` | `data-id`, `data-kind`, `data-fit` | Pins, callouts and arrows |
 | `.mp-furniture` | `.mp-credit` | `data-anchor` | *Reserved* · credits, watermarks, legends |
 
 `.is-highlighted` is a modifier on any feature named in `highlight`.
@@ -63,8 +63,10 @@ A pin is a `.mp-anno.mp-pin` group holding a `.mp-pin-mark` circle and, where
 it has one, a `.mp-label` carrying `data-kind="pin"`. A callout is a
 `.mp-anno.mp-callout` group holding a `.mp-callout-leader` path, a
 `.mp-callout-box` rect and a `.mp-label` carrying `data-kind="callout"`.
-`.mp-arrow`, `.mp-watermark`, `.mp-legend`, `.mp-scale` and `.mp-compass` are
-claimed but not yet emitted.
+An arrow is a `.mp-anno.mp-arrow` group holding one `.mp-arrow-line` path, with
+its head drawn by a `.mp-arrow-head` marker in the defs block.
+`.mp-watermark`, `.mp-legend`, `.mp-scale` and `.mp-compass` are claimed but
+not yet emitted.
 
 Every layer but the last is geographic — its contents move when the projection
 or region changes. `.mp-furniture` is the exception: a credit line or watermark
@@ -629,6 +631,44 @@ It rounds up by 30% — measured as the worst case a real caption runs across th
 bundled stacks — so a box is sometimes a little wider than it strictly needs to
 be. That is the right way round: a box slightly too wide costs whitespace, and a
 box too narrow prints the caption out through its own side.
+
+### Connections
+
+```ts
+await neatline({
+  region: "europe",
+  arrows: [
+    { from: [30.73, 46.48], to: [-3.7, 40.42], kind: "grain" },
+    { from: [30.73, 46.48], to: [12.5, 41.9], bow: -0.18 },
+    { from: [30.73, 46.48], to: [21.0, 52.23], bow: 0 },
+  ],
+});
+```
+
+Trade, migration, supply lines. The first primitive with two coordinates rather
+than one, so the guards a pin's `at` gets are applied twice — and an arrow with
+either end on the far side of a globe is dropped **whole**. Half an arrow is not
+a partial answer; it is a line pointing at somewhere the reader was never told
+about.
+
+`bow` is how far the curve leaves the straight line, as a fraction of the
+distance between the ends. Its **sign is the side it bows to**, which is how you
+get an arrow off a coastline or out from under a second arrow running the other
+way. `0` draws a straight line — a real `L`, not a curve that happens to be
+flat. It is a curve by default because two places on a map usually have
+something between them, and a straight chord runs through whatever is in the way
+and reads as a border or a route.
+
+Arrows are drawn **beneath** pins and callouts, because a connection is context
+for the things it connects rather than the other way round. `data-fit="0"` needs
+both ends on the canvas: an arrow whose destination is off the map has not said
+where it goes.
+
+The head is an SVG `<marker>`, which is markup rather than a declaration — so it
+lives in the defs block and the theme names it, exactly as the relief filter and
+the hatch pattern do. It is styled through `.mp-arrow-head` rather than
+inherited from the arrow, because a marker resolves colour where it *sits*, in
+the defs block, and not where it is used.
 
 ### Cities
 

@@ -571,6 +571,30 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       title: "A captioned callout, and a mark it shares a coordinate with",
     },
   ],
+  // Arrows, which are the one annotation whose head lives in the defs block —
+  // so this is also the gallery's only check that a marker survives the
+  // flattening every snapshot is written through.
+  [
+    "europe-arrows",
+    {
+      region: "europe",
+      projection: "conic-conformal",
+      // Plain atlas, no palette. `slate` sets --land within a hair of --bg, so
+      // the land went flat against the sea and the arrows were the only thing
+      // with any contrast on the page — which is the open palette defect the
+      // plan records, and not something a gallery entry should be showing off.
+      theme: "atlas",
+      size: [1100, 800],
+      names: { Kiev: "Kyiv" },
+      pins: [{ at: [30.73, 46.48], label: "Odesa", kind: "port", offset: [12, 12] }],
+      arrows: [
+        { from: [30.73, 46.48], to: [-3.7, 40.42], kind: "grain" },
+        { from: [30.73, 46.48], to: [12.5, 41.9], bow: -0.18, kind: "grain" },
+        { from: [30.73, 46.48], to: [21.0, 52.23], bow: 0, kind: "grain" },
+      ],
+      title: "Three routes out of one port, one of them straight",
+    },
+  ],
 ];
 
 describe("gallery", () => {

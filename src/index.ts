@@ -1,6 +1,6 @@
 import { geoBounds, geoContains, geoPath } from "d3-geo";
 import { assignBins, DEFAULT_BINS } from "./bins.js";
-import { calloutLayer, pinLayer } from "./annotations.js";
+import { arrowLayer, calloutLayer, pinLayer } from "./annotations.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
 import { countryLabels, labelLayer, labelSizes, placeLabel, type LabelBox, type Placed } from "./labels.js";
@@ -9,6 +9,7 @@ import { politicalFill } from "./political.js";
 import { createProjection } from "./projections.js";
 import { expandPreset, isRegionPreset, presetLabel } from "./regions.js";
 import { referencedFilters } from "./filters.js";
+import { referencedMarkers } from "./markers.js";
 import { referencedPatterns } from "./patterns.js";
 import { inlineStyles } from "./inline.js";
 import { hashCss, scopeIds, scopeIdsInNodes } from "./css.js";
@@ -42,6 +43,7 @@ export { PROJECTION_NAMES, isProjectionName } from "./projections.js";
 export { REGION_PRESETS, REGION_PRESET_NAMES, isRegionPreset } from "./regions.js";
 export { FILTER_NAMES } from "./filters.js";
 export { PATTERN_NAMES } from "./patterns.js";
+export { MARKER_NAMES } from "./markers.js";
 export {
   PALETTE_NAMES,
   THEME_NAMES,
@@ -64,6 +66,7 @@ export {
 } from "./taxonomy.js";
 
 export type {
+  Arrow,
   BBox,
   Callout,
   Detail,
@@ -712,6 +715,7 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
    */
   const pins = options.pins ?? [];
   const callouts = options.callouts ?? [];
+  const arrows = options.arrows ?? [];
   // Built even when the layer is switched off, so a coordinate that cannot be
   // one is still rejected rather than quietly ignored: turning a layer off
   // controls what is drawn, never whether the options were valid.
@@ -732,8 +736,13 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
           sizes.advance,
           sizes.track,
         );
+  // Beneath the marks: a connection is context for them, not the reverse.
+  const flows =
+    arrows.length === 0
+      ? { nodes: [], labels: [] }
+      : arrowLayer(arrows, projectPoint, invertPoint, [width, height]);
   const annotated = wants("annotations");
-  const drawn = [...marks.nodes, ...captions.nodes];
+  const drawn = [...flows.nodes, ...marks.nodes, ...captions.nodes];
   if (annotated && drawn.length > 0) content.set("annotations", drawn);
 
   const description = options.title
@@ -778,6 +787,7 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     }
     definitions.push(
       ...referencedPatterns(theme.css, idScope),
+      ...referencedMarkers(theme.css, idScope),
       ...referencedFilters(theme.css, idScope),
     );
     const defs = el(DEFS_TAG, { class: DEFS_CLASS }, definitions);

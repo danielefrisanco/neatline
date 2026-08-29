@@ -108,6 +108,35 @@ whatever shape the pin takes, the other three copy it.
 
 ### Added
 
+- **`arrows` — a curve between two coordinates, with a head on the far end.**
+  Trade, migration, supply lines. The third primitive, and the first with two
+  `at`s rather than one, so the locator settled for the pin has to hold twice
+  over: both ends are validated the same way, both are guarded the same way, and
+  an arrow with either end behind a globe is dropped **whole**. Half an arrow is
+  not a partial answer — it is a line pointing at somewhere the reader was never
+  told about.
+
+  `bow` is how far the curve leaves the straight line, as a fraction of the
+  distance between the ends, and its sign is the side it bows to — which is how
+  a caller gets an arrow off a coastline or out from under one running the other
+  way. `0` emits a real straight line rather than a curve that happens to be
+  flat. A curve is the default because two places on a map usually have
+  something between them, and a straight chord runs through whatever is in the
+  way and reads as a border or a route.
+
+  Arrows are drawn beneath the pins and callouts: a connection is context for
+  the things it connects, not the reverse. Two coordinates that project to the
+  same pixel draw nothing, because there is no direction to orient a head along.
+
+- **`marker-start`, `marker-mid` and `marker-end` survive flattening.** They are
+  presentation attributes in SVG 1.1 and the flattening pass did not carry them,
+  so an arrow exported for a reader that ignores stylesheets would have arrived
+  as a line with no head. That is the same failure this project has already
+  shipped twice — a choropleth flattened to one colour in 0.7, a prism flattened
+  to a silhouette in 0.6 — and it is the exact reader the flattened form exists
+  for. Found before it shipped this time, by checking the list rather than the
+  render.
+
 - **`callouts` — a caption tied to a coordinate by a leader line.** The second
   annotation primitive, and it says `where` the way the first one does: same
   `at`, same validation, same round-trip guard against the far side of a globe,

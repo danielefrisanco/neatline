@@ -46,6 +46,14 @@ const PRESENTATION = new Set([
   "paint-order",
   "vector-effect",
   "filter",
+  // Markers are presentation attributes in SVG 1.1, and they have to be here
+  // for the same reason `filter` is: a reader that ignores the stylesheet is
+  // exactly the reader the flattened form exists for, and an arrow that arrives
+  // without its head is a line. This project has shipped that failure twice —
+  // a choropleth flattened to one colour, a prism flattened to a silhouette.
+  "marker-start",
+  "marker-mid",
+  "marker-end",
   "r",
   "display",
   "visibility",

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { neatline, type Callout, type Pin } from "../src/index.js";
+import { neatline, type Arrow, type Callout, type Pin } from "../src/index.js";
 
 /**
  * Pins, tested by where they land rather than by what they print.
@@ -472,5 +472,195 @@ describe("callouts", () => {
   it("carries its caption into the accessible description", async () => {
     const map = await neatline({ region: "west-europe", callouts: [NOTE] });
     expect(/aria-label="([^"]*)"/.exec(map.svg)?.[1]).toContain("Rail hub reopened");
+  });
+});
+
+interface Curve {
+  readonly id: string | null;
+  readonly kind: string | null;
+  readonly fit: string | null;
+  readonly d: string;
+  readonly start: readonly [number, number];
+  readonly end: readonly [number, number];
+  /** The control point, or null for a straight line. */
+  readonly control: readonly [number, number] | null;
+}
+
+function curves(svg: string): Curve[] {
+  const layer = annotationLayer(svg);
+  const found: Curve[] = [];
+  for (const group of layer.matchAll(/<g class="mp-anno mp-arrow"([^>]*)>([\s\S]*?)<\/g>/g)) {
+    const attributes = group[1] as string;
+    const d =
+      attribute(
+        /<path class="mp-arrow-line"([^>]*)\/?>/.exec(group[2] as string)?.[1] ?? "",
+        "d",
+      ) ?? "";
+    const bowed = /M(-?[\d.]+),(-?[\d.]+)Q(-?[\d.]+),(-?[\d.]+) (-?[\d.]+),(-?[\d.]+)/.exec(d);
+    const straight = /M(-?[\d.]+),(-?[\d.]+)L(-?[\d.]+),(-?[\d.]+)/.exec(d);
+    const n = (v: string | undefined) => Number(v);
+    found.push({
+      id: attribute(attributes, "data-id"),
+      kind: attribute(attributes, "data-kind"),
+      fit: attribute(attributes, "data-fit"),
+      d,
+      start: bowed
+        ? [n(bowed[1]), n(bowed[2])]
+        : [n(straight?.[1]), n(straight?.[2])],
+      end: bowed
+        ? [n(bowed[5]), n(bowed[6])]
+        : [n(straight?.[3]), n(straight?.[4])],
+      control: bowed ? [n(bowed[3]), n(bowed[4])] : null,
+    });
+  }
+  return found;
+}
+
+const ODESA: Arrow["from"] = [30.73, 46.48];
+const MADRID: Arrow["to"] = [-3.7, 40.42];
+
+describe("arrows", () => {
+  it("runs from one coordinate to the other and nowhere else", async () => {
+    const map = await neatline({
+      region: "europe",
+      arrows: [{ from: ODESA, to: MADRID, id: "a1", kind: "grain" }],
+    });
+    const from = map.project(ODESA) as [number, number];
+    const to = map.project(MADRID) as [number, number];
+    const [curve] = curves(map.svg);
+    expect(curve).toBeDefined();
+    expect(curve?.start[0]).toBeCloseTo(from[0], 0);
+    expect(curve?.start[1]).toBeCloseTo(from[1], 0);
+    expect(curve?.end[0]).toBeCloseTo(to[0], 0);
+    expect(curve?.end[1]).toBeCloseTo(to[1], 0);
+    expect(curve?.id).toBe("a1");
+    expect(curve?.kind).toBe("grain");
+  });
+
+  it("bows to the side the sign asks for, and not at all at zero", async () => {
+    const map = await neatline({
+      region: "europe",
+      arrows: [
+        { from: ODESA, to: MADRID, bow: 0.25 },
+        { from: ODESA, to: MADRID, bow: -0.25 },
+        { from: ODESA, to: MADRID, bow: 0 },
+      ],
+    });
+    const [left, right, flat] = curves(map.svg);
+
+    // Straight is a line, not a curve that happens to be flat.
+    expect(flat?.control).toBeNull();
+    expect(flat?.d).toContain("L");
+
+    expect(left?.control).not.toBeNull();
+    expect(right?.control).not.toBeNull();
+
+    // The two bows land on opposite sides of the chord they share.
+    const side = (c: Curve): number => {
+      const [ax, ay] = c.start;
+      const [bx, by] = c.end;
+      const [cx, cy] = c.control as [number, number];
+      return Math.sign((bx - ax) * (cy - ay) - (by - ay) * (cx - ax));
+    };
+    expect(side(left as Curve)).not.toBe(0);
+    expect(side(left as Curve)).toBe(-side(right as Curve));
+  });
+
+  it("drops the whole arrow when either end is behind the globe", async () => {
+    // Half an arrow is not a partial answer — it is a line pointing at a place
+    // the reader was never told about.
+    const map = await neatline({
+      region: "africa",
+      projection: "orthographic",
+      size: [800, 800],
+      arrows: [
+        { from: [15, 0], to: [30, -20] },
+        { from: [15, 0], to: [-160, -10] },
+        { from: [-160, -10], to: [15, 0] },
+      ],
+    });
+    expect(curves(map.svg)).toHaveLength(1);
+    // Both of the dropped ends did have a pixel on offer.
+    expect(map.project([-160, -10])).not.toBeNull();
+  });
+
+  it("needs both ends on the canvas to call itself fitted", async () => {
+    const map = await neatline({
+      region: "west-europe",
+      projection: "conic-conformal",
+      size: [600, 600],
+      arrows: [
+        { from: [2.35, 48.86], to: [13.4, 52.52] },
+        { from: [2.35, 48.86], to: [158.65, 53.05] },
+      ],
+    });
+    const drawn = curves(map.svg);
+    expect(drawn).toHaveLength(2);
+    expect(drawn[0]?.fit).toBe("1");
+    expect(drawn[1]?.fit).toBe("0");
+  });
+
+  it("draws no arrow between two coordinates that share a pixel", async () => {
+    // No direction, so no curve and nothing to orient a head along.
+    const map = await neatline({
+      region: "europe",
+      detail: "110m",
+      arrows: [{ from: [30.73, 46.48], to: [30.7301, 46.4801] }],
+    });
+    expect(curves(map.svg)).toHaveLength(0);
+  });
+
+  it("keeps its head through the flattening pass", async () => {
+    // A marker is a presentation attribute, and the flattened form exists for
+    // readers that ignore the stylesheet. An arrow that arrives without its
+    // head is a line — the same failure as a choropleth exporting flat.
+    const map = await neatline({
+      region: "europe",
+      theme: "noir",
+      arrows: [{ from: ODESA, to: MADRID }],
+    });
+    const document = await map.render();
+    expect(document).toMatch(/id="mp-arrowhead-[^"]+"/);
+    expect(document).toMatch(/marker-end="url\(#mp-arrowhead-[^"]+\)"/);
+    // And the head it names is the one this document defines.
+    const referenced = /marker-end="url\(#(mp-arrowhead-[^")]+)\)"/.exec(document)?.[1];
+    expect(document).toContain(`id="${referenced}"`);
+  });
+
+  it("emits the head because the stylesheet asks, not because an arrow does", async () => {
+    // The same rule the hatch pattern has followed since Phase 5: a definition
+    // is materialised when the *stylesheet* references it, because that is the
+    // only thing the defs block can see. So a themed map carries the marker
+    // whether or not it draws an arrow — a couple of hundred bytes, and the
+    // alternative is making the defs block depend on the content it sits above.
+    const themed = await neatline({ region: "europe", detail: "110m", theme: "noir" });
+    expect(themed.svg).toContain("mp-arrowhead");
+
+    // With no stylesheet there is nothing to ask, and nothing is emitted.
+    const bare = await neatline({ region: "europe", detail: "110m" });
+    expect(bare.svg).not.toContain("mp-arrowhead");
+    expect(bare.svg).not.toContain("mp-stripe");
+  });
+
+  it("names which end was wrong", async () => {
+    await expect(
+      neatline({ region: "europe", arrows: [{ from: [0, 100], to: MADRID }] }),
+    ).rejects.toThrow(/arrows\[0\]\.from/);
+    await expect(
+      neatline({ region: "europe", arrows: [{ from: ODESA, to: [0, 100] }] }),
+    ).rejects.toThrow(/arrows\[0\]\.to/);
+  });
+
+  it("runs beneath the marks rather than over them", async () => {
+    // A connection is context for the things it connects, not the reverse.
+    const map = await neatline({
+      region: "europe",
+      arrows: [{ from: ODESA, to: MADRID }],
+      pins: [{ at: ODESA, label: "Odesa" }],
+      callouts: [{ at: MADRID, text: "and to here" }],
+    });
+    const layer = annotationLayer(map.svg);
+    expect(layer.indexOf("mp-arrow")).toBeLessThan(layer.indexOf("mp-pin"));
+    expect(layer.indexOf("mp-pin")).toBeLessThan(layer.indexOf("mp-callout"));
   });
 });

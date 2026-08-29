@@ -178,7 +178,12 @@ export const RESERVED_CLASSES: readonly string[] = Object.freeze([
   // the tracking and above all the halo that rule already provides.
   "mp-pin",
   "mp-pin-mark",
+  // An arrow is a group holding one curve; the head is a marker in the defs
+  // block, and its fill comes from a class because a marker resolves colour
+  // where it sits rather than where it is used.
   "mp-arrow",
+  "mp-arrow-line",
+  "mp-arrow-head",
   // A callout is a group too: a leader line from the coordinate to the corner
   // of a box, and the caption set inside it on `mp-label`.
   "mp-callout",

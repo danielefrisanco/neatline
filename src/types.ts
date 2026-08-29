@@ -165,6 +165,43 @@ export interface Callout {
   readonly kind?: string;
 }
 
+/**
+ * A curve from one coordinate to another, with a head on the far end.
+ *
+ * The third primitive, and the first with two `at`s rather than one — so it is
+ * where the locator settled for the pin has to hold twice over. Both ends are
+ * validated the same way and both are guarded the same way: an arrow with one
+ * end on the far side of a globe is not drawn at all, because half an arrow
+ * points somewhere nobody asked about.
+ *
+ * ```ts
+ * arrows: [
+ *   { from: [30.73, 46.48], to: [32.5, 15.6], kind: "grain" },
+ * ]
+ * ```
+ */
+export interface Arrow {
+  /** Where the curve starts, in `[lon, lat]`. */
+  readonly from: Position;
+  /** Where it ends, and where the head goes. */
+  readonly to: Position;
+  /**
+   * How far the curve bows out from the straight line, as a fraction of the
+   * distance between the ends.
+   *
+   * The sign is the side it bows to, so flipping it is how a caller gets an
+   * arrow off a coastline or out from under a second arrow running the other
+   * way. `0` draws a straight line.
+   *
+   * @default 0.18
+   */
+  readonly bow?: number;
+  /** The caller's handle, written out as `data-id`. */
+  readonly id?: string;
+  /** What kind of thing this is, written out as `data-kind` for a theme. */
+  readonly kind?: string;
+}
+
 export interface MapOptions {
   /** Preset name, ISO 3166-1 alpha-2 codes, a bounding box, or raw GeoJSON. */
   readonly region: Region;
@@ -292,6 +329,15 @@ export interface MapOptions {
    * pointed at is drawn carrying `data-fit="0"`.
    */
   readonly callouts?: readonly Callout[];
+  /**
+   * Curves between two coordinates — trade, migration, supply lines.
+   *
+   * Drawn into `.mp-annotations` beneath the pins and callouts, since a
+   * connection is context for the marks rather than the other way round. Both
+   * ends take the same guards a pin's `at` does, and an arrow with either end
+   * behind a globe is dropped whole.
+   */
+  readonly arrows?: readonly Arrow[];
   /** Bundled theme name, a path to a `.css` file, or a stylesheet. */
   readonly theme?: string;
   /**

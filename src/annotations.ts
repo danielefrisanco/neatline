@@ -1,6 +1,6 @@
 import { textWidth } from "./labels.js";
 import { el, text, type SvgNode } from "./svg.js";
-import type { Callout, Pin, Point, Position, Size } from "./types.js";
+import type { Arrow, Callout, Pin, Point, Position, Size } from "./types.js";
 
 /**
  * The annotation layer — where the map stops describing the ground and starts
@@ -100,8 +100,8 @@ function round(value: number): number {
  * writing about anywhere east of Corsica. A swap that stays in range is a real
  * place and no validation can find it.
  */
-function assertPosition(at: Position, index: number, what: string): void {
-  const where = `neatline: ${what}[${index}].at`;
+function assertPosition(at: Position, index: number, what: string, field: string): void {
+  const where = `neatline: ${what}[${index}].${field}`;
   if (!Array.isArray(at) || at.length !== 2) {
     throw new Error(`${where} must be a [lon, lat] pair`);
   }
@@ -155,8 +155,9 @@ function resolve(
   what: string,
   project: (position: Position) => Point | null,
   invert: (point: Point) => Position | null,
+  field = "at",
 ): Point | null {
-  assertPosition(at, index, what);
+  assertPosition(at, index, what, field);
   const point = project(at);
   if (point === null) return null;
   if (!Number.isFinite(point[0]) || !Number.isFinite(point[1])) return null;
@@ -467,4 +468,81 @@ export function calloutLayer(
   }
 
   return { nodes, labels };
+}
+
+/** How far a curve bows from the straight line, as a fraction of its length. */
+const ARROW_BOW = 0.18;
+
+/**
+ * Build the arrows.
+ *
+ * The first primitive with two coordinates instead of one, and it is drawn only
+ * when both survive. Half an arrow is not a partial answer — it is a line
+ * pointing at somewhere the reader was never told about, which is worse than
+ * nothing at all. So `from` and `to` go through the same resolver a pin's `at`
+ * does, and either one failing drops the pair.
+ *
+ * A curve rather than a straight line because two places on a map usually have
+ * something between them: a straight chord runs through whatever is in the way
+ * and reads as a border or a route. A bow says "from here to there" without
+ * claiming a path, and its sign is the side it bows to, so a caller can flip one
+ * off a coastline or out from under an arrow running the other way.
+ */
+export function arrowLayer(
+  arrows: readonly Arrow[],
+  project: (position: Position) => Point | null,
+  invert: (point: Point) => Position | null,
+  [width, height]: Size,
+): PinLayer {
+  const nodes: SvgNode[] = [];
+
+  for (const [index, arrow] of arrows.entries()) {
+    const start = resolve(arrow.from, index, "arrows", project, invert, "from");
+    if (start === null) continue;
+    const end = resolve(arrow.to, index, "arrows", project, invert, "to");
+    if (end === null) continue;
+
+    const [ax, ay] = start;
+    const [bx, by] = end;
+    const span = Math.hypot(bx - ax, by - ay);
+    // Two coordinates that project to the same pixel have no direction, so
+    // there is no curve to draw and no way to orient a head on it.
+    if (span < 1) continue;
+
+    const bow = arrow.bow ?? ARROW_BOW;
+    // A quadratic reaches only halfway to its control point, so the control
+    // offset is twice the bow the caller asked to see.
+    const lift = bow * span * 2;
+    const cx = (ax + bx) / 2 + ((by - ay) / span) * lift;
+    const cy = (ay + by) / 2 - ((bx - ax) / span) * lift;
+
+    const onCanvas = [start, end].every(
+      ([x, y]) => x >= 0 && x <= width && y >= 0 && y <= height,
+    );
+
+    nodes.push(
+      el(
+        "g",
+        {
+          class: "mp-anno mp-arrow",
+          "data-id": arrow.id,
+          "data-kind": arrow.kind,
+          // Both ends, because an arrow whose destination is off the canvas has
+          // not said where it goes.
+          "data-fit": onCanvas ? 1 : 0,
+        },
+        [
+          el("path", {
+            class: "mp-arrow-line",
+            d:
+              bow === 0
+                ? `M${round(ax)},${round(ay)}L${round(bx)},${round(by)}`
+                : `M${round(ax)},${round(ay)}Q${round(cx)},${round(cy)} ${round(bx)},${round(by)}`,
+          }),
+        ],
+      ),
+    );
+  }
+
+  return { nodes, labels: [] };
 }
