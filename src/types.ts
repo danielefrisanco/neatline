@@ -295,6 +295,48 @@ export interface ScaleBar {
  * the two claims — a conic fitted to a region holds its scale to a few per cent
  * while its meridians fan twenty degrees apart at the corners.
  */
+/**
+ * A wordmark or a logo, stamped on the canvas.
+ *
+ * ```ts
+ * watermark: "DRAFT"
+ * watermark: { image: "./logo.svg", anchor: "bottom-right", width: 90 }
+ * ```
+ *
+ * **This is attribution, not protection.** A watermark on an SVG is a node in a
+ * file the reader can open, select and delete. It marks provenance; it cannot
+ * enforce anything, and nothing here is a rights mechanism. It exists for the
+ * same reason `credit` does — a map that leaves a browser as a file has no
+ * surrounding page to carry a mark.
+ *
+ * `text` and `image` are exclusive. A logo above a wordmark is a lockup, and a
+ * lockup's spacing and proportions belong to whoever owns the mark; a caller
+ * who has both passes the lockup as one image.
+ */
+export interface Watermark {
+  /** Words stamped on the canvas. */
+  readonly text?: string;
+  /**
+   * A logo: a `data:` URI, or — under Node — a path to a `.png`, `.jpg`,
+   * `.gif`, `.webp` or `.svg` file, which is read and embedded so the document
+   * stays standalone.
+   */
+  readonly image?: string;
+  /** @default "centre" */
+  readonly anchor?: Anchor;
+  /** Type size for `text`, in user units. @default a tenth of the shorter side */
+  readonly size?: number;
+  /**
+   * The box an `image` is fitted inside, in user units. The logo is scaled to
+   * fit and never stretched, so the box only has to be big enough.
+   *
+   * @default 120
+   */
+  readonly width?: number;
+  /** @default the same as `width` */
+  readonly height?: number;
+}
+
 export interface Compass {
   /** @default "top-right" */
   readonly anchor?: Anchor;
@@ -461,6 +503,12 @@ export interface MapOptions {
    * takes the defaults; see {@link Compass}.
    */
   readonly compass?: boolean | Compass;
+  /**
+   * A wordmark or a logo on the canvas. A bare string is text at the centre.
+   *
+   * Attribution, not protection — see {@link Watermark}.
+   */
+  readonly watermark?: string | Watermark;
   /** Bundled theme name, a path to a `.css` file, or a stylesheet. */
   readonly theme?: string;
   /**

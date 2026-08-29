@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import { ANCHORS, isAnchor, neatline, type Anchor } from "../src/index.js";
 
 /**
@@ -553,5 +553,182 @@ describe("a north arrow", () => {
     });
     const label = /aria-label="([^"]*)"/.exec(map.svg)?.[1] as string;
     expect(label).not.toMatch(/km|north|scale/i);
+  });
+});
+
+/**
+ * A watermark is attribution, not protection.
+ *
+ * It is a node in a file the reader can open, select and delete — it marks
+ * provenance and enforces nothing. What these tests hold is the part that *can*
+ * be true: that the mark is embedded rather than linked, so the document still
+ * carries it after being moved; that a logo is never stretched; and that it
+ * survives the flattening pass, which is where four of this phase's defects
+ * lived.
+ */
+
+const LOGO =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">' +
+  '<circle cx="5" cy="5" r="4" fill="#B4522C"/></svg>';
+
+function watermark(svg: string): string | null {
+  const inside = furniture(svg);
+  return /<(?:text|image) class="mp-watermark"[\s\S]*?(?:<\/text>|\/>)/.exec(inside)?.[0] ?? null;
+}
+
+describe("a watermark", () => {
+  let logoPath = "";
+
+  beforeAll(async () => {
+    const { mkdtemp, writeFile } = await import("node:fs/promises");
+    const { tmpdir } = await import("node:os");
+    const { join } = await import("node:path");
+    const dir = await mkdtemp(join(tmpdir(), "neatline-wm-"));
+    logoPath = join(dir, "logo.svg");
+    await writeFile(logoPath, LOGO, "utf8");
+  });
+
+  it("takes a bare string as words at the centre", async () => {
+    const map = await neatline({
+      region: ["FR"],
+      detail: "110m",
+      size: SIZE,
+      watermark: "DRAFT",
+    });
+    const mark = watermark(map.svg) as string;
+    expect(mark).toContain(">DRAFT<");
+    expect(attribute(mark, "data-anchor")).toBe("centre");
+    expect(Number(attribute(mark, "x"))).toBe(SIZE[0] / 2);
+    expect(Number(attribute(mark, "y"))).toBe(SIZE[1] / 2);
+    expect(attribute(mark, "text-anchor")).toBe("middle");
+    // Big by default: a tenth of the shorter side, which is a stamp rather than
+    // a second credit line.
+    expect(Number(attribute(mark, "font-size"))).toBe(Math.round(SIZE[1] * 0.1));
+  });
+
+  it("anchors words the way the credit does, alignment and all", async () => {
+    for (const anchor of ANCHORS) {
+      const map = await neatline({
+        region: ["FR"],
+        detail: "110m",
+        size: SIZE,
+        padding: PADDING,
+        watermark: { text: "PROVISIONAL", anchor: anchor as Anchor, size: 20 },
+      });
+      const mark = watermark(map.svg) as string;
+      const wantsLeft = anchor.endsWith("left");
+      const wantsRight = anchor.endsWith("right");
+      expect(Number(attribute(mark, "x")), anchor).toBe(
+        wantsLeft ? PADDING : wantsRight ? SIZE[0] - PADDING : SIZE[0] / 2,
+      );
+      // Anchored right, the text's *end* sits at the inset — which is the only
+      // thing keeping a long wordmark on the canvas.
+      expect(attribute(mark, "text-anchor"), anchor).toBe(
+        wantsLeft ? "start" : wantsRight ? "end" : "middle",
+      );
+      expect(Number(attribute(mark, "font-size"))).toBe(20);
+    }
+  });
+
+  it("embeds a logo rather than linking to it", async () => {
+    // The whole point of this library's output is that one file is the whole
+    // map. A watermark that referenced a logo on disk would stop working the
+    // moment the SVG was emailed to anyone.
+    const map = await neatline({
+      region: ["FR"],
+      detail: "110m",
+      size: SIZE,
+      watermark: { image: logoPath, anchor: "top-right", width: 90 },
+    });
+    const mark = watermark(map.svg) as string;
+    const href = attribute(mark, "href") as string;
+    expect(href).toMatch(/^data:image\/svg\+xml;base64,/);
+    expect(map.svg, "the path leaked into the document").not.toContain(logoPath);
+
+    const decoded = Buffer.from(href.split(",")[1] as string, "base64").toString("utf8");
+    expect(decoded).toBe(LOGO);
+  });
+
+  it("bounds a logo without stretching it", async () => {
+    // The library cannot measure an image's aspect ratio outside a browser —
+    // the same wall --label-advance exists to get around. So the caller gives a
+    // box and the logo is fitted inside it.
+    const map = await neatline({
+      region: ["FR"],
+      detail: "110m",
+      size: SIZE,
+      padding: PADDING,
+      watermark: { image: logoPath, anchor: "bottom-left", width: 90, height: 40 },
+    });
+    const mark = watermark(map.svg) as string;
+    expect(attribute(mark, "preserveAspectRatio")).toBe("xMidYMid meet");
+    expect(Number(attribute(mark, "width"))).toBe(90);
+    expect(Number(attribute(mark, "height"))).toBe(40);
+    expect(Number(attribute(mark, "x"))).toBe(PADDING);
+    expect(Number(attribute(mark, "y"))).toBe(SIZE[1] - PADDING - 40);
+  });
+
+  it("passes a data URI through untouched", async () => {
+    const uri = "data:image/png;base64,iVBORw0KGgo=";
+    const map = await neatline({
+      region: ["FR"],
+      detail: "110m",
+      watermark: { image: uri },
+    });
+    expect(attribute(watermark(map.svg) as string, "href")).toBe(uri);
+  });
+
+  it("keeps its paint through the flattening pass", async () => {
+    // Four of this phase's defects were a value nothing consumed yet. A
+    // watermark flattened without its opacity is a logo printed at full
+    // strength across the middle of the map.
+    const map = await neatline({
+      region: ["FR"],
+      detail: "110m",
+      theme: "noir",
+      watermark: { image: logoPath },
+    });
+    const document = await map.render();
+    const mark = /<image class="mp-watermark"[^>]*>/.exec(document)?.[0] as string;
+    expect(mark, "the watermark vanished when styles were flattened").toBeTruthy();
+    expect(Number(attribute(mark, "opacity"))).toBeGreaterThan(0);
+    expect(Number(attribute(mark, "opacity"))).toBeLessThan(1);
+    expect(attribute(mark, "href")).toMatch(/^data:/);
+  });
+
+  it("refuses what it cannot draw, by name", async () => {
+    const base = { region: ["FR"] as const, detail: "110m" as const };
+    await expect(
+      neatline({ ...base, watermark: { text: "x", image: "data:image/png;base64,a" } }),
+    ).rejects.toThrow(/not both/);
+    await expect(neatline({ ...base, watermark: {} })).rejects.toThrow(/needs text or image/);
+    await expect(neatline({ ...base, watermark: { image: "./logo.tiff" } })).rejects.toThrow(
+      /neither a data: URI nor a path/,
+    );
+    await expect(neatline({ ...base, watermark: { image: "./absent.png" } })).rejects.toThrow(
+      /could not read/,
+    );
+    await expect(
+      neatline({ ...base, watermark: { text: "x", anchor: "middle-left" as Anchor } }),
+    ).rejects.toThrow(/is not one of/);
+  });
+
+  it("says nothing when there is nothing to say", async () => {
+    const empty = await neatline({ region: ["FR"], detail: "110m", watermark: "" });
+    expect(watermark(empty.svg)).toBeNull();
+    const off = await neatline({
+      region: ["FR"],
+      detail: "110m",
+      watermark: "DRAFT",
+      layers: { furniture: false },
+    });
+    expect(watermark(off.svg)).toBeNull();
+  });
+
+  it("stays out of the accessible description", async () => {
+    // Same reason the credit does: a mark of provenance is not what the map is
+    // *of*, and announcing it would put the stamp ahead of the subject.
+    const map = await neatline({ region: ["FR"], detail: "110m", watermark: "DRAFT" });
+    expect(/aria-label="([^"]*)"/.exec(map.svg)?.[1]).not.toContain("DRAFT");
   });
 });

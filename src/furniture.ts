@@ -149,7 +149,7 @@ export function placeBox(
   return [round(x), round(y)];
 }
 
-function checkAnchor(anchor: string, what: string): Anchor {
+export function checkAnchor(anchor: string, what: string): Anchor {
   if (!isAnchor(anchor)) {
     throw new Error(`neatline: ${what} "${anchor}" is not one of ${ANCHORS.join(", ")}`);
   }

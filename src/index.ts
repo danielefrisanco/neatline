@@ -3,6 +3,7 @@ import { assignBins, DEFAULT_BINS } from "./bins.js";
 import { arrowLayer, calloutLayer, pinLayer } from "./annotations.js";
 import { compassLayer, creditLayer, scaleLayer } from "./furniture.js";
 import { measureDistortion, type Distortion } from "./distortion.js";
+import { watermarkLayer } from "./watermark.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
 import { countryLabels, labelLayer, labelSizes, placeLabel, type LabelBox, type Placed } from "./labels.js";
@@ -90,6 +91,7 @@ export type {
   RenderOptions,
   ScaleBar,
   Size,
+  Watermark,
 } from "./types.js";
 
 /**
@@ -799,6 +801,11 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     if (options.compass !== undefined && options.compass !== false) {
       const compass = options.compass === true ? {} : options.compass;
       furniture.push(...compassLayer(compass, [width, height], padding, sizes.place, distortion()));
+    }
+    if (options.watermark !== undefined) {
+      const mark =
+        typeof options.watermark === "string" ? { text: options.watermark } : options.watermark;
+      furniture.push(...(await watermarkLayer(mark, [width, height], padding)));
     }
     if (furniture.length > 0) content.set("furniture", furniture);
   }

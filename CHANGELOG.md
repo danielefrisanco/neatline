@@ -127,6 +127,23 @@ whatever shape the pin takes, the other three copy it.
 
 ### Added
 
+- **`watermark`, and Phase 8c closes.** A wordmark or a logo stamped on the
+  canvas. A bare string is text at the centre; `{ image }` takes a `data:` URI,
+  or under Node a path to a `.png`, `.jpg`, `.gif`, `.webp` or `.svg`, which is
+  read and **embedded**. The whole point of this library's output is that one
+  file is the whole map, and a watermark referencing a logo on disk would stop
+  working the moment the SVG was emailed to anyone.
+
+  **It is attribution, not protection**, and the docs say so rather than letting
+  anyone assume otherwise: a watermark on an SVG is a node in a file the reader
+  can open, select and delete. It marks provenance and enforces nothing.
+
+  A logo is given a *box* and fitted inside it, never stretched — the library
+  has no way to measure an image's aspect ratio outside a browser, the same wall
+  `--label-advance` exists to get around. `text` and `image` are exclusive,
+  because a logo above a wordmark is a lockup and a lockup's proportions belong
+  to whoever owns the mark.
+
 - **`scaleBar` and `compass`, and the two claims a map has to earn.** These are
   the only furniture that says something about the *ground* rather than about
   who made the map. A credit line cannot be wrong. A bar reading `500 km` on a

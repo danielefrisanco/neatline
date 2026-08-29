@@ -272,6 +272,24 @@ ${rules((n) => `.mp .mp-prism[data-fill="${n}"] .mp-prism-top { fill: var(--fill
 .mp .mp-compass-needle {
   fill: var(--furniture-ink);
 }
+
+/*
+ * A watermark is the one piece of furniture meant to sit *under* the reader's
+ * attention rather than in it, which is what the opacity is for — a mark of
+ * provenance should not compete with the map it marks.
+ *
+ * One rule for both forms. The type properties are inert on an <image> and a
+ * fill is inert on a logo, so a wordmark and a mark can share a selector rather
+ * than needing an element-qualified one, which the flattening pass would then
+ * have to be able to parse.
+ */
+.mp .mp-watermark {
+  fill: var(--furniture-ink);
+  font-family: var(--font);
+  font-weight: 600;
+  letter-spacing: var(--label-track);
+  opacity: 0.18;
+}
 `.trim();
 
 export interface ThemeParts {

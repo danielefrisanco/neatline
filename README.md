@@ -55,7 +55,7 @@ Inside it, a `.mp-bg` rectangle covers the canvas, then eight layer groups in
 | `.mp-places` | `.mp-place` | `data-name`, `data-iso`, `data-rank`, `data-pop` | Settlement dots, ranked 1–3 |
 | `.mp-labels` | `.mp-label` | `data-kind`, `data-rank`, `data-fit`, `data-iso`, `data-capital` | Country and settlement names |
 | `.mp-annotations` | `.mp-anno` | `data-id`, `data-kind`, `data-fit` | Pins, callouts and arrows |
-| `.mp-furniture` | `.mp-credit` | `data-anchor` | Credits, scale bars, north arrows · watermarks and legends reserved |
+| `.mp-furniture` | `.mp-credit` | `data-anchor` | Credits, watermarks, scale bars, north arrows · legend reserved |
 
 `.is-highlighted` is a modifier on any feature named in `highlight`.
 A pin is a `.mp-anno.mp-pin` group holding a `.mp-pin-mark` circle and, where
@@ -265,7 +265,7 @@ every theme in the wild.
 | `--neighbour` | Context countries |
 | `--anno` | The mark a pin is drawn with, and a callout's box and leader |
 | `--anno-ink` | Ink on an annotation: a callout's caption, a pin's icon |
-| `--furniture-ink` | Text and marks on the canvas — a credit line, a scale bar, a north arrow |
+| `--furniture-ink` | Text and marks on the canvas — a credit, a watermark, a scale bar, a north arrow |
 | `--ink` / `--ink-muted` | Country names / settlement names |
 | `--font` / `--label-size` / `--place-label-size` | Type |
 | `--label-halo` / `--label-halo-width` | The casing drawn behind label text |
@@ -725,6 +725,53 @@ call and kept, and a map that never asks never pays for it.
 The bar's number is always a round one — 1, 2 or 5 times a power of ten — so the
 **width is derived from the number** rather than the number from the width. A
 bar reading 237 km is a bar nobody can step across a map.
+
+### Watermarks
+
+```ts
+await neatline({
+  region: "africa",
+  watermark: "PROVISIONAL",
+  // or: watermark: { image: "./logo.svg", anchor: "bottom-right", width: 90 }
+});
+```
+
+**A watermark is attribution, not protection.** It is a node in a file the
+reader can open, select and delete — it marks provenance and it cannot enforce
+anything. Nothing here is a rights mechanism, and a caller who needs one needs
+something other than a vector graphic.
+
+An `image` is **embedded**, not linked: a `data:` URI passes through untouched,
+and under Node a path to a `.png`, `.jpg`, `.gif`, `.webp` or `.svg` is read and
+base64'd into the document. The whole point of this library's output is that one
+file is the whole map, and a watermark referencing a logo on disk would stop
+working the moment the SVG was emailed to anyone. The `<image>` carries a plain
+SVG 2 `href` rather than a duplicate `xlink:href`, which would double the
+payload of the logo to satisfy renderers older than about 2019.
+
+You give a **box**, and the logo is fitted inside it — never stretched. The
+library has no way to measure an image's aspect ratio outside a browser, which
+is the same wall `--label-advance` exists to get around, so `width` and
+`height` bound the mark rather than setting it.
+
+`text` and `image` are exclusive. A logo above a wordmark is a lockup, and a
+lockup's spacing and proportions belong to whoever owns the mark; pass the
+lockup as one image.
+
+Styling is `--furniture-ink` at `opacity: 0.18` — one CSS rule changes it:
+
+```css
+.mp .mp-watermark { opacity: 0.4; }
+```
+
+### Furniture does not dodge itself
+
+The nine anchors are yours to assign, and nothing stops you putting a watermark
+and a scale bar in the same corner. The defaults are three different corners on
+purpose — `credit` bottom-right, `scaleBar` bottom-left, `compass` top-right,
+`watermark` centre — but there is no layout engine underneath them, and there is
+deliberately no auto-placement: where a mark of provenance sits is an editorial
+decision, not a packing problem.
 
 ### Icons
 

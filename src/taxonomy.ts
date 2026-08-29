@@ -132,7 +132,7 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     className: "mp-furniture",
     feature: "mp-credit",
     status: "live",
-    carries: "Credits, scale bars, north arrows — placed on the canvas, not on the map",
+    carries: "Credits, watermarks, scale bars, north arrows — on the canvas, not on the map",
   },
 ]);
 

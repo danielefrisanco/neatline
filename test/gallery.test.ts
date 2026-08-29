@@ -690,6 +690,22 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       title: "Bar, arrow and credit, in three corners",
     },
   ],
+  [
+    // A watermark marks provenance and enforces nothing — it is a text node in
+    // a file the reader can open, select and delete. Drawn in the furniture
+    // layer, which is above everything, so it is a stamp rather than a texture.
+    "africa-provisional",
+    {
+      region: "africa",
+      projection: "albers",
+      theme: "atlas",
+      size: [900, 900],
+      watermark: "PROVISIONAL",
+      credit: "Boundaries as drawn are not authoritative",
+      compass: true,
+      title: "A watermark marks provenance, it does not enforce it",
+    },
+  ],
 ];
 
 describe("gallery", () => {
