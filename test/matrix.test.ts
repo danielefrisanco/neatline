@@ -140,3 +140,71 @@ describe("every palette and typeface, on one region", () => {
     expect(flattened).not.toMatch(/var\(--/);
   });
 });
+
+/**
+ * A bounding box frames the box, not the planet.
+ *
+ * The rectangle a bbox region is framed by is a GeoJSON polygon, and d3-geo
+ * reads a ring by the right-hand rule on the sphere: wound the other way, it
+ * describes the *complement*. It was wound the other way. `geoBounds` on it
+ * came back as the whole world and `geoArea` as 11.999 steradians of a
+ * 12.566-steradian globe, so every bbox map was fitted to the entire planet.
+ *
+ * The conics failed loudly — a world extent fits at a scale of zero and every
+ * coordinate projects to NaN — and the cylindricals failed silently, drawing a
+ * world map with the region as a small patch in the middle. The silent half is
+ * why this is a test about *where things land* rather than about whether the
+ * call threw.
+ */
+describe("a bbox region", () => {
+  const BOX = [-30, 20, 30, 64] as const;
+  const SIZE = [800, 600] as const;
+
+  it.each(PROJECTION_NAMES)("fills the canvas with the box under %s", async (projection) => {
+    const map = await neatline({
+      region: { bbox: BOX },
+      projection: projection as never,
+      size: SIZE,
+      detail: "110m",
+    });
+    const [west, south, east, north] = BOX;
+    const corners = [
+      map.project([west, south]),
+      map.project([east, south]),
+      map.project([east, north]),
+      map.project([west, north]),
+    ];
+    for (const corner of corners) {
+      expect(corner, `${projection}: a corner of the box is nowhere`).not.toBeNull();
+      expect(Number.isFinite((corner as [number, number])[0])).toBe(true);
+      expect(Number.isFinite((corner as [number, number])[1])).toBe(true);
+    }
+
+    const xs = corners.map((c) => (c as [number, number])[0]);
+    const ys = corners.map((c) => (c as [number, number])[1]);
+    const spread = Math.max(...xs) - Math.min(...xs);
+    const rise = Math.max(...ys) - Math.min(...ys);
+
+    // Fitted to the box, its corners span most of the canvas. Fitted to the
+    // world, they huddle in the middle — which is exactly what they did.
+    expect(spread, `${projection}: the box spans only ${spread.toFixed(0)} of ${SIZE[0]}`)
+      .toBeGreaterThan(SIZE[0] * 0.5);
+    expect(rise, `${projection}: the box rises only ${rise.toFixed(0)} of ${SIZE[1]}`)
+      .toBeGreaterThan(SIZE[1] * 0.5);
+  });
+
+  it("puts the middle of the box near the middle of the canvas", async () => {
+    const map = await neatline({
+      region: { bbox: BOX },
+      projection: "conic-conformal",
+      size: SIZE,
+      detail: "110m",
+    });
+    const middle = map.project([(BOX[0] + BOX[2]) / 2, (BOX[1] + BOX[3]) / 2]);
+    expect(middle).not.toBeNull();
+    const [x, y] = middle as [number, number];
+    expect(Math.abs(x - SIZE[0] / 2)).toBeLessThan(SIZE[0] * 0.1);
+    expect(Math.abs(y - SIZE[1] / 2)).toBeLessThan(SIZE[1] * 0.15);
+  });
+});
+

@@ -221,12 +221,21 @@ function resolveRegion(region: Region, all: readonly CountryFeature[]): Resolved
           properties: {},
           geometry: {
             type: "Polygon",
+            // Wound so the *box* is the interior, not the rest of the planet.
+            // d3-geo reads a ring by the right-hand rule on the sphere, and the
+            // other winding describes the complement: `geoBounds` on it came
+            // back as the whole world and `geoArea` as 11.999 steradians of a
+            // 12.566-steradian globe. Every bbox map was framed to the entire
+            // planet — loudly on the conics, which fit a world extent to a
+            // scale of zero and projected every coordinate to NaN, and silently
+            // on the rest, which simply drew a world map when a region was
+            // asked for.
             coordinates: [
               [
                 [west, south],
-                [east, south],
-                [east, north],
                 [west, north],
+                [east, north],
+                [east, south],
                 [west, south],
               ],
             ],
