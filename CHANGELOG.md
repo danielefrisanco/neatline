@@ -23,6 +23,21 @@ whatever shape the pin takes, the other three copy it.
 
 ### Fixed
 
+- **`contrast` drew ice in the colour of the land under it**, and roads in the
+  colour of the land over it. `--glacier` was `#FFFFFF`, which is that theme's
+  `--land`; and `--road` was never redefined in the dark block, so it stayed
+  black on black land. Neither had ever rendered, because terrain and roads are
+  both reserved — which is exactly why neither had been caught.
+
+  Found by a new preset test rather than by a picture. Four of this phase's
+  defects were one mistake wearing different names: a preset copying a
+  neighbouring value into a token nothing consumed yet. Nine reserved tokens sit
+  in that position today. What cannot be checked is whether they look good; what
+  can is that each differs from what it will be drawn against, because a tint
+  the colour of its ground is not a tint. `contrast`'s whole cover ramp moved
+  below `#D8` as a result, so it clears the white land above it and the grey sea
+  beside it.
+
 - **Two maps can share a document.** The stylesheets have been scoped to a hash
   of themselves since Phase 3, which made this look as though it already worked.
   It did not: an `url(#…)` resolves against the whole document and the SVG ids
