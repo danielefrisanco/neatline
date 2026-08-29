@@ -16,6 +16,13 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
+Nothing yet. Next are the geopolitical icon set — a drawing job rather than an
+engineering one — and Phase 8d, where the palette contrast floor is the known
+defect: `sand` and `slate` put `--land` within a hair of `--bg`, and three
+gallery entries have had to be moved off `slate` in one day for it.
+
+## [0.13.0] — 2026-08-29
+
 Phase 8 opens here. `invert()` first, because it is the one thing in the phase
 nothing else can be built on top of. Then pins, which are where the annotation
 API gets decided: arrows, callouts and icons all have to say *where*, and
@@ -1209,7 +1216,8 @@ and grew to carry the legend, the ocean layer and a brighter palette — each is
 something the tool needs and none is large alone. Routes split out of it because
 that one is gated on acquiring data, not on drawing it.
 
-[Unreleased]: https://github.com/danielefrisanco/neatline/compare/v0.12.0...HEAD
+[Unreleased]: https://github.com/danielefrisanco/neatline/compare/v0.13.0...HEAD
+[0.13.0]: https://github.com/danielefrisanco/neatline/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/danielefrisanco/neatline/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/danielefrisanco/neatline/compare/v0.10.0...v0.11.0
 [0.7.0]: https://github.com/danielefrisanco/neatline/compare/v0.6.0...v0.7.0
