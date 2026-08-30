@@ -5,17 +5,19 @@
  * this project makes. These names are versioned like a function signature and
  * change only on a major. The order of `LAYERS` is the paint order, and it is
  * part of that promise: a layer inserted between two existing ones would
- * silently restack every theme in the wild, so all eleven slots are emitted from
+ * silently restack every theme in the wild, so all twelve slots are emitted from
  * v1 onward, empty where the feature does not exist yet.
  *
  * The graticule and land cover were both reserved before anyone asked for
  * them, and that is the whole point. A graticule sits at the very bottom — the
  * grid the world is drawn on, which land covers. Land cover sits directly above
- * the land it tints and below the water, because a river runs over a forest.
+ * the land it tints and below the water, because a river runs over a desert.
  * Both are placements that can only be made once: adding either after 1.0 would
- * restack everything above it. The graticule filled its slot in Phase 8d
- * without moving a single line of anyone's stylesheet, which is what reserving
- * it bought.
+ * restack everything above it. The graticule filled its slot in Phase 8d and
+ * land cover filled its own in 8e, neither of them moving a single line of
+ * anyone's stylesheet — which is exactly what reserving them bought. Eleven of
+ * the twelve slots now carry something; `roads` is the last one still waiting,
+ * and it is waiting on data rather than on a decision.
  *
  * Layers are plural (`.mp-land`), features are singular (`.mp-country`).
  *
@@ -92,8 +94,8 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     name: "terrain",
     className: "mp-terrain",
     feature: "mp-cover",
-    status: "reserved",
-    carries: "Land cover — desert, forest, mountain, glacier — tinted over the land",
+    status: "live",
+    carries: "Land cover — desert, mountain and glacier — tinted over the land",
   },
   {
     name: "hydro",
@@ -197,6 +199,12 @@ export const RESERVED_CLASSES: readonly string[] = Object.freeze([
   "mp-arrow",
   "mp-arrow-line",
   "mp-arrow-head",
+  // A route is a group too: one polyline through every stop, and a ringed mark
+  // at each. Its stops carry `mp-label` for the pin's reason — a name on a map
+  // wants the type stack and the halo the label rule already provides.
+  "mp-route",
+  "mp-route-line",
+  "mp-route-stop",
   // A callout is a group too: a leader line from the coordinate to the corner
   // of a box, and the caption set inside it on `mp-label`.
   "mp-callout",

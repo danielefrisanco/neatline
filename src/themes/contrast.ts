@@ -103,6 +103,12 @@ export const contrast = compose({
   --ink: #FFFFFF;
   --ink-muted: #FFFFFF;
   --label-halo: #000000;
+  /*
+   * Inherited from the light block, where it is #000000 against a #E8E8E8 sea.
+   * On the dark ground that is black on #171717 — a name the reader is told is
+   * there and cannot see. The theme's own rule applies: maximum separation.
+   */
+  --sea-ink: #FFFFFF;
   --water: #FFFFFF;
   /* Inherited #000000 from the light block, which is this theme's dark land —
      a route drawn in the colour of the ground it crosses. Light enough to read

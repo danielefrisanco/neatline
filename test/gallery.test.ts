@@ -805,6 +805,91 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       title: "Croatia, where the Adriatic and Bosnia used to be one colour",
     },
   ],
+  [
+    // Land cover, on the one region where a reader can check it against what
+    // they already know: the Sahara covers almost the whole frame and stops
+    // exactly where the Nile and the Sahel are. 50m, because the classification
+    // at 110m carries two deserts for the whole planet.
+    "sahara-cover",
+    {
+      region: ["DZ", "LY", "EG", "NE", "TD", "ML", "MR", "MA", "TN", "SD"],
+      detail: "50m",
+      projection: "mercator",
+      theme: "atlas",
+      size: [900, 620],
+      terrain: true,
+      sea: true,
+      seaNames: true,
+      labelRank: 1,
+      placeRank: 1,
+      credit: "Natural Earth",
+      title: "The Sahara as cover, and the Nile as the line it stops at",
+    },
+  ],
+  [
+    // The other half of the layer, and the harder one: mountains are a shape
+    // nobody draws from memory, so the Alpine arc, the Pyrenees, the Apennines
+    // and the Carpathians all have to arrive in the right place at once.
+    "alps-cover",
+    {
+      region: ["CH", "IT", "FR", "AT", "DE", "SI"],
+      detail: "50m",
+      projection: "conic-conformal",
+      theme: "minimal",
+      palette: "sand",
+      size: [900, 620],
+      terrain: ["mountain"],
+      sea: true,
+      seaNames: 3,
+      labelRank: 1,
+      placeRank: 1,
+      title: "The Alps, the Pyrenees and the Apennines, with the water named",
+    },
+  ],
+  [
+    // The one thing in this phase that needed nothing downloaded. A main line
+    // with a branch hanging off it, which is the shape the reference map that
+    // prompted it had: ringed stops along an ordered line, the branch drawn in
+    // smaller marks so it reads as a branch rather than a second main line.
+    "norrland-route",
+    {
+      region: ["SE", "NO", "FI"],
+      detail: "50m",
+      projection: "conic-conformal",
+      theme: "minimal",
+      palette: "moss",
+      size: [620, 820],
+      sea: true,
+      seaNames: true,
+      placeRank: 1,
+      labelRank: 1,
+      routes: [
+        {
+          label: "Stambanan genom övre Norrland",
+          stops: [
+            { at: [18.06, 59.33], label: "Stockholm" },
+            { at: [17.14, 60.67], label: "Gävle" },
+            { at: [17.31, 62.39], label: "Sundsvall" },
+            { at: [20.26, 63.83], label: "Umeå" },
+            { at: [21.48, 65.58], label: "Luleå" },
+            { at: [20.22, 67.85], label: "Kiruna" },
+            { at: [17.42, 68.44], label: "Narvik", kind: "minor" },
+          ],
+        },
+        {
+          label: "Inlandsbanan",
+          kind: "branch",
+          stops: [
+            { at: [17.31, 62.39] },
+            { at: [14.64, 63.18], label: "Östersund", kind: "minor" },
+            { at: [19.03, 65.59], label: "Arvidsjaur", kind: "minor" },
+            { at: [20.22, 67.85] },
+          ],
+        },
+      ],
+      title: "A route is an ordered list of places, and a branch is another one",
+    },
+  ],
 ];
 
 describe("gallery", () => {

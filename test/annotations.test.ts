@@ -664,3 +664,193 @@ describe("arrows", () => {
     expect(layer.indexOf("mp-pin")).toBeLessThan(layer.indexOf("mp-callout"));
   });
 });
+
+/**
+ * Routes: the ordering is the primitive.
+ *
+ * Everything a route is made of already shipped — a pin is a mark with a name
+ * beside it, an arrow is a line between two coordinates — so the tests here are
+ * about the one thing that is new, which is that the stops are in an order and
+ * the line follows it. The failure worth catching is the far side of a globe:
+ * threading past a stop the camera cannot see draws a leg between two places
+ * that are not adjacent, and on a globe that leg is a chord through the planet.
+ */
+const STOCKHOLM: Pin["at"] = [18.06, 59.33];
+const SUNDSVALL: Pin["at"] = [17.31, 62.39];
+const KIRUNA: Pin["at"] = [20.22, 67.85];
+
+function routeGroups(svg: string): string[] {
+  return [...annotationLayer(svg).matchAll(/<g class="mp-anno mp-route"[\s\S]*?<\/g>/g)].map(
+    (m) => m[0] as string,
+  );
+}
+
+/**
+ * The route's polyline, or null when no leg was drawn.
+ *
+ * Read off the `mp-route-line` path by name rather than with the generic
+ * attribute helper, whose `d="..."` pattern also matches the tail of
+ * `data-id="..."` — which is how the first version of this read a route's id
+ * as its geometry.
+ */
+function line(group: string): string | null {
+  const match = /<path class="mp-route-line" d="([^"]*)"/.exec(group);
+  return match === null ? null : (match[1] as string);
+}
+
+/** Every point of a route's polyline, in canvas units. */
+function legs(group: string): Array<[number, number]> {
+  const d = line(group) ?? "";
+  return [...d.matchAll(/(-?[\d.]+),(-?[\d.]+)/g)].map(
+    (m) => [Number(m[1]), Number(m[2])] as [number, number],
+  );
+}
+
+describe("routes", () => {
+  it("threads the stops in the order they were given", async () => {
+    const map = await neatline({
+      region: ["SE", "NO", "FI"],
+      routes: [
+        {
+          id: "r1",
+          kind: "rail",
+          label: "Norrland",
+          stops: [
+            { at: STOCKHOLM, label: "Stockholm" },
+            { at: SUNDSVALL, label: "Sundsvall" },
+            { at: KIRUNA, label: "Kiruna" },
+          ],
+        },
+      ],
+    });
+    const [group] = routeGroups(map.svg);
+    expect(group).toBeDefined();
+    expect(attribute(group as string, "data-id")).toBe("r1");
+    expect(attribute(group as string, "data-kind")).toBe("rail");
+
+    // Each vertex is where that stop projects, in sequence. A route that
+    // visited the same three places in another order would pass every string
+    // assertion and be a different journey.
+    const drawn = legs(group as string);
+    expect(drawn).toHaveLength(3);
+    for (const [index, at] of [STOCKHOLM, SUNDSVALL, KIRUNA].entries()) {
+      const [x, y] = map.project(at) as [number, number];
+      expect(drawn[index]?.[0]).toBeCloseTo(x, 0);
+      expect(drawn[index]?.[1]).toBeCloseTo(y, 0);
+    }
+  });
+
+  it("puts a mark at every stop, smaller where the stop is minor", async () => {
+    const map = await neatline({
+      region: ["SE", "NO", "FI"],
+      routes: [
+        {
+          stops: [
+            { at: STOCKHOLM, label: "Stockholm" },
+            { at: SUNDSVALL, kind: "minor" },
+            { at: KIRUNA },
+          ],
+        },
+      ],
+    });
+    const [group] = routeGroups(map.svg);
+    const radii = [...(group as string).matchAll(/<circle class="mp-route-stop"[^>]*\sr="([\d.]+)"/g)].map(
+      (m) => Number(m[1]),
+    );
+    expect(radii).toHaveLength(3);
+    expect(radii[1]).toBeLessThan(radii[0] as number);
+    expect(radii[2]).toBe(radii[0]);
+  });
+
+  it("names only the stops that were given names", async () => {
+    const map = await neatline({
+      region: ["SE", "NO", "FI"],
+      routes: [{ stops: [{ at: STOCKHOLM, label: "Stockholm" }, { at: SUNDSVALL }, { at: KIRUNA }] }],
+    });
+    const [group] = routeGroups(map.svg);
+    const named = [...(group as string).matchAll(/data-kind="route"[^>]*>([^<]*)</g)].map((m) => m[1]);
+    expect(named).toEqual(["Stockholm"]);
+  });
+
+  it("leaves the line bare when asked", async () => {
+    const map = await neatline({
+      region: ["SE", "NO", "FI"],
+      routes: [{ marks: false, stops: [{ at: STOCKHOLM }, { at: KIRUNA }] }],
+    });
+    const [group] = routeGroups(map.svg);
+    expect(group).toContain("mp-route-line");
+    expect(group).not.toContain("mp-route-stop");
+  });
+
+  /**
+   * The far side of a globe breaks the line rather than being threaded past.
+   *
+   * `project()` answers a coordinate behind the planet with a pixel on the near
+   * side, so skipping a dropped stop would draw a leg from Stockholm to
+   * somewhere in the Atlantic that is really New Zealand. The line has to stop
+   * and start again instead.
+   */
+  it("breaks rather than threading past a stop it cannot see", async () => {
+    const map = await neatline({
+      region: "europe",
+      projection: "orthographic",
+      routes: [
+        {
+          stops: [
+            { at: STOCKHOLM },
+            // The Chatham Islands: as far behind a Europe-facing globe as it gets.
+            { at: [-176.5, -43.9] },
+            { at: KIRUNA },
+          ],
+        },
+      ],
+    });
+    const [group] = routeGroups(map.svg);
+    expect(group).toBeDefined();
+    // Two visible stops, no line between them, because they are not adjacent.
+    const marks = [...(group as string).matchAll(/mp-route-stop/g)];
+    expect(marks).toHaveLength(2);
+    expect(
+      line(group as string),
+      "a leg was drawn across a stop the camera cannot see",
+    ).toBeNull();
+  });
+
+  it("draws every visible run when only the middle is missing", async () => {
+    const map = await neatline({
+      region: "europe",
+      projection: "orthographic",
+      routes: [
+        {
+          stops: [
+            { at: STOCKHOLM },
+            { at: SUNDSVALL },
+            { at: [-176.5, -43.9] },
+            { at: KIRUNA },
+            { at: [17.42, 68.44] },
+          ],
+        },
+      ],
+    });
+    const [group] = routeGroups(map.svg);
+    const d = line(group as string) ?? "";
+    // Two subpaths: the pair before the gap and the pair after it.
+    expect([...d.matchAll(/M/g)]).toHaveLength(2);
+  });
+
+  it("refuses a coordinate that cannot be one", async () => {
+    await expect(
+      neatline({ region: "europe", routes: [{ stops: [{ at: [200, 0] }] }] }),
+    ).rejects.toThrow(/routes\[0\]\.stops\[0\]\.at/);
+  });
+
+  it("runs beneath the marks, alongside the arrows", async () => {
+    const map = await neatline({
+      region: ["SE", "NO", "FI"],
+      routes: [{ stops: [{ at: STOCKHOLM }, { at: KIRUNA }] }],
+      pins: [{ at: SUNDSVALL, label: "Sundsvall" }],
+    });
+    const layer = annotationLayer(map.svg);
+    expect(layer.indexOf("mp-route")).toBeLessThan(layer.indexOf("mp-pin"));
+  });
+});

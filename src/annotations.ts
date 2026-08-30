@@ -1,7 +1,7 @@
 import { ICON_GRID, ICONS } from "./icons.js";
 import { textWidth } from "./labels.js";
 import { el, text, type SvgNode } from "./svg.js";
-import type { Arrow, Callout, Pin, Point, Position, Size } from "./types.js";
+import type { Arrow, Callout, Pin, Point, Position, Route, Size } from "./types.js";
 
 /**
  * The annotation layer — where the map stops describing the ground and starts
@@ -515,6 +515,138 @@ export function calloutLayer(
 
 /** How far a curve bows from the straight line, as a fraction of its length. */
 const ARROW_BOW = 0.18;
+
+/** How wide a route's stop mark is drawn, in user units. */
+const STOP_RADIUS = 4.5;
+
+/** A minor stop, drawn smaller so a branch reads as a branch. */
+const MINOR_STOP_RADIUS = 3;
+
+/**
+ * Build the routes.
+ *
+ * The one thing in the second-ingest phase that needs nothing downloaded, and
+ * it is here rather than in the roads layer for exactly that reason: a road is
+ * a fact about the world that has to arrive from Natural Earth, and a route is
+ * a claim the caller is making. Drawing them in the same layer would say the
+ * two are the same kind of thing.
+ *
+ * It is an ordered list of the primitives that already exist. A pin is a mark
+ * with a name beside it; an arrow is a line between two coordinates; a route is
+ * *n* of the first threaded onto *n-1* of the second. Nothing new is invented
+ * except the ordering, which is the part that carries the meaning: a reader
+ * follows a route, and following needs a sequence.
+ *
+ * **A stop the camera cannot see breaks the line rather than being skipped
+ * over.** Threading past a dropped stop would draw a segment between two places
+ * that are not adjacent — on a globe, a chord straight through the planet — and
+ * a route that claims a leg nobody travels is worse than a route with a gap.
+ * So the line is emitted as one path of several subpaths, one per visible run.
+ */
+export function routeLayer(
+  routes: readonly Route[],
+  project: (position: Position) => Point | null,
+  invert: (point: Point) => Position | null,
+  [width, height]: Size,
+): PinLayer {
+  const nodes: SvgNode[] = [];
+  const labels: string[] = [];
+
+  for (const [index, route] of routes.entries()) {
+    const stops = route.stops ?? [];
+    if (stops.length === 0) continue;
+
+    // `null` marks a stop the camera cannot see, and is what breaks the line.
+    const placed = stops.map((stop, at) => {
+      const point = resolve(stop.at, index, "routes", project, invert, `stops[${at}].at`);
+      return point === null ? null : { stop, point };
+    });
+    const seen = placed.filter((p): p is NonNullable<typeof p> => p !== null);
+    if (seen.length === 0) continue;
+
+    const runs: string[] = [];
+    let run: string[] = [];
+    for (const item of placed) {
+      if (item === null) {
+        if (run.length > 1) runs.push(run.join("L"));
+        run = [];
+        continue;
+      }
+      run.push(`${round(item.point[0])},${round(item.point[1])}`);
+    }
+    if (run.length > 1) runs.push(run.join("L"));
+
+    const children: SvgNode[] = [];
+    if (route.label !== undefined && route.label !== "") {
+      children.push(el("title", {}, [text(route.label)]));
+    }
+    // A route of one visible stop has no line, only a mark. That is not a
+    // failure — it is a route the camera has caught the end of.
+    if (runs.length > 0) {
+      children.push(
+        el("path", { class: "mp-route-line", d: runs.map((r) => `M${r}`).join("") }),
+      );
+    }
+
+    const onCanvas = seen.some(
+      ({ point: [x, y] }) => x >= 0 && x <= width && y >= 0 && y <= height,
+    );
+    if (onCanvas && route.label !== undefined && route.label !== "") labels.push(route.label);
+
+    if (route.marks !== false) {
+      for (const { stop, point } of seen) {
+        const [x, y] = point;
+        const minor = stop.kind === "minor";
+        const radius = minor ? MINOR_STOP_RADIUS : STOP_RADIUS;
+        children.push(
+          el("circle", {
+            class: "mp-route-stop",
+            "data-kind": stop.kind,
+            cx: round(x),
+            cy: round(y),
+            r: radius,
+          }),
+        );
+        if (stop.label === undefined || stop.label === "") continue;
+        if (x >= 0 && x <= width && y >= 0 && y <= height) labels.push(stop.label);
+        const at = labelAt(x, y, stop.offset, radius);
+        children.push(
+          el(
+            "text",
+            {
+              // `mp-label` for the pin's reason: a stop's name is text on a map
+              // and wants the type, the tracking and the halo that rule gives.
+              class: "mp-label",
+              "data-kind": "route",
+              x: round(at.x),
+              y: round(at.y),
+              "text-anchor": at.anchor,
+              "dominant-baseline": "central",
+            },
+            [text(stop.label)],
+          ),
+        );
+      }
+    }
+
+    nodes.push(
+      el(
+        "g",
+        {
+          class: "mp-anno mp-route",
+          "data-id": route.id,
+          "data-kind": route.kind,
+          // One visible stop is enough: a route running off the edge is still
+          // on the map, which is not what an arrow's two ends can say.
+          "data-fit": onCanvas ? 1 : 0,
+        },
+        children,
+      ),
+    );
+  }
+
+  return { nodes, labels };
+}
 
 /**
  * Build the arrows.

@@ -20,6 +20,26 @@ export interface Place {
   readonly rank: 1 | 2 | 3;
 }
 
+/**
+ * A named body of water, reduced to the one point its name is set at.
+ *
+ * Natural Earth ships these as polygons and this is not one, deliberately. The
+ * shape is only ever used to decide where the name goes, so the build works
+ * that out once — the interior point furthest from the shore, so the name lands
+ * on water rather than on the Sicily the Mediterranean's centroid falls on —
+ * and ships the answer. 1.5 MB of coastline becomes 9 KB of anchors.
+ *
+ * The rule that follows from it is stated in the README because a reader can
+ * check it: a sea is named when its middle is on the map.
+ */
+export interface Sea {
+  readonly name: string;
+  /** `ocean`, `sea`, `bay`, `gulf`, `strait`, `channel`, `sound`, `reef`, `river`. */
+  readonly kind: string;
+  readonly position: Position;
+  readonly rank: 1 | 2 | 3;
+}
+
 export type WaterKind = "lake" | "river";
 
 /**
@@ -33,6 +53,7 @@ export type WaterKind = "lake" | "river";
 export interface World {
   readonly countries: readonly CountryFeature[];
   readonly places: readonly Place[];
+  readonly seas: readonly Sea[];
   /**
    * The boundaries shared between the named countries, each drawn once.
    * Coastlines are excluded — the land layer already draws that silhouette.
@@ -86,6 +107,37 @@ export async function loadOcean(detail: Detail): Promise<GeoJsonFeatureCollectio
   return collection;
 }
 
+/**
+ * Land cover, cached and loaded apart for the ocean's reason, at a tenth of the
+ * weight: 52 KB at 110m and 589 KB at 50m, against a 152 KB bundle.
+ *
+ * Three kinds ship — `desert`, `mountain`, `glacier` — and each feature carries
+ * only which one it is. The classification is Natural Earth's own, joined from
+ * the 10m tier by `NE_ID` because the coarser files ship the column blank; see
+ * `scripts/fetch-natural-earth.mjs`, where that join is done and checked.
+ */
+const coverCache = new Map<Detail, GeoJsonFeatureCollection>();
+
+export async function loadCover(detail: Detail): Promise<GeoJsonFeatureCollection> {
+  const cached = coverCache.get(detail);
+  if (cached) return cached;
+
+  const url = new URL(`../data/cover-${detail}.json`, import.meta.url);
+  let collection: GeoJsonFeatureCollection;
+  try {
+    const { readFile } = await import("node:fs/promises");
+    collection = JSON.parse(await readFile(url, "utf8")) as GeoJsonFeatureCollection;
+  } catch {
+    throw new Error(
+      `neatline: could not read land cover for detail "${detail}". ` +
+        `Run \`npm run build:data\` to regenerate it.`,
+    );
+  }
+
+  coverCache.set(detail, collection);
+  return collection;
+}
+
 interface Bundle {
   readonly countries: { objects: { countries: { geometries: readonly unknown[] } } };
   readonly lakes: unknown;
@@ -99,6 +151,7 @@ interface Bundle {
     c: number;
     r: number;
   }>;
+  readonly seas?: ReadonlyArray<{ n: string; k: string; x: number; y: number; r: number }>;
 }
 
 /**
@@ -160,9 +213,19 @@ export async function loadWorld(detail: Detail): Promise<World> {
     rank: (p.r === 1 || p.r === 2 ? p.r : 3) as 1 | 2 | 3,
   }));
 
+  // Optional in the bundle shape rather than required, so a `data/` built
+  // before sea names existed still loads and simply has none.
+  const seas: Sea[] = (bundle.seas ?? []).map((s) => ({
+    name: s.n,
+    kind: s.k,
+    position: [s.x, s.y] as Position,
+    rank: (s.r === 1 || s.r === 2 ? s.r : 3) as 1 | 2 | 3,
+  }));
+
   const world: World = {
     countries: Object.freeze(countries),
     places: Object.freeze(places),
+    seas: Object.freeze(seas),
 
     borders(ids: readonly string[], focus?: string): unknown | null {
       const geometries: unknown[] = [];

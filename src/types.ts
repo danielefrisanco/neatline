@@ -204,6 +204,69 @@ export interface Arrow {
 }
 
 /**
+ * One place along a route, and the name of it.
+ *
+ * A pin by another name, and deliberately so: `at`, `label`, `offset` and
+ * `kind` all mean here exactly what they mean there. What a stop has that a pin
+ * does not is a position in a sequence, which is the whole of the difference —
+ * a reader follows a route, and following needs an order.
+ *
+ * `kind: "minor"` draws a smaller mark, which is how a branch reads as a branch
+ * rather than as a second main line.
+ */
+export interface RouteStop {
+  /** Where the stop is, in `[lon, lat]`. */
+  readonly at: Position;
+  /** The name set beside the mark. Omitted, the stop is a mark alone. */
+  readonly label?: string;
+  /** Move the label, never the mark. `[dx, dy]` in user units. */
+  readonly offset?: Point;
+  /** Written out as `data-kind`. `"minor"` also draws a smaller mark. */
+  readonly kind?: string;
+}
+
+/**
+ * An ordered line through a list of places, with a mark at each.
+ *
+ * The fourth annotation primitive and the only one in its phase that needs no
+ * data downloaded — which is why it is here rather than waiting behind the road
+ * layer. A road is a fact about the world and has to arrive from Natural Earth;
+ * a route is a claim the caller is making, and every ingredient for it already
+ * shipped. A pin is a mark with a name beside it, an arrow is a line between
+ * two coordinates, and a route is *n* of the first threaded onto *n-1* of the
+ * second.
+ *
+ * ```ts
+ * routes: [{
+ *   label: "Malmbanan",
+ *   stops: [
+ *     { at: [18.06, 59.33], label: "Stockholm" },
+ *     { at: [20.26, 63.83], label: "Umeå" },
+ *     { at: [20.22, 67.85], label: "Kiruna" },
+ *     { at: [17.42, 68.44], label: "Narvik", kind: "minor" },
+ *   ],
+ * }]
+ * ```
+ *
+ * A stop the camera cannot see — the far side of a globe — breaks the line
+ * rather than being threaded past. Skipping it would draw a leg between two
+ * places that are not next to each other, and a route that claims a journey
+ * nobody makes is worse than one with a gap in it.
+ */
+export interface Route {
+  /** The places, in the order they are visited. */
+  readonly stops: readonly RouteStop[];
+  /** The route's own name — a `<title>`, and part of the map's description. */
+  readonly label?: string;
+  /** Draw the stop marks. `false` leaves the bare line. @default true */
+  readonly marks?: boolean;
+  /** The caller's handle, written out as `data-id`. */
+  readonly id?: string;
+  /** What kind of thing this is, written out as `data-kind` for a theme. */
+  readonly kind?: string;
+}
+
+/**
  * One of nine positions on the canvas.
  *
  * What `at` is to an annotation, this is to the furniture — and the difference
@@ -266,6 +329,19 @@ export interface Credit {
  * `map.distortion()` reports the measurement, so a caller who gets no bar can
  * see by how much they missed.
  */
+/**
+ * A kind of land cover, and the value `data-kind` carries on each shape.
+ *
+ * Three, because Natural Earth classifies three honestly. Its physical regions
+ * are sorted into twenty-three kinds, most of them places rather than ground —
+ * `Island`, `Continent`, `Pen/cape` — and of the ones that describe a surface,
+ * only `Desert` and `Range/mtn` describe it in a way a colour can state.
+ * `Plateau` and `Plain` were considered and left out: they name regions more
+ * than surfaces, and tinting Iberia as a plateau claims something a reader
+ * would not accept. Glaciers come from a different file entirely.
+ */
+export type Cover = "desert" | "mountain" | "glacier";
+
 /**
  * Parallels and meridians, and the three latitudes that are not just parallels.
  *
@@ -522,6 +598,13 @@ export interface MapOptions {
    */
   readonly arrows?: readonly Arrow[];
   /**
+   * Ordered lines through a list of places, with a mark at each.
+   *
+   * Drawn into `.mp-annotations` beneath the pins and callouts, alongside the
+   * arrows, because a route is context for the marks on it. See {@link Route}.
+   */
+  readonly routes?: readonly Route[];
+  /**
    * A line of text on the canvas — a source, a byline, a date.
    *
    * Rendered into `.mp-furniture`, the one layer that is not geographic: it is
@@ -547,6 +630,41 @@ export interface MapOptions {
    * of the rest of the bundle.
    */
   readonly sea?: boolean;
+  /**
+   * Tint the ground by what it is — desert, mountain, glacier.
+   *
+   * Three kinds and not four. Natural Earth publishes no forest polygon at any
+   * tier, and land cover of that kind lives in rasters; deriving one from a
+   * climate band would make this the only layer in the library that invents
+   * its subject. `--forest` stays a reserved token against the day a source
+   * exists.
+   *
+   * Drawn into `.mp-terrain`, over the land and under the water, each shape
+   * carrying `data-kind`. Clipped to the land actually drawn, for the reason
+   * rivers are: a desert polygon is a climate band and does not stop at a
+   * coastline the way the eye expects it to.
+   *
+   * `true` draws all three. A list draws only the ones named, which is how a
+   * map of the Alps gets its mountains without the Sahara arriving with them.
+   * The geometry is read only when this is on.
+   */
+  readonly terrain?: boolean | readonly Cover[];
+  /**
+   * Name the seas, gulfs and straits, in `--sea-ink`.
+   *
+   * A sea is named when its middle is on the map. The anchor is computed at
+   * build time as the point furthest from that sea's own shore, so the name
+   * lands on water — the Mediterranean's centroid is over Sicily — and the
+   * polygon is then thrown away, which is what keeps a hundred and eighteen
+   * names down to 7 KB.
+   *
+   * The consequence is worth knowing before you turn it on: a map framed on a
+   * sliver of a sea whose middle lies elsewhere does not get that sea's name.
+   * A number ranks how far down to go, the way `labelRank` does — 1 is the
+   * oceans and the great seas, 2 adds the named basins, 3 adds the straits and
+   * bights. `true` means 2.
+   */
+  readonly seaNames?: boolean | 1 | 2 | 3;
   /**
    * Parallels and meridians under everything else. `true` takes a spacing
    * chosen from the region; see {@link Graticule}.

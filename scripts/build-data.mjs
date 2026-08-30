@@ -10,7 +10,8 @@
  *   world-atlas     countries, because it carries ISO numeric ids that the
  *                   identity table already maps
  *   sane-topojson   lakes and rivers, which world-atlas does not have
- *   Natural Earth   populated places, vendored under vendor/
+ *   Natural Earth   populated places, land cover and sea names, vendored under
+ *                   vendor/ by scripts/fetch-natural-earth.mjs
  *
  * Countries stay as a topology: shared borders can only be derived where arcs
  * are shared. Water needs no such thing — no two lakes share an edge — so it is
@@ -23,6 +24,13 @@
  * an opt-in layer that every caller downloads is not opt-in. The loading seam
  * has been async and swappable since Phase 4 precisely so a layer could move
  * out of the bundle like this without reaching a caller.
+ *
+ * Land cover follows the ocean out for the same reason and sea names do not,
+ * which is the line worth stating once: **weight decides, not opt-in-ness.**
+ * Cover is 47 KB at 110m and 470 KB at 50m of polygon, so it gets its own file.
+ * Sea names are 2 KB and 7 KB, because the polygons were reduced to one anchor
+ * point each before they were ever vendored — a list that small is cheaper in
+ * the bundle than a second network round trip would be, and it rides along.
  */
 import { createRequire } from "node:module";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
@@ -101,8 +109,24 @@ for (const tier of TIERS) {
     await readFile(require.resolve(`sane-topojson/dist/world_${tier}.json`), "utf8"),
   );
   const places = trimPlaces(JSON.parse(await readFile(`vendor/places-${tier}.raw.json`, "utf8")));
+  const seas = JSON.parse(await readFile(`vendor/seas-${tier}.raw.json`, "utf8"));
+  const rawCover = JSON.parse(await readFile(`vendor/cover-${tier}.raw.json`, "utf8"));
 
   const digits = tier === "110m" ? 2 : 3;
+
+  // Land cover, out of the bundle beside the ocean and for the same reason.
+  // `n` is dropped: the Sahara's name would be a label, and labelling cover is
+  // a different feature from tinting it. The class is what a theme colours.
+  const cover = {
+    type: "FeatureCollection",
+    features: rawCover.features.map((f) => ({
+      type: "Feature",
+      properties: { k: f.properties.k },
+      geometry: { type: f.geometry.type, coordinates: round(f.geometry.coordinates, digits) },
+    })),
+  };
+  const coverPath = `data/cover-${tier}.json`;
+  await writeFile(coverPath, JSON.stringify(cover), "utf8");
 
   // Written first and separately: nothing in the bundle refers to it, and
   // nothing that reads the bundle pays for it.
@@ -116,6 +140,7 @@ for (const tier of TIERS) {
     lakes: waterLayer(sane, "lakes", digits),
     rivers: waterLayer(sane, "rivers", digits),
     places,
+    seas,
   };
 
   const path = `data/${tier}.json`;
@@ -127,11 +152,21 @@ for (const tier of TIERS) {
       `  (${countries.objects.countries.geometries.length} countries,` +
       ` ${bundle.lakes.features.length} lakes,` +
       ` ${bundle.rivers.features.length} rivers,` +
-      ` ${places.length} places)`,
+      ` ${places.length} places,` +
+      ` ${seas.length} sea names)`,
   );
   console.log(
     `  ${oceanPath}  ${((await oceanSize).size / 1024).toFixed(0)} KB` +
       `  (${ocean.features.length} ocean polygons, loaded only when \`sea\` is on)`,
+  );
+  const coverSize = (await import("node:fs")).promises.stat(coverPath);
+  const kinds = {};
+  for (const f of cover.features) kinds[f.properties.k] = (kinds[f.properties.k] ?? 0) + 1;
+  console.log(
+    `  ${coverPath}  ${((await coverSize).size / 1024).toFixed(0)} KB` +
+      `  (${Object.entries(kinds)
+        .map(([k, n]) => `${n} ${k}`)
+        .join(", ")}, loaded only when \`terrain\` is on)`,
   );
 }
 console.log("data built");
