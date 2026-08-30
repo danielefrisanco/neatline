@@ -20,6 +20,7 @@ import { compose } from "./structure.js";
 export const noir = compose({
   tokens: `
   --bg: #0B0E11;
+  --sea: #0B0E11;
   --land: #232B33;
   --land-edge: #3E4A55;
   --land-edge-width: 0.6;
@@ -72,6 +73,7 @@ export const noir = compose({
   --furniture-ink: #7A848F;`,
   dark: `
   --bg: #050709;
+  --sea: #050709;
   --land: #1B222A;
   --land-edge: #333E48;
   --border: #6B7681;

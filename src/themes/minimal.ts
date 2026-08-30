@@ -12,6 +12,7 @@ import { compose } from "./structure.js";
 export const minimal = compose({
   tokens: `
   --bg: transparent;
+  --sea: #DCE7EC;
   --land: #D8D8D2;
   --land-edge: #FFFFFF;
   --land-edge-width: 0.5;
@@ -64,6 +65,7 @@ export const minimal = compose({
   --furniture-ink: #80807A;`,
   dark: `
   --land: #2E3134;
+  --sea: #16242C;
   --land-edge: #16181A;
   --border: #6E747A;
   --accent: #E2694A;

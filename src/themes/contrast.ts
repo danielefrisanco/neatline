@@ -23,6 +23,7 @@ import { compose } from "./structure.js";
 export const contrast = compose({
   tokens: `
   --bg: #E8E8E8;
+  --sea: #E8E8E8;
   --land: #FFFFFF;
   --land-edge: #000000;
   --land-edge-width: 2;
@@ -79,6 +80,7 @@ export const contrast = compose({
   --furniture-ink: #000000;`,
   dark: `
   --bg: #171717;
+  --sea: #171717;
   --land: #000000;
   --land-edge: #FFFFFF;
   --border: #FFFFFF;

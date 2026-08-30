@@ -529,6 +529,25 @@ export interface MapOptions {
    * camera does. A bare string takes the default anchor.
    */
   /**
+   * Draw the sea as a shape, under everything else, filled from `--sea`.
+   *
+   * Off, the sea is whatever `--bg` leaves showing where no land was drawn.
+   * That is right for a map framed to a coastline and wrong the moment the
+   * frame holds land the map is not drawing — an inland region, or any map
+   * with `neighbours` off — because then the water runs over places that are
+   * not water.
+   *
+   * Every bundled preset whose `--bg` is already an ocean sets `--sea` to the
+   * same colour, so turning this on cannot change a coastal map. The presets
+   * whose ground is paper or transparent give the sea a colour of its own,
+   * because those are the ones the old answer was wrong for.
+   *
+   * The geometry lives in a file of its own and is read only when this is on:
+   * it is one polygon with a hole for every continent, and half again the size
+   * of the rest of the bundle.
+   */
+  readonly sea?: boolean;
+  /**
    * Parallels and meridians under everything else. `true` takes a spacing
    * chosen from the region; see {@link Graticule}.
    */

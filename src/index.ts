@@ -28,7 +28,7 @@ import {
   ROOT_CLASS,
   type LayerName,
 } from "./taxonomy.js";
-import { loadWorld, type CountryFeature } from "./topology.js";
+import { loadOcean, loadWorld, type CountryFeature } from "./topology.js";
 import type {
   BBox,
   GeoJsonFeatureCollection,
@@ -456,6 +456,39 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
 
   const content = new Map<LayerName, SvgNode[]>();
   const wants = (name: LayerName): boolean => options.layers?.[name] ?? true;
+
+  // Under everything, the graticule included, for the plainest of reasons: an
+  // atlas draws its meridians across the water. Read on demand rather than out
+  // of the bundle — see `loadOcean`.
+  if (options.sea === true && wants("ocean")) {
+    const ocean = await loadOcean(detail);
+    const shapes: SvgNode[] = [];
+    // Clipped to the canvas before it is drawn, which is not an optimisation
+    // so much as the difference between shipping this and not. The ocean is
+    // one polygon carrying every coastline on earth: drawn unclipped, a
+    // 520×400 map of Greece came out 806 KB of path data for the few gulfs
+    // anyone can see, and a map of Switzerland came out 858 KB to draw
+    // nothing at all. `clipExtent` cuts the polygon against the viewport in
+    // the projected plane, so what is emitted is what is visible — and an
+    // inland frame clips to nothing, which is the honest answer there.
+    //
+    // Set on the shared projection and put back immediately: d3 has no way to
+    // copy one, the ocean is drawn in a single pass here, and every other
+    // layer must keep drawing past the edges so its strokes are not cut.
+    projection.clipExtent([
+      [0, 0],
+      [width, height],
+    ]);
+    try {
+      for (const item of ocean.features) {
+        const d = path(item as never);
+        if (d) shapes.push(el("path", { class: "mp-sea", d }));
+      }
+    } finally {
+      projection.clipExtent(null);
+    }
+    if (shapes.length > 0) content.set("ocean", shapes);
+  }
 
   // The bottom of the stack, and the only layer generated rather than read:
   // the grid comes from the framed bounds, not from any file in `data/`.

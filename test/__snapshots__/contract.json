@@ -6,6 +6,12 @@
   "layerClass": "mp-layer",
   "layers": [
     {
+      "name": "ocean",
+      "className": "mp-ocean",
+      "feature": "mp-sea",
+      "status": "live"
+    },
+    {
       "name": "graticule",
       "className": "mp-graticule",
       "feature": "mp-grid",
@@ -138,6 +144,7 @@
     "--water (live)",
     "--water-width (live)",
     "--road (reserved)",
+    "--sea (live)",
     "--graticule (live)",
     "--graticule-width (live)",
     "--equator (live)",

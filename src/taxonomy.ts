@@ -27,6 +27,7 @@
  */
 
 export type LayerName =
+  | "ocean"
   | "graticule"
   | "neighbours"
   | "land"
@@ -59,6 +60,13 @@ export interface LayerSpec {
  * since lakes and rivers are drawn on top of the land they sit in.
  */
 export const LAYERS: readonly LayerSpec[] = Object.freeze([
+  {
+    name: "ocean",
+    className: "mp-ocean",
+    feature: "mp-sea",
+    status: "live",
+    carries: "The sea as a shape, rather than as whatever the land does not cover",
+  },
   {
     name: "graticule",
     className: "mp-graticule",
