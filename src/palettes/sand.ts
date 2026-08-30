@@ -2,7 +2,7 @@ export const sand = `
 .mp {
   --bg: #F6F1E7;
   --land: #E3D6BE;
-  --land-edge: #F6F1E7;
+  --land-edge: #CDBB98;
   --border: #A8916A;
   --accent: #3E6B5A;
   --accent-edge: #F6F1E7;

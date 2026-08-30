@@ -8,7 +8,7 @@ export const slate = `
 .mp {
   --bg: #EDEFF2;
   --land: #DCE0E6;
-  --land-edge: #FFFFFF;
+  --land-edge: #B6BFC9;
   --border: #8B95A3;
   --accent: #2D6E9E;
   --accent-edge: #FFFFFF;

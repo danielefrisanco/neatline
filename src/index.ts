@@ -4,12 +4,13 @@ import { arrowLayer, calloutLayer, pinLayer } from "./annotations.js";
 import { compassLayer, creditLayer, scaleLayer } from "./furniture.js";
 import { measureDistortion, type Distortion } from "./distortion.js";
 import { watermarkLayer } from "./watermark.js";
+import { graticuleLayer } from "./graticule.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
 import { countryLabels, labelLayer, labelSizes, placeLabel, type LabelBox, type Placed } from "./labels.js";
 import { heightsFor, prisms, type PrismInput } from "./prism.js";
 import { politicalFill } from "./political.js";
-import { createProjection } from "./projections.js";
+import { createProjection, resolveCentre } from "./projections.js";
 import { expandPreset, isRegionPreset, presetLabel } from "./regions.js";
 import { referencedFilters } from "./filters.js";
 import { referencedMarkers } from "./markers.js";
@@ -80,6 +81,7 @@ export type {
   Credit,
   Detail,
   GeoJsonFeatureCollection,
+  Graticule,
   MapOptions,
   MapResult,
   Pin,
@@ -389,7 +391,15 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
       ? 0
       : (extrusion.uniform ?? Math.max(0, ...extrusion.byId.values(), 0));
 
-  const projection = createProjection(projectionName, frame, width, height, padding, headroom);
+  const projection = createProjection(
+    projectionName,
+    frame,
+    width,
+    height,
+    padding,
+    headroom,
+    resolveCentre(projectionName, options.center),
+  );
   const path = geoPath(projection).digits(1);
 
   /**
@@ -446,6 +456,14 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
 
   const content = new Map<LayerName, SvgNode[]>();
   const wants = (name: LayerName): boolean => options.layers?.[name] ?? true;
+
+  // The bottom of the stack, and the only layer generated rather than read:
+  // the grid comes from the framed bounds, not from any file in `data/`.
+  if (options.graticule !== undefined && options.graticule !== false && wants("graticule")) {
+    const grid = options.graticule === true ? {} : options.graticule;
+    const lines = graticuleLayer(grid, frame.bounds, path, [width, height]);
+    if (lines.length > 0) content.set("graticule", lines);
+  }
 
   const land: SvgNode[] = [];
   // Collected separately and appended, so hatching sits over every country in

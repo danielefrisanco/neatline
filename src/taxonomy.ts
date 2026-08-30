@@ -8,12 +8,14 @@
  * silently restack every theme in the wild, so all eleven slots are emitted from
  * v1 onward, empty where the feature does not exist yet.
  *
- * Two of them are reserved for things nobody has asked to build yet, and that
- * is the whole point. A graticule sits at the very bottom — the grid the world
- * is drawn on, which land covers. Land cover sits directly above the land it
- * tints and below the water, because a river runs over a forest. Both are
- * placements that can only be made once: adding either after 1.0 would restack
- * everything above it. Reserving them costs two empty groups.
+ * The graticule and land cover were both reserved before anyone asked for
+ * them, and that is the whole point. A graticule sits at the very bottom — the
+ * grid the world is drawn on, which land covers. Land cover sits directly above
+ * the land it tints and below the water, because a river runs over a forest.
+ * Both are placements that can only be made once: adding either after 1.0 would
+ * restack everything above it. The graticule filled its slot in Phase 8d
+ * without moving a single line of anyone's stylesheet, which is what reserving
+ * it bought.
  *
  * Layers are plural (`.mp-land`), features are singular (`.mp-country`).
  *
@@ -61,7 +63,7 @@ export const LAYERS: readonly LayerSpec[] = Object.freeze([
     name: "graticule",
     className: "mp-graticule",
     feature: "mp-grid",
-    status: "reserved",
+    status: "live",
     carries: "Parallels, meridians, the equator and the tropics",
   },
   {

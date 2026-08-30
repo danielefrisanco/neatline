@@ -9,7 +9,7 @@
       "name": "graticule",
       "className": "mp-graticule",
       "feature": "mp-grid",
-      "status": "reserved"
+      "status": "live"
     },
     {
       "name": "neighbours",
@@ -138,9 +138,9 @@
     "--water (live)",
     "--water-width (live)",
     "--road (reserved)",
-    "--graticule (reserved)",
-    "--graticule-width (reserved)",
-    "--equator (reserved)",
+    "--graticule (live)",
+    "--graticule-width (live)",
+    "--equator (live)",
     "--desert (reserved)",
     "--forest (reserved)",
     "--mountain (reserved)",
@@ -163,6 +163,7 @@
       "sand",
       "slate",
       "moss",
+      "limes",
       "dusk"
     ],
     "typefaces": [
