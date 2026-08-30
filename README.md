@@ -561,6 +561,63 @@ polygon with a hole for every continent, and half again the size of the rest of
 the bundle. It is clipped to the canvas before it is drawn, so an inland frame
 emits nothing at all rather than a megabyte of coastline nobody can see.
 
+### Ground that is desert where it is desert
+
+```ts
+await neatline({ region: ["DZ", "LY", "EG", "TD", "NE"], terrain: true });
+await neatline({ region: ["CH", "IT", "AT"], terrain: ["mountain"] });
+```
+
+Three kinds of land cover — `desert`, `mountain`, `glacier` — drawn into
+`.mp-terrain`, over the land they tint and under the water, each shape carrying
+`data-kind` and coloured from `--desert`, `--mountain` and `--glacier`. `true`
+draws all three; a list draws only what it names, which is how a map of the Alps
+gets its mountains without the Sahara arriving alongside them.
+
+**There is no forest, and that is the honest half of the feature.** Natural
+Earth publishes no forest polygon at any tier — land cover of that kind lives in
+rasters — and deriving one from a climate band would make this the only layer in
+the library that invents its subject. `--forest` stays a reserved token against
+the day a source exists.
+
+**The classification is Natural Earth's own, recovered rather than guessed.**
+`geography_regions_polys` is the source, and it ships the `FEATURECLA` column
+populated at 10m only: at 50m and 110m every feature has it blank, so those
+files are a list of named shapes with no way to tell the Sahara from
+Scandinavia. `NE_ID` is stable across tiers, so the build joins the 10m table
+onto the coarser geometry — 60 of 60 features at 110m, 522 of 522 at 50m, and
+the ingest script throws rather than shipping an unclassed blob.
+
+Cover is clipped to the land the map actually drew, for the reason rivers are: a
+cover polygon is a climate band drawn to a coarse outline, so it runs out over
+the sea wherever the coast is finer than the band, and glaciated areas genuinely
+extend onto floating ice. It is read from a file of its own, only when this is
+on.
+
+### The names of seas
+
+```ts
+await neatline({ region: ["GR"], sea: true, seaNames: 3 });
+```
+
+Seas, gulfs, straits and bights, set in italic on the water in `--sea-ink`, into
+the same `.mp-labels` layer country and city names use — `data-kind="sea"`, with
+`data-sea` naming which kind of water it is.
+
+The rule, which you can check: **a sea is named when its middle is on the map.**
+The anchor is the point furthest from that sea's own shore, computed once at
+build time, because a centroid is not good enough for the shapes worth naming —
+the Mediterranean's falls over Sicily. The polygon is then discarded, which is
+what keeps a hundred and eighteen names down to 7 KB. The cost of that trade is
+worth knowing before you turn it on: a map framed on a *sliver* of a sea whose
+middle lies elsewhere does not get that sea's name.
+
+`seaNames` takes a rank, the way `labelRank` does — 1 is the oceans and the
+great seas, 2 adds the named basins, 3 adds the straits and bights. `true` means
+2. Sea names are judged **last** in the collision pass, so they give way to
+every name on land: the land is the subject, and a name on the water is the one
+that can be spared.
+
 ### The grid the world is drawn on
 
 ```ts
@@ -976,6 +1033,43 @@ the hatch pattern do. It is styled through `.mp-arrow-head` rather than
 inherited from the arrow, because a marker resolves colour where it *sits*, in
 the defs block, and not where it is used.
 
+### Routes
+
+```ts
+await neatline({
+  region: ["SE", "NO", "FI"],
+  routes: [{
+    label: "Stambanan genom övre Norrland",
+    stops: [
+      { at: [18.06, 59.33], label: "Stockholm" },
+      { at: [17.31, 62.39], label: "Sundsvall" },
+      { at: [20.22, 67.85], label: "Kiruna" },
+      { at: [17.42, 68.44], label: "Narvik", kind: "minor" },
+    ],
+  }],
+});
+```
+
+A line through a list of places with a ring at each — a rail line, a march, an
+itinerary. Nothing in it is new except the ordering, which is the part that
+carries the meaning: a reader *follows* a route, and following needs a sequence.
+A stop is a pin by another name (`at`, `label`, `offset`, `kind` all mean what
+they mean there), and a leg is an arrow without a head.
+
+`kind: "minor"` draws a smaller ring, which is how a branch reads as a branch
+rather than as a second main line. `marks: false` leaves the bare line. The
+route's own `label` becomes its `<title>` and part of the map's description.
+
+**A stop the camera cannot see breaks the line rather than being threaded
+past.** Skipping it would draw a leg between two places that are not next to
+each other — on a globe, a chord straight through the planet — and a route that
+claims a journey nobody makes is worse than a route with a gap in it. So the
+line is one path of several subpaths, one per visible run.
+
+A route is **not** a road. A road is a fact about the world that has to arrive
+from Natural Earth; a route is a claim you are making. That is why routes are
+annotations and `.mp-roads` is still an empty layer.
+
 ### Cities
 
 Settlements are ranked 1–3: capitals and the largest cities, then everything
@@ -1030,8 +1124,8 @@ this is the honest limit of drawing a map as an SVG. What there is:
 .mp .mp-label[data-capital] { font-weight: 600; }
 ```
 
-Every label carries `data-kind` (`country` or `place`), `data-rank` 1–3, and
-`data-iso`. For a country, rank is how comfortably the name fits: 1 has room to
+Every label carries `data-kind` — `country`, `place`, `sea`, or `pin`, `route`
+and `callout` from the annotation layer — plus `data-rank` 1–3 and `data-iso`. For a country, rank is how comfortably the name fits: 1 has room to
 spare, 3 overhangs. For a settlement it is the same rank the dot carries.
 
 The fit test has no font metrics — SVG offers no way to measure text outside a
@@ -1078,6 +1172,8 @@ one CSS rule, but not emitting its path data is real bytes.
 | | |
 |---|---|
 | `npm run check` | typecheck → test → build → verify exports |
+| `npm run fetch:data` | download and vendor the Natural Earth sources no package carries |
+| `npm run build:data` | build `data/` from `vendor/` and the source packages |
 | `npm run build` | dual ESM/CJS bundle plus types |
 | `npm test` | vitest; snapshots land in `test/__snapshots__/` as real `.svg` files you can open |
 | `npm run dev` | rebuild on change |
@@ -1124,6 +1220,8 @@ kept on public-domain sources on purpose rather than by luck.
 | Country polygons, coastlines | [Natural Earth](https://www.naturalearthdata.com/) via `world-atlas` | Public domain / ISC | None |
 | Lakes, rivers | Natural Earth via `sane-topojson` | Public domain / MIT | None |
 | Populated places | Natural Earth, vendored under `vendor/` | Public domain | None |
+| Land cover — desert, mountain, glacier | Natural Earth, vendored under `vendor/` | Public domain | None |
+| Sea and gulf names | Natural Earth, vendored under `vendor/` | Public domain | None |
 | Projection maths | `d3-geo` | ISC | None |
 
 If a source that *does* require attribution is ever added — Eurostat GISCO or

@@ -72,6 +72,18 @@ ${rules((n) => `.mp .mp-country[data-fill="${n}"] { fill: var(--fill-${n}); }`, 
   stroke: var(--accent-edge);
 }
 
+/**
+ * Land cover, tinted over the land and under the water.
+ *
+ * Unstroked on purpose. A cover polygon is a climate band with no edge in the
+ * world — the Sahara does not stop at a line — so outlining one draws a border
+ * that is not there. The tint is the whole statement.
+ */
+.mp .mp-cover { stroke: none; }
+.mp .mp-cover[data-kind="desert"] { fill: var(--desert); }
+.mp .mp-cover[data-kind="mountain"] { fill: var(--mountain); }
+.mp .mp-cover[data-kind="glacier"] { fill: var(--glacier); }
+
 .mp .mp-water[data-kind="lake"] { fill: var(--water); stroke: none; }
 .mp .mp-water[data-kind="river"] {
   fill: none;
@@ -129,6 +141,45 @@ ${rules((n) => `.mp .mp-prism[data-fill="${n}"] .mp-prism-top { fill: var(--fill
   fill: var(--ink-muted);
   font-size: var(--place-label-size);
 }
+
+/*
+ * The name of a sea, set on the water in its own ink.
+ *
+ * Italic and letter-spaced, because that is how an atlas has distinguished
+ * water from land for four hundred years and it is doing real work: a reader
+ * can tell "Adriatic Sea" from a country name without reading either. The
+ * casing is deliberately dropped: --label-halo is a land colour in every
+ * preset, and a name on the water wants the water behind it.
+ */
+.mp .mp-label[data-kind="sea"] {
+  fill: var(--sea-ink);
+  font-size: var(--place-label-size);
+  font-style: italic;
+  letter-spacing: 0.08em;
+  stroke: none;
+}
+
+/*
+ * A route: one line through the stops, and a ring at each of them.
+ *
+ * The mark is a ring rather than a disc — stroked in the annotation colour and
+ * filled with the casing — because a stop is a place the line passes through
+ * and a disc reads as a place it ends. Same casing the pin's mark takes, so a
+ * route crossing a highlighted country stays visible.
+ */
+.mp .mp-route-line {
+  fill: none;
+  stroke: var(--anno);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mp .mp-route-stop {
+  fill: var(--label-halo);
+  stroke: var(--anno);
+  stroke-width: 2.2;
+}
+.mp .mp-route-stop[data-kind="minor"] { stroke-width: 1.6; }
 
 .mp .mp-label.is-highlighted { font-weight: 700; }
 

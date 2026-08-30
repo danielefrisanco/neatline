@@ -90,6 +90,10 @@ export const minimal = compose({
 
   --stripe: #9A9A94;
   --water: #4C7A96;
+  /* Cover authored for the dark land; the light values are far too bright on it. */
+  --desert: #46473C;
+  --mountain: #3D4246;
+  --glacier: #5C6970;
   --neighbour: #202325;
   --anno: #F79A78;
   --anno-ink: #16181A;

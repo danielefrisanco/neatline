@@ -67,9 +67,10 @@ export const TOKENS: readonly TokenSpec[] = Object.freeze([
   { name: "--water", status: "live", controls: "Lakes and rivers" },
   { name: "--water-width", status: "live", controls: "River stroke width, in user units" },
   { name: "--road", status: "reserved", controls: "Route strokes — Phase 4 data" },
-  // The graticule went live in Phase 8d; the land-cover four stay reserved
-  // alongside their layer. A theme can set those today and they start
-  // working when the layer fills.
+  // The graticule went live in Phase 8d and three of the land-cover four in
+  // 8e. `--forest` is the one that stayed reserved, and not for want of code:
+  // Natural Earth publishes no forest polygon at any tier, so the token waits
+  // on a source rather than on a layer.
   // The sea as a shape. Distinct from `--bg`, which is the canvas ground: on a
   // map framed to a coastline the two can carry the same colour and nobody can
   // tell, and on an inland map they must not, because everything that is not
@@ -78,11 +79,11 @@ export const TOKENS: readonly TokenSpec[] = Object.freeze([
   { name: "--graticule", status: "live", controls: "Parallels and meridians" },
   { name: "--graticule-width", status: "live", controls: "Grid line width" },
   { name: "--equator", status: "live", controls: "The equator and the tropics, drawn apart from the grid" },
-  { name: "--desert", status: "reserved", controls: "Arid land cover" },
+  { name: "--desert", status: "live", controls: "Arid land cover" },
   { name: "--forest", status: "reserved", controls: "Wooded land cover" },
-  { name: "--mountain", status: "reserved", controls: "Upland and mountain cover" },
-  { name: "--glacier", status: "reserved", controls: "Ice and permanent snow" },
-  { name: "--sea-ink", status: "reserved", controls: "Names of seas, gulfs and straits" },
+  { name: "--mountain", status: "live", controls: "Upland and mountain cover" },
+  { name: "--glacier", status: "live", controls: "Ice and permanent snow" },
+  { name: "--sea-ink", status: "live", controls: "Names of seas, gulfs and straits" },
   { name: "--neighbour", status: "live", controls: "Context countries drawn behind the region" },
   { name: "--anno", status: "live", controls: "The mark a pin, arrow or callout is drawn with" },
   // Live as of the callout, and only there. Every bundled preset sets this to

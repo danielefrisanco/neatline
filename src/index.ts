@@ -1,13 +1,21 @@
 import { geoBounds, geoContains, geoPath } from "d3-geo";
 import { assignBins, DEFAULT_BINS } from "./bins.js";
-import { arrowLayer, calloutLayer, pinLayer } from "./annotations.js";
+import { arrowLayer, calloutLayer, pinLayer, routeLayer } from "./annotations.js";
 import { compassLayer, creditLayer, scaleLayer } from "./furniture.js";
 import { measureDistortion, type Distortion } from "./distortion.js";
 import { watermarkLayer } from "./watermark.js";
 import { graticuleLayer } from "./graticule.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
-import { countryLabels, labelLayer, labelSizes, placeLabel, type LabelBox, type Placed } from "./labels.js";
+import {
+  countryLabels,
+  labelLayer,
+  labelSizes,
+  placeLabel,
+  seaLabels,
+  type LabelBox,
+  type Placed,
+} from "./labels.js";
 import { heightsFor, prisms, type PrismInput } from "./prism.js";
 import { politicalFill } from "./political.js";
 import { createProjection, resolveCentre } from "./projections.js";
@@ -28,9 +36,10 @@ import {
   ROOT_CLASS,
   type LayerName,
 } from "./taxonomy.js";
-import { loadOcean, loadWorld, type CountryFeature } from "./topology.js";
+import { loadCover, loadOcean, loadWorld, type CountryFeature } from "./topology.js";
 import type {
   BBox,
+  Cover,
   GeoJsonFeatureCollection,
   MapOptions,
   MapResult,
@@ -78,6 +87,7 @@ export type {
   BBox,
   Callout,
   Compass,
+  Cover,
   Credit,
   Detail,
   GeoJsonFeatureCollection,
@@ -91,6 +101,8 @@ export type {
   Region,
   RegionPreset,
   RenderOptions,
+  Route,
+  RouteStop,
   ScaleBar,
   Size,
   Watermark,
@@ -490,6 +502,50 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     if (shapes.length > 0) content.set("ocean", shapes);
   }
 
+  /**
+   * Land cover, over the land and under the water.
+   *
+   * Clipped twice, and both clips earn their place. `clipExtent` cuts the
+   * shapes to the viewport for the ocean's reason — the Sahara and the Andes
+   * are continent-sized polygons, and a map of Switzerland should not carry
+   * either one in full to draw none of it. The land clip does the other half:
+   * a cover polygon is a climate band drawn to a coarse outline, so it runs
+   * out over the sea wherever the coast is finer than the band, and glaciated
+   * areas genuinely extend onto floating ice. Trimming both to the land the
+   * map actually drew says the true thing — cover is on the ground — and is
+   * the same clip a river already gets.
+   */
+  const coverKinds =
+    options.terrain === true
+      ? new Set<Cover>(["desert", "mountain", "glacier"])
+      : Array.isArray(options.terrain)
+        ? new Set<Cover>(options.terrain)
+        : null;
+  if (coverKinds !== null && coverKinds.size > 0 && wants("terrain")) {
+    const cover = await loadCover(detail);
+    const shapes: SvgNode[] = [];
+    projection.clipExtent([
+      [0, 0],
+      [width, height],
+    ]);
+    try {
+      // One path per kind rather than per polygon: a theme colours the kind,
+      // and 377 separate glaciers would be 377 nodes saying the same thing.
+      for (const kind of ["desert", "mountain", "glacier"] as const) {
+        if (!coverKinds.has(kind)) continue;
+        const features = cover.features.filter(
+          (f) => (f as { properties?: { k?: string } }).properties?.k === kind,
+        );
+        if (features.length === 0) continue;
+        const d = path({ type: "FeatureCollection", features } as never);
+        if (d) shapes.push(el("path", { class: "mp-cover", "data-kind": kind, d }));
+      }
+    } finally {
+      projection.clipExtent(null);
+    }
+    if (shapes.length > 0) content.set("terrain", shapes);
+  }
+
   // The bottom of the stack, and the only layer generated rather than read:
   // the grid comes from the framed bounds, not from any file in `data/`.
   if (options.graticule !== undefined && options.graticule !== false && wants("graticule")) {
@@ -636,7 +692,7 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
    * hand and says the true thing anyway, which is that a river is on land.
    */
   const landClip =
-    content.has("hydro") && frame.countries.length > 0
+    (content.has("hydro") || content.has("terrain")) && frame.countries.length > 0
       ? path({
           type: "FeatureCollection",
           features: frame.countries.map((c) => c.geometry),
@@ -769,7 +825,38 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
       sizes.advance,
       placeBoxes,
     );
-    const all = labelLayer(names, placeNames);
+    /**
+     * Sea names, judged after everything on land.
+     *
+     * `true` means rank 2 — the oceans, the great seas, and the named basins a
+     * country-sized map frames. Rank 3 is straits and bights, which is a lot of
+     * words for a small map and is asked for rather than assumed.
+     */
+    const seaRank =
+      options.seaNames === undefined || options.seaNames === false
+        ? 0
+        : options.seaNames === true
+          ? 2
+          : options.seaNames;
+    const seas =
+      seaRank === 0
+        ? []
+        : seaLabels(
+            world.seas
+              .filter((sea) => sea.rank <= seaRank)
+              .map((sea) => ({
+                name: renamed.get(sea.name) ?? sea.name,
+                kind: sea.kind,
+                position: sea.position,
+                rank: sea.rank,
+              })),
+            projection,
+            [width, height],
+            sizes.place,
+            sizes.advance,
+          );
+
+    const all = labelLayer(names, placeNames, seas);
     if (all.length > 0) content.set("labels", all);
   }
 
@@ -800,6 +887,7 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
   const pins = options.pins ?? [];
   const callouts = options.callouts ?? [];
   const arrows = options.arrows ?? [];
+  const routes = options.routes ?? [];
   // Built even when the layer is switched off, so a coordinate that cannot be
   // one is still rejected rather than quietly ignored: turning a layer off
   // controls what is drawn, never whether the options were valid.
@@ -825,8 +913,14 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     arrows.length === 0
       ? { nodes: [], labels: [] }
       : arrowLayer(arrows, projectPoint, invertPoint, [width, height]);
+  // With the arrows, under the marks, for the arrows' reason: a route is the
+  // context a pin sits on, not a thing that sits on a pin.
+  const lines =
+    routes.length === 0
+      ? { nodes: [], labels: [] }
+      : routeLayer(routes, projectPoint, invertPoint, [width, height]);
   const annotated = wants("annotations");
-  const drawn = [...flows.nodes, ...marks.nodes, ...captions.nodes];
+  const drawn = [...flows.nodes, ...lines.nodes, ...marks.nodes, ...captions.nodes];
   if (annotated && drawn.length > 0) content.set("annotations", drawn);
 
   /**
@@ -886,7 +980,14 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
           // renders as a filled blob.
           fill: spec.name === "borders" ? "none" : undefined,
           "clip-path":
-            spec.name === "hydro" && landClip !== null ? `url(#${LAND_CLIP_ID})` : undefined,
+            // Clipped only where there is something to clip: an empty layer
+            // wearing a clip path is noise in every document that has neither
+            // water nor cover.
+            (spec.name === "hydro" || spec.name === "terrain") &&
+            landClip !== null &&
+            content.has(spec.name)
+              ? `url(#${LAND_CLIP_ID})`
+              : undefined,
         },
         content.get(spec.name) ?? [],
       ),

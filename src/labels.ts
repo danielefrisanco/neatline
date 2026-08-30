@@ -459,11 +459,18 @@ function inset(box: LabelBox): LabelBox {
 export function labelLayer(
   countries: readonly Placed[],
   places: readonly Placed[],
+  seas: readonly Placed[] = [],
 ): SvgNode[] {
   const taken: LabelBox[] = [];
   const hidden = new Set<SvgElement>();
 
-  const ordered = [...countries].sort((a, b) => b.priority - a.priority).concat(places);
+  // Seas are judged last and so give way to everything: the land is the
+  // subject, and a name on the water is the one that can be spared. Among
+  // themselves they go in rank order, largest water first.
+  const ordered = [...countries]
+    .sort((a, b) => b.priority - a.priority)
+    .concat(places)
+    .concat([...seas].sort((a, b) => b.priority - a.priority));
   for (const label of ordered) {
     if (!label.fits || taken.some((box) => hits(inset(label.box), box))) {
       hidden.add(label.node);
@@ -473,8 +480,8 @@ export function labelLayer(
   }
 
   // Emitted in paint order, not in the order they were judged: a settlement
-  // name reads over the country it sits in.
-  return [...countries, ...places].map(({ node }) =>
+  // name reads over the country it sits in, and a sea name sits under both.
+  return [...seas, ...countries, ...places].map(({ node }) =>
     hidden.has(node)
       ? el(node.tag, { ...node.attributes, "data-fit": "0" }, node.children)
       : node,
@@ -542,6 +549,98 @@ export function countryLabels(
       // Room to spare is what earns a name its place: on a crowded map the
       // country that can carry its name keeps it.
       priority: ratio,
+    });
+  }
+  return placed;
+}
+
+/**
+ * How far a coordinate may drift through a round trip before its pixel belongs
+ * to somebody else, in degrees.
+ *
+ * The same guard the annotation layer uses and for the same reason: an
+ * orthographic projection answers a coordinate on the far side of the globe
+ * with a pixel on the near side, so "South Pacific Ocean" would be set neatly
+ * across the Atlantic on a Europe-centred globe. `invert()` returns the near
+ * side by construction, so a coordinate that survives the trip is one the
+ * camera can really see.
+ */
+const ROUND_TRIP_TOLERANCE = 1e-6;
+
+/** What a sea label needs to know about itself. */
+export interface SeaLabel {
+  readonly name: string;
+  readonly kind: string;
+  readonly position: readonly [number, number];
+  readonly rank: 1 | 2 | 3;
+}
+
+/**
+ * The name of a sea, set at the point the build decided its name belongs.
+ *
+ * There is no fit test here, and that is the difference between naming a
+ * country and naming a sea. A country name has to fit inside a shape the map
+ * has drawn, and can be measured against it. A sea's shape was reduced to one
+ * anchor at build time and is not on hand — so the rule the caller is given is
+ * the simpler one this can honestly keep: **a sea is named when its middle is
+ * on the map**. What remains is the collision pass, which sea names go into
+ * last, because a country's name and a city's both outrank the water.
+ */
+export function seaLabels(
+  seas: readonly SeaLabel[],
+  projection: GeoProjection,
+  canvas: readonly [number, number],
+  size: number,
+  advance: number,
+): Placed[] {
+  const [width, height] = canvas;
+  const placed: Placed[] = [];
+  const invert = projection.invert?.bind(projection);
+
+  for (const sea of seas) {
+    const point = projection([sea.position[0], sea.position[1]]);
+    if (point === null) continue;
+    const [x, y] = point;
+    if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+    // The whole name, not the anchor. A country's name is anchored inside a
+    // shape that is itself on the canvas, so testing the point is enough
+    // there; a sea name is centred on a coordinate with nothing holding it in,
+    // and testing the point alone put "Aegea" and "Baltic Se" against the
+    // frame edge on the first two maps drawn with this on.
+    const wide = textWidth(sea.name, size, advance);
+    if (x - wide / 2 < 0 || x + wide / 2 > width) continue;
+    if (y - size / 2 < 0 || y + size / 2 > height) continue;
+    if (invert !== undefined) {
+      const back = invert([x, y]);
+      if (back === null) continue;
+      if (
+        Math.abs(back[0] - sea.position[0]) > ROUND_TRIP_TOLERANCE ||
+        Math.abs(back[1] - sea.position[1]) > ROUND_TRIP_TOLERANCE
+      ) {
+        continue;
+      }
+    }
+
+    placed.push({
+      node: el(
+        "text",
+        {
+          class: "mp-label",
+          "data-kind": "sea",
+          "data-sea": sea.kind,
+          "data-rank": sea.rank,
+          x: round(x),
+          y: round(y),
+          "text-anchor": "middle",
+          "dominant-baseline": "central",
+        },
+        [text(sea.name)],
+      ),
+      box: boxAt(x, y, wide, size),
+      fits: true,
+      // Ranked among themselves so the Mediterranean beats the Ionian for a
+      // space they both want; against the land they are judged last regardless.
+      priority: 4 - sea.rank,
     });
   }
   return placed;

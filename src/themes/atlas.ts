@@ -91,6 +91,17 @@ export const atlas = compose({
 
   --stripe: #A2977F;
   --water: #3E6C86;
+  /*
+   * Land cover, authored for the dark ground rather than inherited from the
+   * light block. The light values are a cream desert and a near-white glacier,
+   * which over a #2C2A24 land turn the Sahara into a lamp — the fifth defect of
+   * exactly this shape in this project, and the first one caught by rendering a
+   * token the same week it went live rather than years later.
+   */
+  --desert: #48412F;
+  --mountain: #3C3B34;
+  --glacier: #5A6870;
+  --sea-ink: #89A6B8;
   --neighbour: #1B2A33;
   --anno: #D9848F;
   --anno-ink: #101D26;

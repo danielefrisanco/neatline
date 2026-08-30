@@ -14,11 +14,120 @@ applies.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
-## [Unreleased]
+## [0.14.0] — 2026-08-30
 
-Phase 8d, four of its seven items. What is left needs a download rather than
-code: land cover and sea names are both Natural Earth ingests, and the sea as
-geometry is waiting on one decision about the bottom of the layer stack.
+Phase 8d, closed at five items, and Phase 8e — the second ingest, where
+everything left starts with a download rather than a keystroke. Land cover and
+sea names shipped; **roads and rail moved forward to Phase 10, on a
+measurement.**
+
+### Land cover
+
+`terrain: true` draws desert, mountain and glacier into `.mp-terrain`, the
+layer reserved since v1, over the land it tints and under the water. Each shape
+carries `data-kind`; `--desert`, `--mountain` and `--glacier` move from
+reserved to live. A list rather than `true` draws only what it names, which is
+how a map of the Alps gets its mountains without the Sahara arriving too.
+
+**There is no forest.** Natural Earth publishes no forest polygon at any tier —
+land cover of that kind lives in rasters — and deriving one from a climate band
+would make this the only layer here that invents its subject. Three that are
+true beats four where one is made up. `--forest` stays reserved.
+
+**The classification only exists at 10m, and the plan did not know that.**
+`geography_regions_polys` is the source and it ships `FEATURECLA` populated at
+10m alone: at 50m and 110m the column is blank on **every** feature, so those
+files are a list of named shapes with no way to tell the Sahara from
+Scandinavia. `NE_ID` is stable across tiers, so the ingest joins the 10m table
+onto the coarser geometry — 60 of 60 at 110m, 522 of 522 at 50m — and throws
+rather than shipping an unclassed blob. The class is still Natural Earth's;
+nothing here guesses from a name.
+
+Clipped twice: to the viewport for the ocean's reason, and to the land the map
+drew, because a cover polygon is a climate band on a coarse outline and runs
+out over the sea wherever the coast is finer than the band. Its geometry is a
+file of its own — 52 KB at 110m, 589 KB at 50m — read only when this is on.
+
+**Three themes were carrying cover colours that had never been drawn**, which
+is the fifth defect of that exact shape in this project and the first caught in
+the same week the token went live. `atlas` and `minimal` inherited a cream
+desert and a near-white glacier into their dark blocks, where the Sahara came
+out as a lamp over near-black land; `contrast` inherited a black `--sea-ink`
+onto a `#171717` dark ground, a name the reader is told is there and cannot
+see. All three now author the values for the ground they are drawn on.
+
+### The names of seas
+
+`seaNames` sets the names of seas, gulfs and straits in italic on the water in
+`--sea-ink`, into the same labels layer country and city names use, carrying
+`data-kind="sea"`. `--sea-ink` moves from reserved to live.
+
+The rule it keeps, and a reader can check it: **a sea is named when its middle
+is on the map.** The anchor is the interior point furthest from that sea's own
+shore, because a centroid is not good enough for the shapes worth naming — the
+Mediterranean's falls over Sicily. It is computed once at build time and the
+polygon is then discarded, which is what turns 1.5 MB of coastline into 9 KB of
+anchors that ride along in the bundle. The trade is stated rather than hidden:
+a map framed on a sliver of a sea whose middle lies elsewhere does not get that
+sea's name.
+
+Ranked 1–3 the way settlements are — oceans and great seas, then the named
+basins, then straits and bights — and judged **last** in the collision pass, so
+a sea name gives way to every name on land.
+
+### Routes
+
+`routes: [{ stops: [{ at, label? }, …] }]` — a line through a list of places
+with a ring at each. The fourth annotation primitive, and the only item in this
+phase that needed nothing downloaded, which is why it did not wait behind the
+road layer. Nothing in it is new except the ordering, and the ordering is the
+meaning: a reader follows a route.
+
+`kind: "minor"` draws a smaller ring, so a branch reads as a branch.
+`marks: false` leaves the bare line. **A stop the camera cannot see breaks the
+line rather than being threaded past** — skipping it would draw a leg between
+two places that are not adjacent, and on a globe that leg is a chord through
+the planet.
+
+`mp-route`, `mp-route-line` and `mp-route-stop` join the reserved class list.
+
+### Roads and rail, moved to Phase 10
+
+Not deferred on a feeling. The files were downloaded and counted, and the
+plan's guess — "strongest in North America and Europe, thin elsewhere" — is
+right in direction and much starker in fact. Of the roads Natural Earth
+carries, the share that is classified at all:
+
+| | classified | of | by length |
+|---|---|---|---|
+| North America | 8,802 | 9,237 | 95% |
+| Oceania | 746 | 856 | 88% |
+| Europe | 3,382 | 9,849 | 45% |
+| Asia | 5,250 | 25,505 | 13% |
+| South America | 274 | 4,204 | 5% |
+| **Africa** | **208** | **6,761** | **1.7%** |
+
+Africa has 420,000 km of road in the file and 7,000 km of it is classified. A
+map of the Sahel drawing only what is classified shows almost nothing; drawing
+everything shows an unlabelled tangle. Both are wrong, and neither is fixable
+by rendering code.
+
+The weight is the second half of it. Vendored and trimmed, the classified roads
+are **5.4 MB** and the railroads **23.6 MB** — against 884 KB for everything
+else this phase vendored — and both exist at 10m only, so a world map has no
+thinned version to fall back on. What roads actually need first is a thinning
+pipeline and a coverage gate, neither of which exists, and both of which are
+build machinery rather than a road feature. So the item moves *forward* to
+Phase 10, after the tool, which is where anyone will first ask for it.
+
+### Ingest, made reproducible
+
+`scripts/fetch-natural-earth.mjs` downloads, trims and vendors the Natural
+Earth sources no npm package carries. `vendor/places-*.raw.json` had been there
+since Phase 4 with no record of where it came from; there is one now. Files are
+trimmed on the way in rather than on the way out — a Natural Earth GeoJSON
+carries about thirty translation columns per feature — so what is committed is
+what will be used.
 
 ### The graticule
 
@@ -1328,7 +1437,8 @@ and grew to carry the legend, the ocean layer and a brighter palette — each is
 something the tool needs and none is large alone. Routes split out of it because
 that one is gated on acquiring data, not on drawing it.
 
-[Unreleased]: https://github.com/danielefrisanco/neatline/compare/v0.13.0...HEAD
+[Unreleased]: https://github.com/danielefrisanco/neatline/compare/v0.14.0...HEAD
+[0.14.0]: https://github.com/danielefrisanco/neatline/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/danielefrisanco/neatline/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/danielefrisanco/neatline/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/danielefrisanco/neatline/compare/v0.10.0...v0.11.0
