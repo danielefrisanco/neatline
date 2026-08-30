@@ -30,3 +30,10 @@ node_modules/
 # HTML page in git produces a diff nobody can read. There is deliberately no
 # second Markdown copy — two plans drift.
 neatline-plan.html
+
+# Reference images — maps someone else drew, kept beside the tests as a target
+# for what to build next. Not ours to redistribute, and not inputs to any test.
+#
+# Anchored with the path, not a leading slash: `/ideas/` would mean a directory
+# called `ideas` at the repository root, which is not where these are.
+test/ideas/
