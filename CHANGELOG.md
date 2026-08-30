@@ -16,10 +16,82 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
-Nothing yet. Next are the geopolitical icon set — a drawing job rather than an
-engineering one — and Phase 8d, where the palette contrast floor is the known
-defect: `sand` and `slate` put `--land` within a hair of `--bg`, and three
-gallery entries have had to be moved off `slate` in one day for it.
+Phase 8d, four of its seven items. What is left needs a download rather than
+code: land cover and sea names are both Natural Earth ingests, and the sea as
+geometry is waiting on one decision about the bottom of the layer stack.
+
+### The graticule
+
+The layer reserved since v1 is filled, and nothing above it moved — which is
+the whole return on having reserved it. `graticule: true` takes a spacing
+chosen from the region (roughly six lines across, snapped to 0.5/1/2/5/10/15/
+30/45), or `graticule: { step: 10 }` / `{ step: [45, 10] }` says which.
+
+The equator and the tropics are drawn apart from the grid, on `--equator`
+rather than `--graticule`, and the parallel set skips those three latitudes so
+they are never stroked twice. A parallel at the pole is not drawn at all: it is
+a point, and on a cylindrical projection it would be a line across the top of
+the map claiming the pole is a place.
+
+The lines are built here rather than taken from `d3.geoGraticule()` for one
+reason — a generator that returns an undifferentiated MultiLineString cannot
+say which of its lines is the equator.
+
+`--graticule`, `--graticule-width` and `--equator` move from reserved to live.
+
+### An explicit centre
+
+`center: 160` builds the projection around that meridian; `center: [100, 20]`
+turns a globe to face that coordinate. This is the projection's **axis**, not
+the middle of the canvas — `fitExtent` still frames the region wherever the
+rotation puts it, so what changes is how far the meridians fan and how much the
+map shears, not where the subject sits on the paper.
+
+It also overrides the rule that keeps a world map Atlantic-centred, which is
+the point: a Pacific-centred world map is exactly what no automatic rule will
+ever produce for you.
+
+A latitude is accepted only by projections that turn in both axes. Tilting a
+cylinder or a cone off the equator makes an *oblique* aspect — a different map
+rather than a recentred one — so asking for one throws instead of quietly
+obliging.
+
+### A contrast floor, and three palettes that were under it
+
+The known defect is fixed and now has a test under it. `sand` set
+`--land-edge` to the background colour exactly, `dusk` did the same, and
+`slate` set it to white on a near-white sea — so a pale country on a coast had
+neither a fill nor an outline dividing it from the water, and Eritrea was
+simply not there. All three now have a real coastline: `#CDBB98`, `#2E4053`
+and `#B6BFC9`.
+
+**The metric is perceptual difference, not a WCAG contrast ratio.** The ratio
+was tried first and rejected by measurement: it scores `atlas` at 1.04 — a
+failing grade — because atlas draws a warm tan coast on a cold blue sea at
+almost identical lightness, and that coast is unmistakable on screen. WCAG
+cannot see hue, and half the cartography here is hue. ΔE in Lab sorts the
+presets the way an eye does, and the floor of 10 is set from `moss` (13.8, the
+weakest preset judged readable) rather than from a round number.
+
+The floor is compound, because the failure is: a country reads against the sea
+if **either** its own fill differs from the water **or** the line drawn round
+it does.
+
+One thing the measurement turned up on the way: a palette is appended after a
+theme, including after the theme's dark block, and `@media` carries no
+specificity — so **a palette replaces a theme's dark mode** rather than being
+overridden by it. `minimal` + `dusk` is a dark map in daylight. That is what
+choosing a palette means here, and it is now written down.
+
+### A palette that is not atlas-muted
+
+`limes` — flat editorial plates, brick red and ochre against olive on a deep
+teal sea, with near-black linework. The four that came before it all suit a
+reference map and none of them suits a page someone is meant to stop at.
+
+Its sea is the dark half, which has one consequence worth knowing: its
+`--furniture-ink` and `--sea-ink` are *light*, because a credit line and the
+name of a gulf are both set on the water.
 
 ## [0.13.0] — 2026-08-29
 

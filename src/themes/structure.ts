@@ -45,6 +45,14 @@ const rules = (build: (n: number) => string, over: readonly number[]): string =>
 export const STRUCTURE = `
 .mp .mp-bg { fill: var(--bg); }
 
+.mp .mp-grid {
+  fill: none;
+  stroke: var(--graticule);
+  stroke-width: var(--graticule-width);
+}
+.mp .mp-grid[data-kind="equator"],
+.mp .mp-grid[data-kind="tropic"] { stroke: var(--equator); }
+
 .mp .mp-neighbour { fill: var(--neighbour); stroke: none; }
 
 .mp .mp-country {

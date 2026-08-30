@@ -156,6 +156,89 @@ describe("every palette and typeface, on one region", () => {
  * why this is a test about *where things land* rather than about whether the
  * call threw.
  */
+/**
+ * The projection's axis, which is not the middle of the canvas.
+ *
+ * `fitExtent` frames the region wherever the rotation puts it, so the thing to
+ * test is not "did the map move" — it did not, and should not. It is which
+ * meridian the projection is now symmetric about, and that is a question only
+ * `project()` can answer.
+ */
+describe("an explicit centre", () => {
+  const SIZE = [800, 600] as const;
+  const world = { region: "world", detail: "110m", size: SIZE } as const;
+
+  it("puts the meridian it was given down the middle of a world map", async () => {
+    const greenwich = await neatline({ ...world, projection: "equal-earth" });
+    const pacific = await neatline({ ...world, projection: "equal-earth", center: 180 });
+
+    const middle = SIZE[0] / 2;
+    expect((greenwich.project([0, 0]) as [number, number])[0]).toBeCloseTo(middle, 0);
+    expect((pacific.project([180, 0]) as [number, number])[0]).toBeCloseTo(middle, 0);
+    // And the one it displaced is now at an edge, which is the whole point:
+    // a Pacific-centred map is the one that stops cutting the Pacific in half.
+    const displaced = (pacific.project([0, 0]) as [number, number])[0];
+    expect(Math.min(displaced, SIZE[0] - displaced)).toBeLessThan(SIZE[0] * 0.1);
+  });
+
+  it("turns a globe to face the coordinate it was given", async () => {
+    const turned = await neatline({ ...world, projection: "orthographic", center: [100, 20] });
+    const facing = await neatline({ ...world, projection: "orthographic" });
+    const fromMiddle = (map: Awaited<ReturnType<typeof neatline>>) => {
+      const [x, y] = map.project([100, 20]) as [number, number];
+      return Math.hypot(x - SIZE[0] / 2, y - SIZE[1] / 2);
+    };
+    // Near the middle rather than at it: `fitExtent` frames the land, and the
+    // land is not symmetric about any axis, so the disc sits a few units off
+    // centre. That is framing doing its job, not the rotation missing.
+    expect(fromMiddle(turned)).toBeLessThan(SIZE[1] * 0.05);
+    expect(fromMiddle(turned)).toBeLessThan(fromMiddle(facing) / 3);
+    // The far side is behind the globe, and the round-trip guard says so.
+    expect(turned.invert(turned.project([-80, -20]) as [number, number])).not.toEqual([-80, -20]);
+  });
+
+  it("moves the axis without reframing the subject", async () => {
+    // The region still fills the canvas. If this drifted, `center` would have
+    // become a camera control, which is the one thing it is documented not
+    // to be.
+    const off = await neatline({ region: "asia", detail: "110m", size: SIZE, projection: "albers" });
+    const on = await neatline({
+      region: "asia", detail: "110m", size: SIZE, projection: "albers", center: 80,
+    });
+    for (const map of [off, on]) {
+      const xs = pathNumbers(map.svg).filter((_, i) => i % 2 === 0);
+      expect(Math.max(...xs) - Math.min(...xs)).toBeGreaterThan(SIZE[0] * 0.7);
+    }
+  });
+
+  it("takes a bare longitude on every projection", async () => {
+    for (const projection of PROJECTION_NAMES) {
+      const map = await neatline({ ...world, projection: projection as never, center: -60 });
+      expect(countryPaths(map.svg).length, `${projection} drew no land`).toBeGreaterThan(0);
+    }
+  });
+
+  it("refuses to tilt a projection that would go oblique", async () => {
+    for (const projection of ["mercator", "equal-earth", "albers", "conic-conformal"] as const) {
+      await expect(
+        neatline({ ...world, projection, center: [10, 47] }),
+      ).rejects.toThrow(/oblique/);
+    }
+    // The one that turns in both axes takes it.
+    await expect(
+      neatline({ ...world, projection: "orthographic", center: [10, 47] }),
+    ).resolves.toBeDefined();
+  });
+
+  it("refuses a coordinate that is not one", async () => {
+    await expect(neatline({ ...world, center: 400 })).rejects.toThrow(/center longitude/);
+    await expect(neatline({ ...world, center: Number.NaN })).rejects.toThrow(/center longitude/);
+    await expect(
+      neatline({ ...world, projection: "orthographic", center: [10, 100] }),
+    ).rejects.toThrow(/center latitude/);
+  });
+});
+
 describe("a bbox region", () => {
   const BOX = [-30, 20, 30, 64] as const;
   const SIZE = [800, 600] as const;

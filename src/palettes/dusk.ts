@@ -12,7 +12,7 @@ export const dusk = `
 .mp {
   --bg: #0E1620;
   --land: #22303F;
-  --land-edge: #0E1620;
+  --land-edge: #2E4053;
   --border: #4A5F73;
   --accent: #E0794B;
   --accent-edge: #0E1620;

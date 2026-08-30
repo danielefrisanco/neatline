@@ -706,6 +706,70 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       title: "A watermark marks provenance, it does not enforce it",
     },
   ],
+  [
+    // The grid, on the projection that bends it most. A conic fans its
+    // meridians, so a graticule drawn in screen space would be a ladder here
+    // and the map would be lying about its own geometry.
+    "south-america-graticule",
+    {
+      region: "south-america",
+      projection: "conic-conformal",
+      theme: "atlas",
+      size: [900, 900],
+      graticule: true,
+      title: "Parallels and meridians, bent by the projection that draws them",
+    },
+  ],
+  [
+    // The equator and the tropics, drawn from `--equator` rather than
+    // `--graticule`. A map that marks the tropics at the weight of 20°N is
+    // not marking them.
+    "africa-tropics",
+    {
+      region: "africa",
+      projection: "albers",
+      theme: "minimal",
+      palette: "limes",
+      size: [900, 900],
+      graticule: { step: 10 },
+      title: "The equator and the tropics, told apart from the grid",
+    },
+  ],
+  [
+    // An explicit centre moves the projection's axis, not the camera. The
+    // world map every reader has seen is Atlantic-centred; this is the other
+    // one, and it is the case the automatic centring deliberately refuses.
+    "world-pacific",
+    {
+      region: "world",
+      projection: "equal-earth",
+      theme: "atlas",
+      size: [1200, 700],
+      center: 160,
+      graticule: true,
+      // Thinned to the top band: the point of this entry is where the
+      // antimeridian sits, and two hundred overlapping city names bury it.
+      labelRank: 1,
+      placeRank: 1,
+      title: "A Pacific-centred world, which no automatic rule would produce",
+    },
+  ],
+  [
+    // The palette that is not atlas-muted. Flat editorial plates on a dark
+    // sea — which is why its furniture ink is light where every other
+    // palette's is dark.
+    "europe-limes",
+    {
+      region: "europe",
+      projection: "conic-conformal",
+      theme: "atlas",
+      palette: "limes",
+      size: [1000, 900],
+      fill: "political",
+      credit: "Natural Earth",
+      title: "Editorial colour: flat plates, near-black linework, a dark sea",
+    },
+  ],
 ];
 
 describe("gallery", () => {

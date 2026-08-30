@@ -168,7 +168,33 @@ dash or the type:
 | `sand` | Warm paper and a deep green accent |
 | `slate` | Cool neutral grey, one cold blue — the register of a report |
 | `moss` | Warm greens on stone, the colouring of a walking map |
+| `limes` | Editorial plates — brick and ochre on a deep teal sea, near-black linework |
 | `dusk` | Night blues, for a dark page |
+
+### Every preset keeps its coastlines findable
+
+There is a floor under how close two colours a map puts side by side may be,
+and it is enforced by a test rather than by taste.
+
+It exists because the preset tests only ever asked whether a token *resolves*.
+Every one of them passed on a `sand` map where `--land-edge` was the background
+colour exactly and the lightest band was four points off it — so a pale country
+on a coast had neither a fill nor an outline dividing it from the sea, and
+Eritrea was simply not there. Nothing was undefined. Nothing threw.
+
+The rule is compound, because that is the shape of the failure: a country reads
+against the water if **either** its own fill differs from the sea **or** the
+line drawn round it does. So a pale choropleth band is legal on a theme with a
+real coastline and illegal on one without.
+
+**The measure is perceptual difference, not a WCAG contrast ratio.** The ratio
+was tried first and rejected by measurement — it scores `atlas` a failing 1.04,
+because atlas draws a warm tan coast on a cold blue sea at almost identical
+lightness, and that coast is unmistakable. WCAG cannot see hue, and half the
+cartography here is hue.
+
+If you write your own theme and it puts a country within ΔE 10 of the sea, this
+test will say so and name the token.
 
 ### The typefaces
 
@@ -504,6 +530,59 @@ opposite side of the planet.
 `antarctica` is the exception that proves this section: a pole is a line rather
 than a point in any cylindrical projection, so it smears across the bottom of
 the map. Draw it `orthographic`.
+
+### The grid the world is drawn on
+
+```ts
+await neatline({ region: "south-america", graticule: true });
+await neatline({ region: "world", graticule: { step: 15 } });
+```
+
+Parallels and meridians, at the bottom of the stack under everything else.
+
+The spacing is chosen from the region unless you name one: roughly six lines
+across the span, snapped to a step a reader can count in — 0.5, 1, 2, 5, 10,
+15, 30 or 45 degrees. So a map of Switzerland gets a degree grid and a map of
+the world gets a 45° one, and neither had to be asked for. `step` takes one
+number for both axes or `[longitude, latitude]`.
+
+**The equator and the tropics are drawn apart from the grid**, on `--equator`
+rather than `--graticule`, and the parallel set skips those three latitudes so
+none of them is ever stroked twice. A map that draws the Tropic of Cancer at
+the weight of 20°N is not marking it.
+
+Each line carries `data-kind` — `meridian`, `parallel`, `equator`, `tropic` —
+so a theme can reach any of them:
+
+```css
+.mp .mp-grid[data-kind="meridian"] { stroke-dasharray: 2 3; }
+```
+
+A parallel at the pole is not drawn: it is a point, and on a cylindrical
+projection it would come out as a line across the top of the map claiming the
+pole is a place.
+
+### Centring on a meridian
+
+```ts
+await neatline({ region: "world", projection: "equal-earth", center: 160 });
+await neatline({ region: "world", projection: "orthographic", center: [100, 20] });
+```
+
+Overrides the automatic centring of the section above.
+
+**This is the projection's axis, not the middle of the canvas.** `fitExtent`
+still frames the region wherever the rotation puts it, so what moves is how far
+the meridians fan, how much the map shears and which way is up — not where your
+subject sits on the paper.
+
+It also beats the 180° rule, which is the point: a Pacific-centred world map is
+exactly the thing no automatic rule will ever hand you.
+
+A latitude is taken only by a projection that turns in both axes —
+`orthographic`. Passing one to a cylinder or a cone throws, rather than quietly
+returning an oblique aspect, which is a different map rather than a recentred
+one.
 
 ### Water is clipped to land
 

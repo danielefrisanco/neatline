@@ -266,6 +266,25 @@ export interface Credit {
  * `map.distortion()` reports the measurement, so a caller who gets no bar can
  * see by how much they missed.
  */
+/**
+ * Parallels and meridians, and the three latitudes that are not just parallels.
+ *
+ * The grid is generated from the framed bounds, so a map of Switzerland gets a
+ * degree grid and a map of the world gets a 45° one without either being asked
+ * for. The equator and the tropics are drawn from `--equator` rather than
+ * `--graticule`: a map that draws them at the weight of every other line is
+ * not saying anything by drawing them.
+ */
+export interface Graticule {
+  /**
+   * Spacing in degrees — one number for both axes, or `[longitude, latitude]`.
+   *
+   * Left off, it is chosen from the span: roughly six lines across, snapped to
+   * a step a reader can count in (0.5, 1, 2, 5, 10, 15, 30, 45).
+   */
+  readonly step?: number | readonly [number, number];
+}
+
 export interface ScaleBar {
   /** @default "bottom-left" */
   readonly anchor?: Anchor;
@@ -356,6 +375,23 @@ export interface MapOptions {
   readonly detail?: Detail;
   /** @default "equal-earth" */
   readonly projection?: ProjectionName;
+  /**
+   * The meridian the projection is built around — a longitude, or `[lon, lat]`
+   * where the projection turns in both axes.
+   *
+   * This is the projection's *axis*, not the middle of the canvas. The region
+   * is still framed by `fitExtent`, so this changes which part of the
+   * projection is faithful — how far the meridians fan, which way is up, how
+   * much the map shears — and not where the subject sits on the paper. Left
+   * off, it is the middle of the region, except on a world map, which stays
+   * Atlantic-centred because that is the world map everyone has seen.
+   *
+   * A latitude is accepted only by projections that turn in both axes
+   * (`orthographic`). Tilting a cylinder or a cone off the equator makes an
+   * oblique aspect, which is a different map rather than a recentred one, so
+   * asking for one throws rather than quietly obliging.
+   */
+  readonly center?: number | Position;
   /** @default [1000, 1000] */
   readonly size?: Size;
   /** Inset from the canvas edge, in user units. @default 24 */
@@ -492,6 +528,11 @@ export interface MapOptions {
    * anchored to the canvas in fixed user units and does not move when the
    * camera does. A bare string takes the default anchor.
    */
+  /**
+   * Parallels and meridians under everything else. `true` takes a spacing
+   * chosen from the region; see {@link Graticule}.
+   */
+  readonly graticule?: boolean | Graticule;
   readonly credit?: string | Credit;
   /**
    * A scale bar, drawn only if the map's own scale is uniform enough to mean

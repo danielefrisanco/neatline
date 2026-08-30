@@ -67,11 +67,12 @@ export const TOKENS: readonly TokenSpec[] = Object.freeze([
   { name: "--water", status: "live", controls: "Lakes and rivers" },
   { name: "--water-width", status: "live", controls: "River stroke width, in user units" },
   { name: "--road", status: "reserved", controls: "Route strokes — Phase 4 data" },
-  // The graticule and land-cover vocabulary, reserved alongside their layers.
-  // A theme can set them today and they start working when the layer fills.
-  { name: "--graticule", status: "reserved", controls: "Parallels and meridians" },
-  { name: "--graticule-width", status: "reserved", controls: "Grid line width" },
-  { name: "--equator", status: "reserved", controls: "The equator and the tropics, drawn apart from the grid" },
+  // The graticule went live in Phase 8d; the land-cover four stay reserved
+  // alongside their layer. A theme can set those today and they start
+  // working when the layer fills.
+  { name: "--graticule", status: "live", controls: "Parallels and meridians" },
+  { name: "--graticule-width", status: "live", controls: "Grid line width" },
+  { name: "--equator", status: "live", controls: "The equator and the tropics, drawn apart from the grid" },
   { name: "--desert", status: "reserved", controls: "Arid land cover" },
   { name: "--forest", status: "reserved", controls: "Wooded land cover" },
   { name: "--mountain", status: "reserved", controls: "Upland and mountain cover" },
