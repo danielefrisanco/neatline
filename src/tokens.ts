@@ -70,6 +70,11 @@ export const TOKENS: readonly TokenSpec[] = Object.freeze([
   // The graticule went live in Phase 8d; the land-cover four stay reserved
   // alongside their layer. A theme can set those today and they start
   // working when the layer fills.
+  // The sea as a shape. Distinct from `--bg`, which is the canvas ground: on a
+  // map framed to a coastline the two can carry the same colour and nobody can
+  // tell, and on an inland map they must not, because everything that is not
+  // the subject is land rather than water.
+  { name: "--sea", status: "live", controls: "The ocean, drawn as a polygon" },
   { name: "--graticule", status: "live", controls: "Parallels and meridians" },
   { name: "--graticule-width", status: "live", controls: "Grid line width" },
   { name: "--equator", status: "live", controls: "The equator and the tropics, drawn apart from the grid" },

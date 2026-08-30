@@ -12,6 +12,7 @@ import { compose } from "./structure.js";
 export const atlas = compose({
   tokens: `
   --bg: #A8C0CC;
+  --sea: #A8C0CC;
   --land: #F2EAD8;
   --land-edge: #C9BFA6;
   --land-edge-width: 0.8;
@@ -64,6 +65,7 @@ export const atlas = compose({
   --furniture-ink: #7A7263;`,
   dark: `
   --bg: #101D26;
+  --sea: #101D26;
   --land: #2C2A24;
   --land-edge: #4A4437;
   --border: #938872;

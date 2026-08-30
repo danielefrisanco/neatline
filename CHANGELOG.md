@@ -83,6 +83,46 @@ specificity — so **a palette replaces a theme's dark mode** rather than being
 overridden by it. `minimal` + `dusk` is a dark map in daylight. That is what
 choosing a palette means here, and it is now written down.
 
+### The sea, as a shape
+
+`sea: true` draws the ocean as a polygon under everything, filled from
+`--sea`. A twelfth layer, `.mp-ocean`, and the one that could be added late
+without breaking anything: it went *underneath* all eleven, and nothing
+restacks when a layer is put below the bottom. Under the graticule rather than
+over it, because an atlas draws its meridians across water.
+
+**What it fixes.** `--bg` paints the whole canvas and the land is drawn on top,
+so blue has never meant "water" — it has meant "nothing was drawn here". Those
+are the same thing only when the region has coastline all the way round. They
+come apart the moment the frame holds land the map is not drawing: a map of
+Croatia painted Bosnia the same colour as the Adriatic, a map of Italy painted
+Austria as sea, and a map of Switzerland put the whole of central Europe
+underwater.
+
+**Clipped to the canvas, which is the difference between shipping it and not.**
+The ocean is one polygon carrying every coastline on earth. Drawn unclipped, a
+520×400 map of Greece came out **806 KB** of path data for the few gulfs anyone
+can see, and a map of Switzerland came out **858 KB** to draw nothing at all.
+`clipExtent` cuts it against the viewport before it is emitted: Greece is 11 KB,
+and an inland frame clips to nothing — which is the honest answer there, since
+no ocean reaches Switzerland.
+
+**The geometry lives in its own file.** 74 KB at 110m and 985 KB at 50m, half
+again the size of the rest of the bundle, read only when `sea` is on. An opt-in
+layer every caller downloads is not opt-in — and the loading seam has been async
+and swappable since Phase 4 exactly so a layer could move out of the bundle
+without reaching anyone.
+
+`--sea` is live, and set by every preset. The five whose ground is already an
+ocean set it to that same colour, so turning this on cannot change a map that
+was already right; the five whose ground is paper or transparent give the sea a
+colour of its own, because those are the ones the old answer was wrong for.
+
+Depth is filed as a far-future improvement rather than built. Natural Earth
+publishes bathymetry as depth bands and the rendering would be nothing new —
+`data-depth` and `--sea-1…n`, the shape the choropleth already has — but it
+exists only at 10m, so it starts with a download.
+
 ### A palette that is not atlas-muted
 
 `limes` — flat editorial plates, brick red and ochre against olive on a deep

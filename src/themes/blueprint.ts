@@ -15,6 +15,7 @@ import { compose } from "./structure.js";
 export const blueprint = compose({
   tokens: `
   --bg: #10395E;
+  --sea: #10395E;
   --land: #17466F;
   --land-edge: #BCD9F0;
   --land-edge-width: 0.6;
@@ -67,6 +68,7 @@ export const blueprint = compose({
   --furniture-ink: #8FB4D4;`,
   dark: `
   --bg: #081F35;
+  --sea: #081F35;
   --land: #0D2B47;
   --land-edge: #7FA8C9;
   --border: #B9D6EF;

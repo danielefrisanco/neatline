@@ -1,6 +1,6 @@
 import { feature, mesh } from "topojson-client";
 import { featureId } from "./iso.js";
-import type { Detail, Position } from "./types.js";
+import type { Detail, GeoJsonFeatureCollection, Position } from "./types.js";
 
 /** A country ready to draw: geometry plus the ids the emitter needs. */
 export interface CountryFeature {
@@ -55,6 +55,36 @@ export interface World {
 }
 
 const cache = new Map<Detail, World>();
+
+/**
+ * The ocean, cached apart from everything else because it is loaded apart.
+ *
+ * One polygon with a hole for every continent, and half again the size of the
+ * whole rest of the bundle — so it lives in `data/ocean-<tier>.json` and is
+ * read only when a map asks for the sea. An opt-in layer every caller
+ * downloads is not opt-in.
+ */
+const oceanCache = new Map<Detail, GeoJsonFeatureCollection>();
+
+export async function loadOcean(detail: Detail): Promise<GeoJsonFeatureCollection> {
+  const cached = oceanCache.get(detail);
+  if (cached) return cached;
+
+  const url = new URL(`../data/ocean-${detail}.json`, import.meta.url);
+  let collection: GeoJsonFeatureCollection;
+  try {
+    const { readFile } = await import("node:fs/promises");
+    collection = JSON.parse(await readFile(url, "utf8")) as GeoJsonFeatureCollection;
+  } catch {
+    throw new Error(
+      `neatline: could not read ocean geometry for detail "${detail}". ` +
+        `Run \`npm run build:data\` to regenerate it.`,
+    );
+  }
+
+  oceanCache.set(detail, collection);
+  return collection;
+}
 
 interface Bundle {
   readonly countries: { objects: { countries: { geometries: readonly unknown[] } } };

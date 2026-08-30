@@ -770,6 +770,41 @@ const GALLERY: ReadonlyArray<readonly [string, MapOptions]> = [
       title: "Editorial colour: flat plates, near-black linework, a dark sea",
     },
   ],
+  [
+    // The case the sea layer exists for. Without it `--bg` paints the whole
+    // canvas, so the Turkish coast reads as Aegean and the Balkans read as
+    // open water — land the map is not drawing, painted as sea. The ground is
+    // set to paper here so the difference is the thing you look at.
+    "aegean-sea",
+    {
+      region: ["GR"],
+      projection: "mercator",
+      theme: "atlas",
+      size: [900, 700],
+      sea: true,
+      tokens: { "--bg": "#F2EAD8" },
+      credit: "Natural Earth",
+      title: "The sea as a shape, so the land it is not stops being water",
+    },
+  ],
+  [
+    // The same layer on a palette whose ground is already paper, so it needs
+    // no token override to show what it does. Croatia is a crescent and Bosnia
+    // sits inside the curve of it: without the sea layer the Adriatic and
+    // Bosnia are the same colour, and the coast cannot be found at all.
+    "adriatic-sea",
+    {
+      region: ["HR"],
+      projection: "mercator",
+      theme: "minimal",
+      palette: "sand",
+      size: [900, 700],
+      sea: true,
+      labelRank: 1,
+      placeRank: 1,
+      title: "Croatia, where the Adriatic and Bosnia used to be one colour",
+    },
+  ],
 ];
 
 describe("gallery", () => {

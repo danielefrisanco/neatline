@@ -11,6 +11,7 @@
 export const dusk = `
 .mp {
   --bg: #0E1620;
+  --sea: #0E1620;
   --land: #22303F;
   --land-edge: #2E4053;
   --border: #4A5F73;

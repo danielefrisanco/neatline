@@ -65,6 +65,7 @@ describe("layer stack", () => {
   // this test exists to make that change loud.
   it("emits every layer, in the declared order", () => {
     expect(layerOrder(map.svg)).toEqual([
+      "mp-ocean",
       "mp-graticule",
       "mp-neighbours",
       "mp-land",

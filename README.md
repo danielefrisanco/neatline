@@ -531,6 +531,36 @@ opposite side of the planet.
 than a point in any cylindrical projection, so it smears across the bottom of
 the map. Draw it `orthographic`.
 
+### The sea, as a shape
+
+```ts
+await neatline({ region: ["HR"], sea: true, palette: "sand" });
+```
+
+Without this, `--bg` paints the whole canvas and the land is drawn over it — so
+blue has never meant *water*, it has meant *nothing was drawn here*. Those are
+the same thing only when your region has coastline all the way round.
+
+They come apart the moment the frame holds land you did not ask for. A map of
+Croatia painted Bosnia the same colour as the Adriatic. A map of Italy painted
+Austria as sea. A map of Switzerland put the whole of central Europe underwater.
+
+`sea: true` draws the real ocean polygon into `.mp-ocean`, the bottom layer,
+filled from `--sea`. Land the map is not drawing stays as the canvas ground
+instead of pretending to be water.
+
+**It shows only where `--bg` is not already your ocean.** `sand`, `slate`,
+`moss` and `minimal` have a paper ground, so their `--sea` is a different
+colour and the layer changes what you see. `atlas`, `noir`, `blueprint`,
+`dusk` and `limes` set `--sea` to their background exactly, so turning it on
+cannot change a coastal map that was already right — override `--bg` if you
+want the two to differ.
+
+The geometry is read from a file of its own, only when this is on: it is one
+polygon with a hole for every continent, and half again the size of the rest of
+the bundle. It is clipped to the canvas before it is drawn, so an inland frame
+emits nothing at all rather than a megabyte of coastline nobody can see.
+
 ### The grid the world is drawn on
 
 ```ts

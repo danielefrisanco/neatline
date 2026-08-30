@@ -20,6 +20,7 @@
 export const limes = `
 .mp {
   --bg: #1D5C64;
+  --sea: #1D5C64;
   --land: #E9D9B4;
   --land-edge: #B08E5A;
   --border: #241F1A;

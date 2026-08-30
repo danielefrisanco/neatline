@@ -15,6 +15,14 @@
  * Countries stay as a topology: shared borders can only be derived where arcs
  * are shared. Water needs no such thing — no two lakes share an edge — so it is
  * decoded to plain geometry, which is smaller and simpler to read back.
+ *
+ * The ocean is written to a file of its own rather than into the bundle, and
+ * that is the whole reason it can exist at all. It is one polygon with a hole
+ * for every continent, so it costs 74 KB at 110m and 985 KB at 50m — roughly
+ * half again the size of everything else put together. `sea` is opt-in, and
+ * an opt-in layer that every caller downloads is not opt-in. The loading seam
+ * has been async and swappable since Phase 4 precisely so a layer could move
+ * out of the bundle like this without reaching a caller.
  */
 import { createRequire } from "node:module";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
@@ -95,6 +103,13 @@ for (const tier of TIERS) {
   const places = trimPlaces(JSON.parse(await readFile(`vendor/places-${tier}.raw.json`, "utf8")));
 
   const digits = tier === "110m" ? 2 : 3;
+
+  // Written first and separately: nothing in the bundle refers to it, and
+  // nothing that reads the bundle pays for it.
+  const ocean = waterLayer(sane, "ocean", digits);
+  const oceanPath = `data/ocean-${tier}.json`;
+  await writeFile(oceanPath, JSON.stringify(ocean), "utf8");
+
   const bundle = {
     tier,
     countries,
@@ -106,12 +121,17 @@ for (const tier of TIERS) {
   const path = `data/${tier}.json`;
   await writeFile(path, JSON.stringify(bundle), "utf8");
   const { size } = await import("node:fs").then((fs) => fs.promises.stat(path));
+  const oceanSize = (await import("node:fs")).promises.stat(oceanPath);
   console.log(
     `  ${path}  ${(size / 1024).toFixed(0)} KB` +
       `  (${countries.objects.countries.geometries.length} countries,` +
       ` ${bundle.lakes.features.length} lakes,` +
       ` ${bundle.rivers.features.length} rivers,` +
       ` ${places.length} places)`,
+  );
+  console.log(
+    `  ${oceanPath}  ${((await oceanSize).size / 1024).toFixed(0)} KB` +
+      `  (${ocean.features.length} ocean polygons, loaded only when \`sea\` is on)`,
   );
 }
 console.log("data built");

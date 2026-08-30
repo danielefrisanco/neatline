@@ -62,6 +62,11 @@ describe("public contract", () => {
    */
   it("keeps the layer stack in the order the document draws it", () => {
     expect(LAYERS.map((l) => l.name)).toEqual([
+      // The ocean joined in 8d, and it is the one layer that could join late
+      // without breaking a theme: it went *underneath* all eleven, and nothing
+      // restacks when a layer is added below the bottom. Under the graticule
+      // rather than over it, because an atlas draws meridians across water.
+      "ocean",
       "graticule",
       "neighbours",
       "land",

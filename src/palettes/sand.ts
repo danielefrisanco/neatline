@@ -1,6 +1,7 @@
 export const sand = `
 .mp {
   --bg: #F6F1E7;
+  --sea: #C3D7DE;
   --land: #E3D6BE;
   --land-edge: #CDBB98;
   --border: #A8916A;

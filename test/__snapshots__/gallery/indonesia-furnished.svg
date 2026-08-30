@@ -1,8 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600" preserveAspectRatio="xMidYMid meet" class="mp mp-t-09zct5n" role="img" aria-label="Bar, arrow and credit, in three corners">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600" preserveAspectRatio="xMidYMid meet" class="mp mp-t-0nbdfr0" role="img" aria-label="Bar, arrow and credit, in three corners">
   <title>Bar, arrow and credit, in three corners</title>
   <style>
-    .mp.mp-t-09zct5n {
+    .mp.mp-t-0nbdfr0 {
       --bg: transparent;
+      --sea: #DCE7EC;
       --land: #D8D8D2;
       --land-edge: #FFFFFF;
       --land-edge-width: 0.5;
@@ -53,76 +54,80 @@
       --anno-ink: #FFFFFF;
       --furniture-ink: #80807A;
     }
-    .mp.mp-t-09zct5n .mp-bg {
+    .mp.mp-t-0nbdfr0 .mp-bg {
       fill: var(--bg);
     }
-    .mp.mp-t-09zct5n .mp-grid {
+    .mp.mp-t-0nbdfr0 .mp-sea {
+      fill: var(--sea);
+      stroke: none;
+    }
+    .mp.mp-t-0nbdfr0 .mp-grid {
       fill: none;
       stroke: var(--graticule);
       stroke-width: var(--graticule-width);
     }
-    .mp.mp-t-09zct5n .mp-grid[data-kind="equator"], .mp.mp-t-09zct5n .mp-grid[data-kind="tropic"] {
+    .mp.mp-t-0nbdfr0 .mp-grid[data-kind="equator"], .mp.mp-t-0nbdfr0 .mp-grid[data-kind="tropic"] {
       stroke: var(--equator);
     }
-    .mp.mp-t-09zct5n .mp-neighbour {
+    .mp.mp-t-0nbdfr0 .mp-neighbour {
       fill: var(--neighbour);
       stroke: none;
     }
-    .mp.mp-t-09zct5n .mp-country {
+    .mp.mp-t-0nbdfr0 .mp-country {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
       stroke-linejoin: round;
     }
-    .mp.mp-t-09zct5n .mp-country[data-bin="1"] {
+    .mp.mp-t-0nbdfr0 .mp-country[data-bin="1"] {
       fill: var(--bin-1);
     }
-    .mp.mp-t-09zct5n .mp-country[data-bin="2"] {
+    .mp.mp-t-0nbdfr0 .mp-country[data-bin="2"] {
       fill: var(--bin-2);
     }
-    .mp.mp-t-09zct5n .mp-country[data-bin="3"] {
+    .mp.mp-t-0nbdfr0 .mp-country[data-bin="3"] {
       fill: var(--bin-3);
     }
-    .mp.mp-t-09zct5n .mp-country[data-bin="4"] {
+    .mp.mp-t-0nbdfr0 .mp-country[data-bin="4"] {
       fill: var(--bin-4);
     }
-    .mp.mp-t-09zct5n .mp-country[data-bin="5"] {
+    .mp.mp-t-0nbdfr0 .mp-country[data-bin="5"] {
       fill: var(--bin-5);
     }
-    .mp.mp-t-09zct5n .mp-country[data-fill="1"] {
+    .mp.mp-t-0nbdfr0 .mp-country[data-fill="1"] {
       fill: var(--fill-1);
     }
-    .mp.mp-t-09zct5n .mp-country[data-fill="2"] {
+    .mp.mp-t-0nbdfr0 .mp-country[data-fill="2"] {
       fill: var(--fill-2);
     }
-    .mp.mp-t-09zct5n .mp-country[data-fill="3"] {
+    .mp.mp-t-0nbdfr0 .mp-country[data-fill="3"] {
       fill: var(--fill-3);
     }
-    .mp.mp-t-09zct5n .mp-country[data-fill="4"] {
+    .mp.mp-t-0nbdfr0 .mp-country[data-fill="4"] {
       fill: var(--fill-4);
     }
-    .mp.mp-t-09zct5n .mp-country[data-fill="5"] {
+    .mp.mp-t-0nbdfr0 .mp-country[data-fill="5"] {
       fill: var(--fill-5);
     }
-    .mp.mp-t-09zct5n .mp-country[data-fill="6"] {
+    .mp.mp-t-0nbdfr0 .mp-country[data-fill="6"] {
       fill: var(--fill-6);
     }
-    .mp.mp-t-09zct5n .mp-country.is-highlighted {
+    .mp.mp-t-0nbdfr0 .mp-country.is-highlighted {
       fill: var(--accent);
       stroke: var(--accent-edge);
     }
-    .mp.mp-t-09zct5n .mp-water[data-kind="lake"] {
+    .mp.mp-t-0nbdfr0 .mp-water[data-kind="lake"] {
       fill: var(--water);
       stroke: none;
     }
-    .mp.mp-t-09zct5n .mp-water[data-kind="river"] {
+    .mp.mp-t-0nbdfr0 .mp-water[data-kind="river"] {
       fill: none;
       stroke: var(--water);
       stroke-width: var(--water-width);
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mp.mp-t-09zct5n .mp-border {
+    .mp.mp-t-0nbdfr0 .mp-border {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
@@ -130,78 +135,78 @@
       stroke-linejoin: round;
       stroke-linecap: round;
     }
-    .mp.mp-t-09zct5n .mp-road {
+    .mp.mp-t-0nbdfr0 .mp-road {
       fill: none;
       stroke: var(--road);
     }
-    .mp.mp-t-09zct5n .mp-place {
+    .mp.mp-t-0nbdfr0 .mp-place {
       fill: var(--place);
       stroke: none;
     }
-    .mp.mp-t-09zct5n .mp-prism-top {
+    .mp.mp-t-0nbdfr0 .mp-prism-top {
       fill: var(--land);
       stroke: var(--land-edge);
       stroke-width: var(--land-edge-width);
     }
-    .mp.mp-t-09zct5n .mp-prism-side {
+    .mp.mp-t-0nbdfr0 .mp-prism-side {
       fill: var(--prism-side);
       stroke: none;
     }
-    .mp.mp-t-09zct5n .mp-prism-edge {
+    .mp.mp-t-0nbdfr0 .mp-prism-edge {
       fill: none;
       stroke: var(--border);
       stroke-width: var(--border-width);
       stroke-dasharray: var(--border-dash);
     }
-    .mp.mp-t-09zct5n .mp-prism[data-bin="1"] .mp-prism-top {
+    .mp.mp-t-0nbdfr0 .mp-prism[data-bin="1"] .mp-prism-top {
       fill: var(--bin-1);
     }
-    .mp.mp-t-09zct5n .mp-prism[data-bin="2"] .mp-prism-top {
+    .mp.mp-t-0nbdfr0 .mp-prism[data-bin="2"] .mp-prism-top {
       fill: var(--bin-2);
     }
-    .mp.mp-t-09zct5n .mp-prism[data-bin="3"] .mp-prism-top {
+    .mp.mp-t-0nbdfr0 .mp-prism[data-bin="3"] .mp-prism-top {
       fill: var(--bin-3);
     }
-    .mp.mp-t-09zct5n .mp-prism[data-bin="4"] .mp-prism-top {
+    .mp.mp-t-0nbdfr0 .mp-prism[data-bin="4"] .mp-prism-top {
       fill: var(--bin-4);
     }
-    .mp.mp-t-09zct5n .mp-prism[data-bin="5"] .mp-prism-top {
+    .mp.mp-t-0nbdfr0 .mp-prism[data-bin="5"] .mp-prism-top {
       fill: var(--bin-5);
     }
-    .mp.mp-t-09zct5n .mp-prism[data-fill="1"] .mp-prism-top {
+    .mp.mp-t-0nbdfr0 .mp-prism[data-fill="1"] .mp-prism-top {
       fill: var(--fill-1);
     }
-    .mp.mp-t-09zct5n .mp-prism[data-fill="2"] .mp-prism-top {
+    .mp.mp-t-0nbdfr0 .mp-prism[data-fill="2"] .mp-prism-top {
       fill: var(--fill-2);
     }
-    .mp.mp-t-09zct5n .mp-prism[data-fill="3"] .mp-prism-top {
+    .mp.mp-t-0nbdfr0 .mp-prism[data-fill="3"] .mp-prism-top {
       fill: var(--fill-3);
     }
-    .mp.mp-t-09zct5n .mp-prism[data-fill="4"] .mp-prism-top {
+    .mp.mp-t-0nbdfr0 .mp-prism[data-fill="4"] .mp-prism-top {
       fill: var(--fill-4);
     }
-    .mp.mp-t-09zct5n .mp-prism[data-fill="5"] .mp-prism-top {
+    .mp.mp-t-0nbdfr0 .mp-prism[data-fill="5"] .mp-prism-top {
       fill: var(--fill-5);
     }
-    .mp.mp-t-09zct5n .mp-prism[data-fill="6"] .mp-prism-top {
+    .mp.mp-t-0nbdfr0 .mp-prism[data-fill="6"] .mp-prism-top {
       fill: var(--fill-6);
     }
-    .mp.mp-t-09zct5n .mp-prism.is-highlighted .mp-prism-top {
+    .mp.mp-t-0nbdfr0 .mp-prism.is-highlighted .mp-prism-top {
       fill: var(--accent);
     }
-    .mp.mp-t-09zct5n .mp-prism.is-highlighted .mp-prism-side {
+    .mp.mp-t-0nbdfr0 .mp-prism.is-highlighted .mp-prism-side {
       fill: var(--accent-side);
     }
-    .mp.mp-t-09zct5n .mp-hatch {
-      fill: url(#mp-stripe-02n0mc2);
+    .mp.mp-t-0nbdfr0 .mp-hatch {
+      fill: url(#mp-stripe-12j709u);
       stroke: none;
     }
-    .mp.mp-t-09zct5n .mp-hatch-line {
+    .mp.mp-t-0nbdfr0 .mp-hatch-line {
       fill: none;
       stroke: var(--stripe);
       stroke-width: var(--stripe-width);
     }
-    .mp.mp-t-09zct5n .mp-label {
+    .mp.mp-t-0nbdfr0 .mp-label {
       fill: var(--ink);
       font-family: var(--font);
       font-size: var(--label-size);
@@ -212,75 +217,75 @@
       stroke-linejoin: round;
       paint-order: stroke;
     }
-    .mp.mp-t-09zct5n .mp-label[data-kind="place"] {
+    .mp.mp-t-0nbdfr0 .mp-label[data-kind="place"] {
       fill: var(--ink-muted);
       font-size: var(--place-label-size);
     }
-    .mp.mp-t-09zct5n .mp-label.is-highlighted {
+    .mp.mp-t-0nbdfr0 .mp-label.is-highlighted {
       font-weight: 700;
     }
-    .mp.mp-t-09zct5n .mp-label[data-fit="0"] {
+    .mp.mp-t-0nbdfr0 .mp-label[data-fit="0"] {
       display: none;
     }
-    .mp.mp-t-09zct5n .mp-pin-mark {
+    .mp.mp-t-0nbdfr0 .mp-pin-mark {
       fill: var(--anno);
       stroke: var(--label-halo);
       stroke-width: var(--label-halo-width);
     }
-    .mp.mp-t-09zct5n .mp-icon {
+    .mp.mp-t-0nbdfr0 .mp-icon {
       fill: var(--anno-ink);
       stroke: none;
     }
-    .mp.mp-t-09zct5n .mp-label[data-kind="pin"] {
+    .mp.mp-t-0nbdfr0 .mp-label[data-kind="pin"] {
       font-size: var(--place-label-size);
       font-weight: 700;
     }
-    .mp.mp-t-09zct5n .mp-arrow-line {
+    .mp.mp-t-0nbdfr0 .mp-arrow-line {
       fill: none;
       stroke: var(--anno);
       stroke-width: 2;
       stroke-linecap: round;
-      marker-end: url(#mp-arrowhead-02n0mc2);
+      marker-end: url(#mp-arrowhead-12j709u);
     }
-    .mp.mp-t-09zct5n .mp-arrow-head {
+    .mp.mp-t-0nbdfr0 .mp-arrow-head {
       fill: var(--anno);
       stroke: none;
     }
-    .mp.mp-t-09zct5n .mp-callout-leader {
+    .mp.mp-t-0nbdfr0 .mp-callout-leader {
       fill: none;
       stroke: var(--anno);
       stroke-width: 1.25;
       stroke-linecap: round;
     }
-    .mp.mp-t-09zct5n .mp-callout-box {
+    .mp.mp-t-0nbdfr0 .mp-callout-box {
       fill: var(--anno);
       stroke: var(--anno-ink);
       stroke-width: 1;
     }
-    .mp.mp-t-09zct5n .mp-label[data-kind="callout"] {
+    .mp.mp-t-0nbdfr0 .mp-label[data-kind="callout"] {
       fill: var(--anno-ink);
       font-size: var(--place-label-size);
       font-weight: 500;
       stroke: none;
     }
-    .mp.mp-t-09zct5n .mp-anno[data-fit="0"] {
+    .mp.mp-t-0nbdfr0 .mp-anno[data-fit="0"] {
       display: none;
     }
-    .mp.mp-t-09zct5n .mp-credit, .mp.mp-t-09zct5n .mp-scale-label, .mp.mp-t-09zct5n .mp-compass-label {
+    .mp.mp-t-0nbdfr0 .mp-credit, .mp.mp-t-0nbdfr0 .mp-scale-label, .mp.mp-t-0nbdfr0 .mp-compass-label {
       fill: var(--furniture-ink);
       font-family: var(--font);
       font-size: var(--place-label-size);
       letter-spacing: var(--label-track);
     }
-    .mp.mp-t-09zct5n .mp-scale-bar {
+    .mp.mp-t-0nbdfr0 .mp-scale-bar {
       fill: none;
       stroke: var(--furniture-ink);
       stroke-width: 1.5;
     }
-    .mp.mp-t-09zct5n .mp-compass-needle {
+    .mp.mp-t-0nbdfr0 .mp-compass-needle {
       fill: var(--furniture-ink);
     }
-    .mp.mp-t-09zct5n .mp-watermark {
+    .mp.mp-t-0nbdfr0 .mp-watermark {
       fill: var(--furniture-ink);
       font-family: var(--font);
       font-weight: 600;
@@ -288,8 +293,9 @@
       opacity: 0.18;
     }
     @media (prefers-color-scheme: dark) {
-      .mp.mp-t-09zct5n {
+      .mp.mp-t-0nbdfr0 {
         --land: #2E3134;
+        --sea: #16242C;
         --land-edge: #16181A;
         --border: #6E747A;
         --accent: #E2694A;
@@ -321,14 +327,15 @@
     }
   </style>
   <defs class="mp-defs">
-    <pattern id="mp-stripe-02n0mc2" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <pattern id="mp-stripe-12j709u" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
       <path class="mp-hatch-line" d="M0,0 V7" fill="none" stroke="#6E6E68" stroke-width="1.6"/>
     </pattern>
-    <marker id="mp-arrowhead-02n0mc2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+    <marker id="mp-arrowhead-12j709u" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
       <path class="mp-arrow-head" d="M0,0 L10,5 L0,10 Z" fill="#8E2F1C" stroke="none"/>
     </marker>
   </defs>
   <rect class="mp-bg" x="0" y="0" width="1000" height="600" fill="transparent"/>
+  <g class="mp-layer mp-ocean"/>
   <g class="mp-layer mp-graticule"/>
   <g class="mp-layer mp-neighbours"/>
   <g class="mp-layer mp-land">

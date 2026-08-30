@@ -7,6 +7,7 @@
 export const moss = `
 .mp {
   --bg: #D9DCD0;
+  --sea: #BACFD5;
   --land: #EDEBDD;
   --land-edge: #B7B8A4;
   --border: #5E6350;
