@@ -582,9 +582,15 @@ export interface MapOptions {
   /**
    * How far down the settlement ranking to draw. 1 is capitals and the largest
    * cities, 2 adds everything over a million, 3 adds the rest.
+   *
+   * **0 draws none**, which is a real answer rather than an edge case: a map
+   * of borders, a map of terrain, a map carrying its own marks and nothing
+   * else. Same convention `seaNames` uses, where 0 is the absence of a rank
+   * rather than the lowest one.
+   *
    * @default 2
    */
-  readonly placeRank?: 1 | 2 | 3;
+  readonly placeRank?: 0 | 1 | 2 | 3;
   /**
    * How far down the same ranking to *name* the settlements that are drawn.
    *
@@ -594,9 +600,14 @@ export interface MapOptions {
    *
    * Country names are not ranked by the caller — a country is named if its
    * name fits inside it, which the geometry decides.
+   *
+   * **0 names none**, leaving every drawn settlement as a bare dot. A name can
+   * only be given to a settlement that was drawn, so a `placeRank` of 0 leaves
+   * nothing for this to name whatever it is set to.
+   *
    * @default 1
    */
-  readonly labelRank?: 1 | 2 | 3;
+  readonly labelRank?: 0 | 1 | 2 | 3;
   /**
    * Marks placed on the map at a coordinate.
    *

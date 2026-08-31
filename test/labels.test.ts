@@ -169,6 +169,37 @@ describe("settlement labels", () => {
     for (const label of one) expect(dotted.has(label.text)).toBe(true);
   });
 
+  /**
+   * Rank 0 is a real answer, not an edge case: a map of borders, a map of
+   * terrain, a map carrying its own marks and nothing else. The same convention
+   * `seaNames` uses, where 0 is the absence of a rank rather than the lowest.
+   */
+  it("draws no settlements at all at rank 0", async () => {
+    const map = await neatline({ region: "west-europe", detail: "110m", placeRank: 0 });
+    expect(map.svg).not.toContain('<circle class="mp-place"');
+    expect(labels(map.svg).some((l) => l.kind === "place")).toBe(false);
+    // The country names are a different question and are still answered.
+    expect(labels(map.svg).some((l) => l.kind === "country")).toBe(true);
+  });
+
+  it("draws the dots and names none of them at label rank 0", async () => {
+    const map = await neatline({ region: "west-europe", detail: "110m", labelRank: 0 });
+    expect(map.svg).toContain('<circle class="mp-place"');
+    expect(labels(map.svg).some((l) => l.kind === "place")).toBe(false);
+  });
+
+  /** A name can only be given to a settlement that was drawn. */
+  it("has nothing to name when no settlement was drawn", async () => {
+    const map = await neatline({
+      region: "west-europe",
+      detail: "110m",
+      placeRank: 0,
+      labelRank: 3,
+    });
+    expect(map.svg).not.toContain('<circle class="mp-place"');
+    expect(labels(map.svg).some((l) => l.kind === "place")).toBe(false);
+  });
+
   it("steps a country name clear of its own capital", async () => {
     const map = await neatline({ region: "west-europe", detail: "50m", size: [1000, 800] });
     const all = labels(map.svg);

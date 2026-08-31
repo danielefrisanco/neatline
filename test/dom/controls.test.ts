@@ -149,6 +149,24 @@ describe("controls that come and go", () => {
     expect(field("Pin size")).not.toBeNull();
   });
 
+  /** A name is given to a settlement that was drawn, so with no dots there is
+   * nothing below for this control to rank. */
+  it("hides the naming rank when no cities are drawn", () => {
+    build({ placeRank: 2 });
+    expect(field("Cities named")).not.toBeNull();
+    build({ placeRank: 0 });
+    expect(field("Cities named")).toBeNull();
+    // The one that turned them off is still there to turn them back on.
+    expect(field("Cities shown")).not.toBeNull();
+  });
+
+  it("offers a way out of both city rankings", () => {
+    build();
+    const shown = field("Cities shown")?.querySelector("select");
+    expect([...(shown?.options ?? [])].map((o) => o.value)).toEqual(["0", "1", "2", "3"]);
+    expect(shown?.options[0]?.textContent).toBe("none — no city dots");
+  });
+
   it("offers to finish a route only while one is open", () => {
     const text = (): string[] => [...host.querySelectorAll("button")].map((b) => b.textContent ?? "");
     build({}, { mode: "route", openRoute: false });
