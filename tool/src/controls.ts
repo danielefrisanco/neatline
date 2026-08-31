@@ -207,12 +207,23 @@ export function buildForm(
 ): void {
   host.replaceChildren();
 
-  const group = (title: string, children: readonly HTMLElement[]): HTMLElement => {
+  // A group's `?` belongs beside its name, not alone on the line below it: a
+  // bare question mark floating above a stack of checkboxes reads as a control
+  // rather than as an annotation on the heading.
+  const group = (title: string, children: readonly HTMLElement[], topic?: string): HTMLElement => {
     const section = document.createElement("section");
     section.className = "group";
     const heading = document.createElement("h2");
     heading.textContent = title;
-    section.append(heading, ...children);
+    const help = topic === undefined ? null : helpFor(topic);
+    if (help === null) {
+      section.append(heading, ...children);
+      return section;
+    }
+    const head = document.createElement("div");
+    head.className = "group-head";
+    head.append(heading, help);
+    section.append(head, ...children);
     return section;
   };
 
@@ -306,7 +317,6 @@ export function buildForm(
     ]),
 
     group("Layers", [
-      helpFor("layers") ?? document.createElement("span"),
       checkbox("Sea as a shape", config.sea, (on) => onChange({ sea: on })),
       checkbox("Name the seas", config.seaNames, (on) => onChange({ seaNames: on })),
       checkbox("Graticule", config.graticule, (on) => onChange({ graticule: on })),
@@ -323,10 +333,9 @@ export function buildForm(
             }),
         ),
       ),
-    ]),
+    ], "layers"),
 
     group("Names", [
-      helpFor("names") ?? document.createElement("span"),
       field(
         "Cities shown",
         select(
@@ -352,10 +361,9 @@ export function buildForm(
         ),
         "Lower than the dots on purpose: words collide where dots merely crowd",
       ),
-    ]),
+    ], "names"),
 
     group("Marks", [
-      helpFor("marks") ?? document.createElement("span"),
       field(
         "Clicking the map",
         select(
@@ -369,7 +377,7 @@ export function buildForm(
         ? [button("Finish this route", editing.onFinishRoute)]
         : []),
       markList(config, onChange),
-    ]),
+    ], "marks"),
 
     group("Canvas", [
       field("Width", numberBox(config.width, (value) => onChange({ width: value }))),
