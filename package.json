@@ -19,6 +19,9 @@
     "./typefaces/*.css": "./typefaces/*.css",
     "./package.json": "./package.json"
   },
+  "browser": {
+    "node:fs/promises": false
+  },
   "files": [
     "dist",
     "themes",
@@ -49,6 +52,7 @@
     "@types/d3-geo": "^3.1.0",
     "@types/node": "^22.10.2",
     "@types/topojson-client": "^3.1.5",
+    "esbuild": "^0.27.7",
     "sane-topojson": "^4.0.0",
     "tsup": "^8.5.1",
     "typescript": "^5.7.2",

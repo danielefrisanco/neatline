@@ -14,6 +14,50 @@ applies.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
+## [Unreleased]
+
+Phase 09a — the library in a browser. No user interface: the one thing in the
+runtime path that could not work in a page, fixed where it is cheapest to test.
+
+### One data loader instead of three
+
+`loadWorld`, `loadOcean` and `loadCover` each built a URL and read it through
+`node:fs/promises`; 8d and 8e added the second and third. They now share one
+`readData(url)` that **branches on the protocol**: a `file:` URL is read from
+disk, anything else is fetched.
+
+Asking rather than trying, and the order is the reason. Node has had a global
+`fetch` since 18, so "try fetch, fall back to the filesystem" would make every
+Node caller pay a failed request for a `file:` URL before getting the answer.
+The protocol is free to check and cannot be wrong — a package on disk resolves
+`import.meta.url` to `file:`, and a bundle served over HTTP resolves it to
+wherever it was served from.
+
+The failure message follows the reader. On disk it still says
+`npm run build:data`; over HTTP it names the URL that went unanswered, because
+telling someone who opened a web page to run a build script sends them
+somewhere they cannot go.
+
+### The library did not bundle for a browser, and the plan said it did
+
+The plan claimed the `node:fs` imports were "lazy, on paths the tool never
+takes, so a bundler drops all three". **A bundler does not drop a dynamic
+import — it has to resolve it**, and esbuild targeting a browser failed
+outright with `Could not resolve "fs/promises"`. Two things were wrong:
+
+- **tsup was stripping the `node:` prefix** from every builtin import in the
+  shipped build. That prefix is the only thing telling a bundler the name is a
+  builtin rather than a package to go and find. `removeNodeProtocol: false`
+  keeps it, and `external: [/^node:/]` stops `platform: "neutral"` trying to
+  resolve it on disk.
+- **Nothing said what a browser should do with the builtin once named.** A
+  `browser` field maps `node:fs/promises` to an empty module, so a browser build
+  resolves it and never executes it — `readData` checks the protocol first.
+
+`npm run check` now bundles `dist/` for a browser and fails if a live `node:`
+import comes back. It is checked there rather than in the test suite because it
+is a fact about `dist/`, which is what a bundler sees.
+
 ## [0.14.0] — 2026-08-30
 
 Phase 8d, closed at five items, and Phase 8e — the second ingest, where
