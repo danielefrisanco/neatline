@@ -58,11 +58,12 @@ it over.
 
 ## Status
 
-Early, but complete enough to use. **Phases 0–8e are done**, and the tool is
-being built now. The package builds under both ESM and CJS, resolves real
-geometry, emits the frozen document shape below, themes it, and carries lakes,
-rivers, cities, names, the sea, land cover, a graticule and four kinds of
-annotation.
+Early, but complete enough to use. **Phases 0–8e are done and the tool is
+live** — 9a–9e, which is everything from bundled data to a map you can click and
+take away as a file. A design pass over the tool is what is left of Phase 9.
+The package builds under both ESM and CJS, resolves real geometry, emits the
+frozen document shape below, themes it, and carries lakes, rivers, cities,
+names, the sea, land cover, a graticule and four kinds of annotation.
 
 **Not published to npm yet, and not on a schedule to be.** Install it from the
 repository. The class taxonomy below is the part that is meant to be stable; it
