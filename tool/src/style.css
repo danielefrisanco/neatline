@@ -408,3 +408,91 @@ input[type="search"] {
   line-height: 1.45;
   color: var(--ink-soft);
 }
+
+/* ---- the marks a pointer makes ---- */
+
+/* Only while a gesture is armed. A crosshair over a map that does nothing is a
+   promise the page does not keep. */
+.map.is-picking svg {
+  cursor: crosshair;
+}
+
+.marks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.marks-empty {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.mark-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mark {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Tabular and fixed, so a column of coordinates reads as a column rather than
+   stepping in and out with the width of each number — and `flex: 0 0 auto`
+   because a flex item shrinks below its own content by default, which cropped
+   the last letter off every western longitude. */
+.mark-at {
+  flex: 0 0 auto;
+  font-size: 0.74rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* An arrow or a route says two coordinates or a count, which is a sentence
+   rather than a column: it takes the width and wraps. */
+.mark-note {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.74rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+
+.mark-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.2rem 0.35rem;
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--ink);
+  background: var(--page);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.mark-remove {
+  flex: 0 0 auto;
+}
+
+.action {
+  align-self: flex-start;
+  margin-top: 0.2rem;
+  padding: 0.25rem 0.6rem;
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.action:hover,
+.action:focus-visible {
+  border-color: currentColor;
+}

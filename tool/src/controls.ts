@@ -1,6 +1,7 @@
 import type { CountryName } from "../../src/index.js";
 import type { Config } from "./config.js";
 import { helpFor } from "./help.js";
+import { markCount, MODES, readCoordinate, type Mode } from "./marks.js";
 import { buildPicker } from "./picker.js";
 
 /**
@@ -157,6 +158,39 @@ export interface Vocabularies {
 const COVERS = ["desert", "mountain", "glacier"] as const;
 
 /**
+ * The pointer's state, which is the one thing on this form that is not in the
+ * URL.
+ *
+ * A mode is a thing someone is doing, not a thing they made — and a shared link
+ * that drops the reader into arrow-drawing mode would be sharing the tool
+ * rather than the map. The marks themselves are in the URL; the gesture that
+ * placed them is not.
+ */
+export interface Editing {
+  readonly mode: Mode;
+  /** Whether the last route is still being extended by clicks. */
+  readonly openRoute: boolean;
+  readonly onMode: (mode: Mode) => void;
+  readonly onFinishRoute: () => void;
+}
+
+const MODE_LABELS: Readonly<Record<Mode, string>> = {
+  none: "off — the map is only a map",
+  highlight: "highlight a country",
+  pin: "drop a pin",
+  arrow: "draw an arrow",
+  route: "trace a route",
+};
+
+const MODE_HINTS: Readonly<Record<Mode, string>> = {
+  none: "Choose a gesture and the map becomes something you click.",
+  highlight: "Click a country to highlight it, and again to let it go.",
+  pin: "Click anywhere on the ground. Name the pin in the list below.",
+  arrow: "Click where the arrow starts, then where it points.",
+  route: "Click each stop in order, then finish the line.",
+};
+
+/**
  * Rebuild the whole form from the config it is given.
  *
  * Torn down and rebuilt on every change rather than patched in place. That is
@@ -169,6 +203,7 @@ export function buildForm(
   config: Config,
   vocabulary: Vocabularies,
   onChange: Change,
+  editing: Editing,
 ): void {
   host.replaceChildren();
 
@@ -319,12 +354,162 @@ export function buildForm(
       ),
     ]),
 
+    group("Marks", [
+      helpFor("marks") ?? document.createElement("span"),
+      field(
+        "Clicking the map",
+        select(
+          MODES.map((mode) => ({ value: mode, label: MODE_LABELS[mode] })),
+          editing.mode,
+          (value) => editing.onMode(value as Mode),
+        ),
+        MODE_HINTS[editing.mode],
+      ),
+      ...(editing.openRoute
+        ? [button("Finish this route", editing.onFinishRoute)]
+        : []),
+      markList(config, onChange),
+    ]),
+
     group("Canvas", [
       field("Width", numberBox(config.width, (value) => onChange({ width: value }))),
       field("Height", numberBox(config.height, (value) => onChange({ height: value }))),
       field("Credit", textBox(config.credit, (value) => onChange({ credit: value }))),
     ]),
   );
+}
+
+function button(label: string, onClick: () => void): HTMLElement {
+  const element = document.createElement("button");
+  // A form's default button type is "submit", which reloads the page.
+  element.type = "button";
+  element.className = "action";
+  element.textContent = label;
+  element.addEventListener("click", onClick);
+  return element;
+}
+
+/**
+ * Everything on the map that was put there by pointing at it.
+ *
+ * A list rather than an undo stack, because the marks are not a history: they
+ * are the map's contents, and the thing someone wants to change is usually not
+ * the last one they made. It is also the only place a pin can be named — the
+ * gesture puts it somewhere, and the word belongs to a keyboard.
+ */
+function markList(config: Config, onChange: Change): HTMLElement {
+  const wrap = document.createElement("div");
+  wrap.className = "marks";
+
+  if (markCount(config) === 0) {
+    const empty = document.createElement("p");
+    empty.className = "marks-empty";
+    empty.textContent = "Nothing marked yet.";
+    wrap.append(empty);
+    return wrap;
+  }
+
+  if (config.highlight.length > 0) {
+    const chips = document.createElement("div");
+    chips.className = "chips";
+    for (const code of config.highlight) {
+      chips.append(
+        chip(`${code} ×`, `Stop highlighting ${code}`, () =>
+          onChange({ highlight: config.highlight.filter((other) => other !== code) }),
+        ),
+      );
+    }
+    wrap.append(row("Highlighted", chips));
+  }
+
+  for (const [index, pin] of config.pins.entries()) {
+    const line = document.createElement("div");
+    line.className = "mark";
+    const at = document.createElement("span");
+    at.className = "mark-at";
+    at.textContent = readCoordinate(pin.at);
+    const label = document.createElement("input");
+    label.type = "text";
+    label.className = "mark-label";
+    label.value = pin.label ?? "";
+    label.placeholder = "Label";
+    label.setAttribute("aria-label", `Label for the pin at ${readCoordinate(pin.at)}`);
+    label.addEventListener("change", () => {
+      const text = label.value.trim();
+      onChange({
+        pins: config.pins.map((other, i) =>
+          i === index ? (text === "" ? { at: other.at } : { at: other.at, label: text }) : other,
+        ),
+      });
+    });
+    line.append(at, label, remove("Remove this pin", () =>
+      onChange({ pins: config.pins.filter((_, i) => i !== index) }),
+    ));
+    wrap.append(line);
+  }
+
+  for (const [index, arrow] of config.arrows.entries()) {
+    const line = document.createElement("div");
+    line.className = "mark";
+    const at = document.createElement("span");
+    at.className = "mark-note";
+    at.textContent = `${readCoordinate(arrow.from)} → ${readCoordinate(arrow.to)}`;
+    line.append(at, remove("Remove this arrow", () =>
+      onChange({ arrows: config.arrows.filter((_, i) => i !== index) }),
+    ));
+    wrap.append(line);
+  }
+
+  for (const [index, route] of config.routes.entries()) {
+    const line = document.createElement("div");
+    line.className = "mark";
+    const at = document.createElement("span");
+    at.className = "mark-note";
+    at.textContent = `Route · ${route.stops.length} ${route.stops.length === 1 ? "stop" : "stops"}`;
+    line.append(at, remove("Remove this route", () =>
+      onChange({ routes: config.routes.filter((_, i) => i !== index) }),
+    ));
+    wrap.append(line);
+  }
+
+  wrap.append(
+    button("Clear every mark", () =>
+      onChange({ highlight: [], pins: [], arrows: [], routes: [] }),
+    ),
+  );
+  return wrap;
+}
+
+function row(title: string, body: HTMLElement): HTMLElement {
+  const wrap = document.createElement("div");
+  wrap.className = "mark-group";
+  const name = document.createElement("span");
+  name.className = "field-hint";
+  name.textContent = title;
+  wrap.append(name, body);
+  return wrap;
+}
+
+function chip(text: string, title: string, onClick: () => void): HTMLElement {
+  const element = document.createElement("button");
+  element.type = "button";
+  element.className = "chip";
+  element.title = title;
+  element.setAttribute("aria-label", title);
+  element.textContent = text;
+  element.addEventListener("click", onClick);
+  return element;
+}
+
+function remove(title: string, onClick: () => void): HTMLElement {
+  const element = document.createElement("button");
+  element.type = "button";
+  element.className = "chip mark-remove";
+  element.title = title;
+  element.setAttribute("aria-label", title);
+  element.textContent = "×";
+  element.addEventListener("click", onClick);
+  return element;
 }
 
 function numberBox(value: number, onChange: (value: number) => void): HTMLElement {

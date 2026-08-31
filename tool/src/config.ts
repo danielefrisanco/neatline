@@ -1,4 +1,5 @@
 import type { Cover, MapOptions } from "../../src/index.js";
+import { decodeMarks, encodeMarks, MARK_KEYS, NO_MARKS, type Marks } from "./marks.js";
 
 /**
  * Everything the tool can be told, and the URL it turns into.
@@ -24,8 +25,13 @@ import type { Cover, MapOptions } from "../../src/index.js";
  * has no short form, and the tool does not pretend otherwise — the region here
  * is a preset name or a list of ISO codes, both of which fit in a query string.
  * The library still takes GeoJSON; the *tool* is what declines to encode it.
+ *
+ * Marks — the highlights, pins, arrows and routes a pointer places — extend
+ * this through {@link Marks}, and carry their own encoder. They are the first
+ * state here that is a *list* rather than one value against one default, which
+ * is the whole reason they are encoded somewhere else.
  */
-export interface Config {
+export interface Config extends Marks {
   /** A preset name, or a comma-separated list of ISO codes. */
   region: string;
   projection: string;
@@ -65,6 +71,7 @@ export interface Config {
 }
 
 export const DEFAULTS: Config = {
+  ...NO_MARKS,
   region: "west-europe",
   projection: "conic-conformal",
   theme: "minimal",
@@ -101,9 +108,13 @@ const FLAGS = ["sea", "seaNames", "graticule", "neighbours"] as const;
  */
 export function encode(config: Config): string {
   const params = new URLSearchParams();
+  encodeMarks(config, params);
   for (const key of Object.keys(DEFAULTS) as Array<keyof Config>) {
     const value = config[key];
     const fallback = DEFAULTS[key];
+    // Lists never compare equal to their default, so each one is written by
+    // something that knows its own shape rather than by `String(value)`.
+    if ((MARK_KEYS as readonly string[]).includes(key)) continue;
     if (key === "terrain") {
       const cover = value as readonly Cover[];
       if (cover.length > 0) params.set("terrain", [...cover].sort().join(","));
@@ -194,6 +205,8 @@ export function decode(search: string, vocabulary: Vocabulary): Config {
       .filter((kind): kind is Cover => (COVERS as readonly string[]).includes(kind));
   }
 
+  Object.assign(config, decodeMarks(params));
+
   const credit = params.get("credit");
   // Capped rather than rejected: a very long credit is somebody's own doing,
   // but an unbounded one from a crafted link is a way to break the layout.
@@ -255,6 +268,10 @@ export function toOptions(config: Config): MapOptions {
     graticule: config.graticule,
     neighbours: config.neighbours,
     ...(config.terrain.length > 0 ? { terrain: config.terrain } : {}),
+    ...(config.highlight.length > 0 ? { highlight: config.highlight } : {}),
+    ...(config.pins.length > 0 ? { pins: config.pins } : {}),
+    ...(config.arrows.length > 0 ? { arrows: config.arrows } : {}),
+    ...(config.routes.length > 0 ? { routes: config.routes } : {}),
     placeRank: config.placeRank,
     labelRank: config.labelRank,
     ...(Object.keys(tokens).length > 0 ? { tokens } : {}),

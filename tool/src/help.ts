@@ -118,6 +118,24 @@ export const HELP: Readonly<Record<string, readonly HelpEntry[]>> = {
     },
   ],
 
+  marks: [
+    {
+      title: "One click, two clicks, a sequence",
+      body:
+        "A pin is one click, an arrow is two — tail then head — and a route is a stop for every click until you finish it. Highlighting is the odd one out: it clicks a country rather than a place, so it only works on the countries you asked for, not on the neighbours drawn behind them.",
+    },
+    {
+      title: "Marks are on the ground, not on the paper",
+      body:
+        "Every mark is stored as a longitude and a latitude, so changing the projection, the region or the canvas size moves the map underneath them and leaves them where you put them. The credit line is the opposite: that one is on the paper and stays in its corner.",
+    },
+    {
+      title: "The far side of a globe",
+      body:
+        "An orthographic map shows half a world, and the canvas corners outside the disc are not anywhere at all. A click that lands there is refused rather than guessed at — the same rule the library uses when it declines to draw a pin behind the horizon.",
+    },
+  ],
+
   names: [
     {
       title: "Shown and named",

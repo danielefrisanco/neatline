@@ -36,6 +36,13 @@ you can send and the link rebuilds it exactly:
 
 Only what you changed is written down, so a fresh page has a clean URL.
 
+**The map is also something you click.** Choose a gesture and point at it: one
+click drops a pin, two draw an arrow, a sequence traces a route, and a click on
+a country highlights it. Every mark is stored as a longitude and a latitude
+rather than as a pixel, so changing the projection, the region or the canvas
+size moves the map underneath the marks and leaves them exactly where you put
+them — and they travel in the link with everything else.
+
 Run it locally with `npm run tool:dev`; `npm run tool:build` produces the static
 site, and a GitHub Action deploys it from `main`. The tool is a thin form over
 `MapOptions` and nothing more, which is possible only because no option in this
