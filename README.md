@@ -18,20 +18,48 @@ const map = await neatline({
 await map.toFile("europe.svg", { theme: "minimal" });
 ```
 
+## Make a map without installing anything
+
+**→ [danielefrisanco.github.io/neatline](https://danielefrisanco.github.io/neatline/)**
+
+A page over this library: pick a region, a projection, a theme, the layers you
+want, and it draws. **Everything runs in your browser** — the geometry, the
+stylesheet, the file — so there is no server, no account and nothing sent
+anywhere.
+
+The whole configuration lives in the address bar, so a map you made is a link
+you can send and the link rebuilds it exactly:
+
+```
+…/neatline/?region=GR,TR,BG&projection=mercator&theme=atlas&detail=50m&seaNames=1
+```
+
+Only what you changed is written down, so a fresh page has a clean URL.
+
+Run it locally with `npm run tool:dev`; `npm run tool:build` produces the static
+site, and a GitHub Action deploys it from `main`. The tool is a thin form over
+`MapOptions` and nothing more, which is possible only because no option in this
+library is a callback — a UI can build the entire configuration as data and hand
+it over.
+
 ## Status
 
-Early, but complete enough to use. **Phases 0–6 are done** — the package builds
-under both ESM and CJS, resolves real geometry, emits the frozen document shape
-below, themes it, and carries lakes, rivers, cities and names.
+Early, but complete enough to use. **Phases 0–8e are done**, and the tool is
+being built now. The package builds under both ESM and CJS, resolves real
+geometry, emits the frozen document shape below, themes it, and carries lakes,
+rivers, cities, names, the sea, land cover, a graticule and four kinds of
+annotation.
 
 **Not published to npm yet, and not on a schedule to be.** Install it from the
 repository. The class taxonomy below is the part that is meant to be stable; it
 is what a `1.0.0` would be promising, and it wants to sit still for a while
 before that promise is made.
 
-Reserved and out of scope: a legend, roads, and terrain — each has its slot in
-the taxonomy and none is emitted. Pins, callouts, arrows and icons have landed.
-The [build plan](https://claude.ai/code/artifact/1ad97eac-6e9c-4944-96fb-3e6530d9e83d) says when each arrives and what it is waiting on.
+Eleven of the twelve layer slots carry something. **Roads is the last one still
+empty**, and it is waiting on data rather than on code: of the roads Natural
+Earth publishes, 1.7% of Africa's road length carries a classification, so the
+layer would be a lie outside two continents. A legend is deferred to v2. The
+[build plan](https://claude.ai/code/artifact/1ad97eac-6e9c-4944-96fb-3e6530d9e83d) says when each arrives and what it is waiting on.
 
 ## The class taxonomy
 
