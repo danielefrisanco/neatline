@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // The one difference, and the reason this is a second file rather than a
+    // wider `include` on the first: the tool needs DOM types and the library
+    // must not have them. With `DOM` in the library's `lib`, a stray
+    // `document` in `src/` typechecks cleanly and then throws in Node — which
+    // is exactly the class of bug 09a existed to remove.
+    "lib": ["ES2022", "DOM", "DOM.Iterable"]
+  },
+  "include": ["tool", "vite.config.ts"]
+}
