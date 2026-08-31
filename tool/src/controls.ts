@@ -1,5 +1,6 @@
 import type { CountryName } from "../../src/index.js";
 import type { Config } from "./config.js";
+import type { Notes } from "./notes.js";
 import { helpFor } from "./help.js";
 import { markCount, MODES, readCoordinate, relabelPin, repinIcon, type Mode } from "./marks.js";
 import { buildPicker } from "./picker.js";
@@ -37,11 +38,20 @@ let nextId = 0;
  * wrapping label, where the pattern is idiomatic and the double-click is
  * harmless — a checkbox has no menu to close.
  */
+/** What the map had to say about this control, if anything. */
+function noteLine(text: string): HTMLElement {
+  const note = document.createElement("p");
+  note.className = "field-note";
+  note.textContent = text;
+  return note;
+}
+
 function field(
   label: string,
   control: HTMLElement,
   hint?: string,
   topic?: string,
+  note?: string,
 ): HTMLElement {
   const wrap = document.createElement("div");
   wrap.className = "field";
@@ -73,11 +83,12 @@ function field(
   }
   wrap.append(control);
   if (hint !== undefined) {
-    const note = document.createElement("span");
-    note.className = "field-hint";
-    note.textContent = hint;
-    wrap.append(note);
+    const text = document.createElement("span");
+    text.className = "field-hint";
+    text.textContent = hint;
+    wrap.append(text);
   }
+  if (note !== undefined) wrap.append(noteLine(note));
   return wrap;
 }
 
@@ -105,6 +116,7 @@ function checkbox(
   label: string,
   checked: boolean,
   onChange: (checked: boolean) => void,
+  note?: string,
 ): HTMLElement {
   const wrap = document.createElement("label");
   wrap.className = "check";
@@ -115,7 +127,15 @@ function checkbox(
   const text = document.createElement("span");
   text.textContent = label;
   wrap.append(box, text);
-  return wrap;
+  if (note === undefined) return wrap;
+
+  // Wrapped, because the note goes *under* the box and its label rather than
+  // beside them — and a label element laying out two lines of its own would put
+  // the checkbox in the middle of them.
+  const stack = document.createElement("div");
+  stack.className = "check-stack";
+  stack.append(wrap, noteLine(note));
+  return stack;
 }
 
 function slider(
@@ -214,6 +234,12 @@ export function buildForm(
   vocabulary: Vocabularies,
   onChange: Change,
   editing: Editing,
+  /**
+   * What the last drawn map had to say about these controls — read off the SVG
+   * rather than predicted. Empty before the first render, which is correct:
+   * there is nothing to report about a map that does not exist yet.
+   */
+  notes: Notes = {},
 ): void {
   host.replaceChildren();
 
@@ -291,20 +317,33 @@ export function buildForm(
       ),
       field("Width", numberBox(config.width, (value) => onChange({ width: value }))),
       field("Height", numberBox(config.height, (value) => onChange({ height: value }))),
-      checkbox("Neighbours", config.neighbours, (on) => onChange({ neighbours: on })),
+      checkbox(
+        "Neighbours",
+        config.neighbours,
+        (on) => onChange({ neighbours: on }),
+        notes["neighbours"],
+      ),
     ], "frame"),
 
     group("What it shows", [
       checkbox("Sea as a shape", config.sea, (on) => onChange({ sea: on })),
-      checkbox("Name the seas", config.seaNames, (on) => onChange({ seaNames: on })),
+      checkbox(
+        "Name the seas",
+        config.seaNames,
+        (on) => onChange({ seaNames: on }),
+        notes["seaNames"],
+      ),
       checkbox("Graticule", config.graticule, (on) => onChange({ graticule: on })),
       // Only offered with the grid it annotates. A checkbox that does nothing
       // until another one is ticked is a control that has to be discovered
       // twice.
       ...(config.graticule
         ? [
-            checkbox("Degree labels", config.gridLabels, (on) =>
-              onChange({ gridLabels: on }),
+            checkbox(
+              "Degree labels",
+              config.gridLabels,
+              (on) => onChange({ gridLabels: on }),
+              notes["gridLabels"],
             ),
           ]
         : []),
@@ -318,6 +357,7 @@ export function buildForm(
                 ? [...config.terrain, kind]
                 : config.terrain.filter((other) => other !== kind),
             }),
+          notes[kind],
         ),
       ),
       field(
@@ -325,6 +365,9 @@ export function buildForm(
         select(RANKS("none — no city dots"), String(config.placeRank), (value) =>
           onChange({ placeRank: Number(value) as Config["placeRank"] }),
         ),
+        undefined,
+        undefined,
+        notes["placeRank"],
       ),
       // Offered only when there is something to name. With no dots on the map
       // this control has nothing to act on — a name is given to a settlement
@@ -380,7 +423,7 @@ export function buildForm(
             ),
           ]
         : []),
-      markList(config, onChange, vocabulary.icons),
+      markList(config, onChange, vocabulary.icons, notes),
     ], "marks"),
 
     // Last, because it is the only group whose answers do not change what is on
@@ -461,7 +504,12 @@ function iconSelect(
   );
 }
 
-function markList(config: Config, onChange: Change, icons: readonly string[]): HTMLElement {
+function markList(
+  config: Config,
+  onChange: Change,
+  icons: readonly string[],
+  notes: Notes,
+): HTMLElement {
   const wrap = document.createElement("div");
   wrap.className = "marks";
 
@@ -484,6 +532,10 @@ function markList(config: Config, onChange: Change, icons: readonly string[]): H
       );
     }
     wrap.append(row("Highlighted", chips));
+    // A code the region does not contain is the quietest failure on the form:
+    // nothing happens and the chip sits there looking as though it did.
+    const missing = notes["highlight"];
+    if (missing !== undefined) wrap.append(noteLine(missing));
   }
 
   for (const [index, pin] of config.pins.entries()) {

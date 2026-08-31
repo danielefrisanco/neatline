@@ -17,6 +17,7 @@ import { exportSizes, fileName, type ExportSize } from "./export.js";
 import { rasterise, save } from "./raster.js";
 import { place, type Mode } from "./marks.js";
 import { forget, recall, recallZoom, remember, rememberZoom } from "./memory.js";
+import { notesFor, type Notes } from "./notes.js";
 
 /**
  * The tool: a form over `MapOptions`, and a URL that rebuilds what it made.
@@ -111,6 +112,16 @@ let arrowTail: Position | null = null;
 let openRoute = false;
 
 /**
+ * What the last drawn map had to say about the form's own controls.
+ *
+ * Read off the SVG after every render, so a control that asked for something
+ * this frame does not contain can say so where it was asked — rather than the
+ * map looking, from the reader's side, exactly as it does when the control
+ * worked.
+ */
+let notes: Notes = {};
+
+/**
  * How long to wait before drawing, in milliseconds.
  *
  * A slider fires on every pixel of travel and a 50m world map is not a
@@ -135,7 +146,7 @@ function editing(): Editing {
 }
 
 function refreshForm(): void {
-  buildForm(formHost, config, vocabularyFor(config), apply, editing());
+  buildForm(formHost, config, vocabularyFor(config), apply, editing(), notes);
   // The map only looks clickable while it is: a crosshair over a map nothing
   // responds to is a promise the page does not keep.
   mapHost.classList.toggle("is-picking", mode !== "none");
@@ -265,6 +276,15 @@ async function render(): Promise<void> {
     mapHost.innerHTML = result.toString();
     mapHost.removeAttribute("aria-busy");
     applyZoom();
+
+    // Read off the drawn document rather than predicted from the options, and
+    // the form is rebuilt only when the answer changed — a rebuild on every
+    // render would be a rebuild in the middle of somebody typing into it.
+    const found = notesFor(result.svg, config);
+    const keys = new Set([...Object.keys(found), ...Object.keys(notes)]);
+    const changed = [...keys].some((key) => found[key] !== notes[key]);
+    notes = found;
+    if (changed) refreshForm();
     say(`Drawn in ${Math.round(performance.now() - started)} ms.`);
   } catch (error: unknown) {
     if (mine !== generation) return;
