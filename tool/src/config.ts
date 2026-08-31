@@ -45,6 +45,8 @@ export interface Config extends Marks {
   sea: boolean;
   seaNames: boolean;
   graticule: boolean;
+  /** Write each grid line's latitude or longitude on the frame. */
+  gridLabels: boolean;
   neighbours: boolean;
   terrain: readonly Cover[];
   placeRank: 1 | 2 | 3;
@@ -67,6 +69,18 @@ export interface Config extends Marks {
   landEdgeWidth: number;
   /** `--label-size`, in user units. */
   labelSize: number;
+  /**
+   * The Maki icon every pin carries, or "" for a plain mark.
+   *
+   * One choice for the whole map rather than one per pin. The library takes a
+   * `kind` on each pin and would draw a different icon on every one of them —
+   * but a per-pin icon needs a fourth field in the URL and a dropdown in every
+   * row of the mark list, and a map whose pins all mean the same thing is what
+   * people are actually making.
+   */
+  pinIcon: string;
+  /** `--pin-size`, the radius of a pin's mark in user units. */
+  pinSize: number;
   credit: string;
 }
 
@@ -83,6 +97,7 @@ export const DEFAULTS: Config = {
   sea: true,
   seaNames: false,
   graticule: false,
+  gridLabels: false,
   neighbours: false,
   terrain: [],
   placeRank: 2,
@@ -90,14 +105,25 @@ export const DEFAULTS: Config = {
   borderWidth: 0.8,
   landEdgeWidth: -1,
   labelSize: 13,
+  pinIcon: "",
+  pinSize: 7,
   credit: "Natural Earth",
 };
 
 const COVERS: readonly Cover[] = ["desert", "mountain", "glacier"];
 
 /** Which keys are numbers, so decoding does not have to guess. */
-const NUMBERS = ["width", "height", "placeRank", "labelRank", "borderWidth", "landEdgeWidth", "labelSize"] as const;
-const FLAGS = ["sea", "seaNames", "graticule", "neighbours"] as const;
+const NUMBERS = [
+  "width",
+  "height",
+  "placeRank",
+  "labelRank",
+  "borderWidth",
+  "landEdgeWidth",
+  "labelSize",
+  "pinSize",
+] as const;
+const FLAGS = ["sea", "seaNames", "graticule", "gridLabels", "neighbours"] as const;
 
 /**
  * The config as a query string, carrying only what was actually chosen.
@@ -171,6 +197,7 @@ export function decode(search: string, vocabulary: Vocabulary): Config {
   pick("theme", vocabulary.themes);
   pick("palette", ["", ...vocabulary.palettes]);
   pick("typeface", ["", ...vocabulary.typefaces]);
+  pick("pinIcon", ["", ...vocabulary.icons]);
 
   const detail = params.get("detail");
   if (detail === "110m" || detail === "50m") config.detail = detail;
@@ -193,6 +220,8 @@ export function decode(search: string, vocabulary: Vocabulary): Config {
       config[key] = clamp(value, 0, 6, DEFAULTS[key]);
     } else if (key === "landEdgeWidth") {
       config[key] = clamp(value, -1, 6, DEFAULTS[key]);
+    } else if (key === "pinSize") {
+      config[key] = clamp(value, 2, 24, DEFAULTS[key]);
     } else {
       config[key] = clamp(value, 6, 40, DEFAULTS[key]);
     }
@@ -228,6 +257,8 @@ export interface Vocabulary {
   readonly themes: readonly string[];
   readonly palettes: readonly string[];
   readonly typefaces: readonly string[];
+  /** Maki icon names, which double as a pin's `kind`. */
+  readonly icons: readonly string[];
 }
 
 /**
@@ -249,6 +280,11 @@ export function toOptions(config: Config): MapOptions {
   if (config.labelSize !== DEFAULTS.labelSize) {
     tokens["--label-size"] = String(config.labelSize);
   }
+  // The geometry reads this one out of the stylesheet, so a pin's mark and the
+  // icon inside it grow together rather than the circle growing alone.
+  if (config.pinSize !== DEFAULTS.pinSize) {
+    tokens["--pin-size"] = String(config.pinSize);
+  }
   // Negative is the sentinel for "leave the theme alone", so it is the one
   // value that must not reach the stylesheet.
   if (config.landEdgeWidth >= 0) {
@@ -265,11 +301,18 @@ export function toOptions(config: Config): MapOptions {
     ...(config.typeface === "" ? {} : { typeface: config.typeface as MapOptions["typeface"] }),
     sea: config.sea,
     seaNames: config.seaNames,
-    graticule: config.graticule,
+    graticule: config.graticule ? (config.gridLabels ? { labels: true } : true) : false,
     neighbours: config.neighbours,
     ...(config.terrain.length > 0 ? { terrain: config.terrain } : {}),
     ...(config.highlight.length > 0 ? { highlight: config.highlight } : {}),
-    ...(config.pins.length > 0 ? { pins: config.pins } : {}),
+    ...(config.pins.length > 0
+      ? {
+          pins:
+            config.pinIcon === ""
+              ? config.pins
+              : config.pins.map((pin) => ({ ...pin, kind: config.pinIcon })),
+        }
+      : {}),
     ...(config.arrows.length > 0 ? { arrows: config.arrows } : {}),
     ...(config.routes.length > 0 ? { routes: config.routes } : {}),
     placeRank: config.placeRank,

@@ -158,6 +158,7 @@
     "--sea-ink (live)",
     "--neighbour (live)",
     "--anno (live)",
+    "--pin-size (live)",
     "--anno-ink (live)",
     "--furniture-ink (live)"
   ],

@@ -1,5 +1,6 @@
 import {
   countryTable,
+  ICON_NAMES,
   neatline,
   PALETTE_NAMES,
   PROJECTION_NAMES,
@@ -35,6 +36,7 @@ const VOCABULARY: Vocabulary = {
   themes: THEME_NAMES,
   palettes: PALETTE_NAMES,
   typefaces: TYPEFACE_NAMES,
+  icons: ICON_NAMES,
 };
 
 /**

@@ -375,6 +375,22 @@ export interface Graticule {
    * a step a reader can count in (0.5, 1, 2, 5, 10, 15, 30, 45).
    */
   readonly step?: number | readonly [number, number];
+  /**
+   * Write each line's latitude or longitude beside it, on the frame.
+   *
+   * Off by default, and not only for compatibility: numbers are a real design
+   * decision rather than a free addition. They take room at the edge of the
+   * canvas and they turn a background texture into a reference — which is the
+   * point, and also why a map that only wanted a texture should not get them.
+   *
+   * A number is placed where its line **meets the frame**, so a grid whose
+   * lines end inside the picture gets none. That is the honest answer for an
+   * orthographic globe: its meridians stop on the limb, and a degree written
+   * there names nothing a reader can follow to an edge.
+   *
+   * @default false
+   */
+  readonly labels?: boolean;
 }
 
 export interface ScaleBar {

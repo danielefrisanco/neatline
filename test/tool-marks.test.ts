@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  ICON_NAMES,
   neatline,
   PALETTE_NAMES,
   PROJECTION_NAMES,
@@ -32,6 +33,7 @@ const VOCABULARY: Vocabulary = {
   themes: THEME_NAMES,
   palettes: PALETTE_NAMES,
   typefaces: TYPEFACE_NAMES,
+  icons: ICON_NAMES,
 };
 
 const round = (search: string): Config => decode(search, VOCABULARY);

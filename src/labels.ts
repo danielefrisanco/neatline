@@ -1,5 +1,6 @@
 import type { GeoProjection } from "d3-geo";
 import { centroid, contains, projectRings, ringBox, signedArea, type Ring } from "./rings.js";
+import type { GridMark } from "./graticule.js";
 import { el, text, type SvgElement, type SvgNode } from "./svg.js";
 import { HIGHLIGHT_CLASS } from "./taxonomy.js";
 
@@ -60,6 +61,9 @@ const PLACE_GAP = 3;
 /** What the fit test assumes when a stylesheet does not say. */
 const DEFAULT_LABEL_SIZE = 13;
 
+/** The pin radius a theme gets if it does not ask for one. See {@link LabelSizes}. */
+const DEFAULT_PIN_RADIUS = 7;
+
 export interface LabelSizes {
   readonly country: number;
   readonly place: number;
@@ -75,6 +79,16 @@ export interface LabelSizes {
    * of its own box is exactly what that looked like.
    */
   readonly track: number;
+  /**
+   * The radius of a pin's mark, in user units.
+   *
+   * Read from the stylesheet for the same reason `--label-size` is: the
+   * geometry has to know it. A pin carrying an icon is a circle *and* a glyph
+   * scaled to fit inside it, and CSS can only reach the circle — set the radius
+   * in a rule and the mark grows while the icon stays where it was. So the size
+   * arrives through a token the geometry reads, and both follow it.
+   */
+  readonly pin: number;
 }
 
 function declared(css: string, token: string, fallback: number, allowZero = false): number {
@@ -106,6 +120,7 @@ export function labelSizes(css: string): LabelSizes {
     place: declared(css, "--place-label-size", country),
     advance: declared(css, "--label-advance", ADVANCE),
     track: declared(css, "--label-track", 0, true),
+    pin: declared(css, "--pin-size", DEFAULT_PIN_RADIUS),
   };
 }
 
@@ -460,15 +475,21 @@ export function labelLayer(
   countries: readonly Placed[],
   places: readonly Placed[],
   seas: readonly Placed[] = [],
+  grid: readonly Placed[] = [],
 ): SvgNode[] {
   const taken: LabelBox[] = [];
   const hidden = new Set<SvgElement>();
 
+  // Grid numbers are judged first because they are the only labels that cannot
+  // move. A country name has a shape to sit somewhere else in and a settlement
+  // name can be dropped; 45°N is at 45°N or it is a lie. Everything else gives
+  // way to them.
+  //
   // Seas are judged last and so give way to everything: the land is the
   // subject, and a name on the water is the one that can be spared. Among
   // themselves they go in rank order, largest water first.
-  const ordered = [...countries]
-    .sort((a, b) => b.priority - a.priority)
+  const ordered = [...grid]
+    .concat([...countries].sort((a, b) => b.priority - a.priority))
     .concat(places)
     .concat([...seas].sort((a, b) => b.priority - a.priority));
   for (const label of ordered) {
@@ -481,11 +502,60 @@ export function labelLayer(
 
   // Emitted in paint order, not in the order they were judged: a settlement
   // name reads over the country it sits in, and a sea name sits under both.
-  return [...seas, ...countries, ...places].map(({ node }) =>
+  return [...grid, ...seas, ...countries, ...places].map(({ node }) =>
     hidden.has(node)
       ? el(node.tag, { ...node.attributes, "data-fit": "0" }, node.children)
       : node,
   );
+}
+
+/**
+ * The grid's numbers, as text on the frame.
+ *
+ * The placement was already decided — `graticuleLayer` measured where each line
+ * meets the canvas — so this is only the part that turns a decision into a
+ * label: a node, and a box for the solver to reserve.
+ *
+ * They are `.mp-label[data-kind="grid"]` rather than a class of their own. A
+ * degree number is a name for a line in exactly the way a settlement name is a
+ * name for a dot, and giving it the same class means it already inherits the
+ * typeface, the halo and the flattening every other label gets — a new class
+ * would have needed all three added again, and the export would have been the
+ * place it was noticed missing.
+ *
+ * The box is built from the anchor rather than centred on it: a number written
+ * from the left edge of the frame extends to the right of the point it is
+ * anchored at, and a box centred there would reserve empty paper on one side
+ * while leaving the text unprotected on the other.
+ */
+export function gridLabels(
+  marks: readonly GridMark[],
+  size: number,
+  advance: number,
+): Placed[] {
+  return marks.map((mark) => {
+    const [x, y] = mark.at;
+    const wide = textWidth(mark.text, size, advance);
+    const left = mark.anchor === "start" ? x : mark.anchor === "end" ? x - wide : x - wide / 2;
+    return {
+      node: el(
+        "text",
+        {
+          class: "mp-label",
+          "data-kind": "grid",
+          "data-line": mark.kind,
+          x: round(x),
+          y: round(y),
+          "text-anchor": mark.anchor,
+          "dominant-baseline": "central",
+        },
+        [text(mark.text)],
+      ),
+      box: [left, y - size / 2, left + wide, y + size / 2] as LabelBox,
+      fits: true,
+      priority: 0,
+    };
+  });
 }
 
 export interface CountryLabel {

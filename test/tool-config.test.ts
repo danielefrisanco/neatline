@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  ICON_NAMES,
   neatline,
   PALETTE_NAMES,
   PROJECTION_NAMES,
@@ -31,6 +32,7 @@ const VOCABULARY: Vocabulary = {
   themes: THEME_NAMES,
   palettes: PALETTE_NAMES,
   typefaces: TYPEFACE_NAMES,
+  icons: ICON_NAMES,
 };
 
 const CHOSEN: Config = {
@@ -45,6 +47,7 @@ const CHOSEN: Config = {
   sea: false,
   seaNames: true,
   graticule: true,
+  gridLabels: true,
   neighbours: true,
   terrain: ["glacier", "mountain"],
   placeRank: 3,
@@ -52,6 +55,8 @@ const CHOSEN: Config = {
   borderWidth: 2.5,
   landEdgeWidth: 1.2,
   labelSize: 17,
+  pinIcon: "airport",
+  pinSize: 11,
   credit: "Made by someone",
   highlight: ["GR"],
   pins: [{ at: [23.73, 37.98], label: "Athens" }],
@@ -121,6 +126,54 @@ describe("the config as library options", () => {
   it("sets a token only when it was moved off the default", () => {
     expect(toOptions(DEFAULTS).tokens).toBeUndefined();
     expect(toOptions({ ...DEFAULTS, borderWidth: 2 }).tokens).toEqual({ "--border-width": "2" });
+  });
+
+  it("asks for degree labels only along with the grid they annotate", () => {
+    expect(toOptions({ ...DEFAULTS, graticule: false, gridLabels: true }).graticule).toBe(false);
+    expect(toOptions({ ...DEFAULTS, graticule: true, gridLabels: false }).graticule).toBe(true);
+    expect(toOptions({ ...DEFAULTS, graticule: true, gridLabels: true }).graticule).toEqual({
+      labels: true,
+    });
+  });
+
+  it("puts the chosen icon on every pin, and nothing on none", () => {
+    const pins = [{ at: [2, 48] as [number, number] }, { at: [10, 50] as [number, number] }];
+    expect(toOptions({ ...DEFAULTS, pins, pinIcon: "" }).pins).toEqual(pins);
+    expect(toOptions({ ...DEFAULTS, pins, pinIcon: "airport" }).pins).toEqual([
+      { at: [2, 48], kind: "airport" },
+      { at: [10, 50], kind: "airport" },
+    ]);
+  });
+
+  /**
+   * The size has to travel as a token rather than as CSS the caller writes,
+   * because the geometry reads it: a pin is a circle *and* a glyph scaled to sit
+   * inside it, and a rule that only reaches the circle grows the mark while
+   * leaving the icon where it was.
+   */
+  it("sends the pin size through the token the geometry reads", async () => {
+    expect(toOptions({ ...DEFAULTS, pinSize: 7 }).tokens).toBeUndefined();
+    expect(toOptions({ ...DEFAULTS, pinSize: 14 }).tokens).toEqual({ "--pin-size": "14" });
+
+    const big = await neatline({
+      ...toOptions({ ...DEFAULTS, pinSize: 14, pinIcon: "airport", pins: [{ at: [2.35, 48.86] }] }),
+      detail: "110m",
+      size: [400, 300],
+      theme: "minimal",
+    });
+    const small = await neatline({
+      ...toOptions({ ...DEFAULTS, pinIcon: "airport", pins: [{ at: [2.35, 48.86] }] }),
+      detail: "110m",
+      size: [400, 300],
+      theme: "minimal",
+    });
+    const radius = (svg: string): number =>
+      Number(/<circle class="mp-pin-mark"[^>]* r="([\d.]+)"/.exec(svg)?.[1] ?? NaN);
+    expect(radius(big.svg)).toBeGreaterThan(radius(small.svg));
+    // And the glyph with it, which is the whole reason this is not a CSS rule.
+    const scale = (svg: string): number =>
+      Number(/class="mp-icon"[^>]*scale\(([\d.]+)\)/.exec(svg)?.[1] ?? NaN);
+    expect(scale(big.svg)).toBeGreaterThan(scale(small.svg));
   });
 
   it("leaves out a palette and a typeface rather than passing an empty one", () => {

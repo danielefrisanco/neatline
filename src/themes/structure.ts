@@ -143,6 +143,20 @@ ${rules((n) => `.mp .mp-prism[data-fill="${n}"] .mp-prism-top { fill: var(--fill
 }
 
 /*
+ * A degree written on the frame.
+ *
+ * Muted rather than drawn in --graticule: the grid is meant to be faint enough
+ * to read a map through, and a number at that weight is a number nobody reads.
+ * It keeps the halo every label has, because the frame is wherever the map
+ * happens to reach it — sea on one edge and land on the next.
+ */
+.mp .mp-label[data-kind="grid"] {
+  fill: var(--ink-muted);
+  font-size: var(--place-label-size);
+  letter-spacing: 0.04em;
+}
+
+/*
  * The name of a sea, set on the water in its own ink.
  *
  * Italic and letter-spaced, because that is how an atlas has distinguished
