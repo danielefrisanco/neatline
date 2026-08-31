@@ -1,5 +1,6 @@
 import type { CountryName } from "../../src/index.js";
 import type { Config } from "./config.js";
+import { helpFor } from "./help.js";
 import { buildPicker } from "./picker.js";
 
 /**
@@ -35,7 +36,12 @@ let nextId = 0;
  * wrapping label, where the pattern is idiomatic and the double-click is
  * harmless — a checkbox has no menu to close.
  */
-function field(label: string, control: HTMLElement, hint?: string): HTMLElement {
+function field(
+  label: string,
+  control: HTMLElement,
+  hint?: string,
+  topic?: string,
+): HTMLElement {
   const wrap = document.createElement("div");
   wrap.className = "field";
 
@@ -53,7 +59,18 @@ function field(label: string, control: HTMLElement, hint?: string): HTMLElement 
     name.htmlFor = target.id;
   }
 
-  wrap.append(name, control);
+  const help = topic === undefined ? null : helpFor(topic);
+  if (help === null) {
+    wrap.append(name);
+  } else {
+    // The label and its `?` share a line, so the explanation sits beside the
+    // thing it explains rather than under it.
+    const row = document.createElement("div");
+    row.className = "field-head";
+    row.append(name, help);
+    wrap.append(row);
+  }
+  wrap.append(control);
   if (hint !== undefined) {
     const note = document.createElement("span");
     note.className = "field-hint";
@@ -188,7 +205,7 @@ export function buildForm(
 
   host.append(
     group("Subject", [
-      field("Region", regions, "A preset, or a list of ISO codes"),
+      field("Region", regions, "A preset, or a list of ISO codes", "region"),
       field(
         "Detail",
         select(
@@ -199,12 +216,16 @@ export function buildForm(
           config.detail,
           (value) => onChange({ detail: value as Config["detail"] }),
         ),
+        undefined,
+        "detail",
       ),
       field(
         "Projection",
         select(named(vocabulary.projections), config.projection, (value) =>
           onChange({ projection: value }),
         ),
+        undefined,
+        "projection",
       ),
     ]),
 
@@ -212,6 +233,8 @@ export function buildForm(
       field(
         "Theme",
         select(named(vocabulary.themes), config.theme, (value) => onChange({ theme: value })),
+        undefined,
+        "theme",
       ),
       field(
         "Palette",
@@ -233,6 +256,7 @@ export function buildForm(
         "Border width",
         slider(config.borderWidth, [0, 4, 0.1], (value) => onChange({ borderWidth: value })),
         "The boundary between two countries, drawn once",
+        "lines",
       ),
       field(
         "Country outline",
@@ -247,6 +271,7 @@ export function buildForm(
     ]),
 
     group("Layers", [
+      helpFor("layers") ?? document.createElement("span"),
       checkbox("Sea as a shape", config.sea, (on) => onChange({ sea: on })),
       checkbox("Name the seas", config.seaNames, (on) => onChange({ seaNames: on })),
       checkbox("Graticule", config.graticule, (on) => onChange({ graticule: on })),
@@ -266,6 +291,7 @@ export function buildForm(
     ]),
 
     group("Names", [
+      helpFor("names") ?? document.createElement("span"),
       field(
         "Cities shown",
         select(

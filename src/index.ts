@@ -644,16 +644,35 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     }
   }
 
-  // Context, drawn beneath the region and excluded from the camera, so turning
-  // it on can never change the framing — the subject stays exactly where it was.
+  /**
+   * Context, drawn beneath the region and excluded from the camera, so turning
+   * it on can never change the framing — the subject stays exactly where it was.
+   *
+   * **What counts as "in view" is the canvas, not the region's bounding box**,
+   * and the difference is not small. The box is the extent of the *subject*;
+   * the canvas is almost always bigger, because it has an aspect ratio of its
+   * own, padding, and headroom for the furniture. Everything in that margin is
+   * land the reader can see the place of and which was not being drawn — so a
+   * map of the Caribbean showed open water where Central America is, and a map
+   * of South America left a hole at French Guiana, which Natural Earth draws as
+   * part of France.
+   *
+   * So the test is the *projected* bounds against the canvas rectangle. That
+   * also makes it right for every projection rather than for the cylindrical
+   * ones: on an orthographic globe a country's lon/lat box says nothing about
+   * whether the camera is pointed at it, and d3 clips the far hemisphere away
+   * entirely, which shows up here as non-finite bounds.
+   */
   if (options.neighbours === true && wants("neighbours")) {
     const inRegion = new Set(frame.countries.map((c) => c.id));
-    const [[west, south], [east, north]] = frame.bounds;
-    const view: Box = [west, south, east, north];
     const context: SvgNode[] = [];
     for (const country of world.countries) {
       if (inRegion.has(country.id)) continue;
-      if (!overlaps(boxOf(country.geometry), view)) continue;
+      const [[left, top], [right, bottom]] = path.bounds(country.geometry as never);
+      // Clipped away entirely — the far side of a globe, or outside a
+      // projection's domain.
+      if (!Number.isFinite(left) || !Number.isFinite(top)) continue;
+      if (right < 0 || left > width || bottom < 0 || top > height) continue;
       const d = path(country.geometry as never);
       if (!d) continue;
       context.push(
