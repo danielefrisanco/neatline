@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { expandPreset } from "../src/regions.js";
 import {
+  countryTable,
   neatline,
   PALETTE_NAMES,
   PROJECTION_NAMES,
@@ -291,3 +293,33 @@ describe("a bbox region", () => {
   });
 });
 
+
+/**
+ * A preset must not name a code the data cannot draw.
+ *
+ * The failure is quiet and specific: an unresolvable code is not an error, it
+ * is a *hole* — the country is simply absent, and the map looks like the sea
+ * reaches somewhere it does not. `XS` missing unnamed Somaliland once, and
+ * `GF` did it again for French Guiana, which Natural Earth draws as part of
+ * France at every tier.
+ *
+ * Judged across both tiers together rather than one at a time, because the
+ * coarse tier legitimately drops small countries: `PF` is real at 50m and
+ * absent at 110m, and that is a fact about generalisation, not a mistake in
+ * the list.
+ */
+describe("region presets", () => {
+  it("never name a country the data does not have", async () => {
+    const known = new Set<string>();
+    for (const detail of ["110m", "50m"] as const) {
+      for (const country of await countryTable(detail)) known.add(country.code);
+    }
+    const missing: string[] = [];
+    for (const preset of REGION_PRESET_NAMES) {
+      for (const code of expandPreset(preset) ?? []) {
+        if (!known.has(code)) missing.push(`${preset}: ${code}`);
+      }
+    }
+    expect(missing, "these leave a hole rather than a country").toEqual([]);
+  });
+});

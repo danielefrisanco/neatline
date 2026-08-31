@@ -341,3 +341,70 @@ input[type="search"] {
   font-size: 0.8rem;
   color: var(--ink-soft);
 }
+
+/* ---- the "?" explanations ---- */
+
+.field-head {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.help {
+  font-size: 0.82rem;
+}
+
+.help > summary {
+  list-style: none;
+  display: inline-grid;
+  place-items: center;
+  width: 1.05rem;
+  height: 1.05rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+  user-select: none;
+}
+
+.help > summary::-webkit-details-marker {
+  display: none;
+}
+
+.help > summary:hover,
+.help[open] > summary {
+  color: var(--ink);
+  border-color: currentColor;
+}
+
+/* Out of the flow, so opening one does not shove the control below it down the
+   panel and out from under the pointer. */
+.help-body {
+  position: absolute;
+  z-index: 5;
+  width: min(22rem, calc(100vw - 3rem));
+  margin-top: 0.35rem;
+  padding: 0.7rem 0.8rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.14);
+}
+
+.help-term {
+  margin: 0.55rem 0 0.1rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.help-term:first-child {
+  margin-top: 0;
+}
+
+.help-text {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}

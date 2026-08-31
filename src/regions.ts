@@ -23,8 +23,12 @@ export const REGION_PRESETS: Readonly<Record<Exclude<RegionPreset, "world">, rea
     "CA", "US", "MX", "GT", "BZ", "SV", "HN", "NI", "CR", "PA", "CU", "HT",
     "DO", "JM", "BS", "TT", "BB", "GD", "LC", "VC", "AG", "KN", "DM", "GL",
   ],
+  // No `GF`. Natural Earth draws French Guiana as part of France at every tier,
+  // so naming it here promised a shape the data cannot produce and left a hole
+  // on the map instead — the same failure Somaliland's missing `XS` caused.
+  // With `neighbours` on it now fills in correctly, as France.
   "south-america": [
-    "AR", "BO", "BR", "CL", "CO", "EC", "FK", "GF", "GY", "PY", "PE", "SR",
+    "AR", "BO", "BR", "CL", "CO", "EC", "FK", "GY", "PY", "PE", "SR",
     "UY", "VE",
   ],
   africa: [
@@ -40,9 +44,12 @@ export const REGION_PRESETS: Readonly<Record<Exclude<RegionPreset, "world">, rea
     "MN", "MM", "NP", "KP", "OM", "PK", "PS", "PH", "QA", "SA", "SG", "KR",
     "LK", "SY", "TW", "TJ", "TH", "TL", "TR", "TM", "AE", "UZ", "VN", "YE",
   ],
+  // No `TV`. Tuvalu is below the threshold at both tiers, so naming it left a
+  // hole rather than an island — a defect this preset carried from Phase 1
+  // until a test went looking for it.
   oceania: [
     "AU", "FJ", "KI", "MH", "FM", "NR", "NZ", "PW", "PG", "WS", "SB", "TO",
-    "TV", "VU", "NC", "PF",
+    "VU", "NC", "PF",
   ],
   // One country, and the only preset that is a whole continent in a single
   // code. The French Southern and Antarctic Lands are deliberately left out:
@@ -88,10 +95,13 @@ export const REGION_PRESETS: Readonly<Record<Exclude<RegionPreset, "world">, rea
   // geographically North American and culturally Central American, and a map
   // of Central America without it is a map of the isthmus alone.
   "central-america": ["MX", "GT", "BZ", "SV", "HN", "NI", "CR", "PA"],
+  // Guadeloupe, Martinique and the Caribbean Netherlands are absent: Natural
+  // Earth draws them as France and as the Netherlands, the way it draws French
+  // Guiana. `neighbours` fills them in correctly, under those names.
   caribbean: [
     "CU", "HT", "DO", "JM", "PR", "BS", "TT", "BB", "GD", "LC", "VC", "AG",
-    "KN", "DM", "AW", "CW", "BQ", "KY", "TC", "VG", "VI", "AI", "MS", "BL",
-    "MF", "SX", "GP", "MQ",
+    "KN", "DM", "AW", "CW", "KY", "TC", "VG", "VI", "AI", "MS", "BL",
+    "MF", "SX",
   ],
 
   // The Maghreb and the Nile, which is where the Sahara is. Sudan and
@@ -125,8 +135,8 @@ export const REGION_PRESETS: Readonly<Record<Exclude<RegionPreset, "world">, rea
   // map — it is the Pacific, not the countries at its edge — and it is the one
   // that wants `center` on the antimeridian.
   pacific: [
-    "FJ", "KI", "MH", "FM", "NR", "PW", "PG", "WS", "SB", "TO", "TV", "VU",
-    "NC", "PF", "GU", "MP", "AS", "CK", "NU", "TK", "WF", "PN", "NF",
+    "FJ", "KI", "MH", "FM", "NR", "PW", "PG", "WS", "SB", "TO", "VU",
+    "NC", "PF", "GU", "MP", "AS", "CK", "NU", "WF", "PN", "NF",
   ],
 } as const;
 
