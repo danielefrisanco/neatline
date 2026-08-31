@@ -355,7 +355,10 @@ mapHost.addEventListener("click", (event) => {
   // to overwrite the status line anyway, and the mark appearing on the map is a
   // better confirmation than a sentence under it.
   if (mode === "pin") {
-    apply({ pins: [...config.pins, { at }] });
+    // The icon is chosen before the click and stored on the pin, not on the
+    // map: the next one can be something else.
+    const kind = config.pinIcon === "" ? {} : { kind: config.pinIcon };
+    apply({ pins: [...config.pins, { at, ...kind }] });
     return;
   }
 

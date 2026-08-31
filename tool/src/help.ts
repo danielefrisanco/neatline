@@ -14,13 +14,22 @@
  * **It is positioned rather than laid out, and that is not decoration.** The
  * panel it is anchored in scrolls, and a scrolling box clips anything inside it
  * — so an explanation that sits in the flow is cropped by the sidebar and made
- * as narrow as the sidebar is. Fixed to the viewport and opened *beside* the
- * `?`, it lands over the map, where there is room to read a paragraph.
+ * as narrow as the sidebar is. Taking it out of the flow with `position: fixed`
+ * is what fixes that, and it is the whole of what was needed.
  *
- * Which brings the two things the browser then stops doing for you: a fixed box
- * does not follow its anchor when the panel scrolls, and a popover nobody can
- * dismiss by clicking away from it feels stuck. Both are handled once, at the
- * document, however many `?`s the form is rebuilt with.
+ * It opens **at the `?` that was clicked** — below it and to the right, the way
+ * a popover has opened since menus were invented — and not, as it did at first,
+ * shoved clear of the panel and out over the map. That was a second decision
+ * riding on the first, and it was wrong: fixed positioning already escapes the
+ * scrolling box, so pushing the explanation away from the thing it explains
+ * bought nothing and cost the connection between them.
+ *
+ * Which leaves the two things the browser stops doing once a box is fixed. It
+ * does not follow its anchor when the panel scrolls — so it is **repositioned**
+ * on every scroll rather than closed, because closing a paragraph somebody is
+ * halfway through reading is the rudest possible answer to them nudging a
+ * wheel. And nothing dismisses it, so a click anywhere outside does. Both are
+ * handled once, at the document, however many `?`s the form is rebuilt with.
  */
 
 export interface HelpEntry {
@@ -155,32 +164,70 @@ export const HELP: Readonly<Record<string, readonly HelpEntry[]>> = {
   ],
 };
 
+/** Gap between the `?` and the box it opens, in pixels. */
+const GAP = 8;
+/** How close to the window's edge the box may come. */
+const MARGIN = 12;
+
 /**
- * Where the explanation goes: beside the `?`, over the map, on the screen.
+ * Where the explanation goes: at the `?`, and on the screen.
  *
  * Measured rather than guessed at, because the answer changes with the width of
  * the window and the height of the entry — the projection list is five
  * paragraphs and would run off the bottom of a short window if it opened level
- * with a control near the foot of the panel.
+ * with a control near the foot of the panel. So it opens downward when there is
+ * room below and upward when there is not, which is the one thing a popover has
+ * to get right.
  */
 function position(details: HTMLDetailsElement, body: HTMLElement): void {
   const anchor = details.getBoundingClientRect();
   const room = { width: window.innerWidth, height: window.innerHeight };
 
-  const width = Math.min(420, room.width - 24);
+  const width = Math.min(420, room.width - 2 * MARGIN);
   body.style.width = `${width}px`;
-  // Clear of the whole panel rather than just of the `?`, so every explanation
-  // opens at the same edge and none of them lies across the form it is about.
-  // On a narrow window the panel is the whole width and this clamps back to the
-  // left margin, which is the only place left to put it.
-  const panel = details.closest(".panel");
-  const clear = panel === null ? anchor.right : Math.max(anchor.right, panel.getBoundingClientRect().right);
-  body.style.left = `${Math.max(12, Math.min(clear + 10, room.width - 12 - width))}px`;
+  // Aligned with the `?` and extending right, pulled back only when that would
+  // run it off the window.
+  body.style.left = `${Math.max(MARGIN, Math.min(anchor.left, room.width - MARGIN - width))}px`;
 
   // Measured at its final width, since the width decides how many lines it is.
   body.style.top = "0px";
   const height = body.getBoundingClientRect().height;
-  body.style.top = `${Math.max(12, Math.min(anchor.top, room.height - 12 - height))}px`;
+  const below = anchor.bottom + GAP;
+  const above = anchor.top - GAP - height;
+  // Below unless below does not fit and above does — a box that opens upward
+  // when it did not have to is a box that seems to move on its own.
+  const top = below + height <= room.height - MARGIN || above < MARGIN ? below : above;
+  body.style.top = `${Math.max(MARGIN, Math.min(top, room.height - MARGIN - height))}px`;
+}
+
+/**
+ * Keep an open explanation on its `?` while the panel scrolls.
+ *
+ * Throttled to a frame, because a scroll event fires far faster than anything
+ * needs to be redrawn and each of these measures a box.
+ */
+let following = false;
+
+function follow(): void {
+  if (following) return;
+  following = true;
+  requestAnimationFrame(() => {
+    following = false;
+    for (const open of document.querySelectorAll<HTMLDetailsElement>("details.help[open]")) {
+      const body = open.querySelector<HTMLElement>(".help-body");
+      if (body === null) continue;
+      // Once the `?` itself has been scrolled out of the panel there is nothing
+      // left to point at, and a paragraph floating beside an empty strip of
+      // form is worse than no paragraph.
+      const anchor = open.getBoundingClientRect();
+      const panel = open.closest(".panel")?.getBoundingClientRect();
+      if (panel !== undefined && (anchor.bottom < panel.top || anchor.top > panel.bottom)) {
+        open.open = false;
+        continue;
+      }
+      position(open, body);
+    }
+  });
 }
 
 function closeAll(): void {
@@ -216,9 +263,11 @@ function watchOnce(): void {
   });
 
   // A fixed box does not travel with its anchor, so a scrolled panel would
-  // leave the explanation behind, pointing at a control that has moved.
-  document.addEventListener("scroll", closeAll, true);
-  window.addEventListener("resize", closeAll);
+  // leave the explanation behind. It is moved to keep up rather than closed:
+  // somebody reading a paragraph and nudging the wheel has not asked for it to
+  // go away.
+  document.addEventListener("scroll", follow, true);
+  window.addEventListener("resize", follow);
 }
 
 /** A `?` that opens a short explanation. */

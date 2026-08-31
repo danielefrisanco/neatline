@@ -1,4 +1,4 @@
-import { resolveId } from "../../src/index.js";
+import { isIconName, resolveId } from "../../src/index.js";
 import type { Arrow, Pin, Position, Route } from "../../src/index.js";
 
 /**
@@ -100,7 +100,12 @@ export function encodeMarks(marks: Marks, params: URLSearchParams): void {
       "pin",
       marks.pins
         .map((pin) => {
+          // Fixed fields rather than a tagged format: `lon,lat,label,icon`, and
+          // an icon with no label needs the empty slot kept. The label has its
+          // separators stripped on the way in, so it cannot invent a field.
           const label = clean(pin.label ?? "");
+          const icon = pin.kind ?? "";
+          if (icon !== "") return `${pair(pin.at)},${label},${icon}`;
           return label === "" ? pair(pin.at) : `${pair(pin.at)},${label}`;
         })
         .join(";"),
@@ -153,10 +158,17 @@ function readPins(raw: string | null): readonly Pin[] {
     const parts = token.split(",");
     const at = coordinate(parts[0], parts[1]);
     if (at === null) continue;
-    // Joined rather than indexed: a label hand-typed into the URL may still
-    // hold the comma this encoder would have stripped.
-    const label = clean(parts.slice(2).join(" "));
-    pins.push(label === "" ? { at } : { at, label });
+    const label = clean(parts[2] ?? "");
+    // Checked against the library's own icon table rather than passed on: an
+    // unrecognised `kind` draws a plain mark and keeps the word in the markup,
+    // which would leave a URL claiming an icon the map does not have.
+    const icon = (parts[3] ?? "").trim();
+    const kind = isIconName(icon) ? icon : "";
+    pins.push({
+      at,
+      ...(label === "" ? {} : { label }),
+      ...(kind === "" ? {} : { kind }),
+    });
   }
   return pins;
 }
