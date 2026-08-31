@@ -7,9 +7,12 @@ import {
   THEME_NAMES,
   TYPEFACE_NAMES,
   type CountryName,
+  type MapResult,
+  type Position,
 } from "../../src/index.js";
 import { decode, encode, toOptions, type Config, type Vocabulary } from "./config.js";
-import { buildForm } from "./controls.js";
+import { buildForm, type Editing } from "./controls.js";
+import { place, type Mode } from "./marks.js";
 
 /**
  * The tool: a form over `MapOptions`, and a URL that rebuilds what it made.
@@ -47,7 +50,7 @@ async function loadCountries(detail: string): Promise<void> {
   try {
     countryLists.set(detail, await countryTable(detail as "110m" | "50m"));
     // The form was built with an empty list; rebuild it now there is one.
-    buildForm(formHost, config, vocabularyFor(config), apply);
+    refreshForm();
   } catch {
     // A picker with no list is a degraded form, not a broken page — and the
     // render's own error message will already be saying what went wrong.
@@ -72,6 +75,23 @@ function must<T extends Element>(selector: string): T {
 let config: Config = decode(window.location.search, VOCABULARY);
 
 /**
+ * The last map that was drawn, kept for one method: `invert()`.
+ *
+ * It is what turns a click into a coordinate, and it has to be the *current*
+ * map — a projection or a region changed under a stale one would put every
+ * mark somewhere nobody clicked. So it is replaced by the render that wins,
+ * and never by one that arrived late.
+ */
+let drawn: MapResult | null = null;
+
+/** What a click on the map means. Not in the URL: see {@link Editing}. */
+let mode: Mode = "none";
+/** An arrow that has a tail and is waiting for its head. */
+let arrowTail: Position | null = null;
+/** Whether clicks are still adding stops to the last route. */
+let openRoute = false;
+
+/**
  * How long to wait before drawing, in milliseconds.
  *
  * A slider fires on every pixel of travel and a 50m world map is not a
@@ -91,9 +111,35 @@ function say(text: string, state: "" | "busy" | "error" = ""): void {
   statusHost.classList.toggle("is-busy", state === "busy");
 }
 
+function editing(): Editing {
+  return { mode, openRoute, onMode: setMode, onFinishRoute: finishRoute };
+}
+
+function refreshForm(): void {
+  buildForm(formHost, config, vocabularyFor(config), apply, editing());
+  // The map only looks clickable while it is: a crosshair over a map nothing
+  // responds to is a promise the page does not keep.
+  mapHost.classList.toggle("is-picking", mode !== "none");
+}
+
+function setMode(next: Mode): void {
+  mode = next;
+  // A half-drawn arrow belongs to the gesture that started it. Leaving it
+  // pending across a mode change is how the next click somewhere else becomes
+  // an arrow from wherever the last one was abandoned.
+  arrowTail = null;
+  if (next !== "route") openRoute = false;
+  refreshForm();
+}
+
+function finishRoute(): void {
+  openRoute = false;
+  refreshForm();
+}
+
 function apply(patch: Partial<Config>): void {
   config = { ...config, ...patch };
-  buildForm(formHost, config, vocabularyFor(config), apply);
+  refreshForm();
   void loadCountries(config.detail);
   writeUrl();
   schedule();
@@ -118,15 +164,16 @@ async function render(): Promise<void> {
   say("Drawing…", "busy");
   const started = performance.now();
   try {
-    const drawn = await neatline(toOptions(config));
+    const result = await neatline(toOptions(config));
     // An older render finishing after a newer one has started must not win.
     // Switching detail from 110m to 50m and back is exactly how that happens.
     if (mine !== generation) return;
+    drawn = result;
     // `toString()` rather than `svg`: the stylesheet travels inside the
     // document, which is the whole bargain the library makes. Two maps could
     // share this page safely — ids and stylesheet are both scoped to a hash of
     // the map — but there is only one here.
-    mapHost.innerHTML = drawn.toString();
+    mapHost.innerHTML = result.toString();
     mapHost.removeAttribute("aria-busy");
     say(`Drawn in ${Math.round(performance.now() - started)} ms.`);
   } catch (error: unknown) {
@@ -147,9 +194,132 @@ async function render(): Promise<void> {
   }
 }
 
+/**
+ * A click on the page, as a coordinate on the ground.
+ *
+ * Two conversions, and both of them matter. `getScreenCTM()` undoes everything
+ * the browser did to the SVG — the viewBox, and the CSS that scales it to the
+ * width of the column — which is why the map can be shown at any size and still
+ * be clicked accurately. `invert()` then undoes the projection.
+ *
+ * It returns `null` for a pixel that is not on the globe at all. That is not a
+ * failure to handle quietly: on an orthographic map the canvas corners outside
+ * the disc are *nowhere*, and a click there has to be refused out loud rather
+ * than dropped.
+ */
+function coordinateAt(svg: SVGSVGElement, map: MapResult, event: MouseEvent): Position | null {
+  const screen = svg.getScreenCTM();
+  if (screen === null) return null;
+  const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(screen.inverse());
+  const at = map.invert([point.x, point.y]);
+  // Rounded once, here, so the map draws exactly what the link says.
+  return at === null ? null : place(at);
+}
+
+/**
+ * Which country is under the pointer, found in the document rather than the
+ * data.
+ *
+ * The alternative is a point-in-polygon test over every country, which is the
+ * same work the browser has already done to paint them. `elementsFromPoint`
+ * asks it for the answer: the list comes back topmost first, so a city dot or a
+ * label sitting over a country is stepped past rather than mistaken for it.
+ */
+function pickCountry(event: MouseEvent): void {
+  for (const node of document.elementsFromPoint(event.clientX, event.clientY)) {
+    const iso = node.getAttribute("data-iso");
+    if (iso === null || iso === "") continue;
+    const kind = node.getAttribute("class") ?? "";
+    const name = node.getAttribute("data-name") ?? iso;
+    if (kind.includes("mp-country")) {
+      const on = config.highlight.includes(iso);
+      apply({
+        highlight: on
+          ? config.highlight.filter((code) => code !== iso)
+          : [...config.highlight, iso],
+      });
+      return;
+    }
+    // Neighbours carry an ISO code and cannot be highlighted — the library
+    // draws them as context and context must not compete with the subject. Say
+    // so, rather than letting a click do nothing.
+    if (kind.includes("mp-neighbour")) {
+      say(`${name} is drawn as context. Add it to the region to highlight it.`, "error");
+      return;
+    }
+  }
+  say("There is no country under that click.", "error");
+}
+
+/**
+ * Everything a pointer can do to the map.
+ *
+ * Note what is *not* here: nothing tells the map to redraw. Every gesture ends
+ * in `apply()`, which is the same path a dropdown takes — so a mark made with a
+ * mouse and a mark that arrived in a link are the same state, written the same
+ * way, and the URL is right without anything having to remember to update it.
+ */
+mapHost.addEventListener("click", (event) => {
+  if (mode === "none") return;
+  const svg = mapHost.querySelector("svg");
+  if (svg === null || drawn === null) return;
+
+  if (mode === "highlight") {
+    pickCountry(event);
+    return;
+  }
+
+  const at = coordinateAt(svg, drawn, event);
+  if (at === null) {
+    say("That click is not on the globe. Outside the disc there is no ground to mark.", "error");
+    return;
+  }
+
+  // Nothing says "done" on the successful paths on purpose: a render is about
+  // to overwrite the status line anyway, and the mark appearing on the map is a
+  // better confirmation than a sentence under it.
+  if (mode === "pin") {
+    apply({ pins: [...config.pins, { at }] });
+    return;
+  }
+
+  if (mode === "arrow") {
+    if (arrowTail === null) {
+      arrowTail = at;
+      // No render follows, so this message survives to be read.
+      say("Tail set. Now click where the arrow should point.");
+      return;
+    }
+    const from = arrowTail;
+    arrowTail = null;
+    apply({ arrows: [...config.arrows, { from, to: at }] });
+    return;
+  }
+
+  const routes = [...config.routes];
+  const last = openRoute ? routes.at(-1) : undefined;
+  if (last === undefined) routes.push({ stops: [{ at }] });
+  else routes[routes.length - 1] = { ...last, stops: [...last.stops, { at }] };
+  openRoute = true;
+  apply({ routes });
+});
+
+// The way out of a half-finished gesture, and the only keyboard shortcut here:
+// abandoning something is the one action with no control of its own, because a
+// button for it would be visible exactly when nobody is looking at the form.
+window.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  if (arrowTail !== null) {
+    arrowTail = null;
+    say("Arrow abandoned.");
+    return;
+  }
+  if (openRoute) finishRoute();
+});
+
 linkHost.addEventListener("focus", () => linkHost.select());
 
-buildForm(formHost, config, vocabularyFor(config), apply);
+refreshForm();
 writeUrl();
 void render();
 void loadCountries(config.detail);

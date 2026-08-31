@@ -53,6 +53,10 @@ const CHOSEN: Config = {
   landEdgeWidth: 1.2,
   labelSize: 17,
   credit: "Made by someone",
+  highlight: ["GR"],
+  pins: [{ at: [23.73, 37.98], label: "Athens" }],
+  arrows: [{ from: [23.73, 37.98], to: [28.98, 41.01] }],
+  routes: [{ stops: [{ at: [23.73, 37.98] }, { at: [23.32, 42.7] }] }],
 };
 
 describe("the tool's URL", () => {
