@@ -110,6 +110,44 @@ main {
   height: auto;
 }
 
+/* Shown at its own size rather than the column's, so it can be larger than the
+   room available — which is the entire point of asking for true size, and means
+   the frame has to scroll instead of cropping. */
+.map.is-zoomed {
+  overflow: auto;
+  max-height: 80vh;
+}
+
+.map.is-zoomed svg {
+  width: auto;
+  max-width: none;
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.preview label {
+  white-space: nowrap;
+}
+
+/* `width: auto`, because the shared control rule sets every select to the full
+   width of its column — right inside the form, wrong for a control sitting on
+   its own line above the map. */
+.preview select {
+  width: auto;
+  padding: 0.25rem 0.35rem;
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
 .status {
   margin: 0.85rem 0 0;
   color: var(--ink-soft);
