@@ -78,6 +78,63 @@ export interface World {
 const cache = new Map<Detail, World>();
 
 /**
+ * Read one of the files the build writes into `data/`.
+ *
+ * The one thing in the runtime path that could not work in a browser, and it
+ * was three copies of itself: `loadWorld`, `loadOcean` and `loadCover` each
+ * built a URL and read it through `node:fs/promises`. Collapsing them into one
+ * helper is what makes the browser branch smaller than the code it replaces
+ * rather than larger.
+ *
+ * **The branch is on the protocol, and the order matters.** Node has had a
+ * global `fetch` since 18, so "try fetch, fall back to the filesystem" would
+ * make every Node caller pay a failed request for a `file:` URL on the way to
+ * the answer. Asking the URL what it is costs nothing and is never wrong: a
+ * package installed on disk resolves `import.meta.url` to `file:`, and a bundle
+ * served over HTTP resolves it to the address it was served from.
+ *
+ * The `node:` import stays inside the branch and stays dynamic, so a bundler
+ * targeting the browser never reaches it. `test/browser.test.ts` bundles the
+ * library and checks exactly that, because the claim had never been verified.
+ */
+export async function readData(url: URL): Promise<unknown> {
+  if (url.protocol === "file:") {
+    const { readFile } = await import("node:fs/promises");
+    return JSON.parse(await readFile(url, "utf8")) as unknown;
+  }
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`${response.status} ${response.statusText}`);
+  }
+  return (await response.json()) as unknown;
+}
+
+/** Where a data file lives, relative to wherever this module was loaded from. */
+export function dataUrl(name: string): URL {
+  return new URL(`../data/${name}.json`, import.meta.url);
+}
+
+/**
+ * What to say when a data file will not load, which is not the same sentence
+ * in both places it can fail.
+ *
+ * On disk the fix is `npm run build:data`, and that is what the message has
+ * always said. Over HTTP it is not: telling someone who opened a web page to
+ * run a build script sends them somewhere they cannot go. What they need is the
+ * URL that was actually asked for, because the answer is nearly always that
+ * `data/` was not deployed beside the bundle.
+ */
+function unreadable(what: string, detail: Detail, url: URL, cause: unknown): Error {
+  const advice =
+    url.protocol === "file:"
+      ? "Run `npm run build:data` to regenerate it."
+      : `Nothing answered at ${url.href} — serve the package's data/ directory beside the bundle.`;
+  return new Error(`neatline: could not read ${what} for detail "${detail}". ${advice}`, {
+    cause,
+  });
+}
+
+/**
  * The ocean, cached apart from everything else because it is loaded apart.
  *
  * One polygon with a hole for every continent, and half again the size of the
@@ -91,16 +148,12 @@ export async function loadOcean(detail: Detail): Promise<GeoJsonFeatureCollectio
   const cached = oceanCache.get(detail);
   if (cached) return cached;
 
-  const url = new URL(`../data/ocean-${detail}.json`, import.meta.url);
+  const url = dataUrl(`ocean-${detail}`);
   let collection: GeoJsonFeatureCollection;
   try {
-    const { readFile } = await import("node:fs/promises");
-    collection = JSON.parse(await readFile(url, "utf8")) as GeoJsonFeatureCollection;
-  } catch {
-    throw new Error(
-      `neatline: could not read ocean geometry for detail "${detail}". ` +
-        `Run \`npm run build:data\` to regenerate it.`,
-    );
+    collection = (await readData(url)) as GeoJsonFeatureCollection;
+  } catch (cause) {
+    throw unreadable("ocean geometry", detail, url, cause);
   }
 
   oceanCache.set(detail, collection);
@@ -122,16 +175,12 @@ export async function loadCover(detail: Detail): Promise<GeoJsonFeatureCollectio
   const cached = coverCache.get(detail);
   if (cached) return cached;
 
-  const url = new URL(`../data/cover-${detail}.json`, import.meta.url);
+  const url = dataUrl(`cover-${detail}`);
   let collection: GeoJsonFeatureCollection;
   try {
-    const { readFile } = await import("node:fs/promises");
-    collection = JSON.parse(await readFile(url, "utf8")) as GeoJsonFeatureCollection;
-  } catch {
-    throw new Error(
-      `neatline: could not read land cover for detail "${detail}". ` +
-        `Run \`npm run build:data\` to regenerate it.`,
-    );
+    collection = (await readData(url)) as GeoJsonFeatureCollection;
+  } catch (cause) {
+    throw unreadable("land cover", detail, url, cause);
   }
 
   coverCache.set(detail, collection);
@@ -167,17 +216,13 @@ export async function loadWorld(detail: Detail): Promise<World> {
   const cached = cache.get(detail);
   if (cached) return cached;
 
-  const url = new URL(`../data/${detail}.json`, import.meta.url);
+  const url = dataUrl(detail);
 
   let bundle: Bundle;
   try {
-    const { readFile } = await import("node:fs/promises");
-    bundle = JSON.parse(await readFile(url, "utf8")) as Bundle;
-  } catch {
-    throw new Error(
-      `neatline: could not read bundled data for detail "${detail}". ` +
-        `Run \`npm run build:data\` to regenerate it.`,
-    );
+    bundle = (await readData(url)) as Bundle;
+  } catch (cause) {
+    throw unreadable("bundled data", detail, url, cause);
   }
 
   const topology = bundle.countries;

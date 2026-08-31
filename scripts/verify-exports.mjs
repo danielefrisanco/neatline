@@ -43,4 +43,39 @@ for (const [directory, table] of [
   }
 }
 
+/**
+ * And that the shipped bundle can be built for a browser at all.
+ *
+ * This is checked here rather than in the test suite because it is a claim
+ * about `dist/`, not about `src/` — and `dist/` is what a bundler will see.
+ *
+ * The plan said the library's `node:fs` imports were "lazy, on paths the tool
+ * never takes, so a bundler drops all three". **That was never true and this is
+ * how it was found.** A bundler does not drop a dynamic import — it has to
+ * resolve it, and esbuild targeting a browser failed outright with "Could not
+ * resolve". Two things were wrong underneath: tsup was stripping the `node:`
+ * prefix, which is the only thing that tells a bundler the name is a builtin
+ * rather than a package to go and find, and nothing told it what to do with the
+ * builtin once named. The prefix is kept now, and the `browser` field maps it
+ * to an empty module — so a browser build resolves it, never executes it
+ * (`readData` branches on the URL protocol first), and Node is untouched.
+ */
+const { build } = await import("esbuild");
+const bundled = await build({
+  entryPoints: [new URL("../dist/index.js", import.meta.url).pathname],
+  bundle: true,
+  platform: "browser",
+  format: "esm",
+  write: false,
+  logLevel: "silent",
+});
+const browser = bundled.outputFiles[0].text;
+// `(disabled):node:fs/promises` is esbuild's own marker for a module the
+// `browser` field stubbed out, so its presence is the proof rather than a
+// failure. What must not appear is a live import of one.
+const live = browser.match(/(?:import|require)\(\s*["']node:[^"']+["']\s*\)/g) ?? [];
+assert.deepEqual(live, [], `browser bundle still imports a Node builtin: ${live.join(", ")}`);
+assert.ok(browser.includes("(disabled):node:fs/promises"), "the fs branch was not stubbed — did the browser field move?");
+console.log(`  ✓ browser bundle  ${(browser.length / 1024).toFixed(0)} KB, no live node: import`);
+
 console.log("both module systems ok");
