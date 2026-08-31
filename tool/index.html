@@ -25,6 +25,18 @@
       <form id="form" class="panel" autocomplete="off"></form>
 
       <main class="stage">
+        <!-- The zoom is a property of the preview, not of the map: it changes
+             how big the picture looks on this screen and nothing about the
+             document, which is why it is here and not in the form. -->
+        <div class="preview">
+          <label class="field-hint" for="zoom">Preview</label>
+          <select id="zoom">
+            <option value="fit">Fit the column</option>
+            <option value="1">100% — true size</option>
+            <option value="0.5">50%</option>
+            <option value="2">200%</option>
+          </select>
+        </div>
         <figure id="map" class="map" aria-busy="true"></figure>
         <p id="status" class="status" role="status">Loading the map data…</p>
         <label class="share">
@@ -41,6 +53,10 @@
             <select id="export-scale"></select>
           </span>
           <span class="field-hint">The SVG is vector and has no size of its own.</span>
+          <!-- The way out of a restored map. Without it a bare address always
+               reopens the last one, and there is no way back to an empty
+               page. -->
+          <button id="start-over" type="button" class="action">Start over</button>
         </div>
       </main>
     </div>

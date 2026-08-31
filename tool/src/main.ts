@@ -16,6 +16,7 @@ import { buildForm, type Editing } from "./controls.js";
 import { exportSizes, fileName, type ExportSize } from "./export.js";
 import { rasterise, save } from "./raster.js";
 import { place, type Mode } from "./marks.js";
+import { forget, recall, recallZoom, remember, rememberZoom } from "./memory.js";
 
 /**
  * The tool: a form over `MapOptions`, and a URL that rebuilds what it made.
@@ -72,6 +73,8 @@ const linkHost = must<HTMLInputElement>("#share");
 const svgButton = must<HTMLButtonElement>("#save-svg");
 const pngButton = must<HTMLButtonElement>("#save-png");
 const scaleHost = must<HTMLSelectElement>("#export-scale");
+const zoomHost = must<HTMLSelectElement>("#zoom");
+const startOver = must<HTMLButtonElement>("#start-over");
 
 function must<T extends Element>(selector: string): T {
   const found = document.querySelector<T>(selector);
@@ -79,7 +82,16 @@ function must<T extends Element>(selector: string): T {
   return found;
 }
 
-let config: Config = decode(window.location.search, VOCABULARY);
+/**
+ * The map to draw first: the one in the address, or the one this browser was
+ * last making.
+ *
+ * A link somebody sent always wins — arriving from a link is a request for
+ * *that* map, not for the last one made on this machine — so what was stored is
+ * only consulted when the address carries nothing at all.
+ */
+const opening = recall(window.location.search) ?? window.location.search;
+let config: Config = decode(opening, VOCABULARY);
 
 /**
  * The last map that was drawn, kept for one method: `invert()`.
@@ -219,6 +231,7 @@ async function saveMap(format: "svg" | "png"): Promise<void> {
 
 function writeUrl(): void {
   const query = encode(config);
+  remember(query);
   const url = `${window.location.pathname}${query === "" ? "" : `?${query}`}`;
   // `replaceState`, not `pushState`: every keystroke on a slider is not a place
   // in someone's history to go back through.
@@ -251,6 +264,7 @@ async function render(): Promise<void> {
     // the map — but there is only one here.
     mapHost.innerHTML = result.toString();
     mapHost.removeAttribute("aria-busy");
+    applyZoom();
     say(`Drawn in ${Math.round(performance.now() - started)} ms.`);
   } catch (error: unknown) {
     if (mine !== generation) return;
@@ -398,6 +412,49 @@ window.addEventListener("keydown", (event) => {
 
 svgButton.addEventListener("click", () => void saveMap("svg"));
 pngButton.addEventListener("click", () => void saveMap("png"));
+
+/**
+ * How big the drawn map is shown, which is not how big the drawn map is.
+ *
+ * The map is a document at whatever size the canvas says, and the page has been
+ * squeezing it into the width of the column ever since there was a page — so a
+ * 4000-pixel poster and a 600-pixel thumbnail looked identical while they were
+ * being made. "Fit" is that behaviour, kept as the default because it is the
+ * right one for choosing a region. The rest are multiples of the canvas's own
+ * units, so 100% is the size the file will actually be.
+ */
+const ZOOMS = ["fit", "0.5", "1", "2"] as const;
+
+function applyZoom(): void {
+  const svg = mapHost.querySelector("svg");
+  if (svg === null) return;
+  const zoom = zoomHost.value;
+  const fits = zoom === "fit";
+  mapHost.classList.toggle("is-zoomed", !fits);
+  // Width alone: the document carries its own aspect ratio in the viewBox, and
+  // setting both is how a map gets stretched.
+  svg.style.width = fits ? "" : `${Math.round(config.width * Number(zoom))}px`;
+}
+
+zoomHost.value = recallZoom(ZOOMS) ?? "fit";
+zoomHost.addEventListener("change", () => {
+  rememberZoom(zoomHost.value);
+  applyZoom();
+});
+
+/**
+ * Back to an empty page.
+ *
+ * The other half of remembering: once a bare address reopens the last map,
+ * there is no way to ask for a blank one, and a convenience with no way out is
+ * a trap. This forgets and reloads rather than resetting the config in place,
+ * so what comes back is genuinely a fresh page and not a config that happens to
+ * equal the defaults.
+ */
+startOver.addEventListener("click", () => {
+  forget();
+  window.location.href = window.location.pathname;
+});
 
 linkHost.addEventListener("focus", () => linkHost.select());
 
