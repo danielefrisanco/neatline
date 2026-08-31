@@ -11,12 +11,22 @@
       <h1>neatline</h1>
       <p class="tagline">A region and a stylesheet, as a standalone SVG map.</p>
     </header>
-    <main>
-      <!-- Filled by the library. Empty until then, and never a spinner that
-           outlives its request: the status line says what is happening. -->
-      <figure id="map" class="map" aria-busy="true"></figure>
-      <p id="status" class="status" role="status">Loading the map data…</p>
-    </main>
+
+    <div class="layout">
+      <!-- Rebuilt from the config on every change. Empty here: a form written
+           twice, once in markup and once in code, is a form that drifts. -->
+      <form id="form" class="panel" autocomplete="off"></form>
+
+      <main class="stage">
+        <figure id="map" class="map" aria-busy="true"></figure>
+        <p id="status" class="status" role="status">Loading the map data…</p>
+        <label class="share">
+          <span class="field-label">Link to this map</span>
+          <input id="share" type="text" readonly spellcheck="false" />
+        </label>
+      </main>
+    </div>
+
+    <script type="module" src="./src/main.ts"></script>
   </body>
-  <script type="module" src="./src/main.ts"></script>
 </html>

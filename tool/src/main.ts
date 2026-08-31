@@ -1,73 +1,125 @@
-import { neatline } from "../../src/index.js";
+import {
+  neatline,
+  PALETTE_NAMES,
+  PROJECTION_NAMES,
+  REGION_PRESET_NAMES,
+  THEME_NAMES,
+  TYPEFACE_NAMES,
+} from "../../src/index.js";
+import { decode, encode, toOptions, type Config, type Vocabulary } from "./config.js";
+import { buildForm } from "./controls.js";
 
 /**
- * The skeleton: one map, one status line, and a real address.
+ * The tool: a form over `MapOptions`, and a URL that rebuilds what it made.
  *
- * 09b deliberately draws something nobody chose. The point of this sub-phase is
- * the pipeline — a bundler, an action, and data served beside the bundle — and
- * the only way to know that works is to put it on a URL and open it. A static
- * site whose deploy is first attempted at the end of a phase is a static site
- * that turns out to have worked only on the machine that built it.
+ * One state object, one render, one place the URL is written. Every control
+ * hands back a patch and nothing else happens until it reaches here — which is
+ * what makes "someone changed a dropdown" and "someone opened a shared link"
+ * the same code path, and the second one is the path that usually rots.
  *
- * The one thing here that is not scaffolding is the error handling. Every way
- * this page can fail today is a *fetch* failing, and a fetch that fails against
- * the wrong base path does not announce itself: the server answers the 404 page
- * with `content-type: text/html`, `JSON.parse` chokes on `<`, and the message
- * that reaches the console is a syntax error from three modules down. So the
- * failure is caught here and shown as what it is.
+ * The library is doing the work, and the reason a UI this thin is possible at
+ * all is that **no option in `MapOptions` is a callback**. A form can build the
+ * entire configuration as data, put it in a query string, and hand it over.
  */
 
-const map = document.querySelector<HTMLElement>("#map");
-const status = document.querySelector<HTMLElement>("#status");
+const VOCABULARY: Vocabulary = {
+  regions: REGION_PRESET_NAMES,
+  projections: PROJECTION_NAMES,
+  themes: THEME_NAMES,
+  palettes: PALETTE_NAMES,
+  typefaces: TYPEFACE_NAMES,
+};
 
-if (map === null || status === null) {
-  throw new Error("neatline: the page is missing #map or #status");
+const mapHost = must<HTMLElement>("#map");
+const statusHost = must<HTMLElement>("#status");
+const formHost = must<HTMLElement>("#form");
+const linkHost = must<HTMLInputElement>("#share");
+
+function must<T extends Element>(selector: string): T {
+  const found = document.querySelector<T>(selector);
+  if (found === null) throw new Error(`neatline: the page is missing ${selector}`);
+  return found;
 }
 
-function say(text: string, failed = false): void {
-  (status as HTMLElement).textContent = text;
-  (status as HTMLElement).classList.toggle("is-error", failed);
+let config: Config = decode(window.location.search, VOCABULARY);
+
+/**
+ * How long to wait before drawing, in milliseconds.
+ *
+ * A slider fires on every pixel of travel and a 50m world map is not a
+ * per-pixel operation. Short enough that a dropdown feels immediate, long
+ * enough that dragging a slider draws once at the end rather than forty times
+ * on the way.
+ */
+const SETTLE = 90;
+
+let pending: number | undefined;
+/** Which render is current, so a slow one cannot overwrite a newer fast one. */
+let generation = 0;
+
+function say(text: string, state: "" | "busy" | "error" = ""): void {
+  statusHost.textContent = text;
+  statusHost.classList.toggle("is-error", state === "error");
+  statusHost.classList.toggle("is-busy", state === "busy");
 }
 
-async function draw(): Promise<void> {
+function apply(patch: Partial<Config>): void {
+  config = { ...config, ...patch };
+  buildForm(formHost, config, VOCABULARY, apply);
+  writeUrl();
+  schedule();
+}
+
+function writeUrl(): void {
+  const query = encode(config);
+  const url = `${window.location.pathname}${query === "" ? "" : `?${query}`}`;
+  // `replaceState`, not `pushState`: every keystroke on a slider is not a place
+  // in someone's history to go back through.
+  window.history.replaceState(null, "", url);
+  linkHost.value = `${window.location.origin}${url}`;
+}
+
+function schedule(): void {
+  window.clearTimeout(pending);
+  pending = window.setTimeout(() => void render(), SETTLE);
+}
+
+async function render(): Promise<void> {
+  const mine = ++generation;
+  say("Drawing…", "busy");
   const started = performance.now();
-  const drawn = await neatline({
-    region: ["IT", "CH", "AT", "SI", "HR", "FR", "DE"],
-    detail: "50m",
-    projection: "conic-conformal",
-    size: [960, 620],
-    theme: "minimal",
-    palette: "sand",
-    sea: true,
-    seaNames: true,
-    terrain: ["mountain"],
-    graticule: true,
-    labelRank: 1,
-    placeRank: 1,
-    credit: "Natural Earth",
-    title: "The Alps, drawn in a browser",
-  });
-
-  // `toString()` rather than `svg`: the stylesheet ships inside the document,
-  // which is the whole bargain the library makes. Set as markup rather than
-  // through an iframe because the ids and the stylesheet are both scoped to a
-  // hash of the map — two maps on one page was the blocker that Phase 8 closed.
-  (map as HTMLElement).innerHTML = drawn.toString();
-  (map as HTMLElement).removeAttribute("aria-busy");
-  say(`Drawn in ${Math.round(performance.now() - started)} ms.`);
+  try {
+    const drawn = await neatline(toOptions(config));
+    // An older render finishing after a newer one has started must not win.
+    // Switching detail from 110m to 50m and back is exactly how that happens.
+    if (mine !== generation) return;
+    // `toString()` rather than `svg`: the stylesheet travels inside the
+    // document, which is the whole bargain the library makes. Two maps could
+    // share this page safely — ids and stylesheet are both scoped to a hash of
+    // the map — but there is only one here.
+    mapHost.innerHTML = drawn.toString();
+    mapHost.removeAttribute("aria-busy");
+    say(`Drawn in ${Math.round(performance.now() - started)} ms.`);
+  } catch (error: unknown) {
+    if (mine !== generation) return;
+    mapHost.removeAttribute("aria-busy");
+    const detail = error instanceof Error ? error.message : String(error);
+    // The base path is the failure this page was built to catch first: a wrong
+    // base does not error, it fetches the 404 page and reports a parse error
+    // from three modules down.
+    const looksLikeAWrongPath = detail.includes("JSON") || detail.includes("Unexpected token");
+    say(
+      `Could not draw the map. ${detail}` +
+        (looksLikeAWrongPath
+          ? " — that usually means the data was requested from the wrong path and a 404 page came back instead."
+          : ""),
+      "error",
+    );
+  }
 }
 
-draw().catch((error: unknown) => {
-  (map as HTMLElement).removeAttribute("aria-busy");
-  const detail = error instanceof Error ? error.message : String(error);
-  // The base path is the failure this page exists to catch, so it is named
-  // rather than left for the reader to infer from a parse error.
-  say(
-    `Could not draw the map. ${detail}` +
-      (detail.includes("JSON") || detail.includes("Unexpected token")
-        ? " — that usually means the data was requested from the wrong path and a 404 page came back instead."
-        : ""),
-    true,
-  );
-  throw error;
-});
+linkHost.addEventListener("focus", () => linkHost.select());
+
+buildForm(formHost, config, VOCABULARY, apply);
+writeUrl();
+void render();

@@ -38,6 +38,41 @@ The failure message follows the reader. On disk it still says
 telling someone who opened a web page to run a build script sends them
 somewhere they cannot go.
 
+### Every option as a control, and a link that rebuilds the map
+
+Phase 09c. A form over `MapOptions` — region as a preset or a list of ISO
+codes, projection, theme, palette, typeface, detail, the layer switches, the
+two name ranks, canvas size, credit, and sliders for `--border-width` and
+`--label-size`. Nothing in it knows what a theme *is*: the dropdowns are built
+from `THEME_NAMES`, `PALETTE_NAMES`, `PROJECTION_NAMES` and the rest, so a
+palette added to the library appears in the tool on the next build.
+
+**The whole configuration is in the URL, and that is in this sub-phase rather
+than a later one on purpose.** State threaded through afterwards has to be
+retrofitted into every control at once; doing it while there is one control is
+nearly free. Two rules keep the links usable: only what differs from the
+default is written, so a fresh page has a bare address and a shared one carries
+exactly the decisions its author made; and the keys are readable, because they
+end up somewhere people look at them.
+
+Nothing in the decoder throws. A URL is user input arriving from a link that
+may have been edited, truncated by a chat client, or written against an older
+version of the tool, and the useful answer to a bad parameter is the default —
+drawn immediately. The one thing that must not happen is a value reaching the
+library that it will reject, because that fails the whole render rather than one
+control, so an unknown region, an out-of-range number and an invented cover kind
+are each dropped at the edge. A test draws every configuration the URL can
+express.
+
+**What a URL cannot carry, said rather than hidden:** a caller-supplied GeoJSON
+region has no short form. The library still takes one; the tool declines to
+encode it, and offers a preset or a list of codes.
+
+`tool/` is typechecked now, through a second tsconfig. It needs DOM types and
+the library must not have them — with `DOM` in the library's `lib`, a stray
+`document` in `src/` typechecks cleanly and then throws in Node, which is
+exactly the class of bug 09a existed to remove.
+
 ### A skeleton, on a real address
 
 Phase 09b. `npm run tool:dev` and `npm run tool:build` build a page that draws

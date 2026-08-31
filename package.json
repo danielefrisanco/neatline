@@ -32,7 +32,7 @@
   "scripts": {
     "build": "tsup && node scripts/emit-stylesheets.mjs",
     "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.tool.json --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "verify:exports": "node scripts/verify-exports.mjs",
