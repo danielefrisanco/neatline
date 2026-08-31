@@ -1,0 +1,58 @@
+# Deploy the tool to GitHub Pages.
+#
+# Deliberately set up in 09b, when the page it publishes draws one hard-coded
+# map and nothing else. A static site whose deploy is first attempted at the end
+# of a phase is a static site that turns out to have worked only on the machine
+# that built it — and by then there are five sub-phases of work stacked behind
+# the failure.
+#
+# `npm run build:data` comes first and is not optional: `data/` is generated,
+# never committed, and Vite globs that directory at build time. Without it the
+# tool builds cleanly and ships with nothing to draw.
+name: pages
+
+on:
+  push:
+    branches: [main]
+  # So the deploy can be re-run without an empty commit — useful the first time,
+  # when Pages has to be switched to "GitHub Actions" in the repository settings
+  # before this workflow has anywhere to publish to.
+  workflow_dispatch:
+
+# One deploy at a time, and let a newer push win: a queued build of an older
+# commit has nothing to say once a newer one exists.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run build:data
+      - run: npm run tool:build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: tool/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

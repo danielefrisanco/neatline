@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>neatline</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <header class="bar">
+      <h1>neatline</h1>
+      <p class="tagline">A region and a stylesheet, as a standalone SVG map.</p>
+    </header>
+    <main>
+      <!-- Filled by the library. Empty until then, and never a spinner that
+           outlives its request: the status line says what is happening. -->
+      <figure id="map" class="map" aria-busy="true"></figure>
+      <p id="status" class="status" role="status">Loading the map data…</p>
+    </main>
+  </body>
+  <script type="module" src="./src/main.ts"></script>
+</html>

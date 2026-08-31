@@ -40,6 +40,9 @@
     "prepublishOnly": "npm run check",
     "build:data": "node scripts/build-data.mjs",
     "fetch:data": "node scripts/fetch-natural-earth.mjs",
+    "tool:dev": "vite",
+    "tool:build": "vite build",
+    "tool:preview": "vite preview",
     "gallery": "node scripts/build-gallery.mjs",
     "build:icons": "node scripts/build-icons.mjs"
   },
@@ -56,6 +59,7 @@
     "sane-topojson": "^4.0.0",
     "tsup": "^8.5.1",
     "typescript": "^5.7.2",
+    "vite": "^8.2.2",
     "vitest": "^4.1.11",
     "world-atlas": "^2.0.2"
   },

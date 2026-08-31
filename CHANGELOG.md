@@ -38,6 +38,30 @@ The failure message follows the reader. On disk it still says
 telling someone who opened a web page to run a build script sends them
 somewhere they cannot go.
 
+### A skeleton, on a real address
+
+Phase 09b. `npm run tool:dev` and `npm run tool:build` build a page that draws
+one hard-coded map, and a Pages action publishes it off `main`. Deliberately a
+page nobody chose the contents of: the sub-phase is about the pipeline, and a
+static site whose deploy is first attempted at the end of a phase is a site that
+turns out to have worked only on the machine that built it.
+
+**The base path is the trap it was set up to catch.** A GitHub project site is
+served from `/neatline/`, not `/`, and a wrong base does not fail loudly — the
+server answers a request for data with its 404 page, `JSON.parse` chokes on
+`<`, and what reaches the console is a syntax error three modules down. The dev
+server runs on the same base as the deploy, and the page names that failure
+rather than leaving it to be inferred.
+
+**Vite resolves the data URLs itself, and a copy step was written before that
+was checked.** The library asks for `../data/<name>.json` against
+`import.meta.url`; Vite recognises that pattern even with a variable in it,
+globs the directory at build time and rewrites it into a lookup of hashed asset
+URLs. The plugin that copied `data/` beside the bundle was three and a half
+megabytes of duplicate. What it does now is the part Vite cannot: fail the build
+when `data/` is empty, since an empty glob ships a tool that draws nothing and
+says nothing about why.
+
 ### The library did not bundle for a browser, and the plan said it did
 
 The plan claimed the `node:fs` imports were "lazy, on paths the tool never

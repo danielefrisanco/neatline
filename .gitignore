@@ -37,3 +37,7 @@ neatline-plan.html
 # Anchored with the path, not a leading slash: `/ideas/` would mean a directory
 # called `ideas` at the repository root, which is not where these are.
 test/ideas/
+
+# The tool's build output. Same bargain as dist/ — generated, deployed by
+# an action, never committed.
+/tool/dist/
