@@ -267,6 +267,12 @@ export function buildForm(
         undefined,
         "detail",
       ),
+    ]),
+
+    // How much of the subject, and in what shape. The projection and the canvas
+    // decide the same thing between them — what is in the picture — and they
+    // sat in different groups for no reason except the order they were built.
+    group("Frame", [
       field(
         "Projection",
         select(named(vocabulary.projections), config.projection, (value) =>
@@ -275,50 +281,12 @@ export function buildForm(
         undefined,
         "projection",
       ),
-    ]),
+      field("Width", numberBox(config.width, (value) => onChange({ width: value }))),
+      field("Height", numberBox(config.height, (value) => onChange({ height: value }))),
+      checkbox("Neighbours", config.neighbours, (on) => onChange({ neighbours: on })),
+    ], "frame"),
 
-    group("Look", [
-      field(
-        "Theme",
-        select(named(vocabulary.themes), config.theme, (value) => onChange({ theme: value })),
-        undefined,
-        "theme",
-      ),
-      field(
-        "Palette",
-        select(
-          [{ value: "", label: "none — the theme's own" }, ...named(vocabulary.palettes)],
-          config.palette,
-          (value) => onChange({ palette: value }),
-        ),
-      ),
-      field(
-        "Typeface",
-        select(
-          [{ value: "", label: "none — the theme's own" }, ...named(vocabulary.typefaces)],
-          config.typeface,
-          (value) => onChange({ typeface: value }),
-        ),
-      ),
-      field(
-        "Border width",
-        slider(config.borderWidth, [0, 4, 0.1], (value) => onChange({ borderWidth: value })),
-        "The boundary between two countries, drawn once",
-        "lines",
-      ),
-      field(
-        "Country outline",
-        slider(config.landEdgeWidth, [-1, 3, 0.1], (value) =>
-          onChange({ landEdgeWidth: value }),
-        ),
-        "The edge of each country, including its coast. Below zero leaves it to the theme",
-      ),
-      field("Label size", slider(config.labelSize, [6, 28, 1], (value) =>
-        onChange({ labelSize: value }),
-      )),
-    ]),
-
-    group("Layers", [
+    group("What it shows", [
       checkbox("Sea as a shape", config.sea, (on) => onChange({ sea: on })),
       checkbox("Name the seas", config.seaNames, (on) => onChange({ seaNames: on })),
       checkbox("Graticule", config.graticule, (on) => onChange({ graticule: on })),
@@ -332,7 +300,6 @@ export function buildForm(
             ),
           ]
         : []),
-      checkbox("Neighbours", config.neighbours, (on) => onChange({ neighbours: on })),
       ...COVERS.map((kind) =>
         checkbox(
           kind === "mountain" ? "Mountains" : kind === "desert" ? "Desert" : "Glaciers",
@@ -345,9 +312,6 @@ export function buildForm(
             }),
         ),
       ),
-    ], "layers"),
-
-    group("Names", [
       field(
         "Cities shown",
         select(
@@ -373,7 +337,7 @@ export function buildForm(
         ),
         "Lower than the dots on purpose: words collide where dots merely crowd",
       ),
-    ], "names"),
+    ], "shows"),
 
     group("Marks", [
       field(
@@ -416,9 +380,48 @@ export function buildForm(
       markList(config, onChange, vocabulary.icons),
     ], "marks"),
 
-    group("Canvas", [
-      field("Width", numberBox(config.width, (value) => onChange({ width: value }))),
-      field("Height", numberBox(config.height, (value) => onChange({ height: value }))),
+    // Last, because it is the only group whose answers do not change what is on
+    // the map. Everything above decides what the reader is being shown; this
+    // decides how it looks once that is settled.
+    group("Look", [
+      field(
+        "Theme",
+        select(named(vocabulary.themes), config.theme, (value) => onChange({ theme: value })),
+        undefined,
+        "theme",
+      ),
+      field(
+        "Palette",
+        select(
+          [{ value: "", label: "none — the theme's own" }, ...named(vocabulary.palettes)],
+          config.palette,
+          (value) => onChange({ palette: value }),
+        ),
+      ),
+      field(
+        "Typeface",
+        select(
+          [{ value: "", label: "none — the theme's own" }, ...named(vocabulary.typefaces)],
+          config.typeface,
+          (value) => onChange({ typeface: value }),
+        ),
+      ),
+      field(
+        "Border width",
+        slider(config.borderWidth, [0, 4, 0.1], (value) => onChange({ borderWidth: value })),
+        "The boundary between two countries, drawn once",
+        "lines",
+      ),
+      field(
+        "Country outline",
+        slider(config.landEdgeWidth, [-1, 3, 0.1], (value) =>
+          onChange({ landEdgeWidth: value }),
+        ),
+        "The edge of each country, including its coast. Below zero leaves it to the theme",
+      ),
+      field("Label size", slider(config.labelSize, [6, 28, 1], (value) =>
+        onChange({ labelSize: value }),
+      )),
       field("Credit", textBox(config.credit, (value) => onChange({ credit: value }))),
     ]),
   );

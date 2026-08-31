@@ -43,6 +43,32 @@ export interface HelpEntry {
  * the same size are the same size, and that sentence is the whole of what a
  * reader needs.
  */
+const LAYERS: readonly HelpEntry[] = [
+  {
+    title: "Sea as a shape",
+    body:
+      "Off, blue means “nothing was drawn here”, which is only the same as water when your region has coastline all the way round. On, the ocean is a real polygon — so land you did not ask for stops pretending to be sea.",
+  },
+  {
+    title: "Land cover",
+    body:
+      "Desert, mountain and glacier, tinted over the land. There is no forest: Natural Earth publishes no forest polygon at any scale, and inventing one would be the only made-up thing on the map.",
+  },
+  {
+    title: "The graticule, and its numbers",
+    body:
+      "Parallels and meridians, with the equator and the tropics drawn apart from the rest. Degree labels write each line's latitude or longitude on the frame — where the line meets it, which is why a globe gets none: its meridians end on the limb, in the middle of the picture.",
+  },
+];
+
+const NAMES: readonly HelpEntry[] = [
+  {
+    title: "Shown and named",
+    body:
+      "Cities are ranked 1–3: capitals and the largest, then everything over a million, then the rest. You can draw more dots than you name, and usually should — words collide where dots merely crowd.",
+  },
+];
+
 export const HELP: Readonly<Record<string, readonly HelpEntry[]>> = {
   projection: [
     {
@@ -111,23 +137,20 @@ export const HELP: Readonly<Record<string, readonly HelpEntry[]>> = {
     },
   ],
 
-  layers: [
+  frame: [
     {
-      title: "Sea as a shape",
+      title: "The canvas is part of the map",
       body:
-        "Off, blue means “nothing was drawn here”, which is only the same as water when your region has coastline all the way round. On, the ocean is a real polygon — so land you did not ask for stops pretending to be sea.",
+        "Width and height are not a preview size — they are the paper. A tall canvas of the same region shows more ground above and below it, because the region is fitted to whichever axis binds and the other one gets the slack.",
     },
     {
       title: "Neighbours",
       body:
-        "Every country the canvas can see, drawn beneath your subject as context. It never moves the framing: your region stays exactly where it was.",
-    },
-    {
-      title: "Land cover",
-      body:
-        "Desert, mountain and glacier, tinted over the land. There is no forest: Natural Earth publishes no forest polygon at any scale, and inventing one would be the only made-up thing on the map.",
+        "Every country the canvas can see, drawn beneath your subject as context. It never moves the framing: your region stays exactly where it was, and the land that was already in the picture stops pretending to be sea.",
     },
   ],
+
+  layers: LAYERS,
 
   lines: [
     {
@@ -155,13 +178,11 @@ export const HELP: Readonly<Record<string, readonly HelpEntry[]>> = {
     },
   ],
 
-  names: [
-    {
-      title: "Shown and named",
-      body:
-        "Cities are ranked 1–3: capitals and the largest, then everything over a million, then the rest. You can draw more dots than you name, and usually should — words collide where dots merely crowd.",
-    },
-  ],
+  names: NAMES,
+
+  // The group that carries both, since they answer one question between
+  // them: what is on the map besides the land.
+  shows: [...LAYERS, ...NAMES],
 };
 
 /** Gap between the `?` and the box it opens, in pixels. */
