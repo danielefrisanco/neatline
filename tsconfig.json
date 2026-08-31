@@ -20,5 +20,10 @@
     "resolveJsonModule": true,
     "noEmit": true
   },
-  "include": ["src", "test", "*.config.ts"]
+  "include": ["src", "test", "*.config.ts"],
+  // `test/dom` is the tool's own tests, and they hold `document`. They belong
+  // to the tsconfig that has DOM in its `lib` — the same boundary 09e walked
+  // into from the other side, when a test importing the export module dragged
+  // `window` into this compile.
+  "exclude": ["test/dom"]
 }

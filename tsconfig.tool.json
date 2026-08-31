@@ -8,5 +8,5 @@
     // is exactly the class of bug 09a existed to remove.
     "lib": ["ES2022", "DOM", "DOM.Iterable"]
   },
-  "include": ["tool", "vite.config.ts"]
+  "include": ["tool", "test/dom", "vite.config.ts"]
 }
