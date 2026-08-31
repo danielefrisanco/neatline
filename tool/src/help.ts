@@ -172,6 +172,11 @@ export const HELP: Readonly<Record<string, readonly HelpEntry[]>> = {
         "Every mark is stored as a longitude and a latitude, so changing the projection, the region or the canvas size moves the map underneath them and leaves them where you put them. The credit line is the opposite: that one is on the paper and stays in its corner.",
     },
     {
+      title: "Without a mouse",
+      body:
+        "Tab to the map and a small cross appears. The arrow keys move it — ten units a press, one with Shift held — and Enter places the mark where it stands. Escape puts it away. The coordinate above the map follows the cross as well as the pointer, so you can see where you are before committing to it.",
+    },
+    {
       title: "The far side of a globe",
       body:
         "An orthographic map shows half a world, and the canvas corners outside the disc are not anywhere at all. A click that lands there is refused rather than guessed at — the same rule the library uses when it declines to draw a pin behind the horizon.",

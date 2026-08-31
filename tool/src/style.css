@@ -138,6 +138,19 @@ main {
   white-space: nowrap;
 }
 
+/* Pushed to the far end, and tabular so the digits do not shuffle the line
+   sideways as the pointer moves. Reserves its own width for the same reason:
+   an empty readout that grows when it fills would nudge everything beside it. */
+.where {
+  margin-left: auto;
+  min-width: 12ch;
+  text-align: right;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
 /* `width: auto`, because the shared control rule sets every select to the full
    width of its column — right inside the form, wrong for a control sitting on
    its own line above the map. */
@@ -192,6 +205,17 @@ main {
   top: 1.5rem;
   max-height: calc(100vh - 3rem);
   overflow-y: auto;
+  /* Above the map, and the reason is two rules meeting.
+     `position: sticky` creates a stacking context, so the explanation's own
+     `z-index: 5` is spent *inside* this panel and cannot lift it past anything
+     outside. And the map became positioned when the keyboard's cross needed a
+     box to be placed against — so it joined the same painting layer as this
+     panel and, being later in the document, went on top of it. The `?` opened
+     underneath the map.
+     Naming a level here settles it: the panel and everything it contains paint
+     above the map, which is what a panel of controls beside a picture should do
+     anyway. */
+  z-index: 2;
 }
 
 .group {
