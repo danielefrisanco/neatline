@@ -1305,6 +1305,15 @@ kept on public-domain sources on purpose rather than by luck.
 | Land cover — desert, mountain, glacier | Natural Earth, vendored under `vendor/` | Public domain | None |
 | Sea and gulf names | Natural Earth, vendored under `vendor/` | Public domain | None |
 | Projection maths | `d3-geo` | ISC | None |
+| Topology decoding | `topojson-client` | ISC | None |
+| Pin icons | [Maki](https://labs.mapbox.com/maki-icons/) by Mapbox, vendored into `src/icons.ts` | CC0-1.0 | None |
+
+`d3-geo` and `topojson-client` are ordinary dependencies rather than bundled
+into `dist`, so their own licence files arrive with them and their terms are
+satisfied without this package restating anything. Maki is CC0 and vendored,
+because 29 inlined path strings is cheaper than a dependency. The Natural Earth
+extracts under `vendor/` are committed rather than fetched, which is why
+`npm run build:data` needs no network — and why a publish does not either.
 
 If a source that *does* require attribution is ever added — Eurostat GISCO or
 OpenStreetMap are the two that would tempt it — the credit has to be rendered

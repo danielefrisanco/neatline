@@ -2,6 +2,30 @@
   "name": "neatline",
   "version": "0.15.0",
   "description": "Generate standalone, CSS-themeable SVG maps from a region and a stylesheet.",
+  "keywords": [
+    "map",
+    "svg",
+    "cartography",
+    "geojson",
+    "topojson",
+    "natural-earth",
+    "projection",
+    "d3-geo",
+    "choropleth",
+    "static-maps"
+  ],
+  "author": {
+    "name": "Daniele Frisanco",
+    "url": "https://danielefrisanco.github.io/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielefrisanco/neatline.git"
+  },
+  "homepage": "https://danielefrisanco.github.io/neatline/",
+  "bugs": {
+    "url": "https://github.com/danielefrisanco/neatline/issues"
+  },
   "license": "MIT",
   "type": "module",
   "sideEffects": false,

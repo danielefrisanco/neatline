@@ -1,0 +1,53 @@
+# Publish to npm when a release is published.
+#
+# **No token.** Authentication is OIDC — npm's Trusted Publishers — so there is
+# no `NPM_TOKEN` in this repository's secrets to leak, rotate or forget. Two
+# things make it work and both are easy to leave out: `id-token: write` on this
+# job, and `registry-url` on `setup-node`, which is what writes the `.npmrc`
+# that the exchange needs.
+#
+# **It has to be configured on npm's side once**, under the package's settings:
+# a trusted publisher naming this repository and this workflow file. Until that
+# exists the publish fails with an authentication error, which is the safe
+# direction for it to fail in.
+#
+# The job runs `npm publish` and nothing else, deliberately. `prepublishOnly` is
+# `npm run check` — build the data, typecheck, test, build both module systems,
+# verify every export path resolves — so the gate is the same one a person gets
+# locally, and adding the steps here as well would only run them twice.
+#
+# `build:data` needs no network: it reads `world-atlas` and `sane-topojson` out
+# of node_modules and the Natural Earth extracts committed under `vendor/`.
+# Downloading from Natural Earth is `npm run fetch:data`, which is manual and
+# rare, and never part of a publish.
+name: publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # The half of Trusted Publishers that lives here. Without it npm has no
+      # identity to check and the publish is refused.
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          # The other half: this is what writes the .npmrc pointing at the
+          # public registry, which the OIDC exchange reads.
+          registry-url: "https://registry.npmjs.org"
+
+      - run: npm ci
+
+      # `--access public` because a first publish of an unscoped package
+      # defaults to public anyway, and saying so means the command does not
+      # change meaning if the package is ever scoped.
+      - run: npm publish --access public
