@@ -1,7 +1,7 @@
 import type { CountryName } from "../../src/index.js";
 import type { Config } from "./config.js";
 import { helpFor } from "./help.js";
-import { markCount, MODES, readCoordinate, type Mode } from "./marks.js";
+import { markCount, MODES, readCoordinate, relabelPin, repinIcon, type Mode } from "./marks.js";
 import { buildPicker } from "./picker.js";
 
 /**
@@ -493,19 +493,10 @@ function markList(config: Config, onChange: Change, icons: readonly string[]): H
     label.placeholder = "Label";
     label.setAttribute("aria-label", `Label for the pin at ${readCoordinate(pin.at)}`);
     label.addEventListener("change", () => {
-      const text = label.value.trim();
-      onChange({
-        pins: config.pins.map((other, i) =>
-          i === index ? (text === "" ? { at: other.at } : { at: other.at, label: text }) : other,
-        ),
-      });
+      onChange({ pins: relabelPin(config.pins, index, label.value) });
     });
     const icon = iconSelect(icons, pin.kind ?? "", (value) => {
-      onChange({
-        pins: config.pins.map((other, i) =>
-          i === index ? { ...other, kind: value === "" ? undefined : value } : other,
-        ),
-      });
+      onChange({ pins: repinIcon(config.pins, index, value) });
     });
     icon.className = "mark-icon";
     icon.setAttribute("aria-label", `Icon for the pin at ${readCoordinate(pin.at)}`);

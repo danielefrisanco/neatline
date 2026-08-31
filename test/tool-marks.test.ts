@@ -9,7 +9,15 @@ import {
   TYPEFACE_NAMES,
 } from "../src/index.js";
 import { DEFAULTS, decode, encode, toOptions, type Config, type Vocabulary } from "../tool/src/config.js";
-import { decodeMarks, encodeMarks, markCount, readCoordinate, NO_MARKS } from "../tool/src/marks.js";
+import {
+  decodeMarks,
+  encodeMarks,
+  markCount,
+  readCoordinate,
+  relabelPin,
+  repinIcon,
+  NO_MARKS,
+} from "../tool/src/marks.js";
 
 /**
  * The marks a pointer makes, and the link they have to survive in.
@@ -197,6 +205,52 @@ describe("marks on the map", () => {
       expect(map?.svg).toContain("mp-pin");
     }
     expect(wide?.project(at)).not.toEqual(tall?.project(at));
+  });
+});
+
+describe("editing a pin", () => {
+  const pins = [
+    { at: [2.35, 48.86] as [number, number], kind: "airport" },
+    { at: [13.4, 52.5] as [number, number], label: "Berlin" },
+  ];
+
+  /**
+   * The bug this exists for: naming a pin used to rebuild it as `{ at, label }`
+   * and drop everything else, so typing "Charles de Gaulle" into a pin dropped
+   * with an airport on it turned it back into a plain mark.
+   */
+  it("keeps the icon when the name changes", () => {
+    expect(relabelPin(pins, 0, "Charles de Gaulle")[0]).toEqual({
+      at: [2.35, 48.86],
+      kind: "airport",
+      label: "Charles de Gaulle",
+    });
+  });
+
+  it("keeps the icon when the name is cleared", () => {
+    const cleared = relabelPin([{ at: [0, 0], label: "x", kind: "rail" }], 0, "   ");
+    expect(cleared[0]).toEqual({ at: [0, 0], kind: "rail" });
+    expect("label" in (cleared[0] ?? {})).toBe(false);
+  });
+
+  it("keeps the name when the icon changes, and drops the icon on none", () => {
+    expect(repinIcon(pins, 1, "hospital")[1]).toEqual({
+      at: [13.4, 52.5],
+      label: "Berlin",
+      kind: "hospital",
+    });
+    const plain = repinIcon(pins, 0, "")[0];
+    expect(plain).toEqual({ at: [2.35, 48.86] });
+    expect("kind" in (plain ?? {})).toBe(false);
+  });
+
+  it("leaves every other pin exactly as it was", () => {
+    expect(relabelPin(pins, 0, "Roissy")[1]).toBe(pins[1]);
+    expect(repinIcon(pins, 1, "rail")[0]).toBe(pins[0]);
+  });
+
+  it("caps a name typed into the list, as the URL does", () => {
+    expect(relabelPin(pins, 0, "x".repeat(200))[0]?.label).toHaveLength(40);
   });
 });
 

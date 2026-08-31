@@ -220,6 +220,44 @@ function coordinate(lon: string | undefined, lat: string | undefined): Position 
   return [round(Math.min(180, Math.max(-180, x))), round(Math.min(90, Math.max(-90, y)))];
 }
 
+/**
+ * Rename a pin, and change a pin's icon.
+ *
+ * Here rather than inline in the mark list's event handlers, because that is
+ * where the bug was: the rename rebuilt the pin as `{ at, label }` and dropped
+ * everything else on it, so typing a name into a pin that had been dropped with
+ * an airport on it turned it back into a plain mark. A handler that constructs
+ * a new object instead of amending the old one loses whatever it did not think
+ * to mention, and what it does not think to mention grows with every field
+ * added later.
+ *
+ * Spread, therefore, and tested — which is the other half of the reason they
+ * are functions. A transformation buried in a DOM listener cannot be tested
+ * where this library's tests run.
+ */
+export function relabelPin(pins: readonly Pin[], index: number, label: string): Pin[] {
+  const text = label.trim().slice(0, LIMITS.label);
+  return pins.map((pin, i) =>
+    i !== index ? pin : text === "" ? withoutLabel(pin) : { ...pin, label: text },
+  );
+}
+
+export function repinIcon(pins: readonly Pin[], index: number, icon: string): Pin[] {
+  return pins.map((pin, i) => {
+    if (i !== index) return pin;
+    if (icon === "" || !isIconName(icon)) {
+      const { kind: _kind, ...rest } = pin;
+      return rest;
+    }
+    return { ...pin, kind: icon };
+  });
+}
+
+function withoutLabel(pin: Pin): Pin {
+  const { label: _label, ...rest } = pin;
+  return rest;
+}
+
 /** How many marks are on the map, for the "nothing here yet" case. */
 export function markCount(marks: Marks): number {
   return marks.highlight.length + marks.pins.length + marks.arrows.length + marks.routes.length;
