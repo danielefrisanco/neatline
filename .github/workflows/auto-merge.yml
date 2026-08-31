@@ -91,12 +91,22 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
-
+      # No checkout, deliberately. `gh pr merge` merges through the API and
+      # needs nothing on disk — but given a git repository it also tries to
+      # clean up *locally*: delete the local branch and switch to main. In a
+      # shallow clone there is no `origin/main` to switch to, so it merged the
+      # pull request correctly and then exited 1 with "'origin/main' is not a
+      # commit", which reads like a merge that failed and was not one.
+      #
+      # `GH_REPO` is what a checkout was providing: the repository to act on.
+      # Without a working copy, `--delete-branch` deletes the remote branch and
+      # has no local one to be confused by.
+      #
       # A merge commit rather than a squash, to match the history this
       # repository already has — and because a branch here is usually one commit
       # carrying one long explanation, which a squash would only repeat.
       - name: Merge it
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
         run: gh pr merge "$GITHUB_REF_NAME" --merge --delete-branch
