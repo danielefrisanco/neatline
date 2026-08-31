@@ -49,8 +49,9 @@ describe("marks in the URL", () => {
       ...DEFAULTS,
       highlight: ["FR", "DE"],
       pins: [
-        { at: [2.3522, 48.8566], label: "Paris" },
+        { at: [2.3522, 48.8566], label: "Paris", kind: "airport" },
         { at: [30.5234, 50.4501] },
+        { at: [13.405, 52.52], kind: "hospital" },
       ],
       arrows: [{ from: [2.3522, 48.8566], to: [30.5234, 50.4501] }],
       routes: [
@@ -112,6 +113,30 @@ describe("marks in the URL", () => {
     encodeMarks({ ...NO_MARKS, pins: [{ at: [0, 0], label: "Paris, France; north|ish" }] }, params);
     expect(params.get("pin")).toBe("0,0,Paris France north ish");
     expect(decodeMarks(params).pins).toEqual([{ at: [0, 0], label: "Paris France north ish" }]);
+  });
+
+  /**
+   * Each pin keeps its own icon, so a map can carry an airport, a hospital and
+   * three plain marks. The empty label slot has to survive the round trip: an
+   * icon with no name is `lon,lat,,airport`, and losing the comma would read the
+   * icon as the label.
+   */
+  it("gives every pin its own icon, named or not", () => {
+    const params = new URLSearchParams();
+    encodeMarks(
+      { ...NO_MARKS, pins: [{ at: [0, 0], kind: "airport" }, { at: [1, 1], label: "Kyiv", kind: "rail" }] },
+      params,
+    );
+    expect(params.get("pin")).toBe("0,0,,airport;1,1,Kyiv,rail");
+    expect(decodeMarks(params).pins).toEqual([
+      { at: [0, 0], kind: "airport" },
+      { at: [1, 1], label: "Kyiv", kind: "rail" },
+    ]);
+  });
+
+  it("drops an icon the library has no glyph for", () => {
+    // Kept, the map would draw a plain mark while the URL claimed an icon.
+    expect(round("pin=0,0,,unicorn").pins).toEqual([{ at: [0, 0] }]);
   });
 
   it("caps what a crafted link can put on the page", () => {

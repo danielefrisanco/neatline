@@ -136,13 +136,18 @@ describe("the config as library options", () => {
     });
   });
 
-  it("puts the chosen icon on every pin, and nothing on none", () => {
-    const pins = [{ at: [2, 48] as [number, number] }, { at: [10, 50] as [number, number] }];
+  /**
+   * The icon belongs to the pin, not to the map. `pinIcon` is a setting on the
+   * *tool* — what the next click drops — so it must not reach into pins that
+   * were already placed with something else.
+   */
+  it("leaves every pin the icon it was dropped with", () => {
+    const pins = [
+      { at: [2, 48] as [number, number], kind: "airport" },
+      { at: [10, 50] as [number, number] },
+    ];
+    expect(toOptions({ ...DEFAULTS, pins, pinIcon: "hospital" }).pins).toEqual(pins);
     expect(toOptions({ ...DEFAULTS, pins, pinIcon: "" }).pins).toEqual(pins);
-    expect(toOptions({ ...DEFAULTS, pins, pinIcon: "airport" }).pins).toEqual([
-      { at: [2, 48], kind: "airport" },
-      { at: [10, 50], kind: "airport" },
-    ]);
   });
 
   /**
@@ -156,13 +161,17 @@ describe("the config as library options", () => {
     expect(toOptions({ ...DEFAULTS, pinSize: 14 }).tokens).toEqual({ "--pin-size": "14" });
 
     const big = await neatline({
-      ...toOptions({ ...DEFAULTS, pinSize: 14, pinIcon: "airport", pins: [{ at: [2.35, 48.86] }] }),
+      ...toOptions({
+        ...DEFAULTS,
+        pinSize: 14,
+        pins: [{ at: [2.35, 48.86], kind: "airport" }],
+      }),
       detail: "110m",
       size: [400, 300],
       theme: "minimal",
     });
     const small = await neatline({
-      ...toOptions({ ...DEFAULTS, pinIcon: "airport", pins: [{ at: [2.35, 48.86] }] }),
+      ...toOptions({ ...DEFAULTS, pins: [{ at: [2.35, 48.86], kind: "airport" }] }),
       detail: "110m",
       size: [400, 300],
       theme: "minimal",

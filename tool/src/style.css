@@ -450,8 +450,22 @@ input[type="search"] {
 
 .mark {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.35rem;
+}
+
+/* A second line, shared with the remove button. A coordinate, a name, an icon
+   and a button do not fit across a nineteen-rem panel; two and two do. */
+.mark-icon {
+  flex: 1 1 8rem;
+  padding: 0.15rem 0.3rem;
+  font: inherit;
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  background: var(--page);
+  border: 1px solid var(--line);
+  border-radius: 4px;
 }
 
 /* Tabular and fixed, so a column of coordinates reads as a column rather than
@@ -476,8 +490,12 @@ input[type="search"] {
   color: var(--ink-soft);
 }
 
+/* A small basis, not `auto`. Once the row wraps, a flex item with an automatic
+   basis takes its natural width and pushes the next item onto a line of its own
+   rather than shrinking — which put the coordinate, the name and the remove
+   button on three lines each. */
 .mark-label {
-  flex: 1 1 auto;
+  flex: 1 1 4rem;
   min-width: 0;
   padding: 0.2rem 0.35rem;
   font: inherit;

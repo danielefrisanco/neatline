@@ -70,13 +70,12 @@ export interface Config extends Marks {
   /** `--label-size`, in user units. */
   labelSize: number;
   /**
-   * The Maki icon every pin carries, or "" for a plain mark.
+   * The Maki icon the *next* pin will carry, or "" for a plain mark.
    *
-   * One choice for the whole map rather than one per pin. The library takes a
-   * `kind` on each pin and would draw a different icon on every one of them —
-   * but a per-pin icon needs a fourth field in the URL and a dropdown in every
-   * row of the mark list, and a map whose pins all mean the same thing is what
-   * people are actually making.
+   * Not a property of the map: each pin stores its own `kind`, so a map can
+   * carry an airport, a hospital and three plain marks. This is the setting on
+   * the tool that decides what the next click drops — which is why it lives
+   * beside the gesture and disappears with it.
    */
   pinIcon: string;
   /** `--pin-size`, the radius of a pin's mark in user units. */
@@ -305,14 +304,7 @@ export function toOptions(config: Config): MapOptions {
     neighbours: config.neighbours,
     ...(config.terrain.length > 0 ? { terrain: config.terrain } : {}),
     ...(config.highlight.length > 0 ? { highlight: config.highlight } : {}),
-    ...(config.pins.length > 0
-      ? {
-          pins:
-            config.pinIcon === ""
-              ? config.pins
-              : config.pins.map((pin) => ({ ...pin, kind: config.pinIcon })),
-        }
-      : {}),
+    ...(config.pins.length > 0 ? { pins: config.pins } : {}),
     ...(config.arrows.length > 0 ? { arrows: config.arrows } : {}),
     ...(config.routes.length > 0 ? { routes: config.routes } : {}),
     placeRank: config.placeRank,

@@ -388,21 +388,32 @@ export function buildForm(
       ...(editing.openRoute
         ? [button("Finish this route", editing.onFinishRoute)]
         : []),
-      field(
-        "Pin icon",
-        select(
-          [{ value: "", label: "none — a plain mark" }, ...named(vocabulary.icons)],
-          config.pinIcon,
-          (value) => onChange({ pinIcon: value }),
-        ),
-        "One icon for every pin on the map",
-      ),
-      field(
-        "Pin size",
-        slider(config.pinSize, [3, 20, 0.5], (value) => onChange({ pinSize: value })),
-        "The mark and the icon inside it grow together",
-      ),
-      markList(config, onChange),
+      // Shown only while pins are being dropped. It sets what the *next* click
+      // makes, so outside that gesture it is a control with nothing to act on —
+      // and an existing pin's icon is changed in its own row below.
+      ...(editing.mode === "pin"
+        ? [
+            field(
+              "Icon for the next pin",
+              iconSelect(vocabulary.icons, config.pinIcon, (value) =>
+                onChange({ pinIcon: value }),
+              ),
+              "Each pin keeps the icon it was dropped with",
+            ),
+          ]
+        : []),
+      // The size is one number for the whole map — it arrives as a token the
+      // geometry reads — so it stays as long as there is a pin to size.
+      ...(config.pins.length > 0 || editing.mode === "pin"
+        ? [
+            field(
+              "Pin size",
+              slider(config.pinSize, [3, 20, 0.5], (value) => onChange({ pinSize: value })),
+              "The mark and the icon inside it grow together",
+            ),
+          ]
+        : []),
+      markList(config, onChange, vocabulary.icons),
     ], "marks"),
 
     group("Canvas", [
@@ -431,7 +442,20 @@ function button(label: string, onClick: () => void): HTMLElement {
  * the last one they made. It is also the only place a pin can be named — the
  * gesture puts it somewhere, and the word belongs to a keyboard.
  */
-function markList(config: Config, onChange: Change): HTMLElement {
+/** The icon list, with the plain mark at the top of it. */
+function iconSelect(
+  icons: readonly string[],
+  value: string,
+  onChange: (value: string) => void,
+): HTMLSelectElement {
+  return select(
+    [{ value: "", label: "none — a plain mark" }, ...named(icons)],
+    value,
+    onChange,
+  );
+}
+
+function markList(config: Config, onChange: Change, icons: readonly string[]): HTMLElement {
   const wrap = document.createElement("div");
   wrap.className = "marks";
 
@@ -476,7 +500,16 @@ function markList(config: Config, onChange: Change): HTMLElement {
         ),
       });
     });
-    line.append(at, label, remove("Remove this pin", () =>
+    const icon = iconSelect(icons, pin.kind ?? "", (value) => {
+      onChange({
+        pins: config.pins.map((other, i) =>
+          i === index ? { ...other, kind: value === "" ? undefined : value } : other,
+        ),
+      });
+    });
+    icon.className = "mark-icon";
+    icon.setAttribute("aria-label", `Icon for the pin at ${readCoordinate(pin.at)}`);
+    line.append(at, label, icon, remove("Remove this pin", () =>
       onChange({ pins: config.pins.filter((_, i) => i !== index) }),
     ));
     wrap.append(line);
