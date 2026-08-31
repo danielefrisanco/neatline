@@ -212,12 +212,19 @@ const MODE_LABELS: Readonly<Record<Mode, string>> = {
   route: "trace a route",
 };
 
+/**
+ * Every one of these names the keyboard as well as the pointer.
+ *
+ * The cross was reachable and undocumented — tab to the map, arrows, Enter —
+ * which is a feature only somebody who already knew about it would find. This
+ * is the line a person is reading at the moment they are about to click.
+ */
 const MODE_HINTS: Readonly<Record<Mode, string>> = {
   none: "Choose a gesture and the map becomes something you click.",
-  highlight: "Click a country to highlight it, and again to let it go.",
-  pin: "Click anywhere on the ground. Name the pin in the list below.",
-  arrow: "Click where the arrow starts, then where it points.",
-  route: "Click each stop in order, then finish the line.",
+  highlight: "Click a country to highlight it, and again to let it go. Or tab to the map and use the arrows and Enter.",
+  pin: "Click anywhere on the ground, or tab to the map and use the arrows and Enter. Name the pin in the list below.",
+  arrow: "Click where the arrow starts, then where it points. The arrows and Enter do the same from the keyboard.",
+  route: "Click each stop in order, then finish the line. The arrows and Enter do the same from the keyboard.",
 };
 
 /**

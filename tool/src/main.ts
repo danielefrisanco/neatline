@@ -16,7 +16,7 @@ import { decode, encode, toOptions, type Config, type Vocabulary } from "./confi
 import { buildForm, type Editing } from "./controls.js";
 import { exportSizes, fileName, type ExportSize } from "./export.js";
 import { rasterise, save } from "./raster.js";
-import { place, type Mode } from "./marks.js";
+import { place, readCoordinate, type Mode } from "./marks.js";
 import { forget, recall, recallZoom, remember, rememberZoom } from "./memory.js";
 import { notesFor, type Notes } from "./notes.js";
 
@@ -77,6 +77,7 @@ const pngButton = must<HTMLButtonElement>("#save-png");
 const scaleHost = must<HTMLSelectElement>("#export-scale");
 const zoomHost = must<HTMLSelectElement>("#zoom");
 const startOver = must<HTMLButtonElement>("#start-over");
+const whereHost = must<HTMLElement>("#where");
 
 function must<T extends Element>(selector: string): T {
   const found = document.querySelector<T>(selector);
@@ -427,6 +428,48 @@ function act(x: number, y: number): void {
   apply({ routes });
 }
 
+/**
+ * Where the pointer is, in the units every mark is stored in.
+ *
+ * Beside the map rather than on it: a coordinate that follows the cursor covers
+ * the thing being pointed at, which is the one place a reader is looking.
+ *
+ * It runs through `invert()` exactly as a click does, so it says the same thing
+ * the click will store — including "not on the globe" outside an orthographic
+ * disc, which is a far better way to learn that rule than being refused by it
+ * after clicking.
+ */
+function showWhere(x: number | null, y: number | null): void {
+  const svg = mapHost.querySelector("svg");
+  if (x === null || y === null || svg === null || drawn === null) {
+    whereHost.textContent = "";
+    return;
+  }
+  const at = coordinateAt(svg, drawn, x, y);
+  whereHost.textContent = at === null ? "not on the globe" : readCoordinate(at);
+}
+
+// Throttled to a frame: a pointer reports far more often than a line of text
+// needs rewriting, and each of these inverts a projection.
+let tracking = false;
+let pointer: { x: number; y: number } | null = null;
+
+mapHost.addEventListener("pointermove", (event) => {
+  pointer = { x: event.clientX, y: event.clientY };
+  if (tracking) return;
+  tracking = true;
+  requestAnimationFrame(() => {
+    tracking = false;
+    showWhere(pointer?.x ?? null, pointer?.y ?? null);
+  });
+});
+
+mapHost.addEventListener("pointerleave", () => {
+  pointer = null;
+  // Back to the cross if the keyboard is driving, empty if nothing is.
+  showCursorWhere();
+});
+
 mapHost.addEventListener("click", (event) => act(event.clientX, event.clientY));
 
 /**
@@ -456,6 +499,17 @@ const crosshair = document.createElement("div");
 crosshair.className = "crosshair";
 crosshair.setAttribute("aria-hidden", "true");
 
+/** The readout follows the cross too, so the keyboard is not flying blind. */
+function showCursorWhere(): void {
+  const svg = mapHost.querySelector("svg");
+  if (cursor === null || svg === null) {
+    whereHost.textContent = "";
+    return;
+  }
+  const screen = screenAt(svg, cursor);
+  showWhere(screen?.x ?? null, screen?.y ?? null);
+}
+
 function drawCursor(): void {
   const svg = mapHost.querySelector("svg");
   if (cursor === null || svg === null) {
@@ -470,6 +524,7 @@ function drawCursor(): void {
   // Re-appended rather than left in place: every render replaces the map's
   // innerHTML, which takes the cross with it.
   mapHost.append(crosshair);
+  showCursorWhere();
 }
 
 function moveCursor(dx: number, dy: number): void {

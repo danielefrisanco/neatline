@@ -36,6 +36,10 @@
             <option value="0.5">50%</option>
             <option value="2">200%</option>
           </select>
+          <!-- Where the pointer is, in the units every mark is stored in. Beside
+               the map rather than on it: a coordinate that follows the cursor
+               covers the thing being pointed at. -->
+          <output id="where" class="where" for="map"></output>
         </div>
         <!-- Focusable, because since 09d this is the tool's main input surface
              and it was reachable only with a mouse. The label says what the
