@@ -90,6 +90,12 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      # Asking for a workflow run is a write to Actions, and a job gets only the
+      # scopes it names. Without this the dispatch below comes back "403:
+      # Resource not accessible by integration" — a permissions error wearing
+      # the words of an access error, which is a long way from "you did not ask
+      # for actions: write".
+      actions: write
     steps:
       # No checkout, deliberately. `gh pr merge` merges through the API and
       # needs nothing on disk — but given a git repository it also tries to
