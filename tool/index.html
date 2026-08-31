@@ -37,7 +37,17 @@
             <option value="2">200%</option>
           </select>
         </div>
-        <figure id="map" class="map" aria-busy="true"></figure>
+        <!-- Focusable, because since 09d this is the tool's main input surface
+             and it was reachable only with a mouse. The label says what the
+             keys do, since there is nothing on screen to read until the cross
+             appears. -->
+        <figure
+          id="map"
+          class="map"
+          aria-busy="true"
+          tabindex="0"
+          aria-label="The map. With a gesture chosen under Marks, the arrow keys move a cross and Enter places a mark."
+        ></figure>
         <p id="status" class="status" role="status">Loading the map data…</p>
         <label class="share">
           <span class="field-label">Link to this map</span>

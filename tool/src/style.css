@@ -97,6 +97,8 @@ main {
 .map {
   margin: 0;
   padding: 0;
+  /* The cross is placed against this box. */
+  position: relative;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 6px;
@@ -628,4 +630,75 @@ input[type="search"] {
   display: flex;
   flex-direction: column;
   gap: 0;
+}
+
+/* ---- the keyboard's cross ---- */
+
+/* Two hairlines through one point rather than a dot, because a dot the size of
+   a pin mark hides the thing it is being aimed at. Never a pointer target: it
+   is a picture of where the keyboard is, and a click must reach the map under
+   it. */
+.crosshair {
+  position: absolute;
+  width: 21px;
+  height: 21px;
+  margin: -11px 0 0 -11px;
+  pointer-events: none;
+}
+
+.crosshair::before,
+.crosshair::after {
+  content: "";
+  position: absolute;
+  background: var(--ink);
+  box-shadow: 0 0 0 1px var(--panel);
+}
+
+.crosshair::before {
+  left: 10px;
+  top: 0;
+  width: 1px;
+  height: 21px;
+}
+
+.crosshair::after {
+  top: 10px;
+  left: 0;
+  height: 1px;
+  width: 21px;
+}
+
+/* ---- one column, on a phone ---- */
+
+@media (max-width: 60rem) {
+  /* The map first. On one column the form is a screen and a half of controls,
+     and putting it above the map means scrolling past everything you are
+     adjusting to see what it did. */
+  .stage {
+    order: -1;
+  }
+
+  /* A panel that scrolls inside a page that scrolls is two scrollbars fighting
+     over one gesture. On a narrow screen the page is the scroller. */
+  .panel {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .layout,
+  main {
+    padding: 0.9rem;
+  }
+
+  /* Thumbs, not pointers: the tap targets that were comfortable with a mouse
+     are the ones people miss on a phone. */
+  .chip,
+  .action {
+    min-height: 2rem;
+  }
+
+  .picker-row {
+    padding: 0.4rem 0.45rem;
+  }
 }

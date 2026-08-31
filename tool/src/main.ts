@@ -9,6 +9,7 @@ import {
   TYPEFACE_NAMES,
   type CountryName,
   type MapResult,
+  type Point,
   type Position,
 } from "../../src/index.js";
 import { decode, encode, toOptions, type Config, type Vocabulary } from "./config.js";
@@ -276,6 +277,7 @@ async function render(): Promise<void> {
     mapHost.innerHTML = result.toString();
     mapHost.removeAttribute("aria-busy");
     applyZoom();
+    drawCursor();
 
     // Read off the drawn document rather than predicted from the options, and
     // the form is rebuilt only when the answer changed — a rebuild on every
@@ -317,13 +319,21 @@ async function render(): Promise<void> {
  * the disc are *nowhere*, and a click there has to be refused out loud rather
  * than dropped.
  */
-function coordinateAt(svg: SVGSVGElement, map: MapResult, event: MouseEvent): Position | null {
+function coordinateAt(svg: SVGSVGElement, map: MapResult, x: number, y: number): Position | null {
   const screen = svg.getScreenCTM();
   if (screen === null) return null;
-  const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(screen.inverse());
+  const point = new DOMPoint(x, y).matrixTransform(screen.inverse());
   const at = map.invert([point.x, point.y]);
   // Rounded once, here, so the map draws exactly what the link says.
   return at === null ? null : place(at);
+}
+
+/** The other direction: a point in the map's own units, as a pixel on screen. */
+function screenAt(svg: SVGSVGElement, [x, y]: Point): { x: number; y: number } | null {
+  const screen = svg.getScreenCTM();
+  if (screen === null) return null;
+  const point = new DOMPoint(x, y).matrixTransform(screen);
+  return { x: point.x, y: point.y };
 }
 
 /**
@@ -335,8 +345,8 @@ function coordinateAt(svg: SVGSVGElement, map: MapResult, event: MouseEvent): Po
  * asks it for the answer: the list comes back topmost first, so a city dot or a
  * label sitting over a country is stepped past rather than mistaken for it.
  */
-function pickCountry(event: MouseEvent): void {
-  for (const node of document.elementsFromPoint(event.clientX, event.clientY)) {
+function pickCountry(x: number, y: number): void {
+  for (const node of document.elementsFromPoint(x, y)) {
     const iso = node.getAttribute("data-iso");
     if (iso === null || iso === "") continue;
     const kind = node.getAttribute("class") ?? "";
@@ -358,7 +368,7 @@ function pickCountry(event: MouseEvent): void {
       return;
     }
   }
-  say("There is no country under that click.", "error");
+  say("There is no country there.", "error");
 }
 
 /**
@@ -369,19 +379,19 @@ function pickCountry(event: MouseEvent): void {
  * mouse and a mark that arrived in a link are the same state, written the same
  * way, and the URL is right without anything having to remember to update it.
  */
-mapHost.addEventListener("click", (event) => {
+function act(x: number, y: number): void {
   if (mode === "none") return;
   const svg = mapHost.querySelector("svg");
   if (svg === null || drawn === null) return;
 
   if (mode === "highlight") {
-    pickCountry(event);
+    pickCountry(x, y);
     return;
   }
 
-  const at = coordinateAt(svg, drawn, event);
+  const at = coordinateAt(svg, drawn, x, y);
   if (at === null) {
-    say("That click is not on the globe. Outside the disc there is no ground to mark.", "error");
+    say("That point is not on the globe. Outside the disc there is no ground to mark.", "error");
     return;
   }
 
@@ -415,6 +425,108 @@ mapHost.addEventListener("click", (event) => {
   else routes[routes.length - 1] = { ...last, stops: [...last.stops, { at }] };
   openRoute = true;
   apply({ routes });
+}
+
+mapHost.addEventListener("click", (event) => act(event.clientX, event.clientY));
+
+/**
+ * The same map, from a keyboard.
+ *
+ * Since 09d the map is the main input surface of this tool and it was not
+ * focusable at all — every mark needed a mouse, which made the whole gesture
+ * layer unreachable for anyone who does not use one. Everything else on the
+ * page is a native control and reachable by tab, which is the floor rather than
+ * the goal.
+ *
+ * A cross, moved by the arrow keys and placed with Enter. It is kept in the
+ * map's **own units** rather than in pixels, for the same reason every mark is
+ * kept in lon/lat: those units survive the preview being zoomed, and a pixel
+ * offset does not.
+ *
+ * Ten units a step, one with Shift held. Ten is about a degree on a
+ * continental map — coarse enough to cross the frame in a few seconds, and the
+ * fine step is there for the cases where that matters.
+ */
+const STEP = 10;
+
+/** Where the cross is, in the map's own units. Null when it is not shown. */
+let cursor: Point | null = null;
+
+const crosshair = document.createElement("div");
+crosshair.className = "crosshair";
+crosshair.setAttribute("aria-hidden", "true");
+
+function drawCursor(): void {
+  const svg = mapHost.querySelector("svg");
+  if (cursor === null || svg === null) {
+    crosshair.remove();
+    return;
+  }
+  const screen = screenAt(svg, cursor);
+  const frame = mapHost.getBoundingClientRect();
+  if (screen === null) return;
+  crosshair.style.left = `${screen.x - frame.left + mapHost.scrollLeft}px`;
+  crosshair.style.top = `${screen.y - frame.top + mapHost.scrollTop}px`;
+  // Re-appended rather than left in place: every render replaces the map's
+  // innerHTML, which takes the cross with it.
+  mapHost.append(crosshair);
+}
+
+function moveCursor(dx: number, dy: number): void {
+  const at = cursor ?? [config.width / 2, config.height / 2];
+  cursor = [
+    Math.max(0, Math.min(config.width, at[0] + dx)),
+    Math.max(0, Math.min(config.height, at[1] + dy)),
+  ];
+  drawCursor();
+}
+
+const ARROWS: Readonly<Record<string, Point>> = {
+  ArrowLeft: [-1, 0],
+  ArrowRight: [1, 0],
+  ArrowUp: [0, -1],
+  ArrowDown: [0, 1],
+};
+
+mapHost.addEventListener("focus", () => {
+  if (mode === "none") {
+    say("Choose a gesture under Marks, then use the arrow keys here.");
+    return;
+  }
+  moveCursor(0, 0);
+  say("Arrow keys move the cross, Enter places it, Escape puts it away.");
+});
+
+mapHost.addEventListener("blur", () => {
+  cursor = null;
+  drawCursor();
+});
+
+mapHost.addEventListener("keydown", (event) => {
+  if (mode === "none") return;
+
+  const step = ARROWS[event.key];
+  if (step !== undefined) {
+    // The page would scroll under the map otherwise, which is the arrow keys'
+    // own default and not what somebody aiming a cross is asking for.
+    event.preventDefault();
+    const size = event.shiftKey ? 1 : STEP;
+    moveCursor(step[0] * size, step[1] * size);
+    return;
+  }
+
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    const svg = mapHost.querySelector("svg");
+    if (cursor === null || svg === null) return;
+    const screen = screenAt(svg, cursor);
+    if (screen === null) return;
+    // Through the same path a click takes, down to the pixel: highlighting asks
+    // the document what is under a point, and it must be asked the same
+    // question however the point was chosen.
+    act(screen.x, screen.y);
+    drawCursor();
+  }
 });
 
 // The way out of a half-finished gesture, and the only keyboard shortcut here:
