@@ -1,0 +1,92 @@
+/*
+ * The page around the map, and nothing more than that.
+ *
+ * The map brings its own stylesheet — that is what the library is for — so
+ * nothing here may reach inside `.mp`. Every rule below stops at the figure.
+ */
+
+:root {
+  --page: #f7f6f2;
+  --panel: #ffffff;
+  --ink: #1b1d1a;
+  --ink-soft: #5a615a;
+  --line: #dcdad2;
+  --error: #8f2f22;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #141614;
+    --panel: #1b1e1b;
+    --ink: #e6e8e4;
+    --ink-soft: #9aa39a;
+    --line: #2c312c;
+    --error: #e8907f;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.bar {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.bar h1 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.tagline {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+main {
+  padding: 1.5rem;
+}
+
+.map {
+  margin: 0;
+  padding: 0;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  /* The map is a document with its own aspect ratio; the page must not crop it
+     or stretch it, only give it room and let it scale. */
+  overflow: hidden;
+  min-height: 4rem;
+}
+
+.map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.status {
+  margin: 0.85rem 0 0;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.status.is-error {
+  color: var(--error);
+  font-weight: 500;
+}
