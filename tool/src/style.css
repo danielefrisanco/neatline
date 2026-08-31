@@ -496,3 +496,41 @@ input[type="search"] {
 .action:focus-visible {
   border-color: currentColor;
 }
+
+/* ---- taking the map away ---- */
+
+.export {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.export-size {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.export-size select {
+  padding: 0.25rem 0.35rem;
+  font: inherit;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+/* Disabled until a map exists to save, and it has to look it: a button that
+   answers nothing is a bug report. */
+.action:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.action:disabled:hover {
+  border-color: var(--line);
+}

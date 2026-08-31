@@ -12,6 +12,7 @@ import {
 } from "../../src/index.js";
 import { decode, encode, toOptions, type Config, type Vocabulary } from "./config.js";
 import { buildForm, type Editing } from "./controls.js";
+import { exportSizes, fileName, rasterise, save, type ExportSize } from "./export.js";
 import { place, type Mode } from "./marks.js";
 
 /**
@@ -65,6 +66,9 @@ const mapHost = must<HTMLElement>("#map");
 const statusHost = must<HTMLElement>("#status");
 const formHost = must<HTMLElement>("#form");
 const linkHost = must<HTMLInputElement>("#share");
+const svgButton = must<HTMLButtonElement>("#save-svg");
+const pngButton = must<HTMLButtonElement>("#save-png");
+const scaleHost = must<HTMLSelectElement>("#export-scale");
 
 function must<T extends Element>(selector: string): T {
   const found = document.querySelector<T>(selector);
@@ -142,7 +146,72 @@ function apply(patch: Partial<Config>): void {
   refreshForm();
   void loadCountries(config.detail);
   writeUrl();
+  writeSizes();
   schedule();
+}
+
+/**
+ * The PNG sizes on offer, rebuilt when the canvas changes.
+ *
+ * The multiplier is kept across a resize rather than the pixel count: somebody
+ * who chose 2× wants twice whatever the canvas is now, not 1920 pixels for ever.
+ */
+function writeSizes(): void {
+  const chosen = Number(scaleHost.value);
+  const sizes = exportSizes(config.width, config.height);
+  scaleHost.replaceChildren();
+  for (const size of sizes) {
+    const option = document.createElement("option");
+    option.value = String(size.scale);
+    option.textContent = size.label;
+    scaleHost.append(option);
+  }
+  const kept = sizes.find((size) => size.scale === chosen) ?? sizes[0];
+  if (kept !== undefined) scaleHost.value = String(kept.scale);
+}
+
+function chosenSize(): ExportSize {
+  const sizes = exportSizes(config.width, config.height);
+  const scale = Number(scaleHost.value);
+  return (
+    sizes.find((size) => size.scale === scale) ??
+    sizes[0] ?? { scale: 1, width: config.width, height: config.height, label: "1×" }
+  );
+}
+
+/**
+ * The map as a file.
+ *
+ * Both formats come from the same `render()`: the flattened document, with
+ * every computed value on a presentation attribute. For the SVG that is what
+ * makes the file readable by a design tool that ignores stylesheets; for the
+ * PNG it is what makes the rasterisation possible at all.
+ *
+ * **The size applies to the PNG alone.** An SVG has no size of its own — it is
+ * the same document at any width, which is the whole advantage of the format —
+ * and naming a vector file `1920x1240` would be claiming something about it
+ * that is not true.
+ */
+async function saveMap(format: "svg" | "png"): Promise<void> {
+  if (drawn === null) return;
+  const size =
+    format === "svg"
+      ? { scale: 1, width: config.width, height: config.height, label: "1×" }
+      : chosenSize();
+  const name = fileName(config.region, size, format);
+  try {
+    say(`Preparing ${name}…`, "busy");
+    const flattened = await drawn.render();
+    save(
+      format === "svg"
+        ? new Blob([flattened], { type: "image/svg+xml;charset=utf-8" })
+        : await rasterise(flattened, size),
+      name,
+    );
+    say(`Saved ${name}.`);
+  } catch (error: unknown) {
+    say(`Could not save the map. ${error instanceof Error ? error.message : String(error)}`, "error");
+  }
 }
 
 function writeUrl(): void {
@@ -169,6 +238,10 @@ async function render(): Promise<void> {
     // Switching detail from 110m to 50m and back is exactly how that happens.
     if (mine !== generation) return;
     drawn = result;
+    // Only offered once there is something to save. A download button that
+    // produces a broken file is worse than one that is not there yet.
+    svgButton.disabled = false;
+    pngButton.disabled = false;
     // `toString()` rather than `svg`: the stylesheet travels inside the
     // document, which is the whole bargain the library makes. Two maps could
     // share this page safely — ids and stylesheet are both scoped to a hash of
@@ -317,9 +390,13 @@ window.addEventListener("keydown", (event) => {
   if (openRoute) finishRoute();
 });
 
+svgButton.addEventListener("click", () => void saveMap("svg"));
+pngButton.addEventListener("click", () => void saveMap("png"));
+
 linkHost.addEventListener("focus", () => linkHost.select());
 
 refreshForm();
 writeUrl();
+writeSizes();
 void render();
 void loadCountries(config.detail);

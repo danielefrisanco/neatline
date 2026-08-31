@@ -43,6 +43,13 @@ rather than as a pixel, so changing the projection, the region or the canvas
 size moves the map underneath the marks and leaves them exactly where you put
 them — and they travel in the link with everything else.
 
+**Take it away as a file.** SVG, which is the better format for anyone who
+will restyle it later, or PNG at up to four times the canvas — a map re-renders
+at any size because it is geometry rather than pixels, so a preview in a browser
+column and a poster at 4000 pixels are the same document twice. The PNG is
+rasterised by the browser itself, from the flattened form: there is no
+server-side rasteriser here and no dependency on one.
+
 Run it locally with `npm run tool:dev`; `npm run tool:build` produces the static
 site, and a GitHub Action deploys it from `main`. The tool is a thin form over
 `MapOptions` and nothing more, which is possible only because no option in this

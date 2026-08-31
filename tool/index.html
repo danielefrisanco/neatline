@@ -31,6 +31,17 @@
           <span class="field-label">Link to this map</span>
           <input id="share" type="text" readonly spellcheck="false" />
         </label>
+        <!-- Actions rather than options, so they live beside the map instead of
+             in the form: nothing here changes what is drawn. -->
+        <div class="export">
+          <button id="save-svg" type="button" class="action" disabled>Download SVG</button>
+          <button id="save-png" type="button" class="action" disabled>Download PNG</button>
+          <span class="export-size">
+            <label class="field-hint" for="export-scale">PNG size</label>
+            <select id="export-scale"></select>
+          </span>
+          <span class="field-hint">The SVG is vector and has no size of its own.</span>
+        </div>
       </main>
     </div>
 
