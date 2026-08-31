@@ -86,6 +86,11 @@ export const TOKENS: readonly TokenSpec[] = Object.freeze([
   { name: "--sea-ink", status: "live", controls: "Names of seas, gulfs and straits" },
   { name: "--neighbour", status: "live", controls: "Context countries drawn behind the region" },
   { name: "--anno", status: "live", controls: "The mark a pin, arrow or callout is drawn with" },
+  {
+    name: "--pin-size",
+    status: "live",
+    controls: "The radius of a pin's mark — and, with it, the icon inside",
+  },
   // Live as of the callout, and only there. Every bundled preset sets this to
   // the same value as `--label-halo`, which is exactly what it was authored to
   // mean: ink drawn *on* an annotation, legible against `--anno`. That makes it

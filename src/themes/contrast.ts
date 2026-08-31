@@ -77,6 +77,7 @@ export const contrast = compose({
   --neighbour: #E8E8E8;
   --anno: #4A4A4A;
   --anno-ink: #FFFFFF;
+  --pin-size: 7;
   --furniture-ink: #000000;`,
   dark: `
   --bg: #171717;

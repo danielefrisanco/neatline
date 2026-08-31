@@ -4,11 +4,12 @@ import { arrowLayer, calloutLayer, pinLayer, routeLayer } from "./annotations.js
 import { compassLayer, creditLayer, scaleLayer } from "./furniture.js";
 import { measureDistortion, type Distortion } from "./distortion.js";
 import { watermarkLayer } from "./watermark.js";
-import { graticuleLayer } from "./graticule.js";
+import { graticuleLayer, type GridMark } from "./graticule.js";
 import { framingGeometry, type FrameGeometry } from "./framing.js";
 import { resolveId } from "./iso.js";
 import {
   countryLabels,
+  gridLabels,
   labelLayer,
   labelSizes,
   placeLabel,
@@ -576,12 +577,19 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
     if (shapes.length > 0) content.set("terrain", shapes);
   }
 
+  /** Where the grid's numbers go, filled in below and read by the label layer. */
+  let gridMarks: readonly GridMark[] = [];
+
   // The bottom of the stack, and the only layer generated rather than read:
   // the grid comes from the framed bounds, not from any file in `data/`.
   if (options.graticule !== undefined && options.graticule !== false && wants("graticule")) {
     const grid = options.graticule === true ? {} : options.graticule;
-    const lines = graticuleLayer(grid, frame.bounds, path, [width, height]);
-    if (lines.length > 0) content.set("graticule", lines);
+    const drawnGrid = graticuleLayer(grid, frame.bounds, path, [width, height], projection);
+    if (drawnGrid.lines.length > 0) content.set("graticule", drawnGrid.lines);
+    // The numbers do not live in this layer. A degree written under the land is
+    // a degree nobody reads, and the grid is at the bottom of the stack — so
+    // they go up with the other text and are judged against it.
+    gridMarks = drawnGrid.marks;
   }
 
   const land: SvgNode[] = [];
@@ -905,7 +913,7 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
             sizes.advance,
           );
 
-    const all = labelLayer(names, placeNames, seas);
+    const all = labelLayer(names, placeNames, seas, gridLabels(gridMarks, sizes.place, sizes.advance));
     if (all.length > 0) content.set("labels", all);
   }
 
@@ -943,7 +951,7 @@ export async function neatline(options: MapOptions): Promise<MapResult> {
   const marks =
     pins.length === 0
       ? { nodes: [], labels: [] }
-      : pinLayer(pins, projectPoint, invertPoint, [width, height]);
+      : pinLayer(pins, projectPoint, invertPoint, [width, height], sizes.pin);
   // Captions last, so a box is never drawn under a mark it sits beside.
   const captions =
     callouts.length === 0

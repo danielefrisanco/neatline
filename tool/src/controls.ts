@@ -147,6 +147,8 @@ export interface Vocabularies {
   readonly themes: readonly string[];
   readonly palettes: readonly string[];
   readonly typefaces: readonly string[];
+  /** Maki icon names, which double as a pin's `kind`. */
+  readonly icons: readonly string[];
   /**
    * Every country the current detail can draw. Empty until the first render
    * has loaded the data — the form is built before that, and a picker with
@@ -320,6 +322,16 @@ export function buildForm(
       checkbox("Sea as a shape", config.sea, (on) => onChange({ sea: on })),
       checkbox("Name the seas", config.seaNames, (on) => onChange({ seaNames: on })),
       checkbox("Graticule", config.graticule, (on) => onChange({ graticule: on })),
+      // Only offered with the grid it annotates. A checkbox that does nothing
+      // until another one is ticked is a control that has to be discovered
+      // twice.
+      ...(config.graticule
+        ? [
+            checkbox("Degree labels", config.gridLabels, (on) =>
+              onChange({ gridLabels: on }),
+            ),
+          ]
+        : []),
       checkbox("Neighbours", config.neighbours, (on) => onChange({ neighbours: on })),
       ...COVERS.map((kind) =>
         checkbox(
@@ -376,6 +388,20 @@ export function buildForm(
       ...(editing.openRoute
         ? [button("Finish this route", editing.onFinishRoute)]
         : []),
+      field(
+        "Pin icon",
+        select(
+          [{ value: "", label: "none — a plain mark" }, ...named(vocabulary.icons)],
+          config.pinIcon,
+          (value) => onChange({ pinIcon: value }),
+        ),
+        "One icon for every pin on the map",
+      ),
+      field(
+        "Pin size",
+        slider(config.pinSize, [3, 20, 0.5], (value) => onChange({ pinSize: value })),
+        "The mark and the icon inside it grow together",
+      ),
       markList(config, onChange),
     ], "marks"),
 

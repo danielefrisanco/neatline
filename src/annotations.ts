@@ -220,7 +220,16 @@ export function pinLayer(
   project: (position: Position) => Point | null,
   invert: (point: Point) => Position | null,
   [width, height]: Size,
+  size: number = PIN_RADIUS,
 ): PinLayer {
+  // One number sets all three, so a bigger pin is a bigger pin rather than a
+  // bigger circle with the same glyph rattling around inside it. The ratios are
+  // the ones the defaults were tuned to: a mark carrying an icon needs the room
+  // the icon takes plus the casing, and the casing is centred on the edge.
+  const scaleUp = size / PIN_RADIUS;
+  const plainRadius = size;
+  const iconRadius = PIN_ICON_RADIUS * scaleUp;
+  const iconSize = ICON_SIZE * scaleUp;
   const nodes: SvgNode[] = [];
   const labels: string[] = [];
 
@@ -239,7 +248,7 @@ export function pinLayer(
     // for a theme to style, so a category of the caller's own invention still
     // works.
     const glyph = pin.kind === undefined ? undefined : ICONS[pin.kind];
-    const radius = glyph === undefined ? PIN_RADIUS : PIN_ICON_RADIUS;
+    const radius = glyph === undefined ? plainRadius : iconRadius;
 
     // A per-feature title is a hover tooltip, not an accessibility tree — the
     // root carries `role="img"`, so it is read once. Same bargain the country
@@ -262,7 +271,7 @@ export function pinLayer(
       // set can change size in one constant. Filled from `--anno-ink`, which is
       // exactly what that token was authored to mean: ink drawn *on* an
       // annotation, legible against `--anno`.
-      const scale = ICON_SIZE / ICON_GRID;
+      const scale = iconSize / ICON_GRID;
       children.push(
         el(
           "g",
@@ -270,7 +279,7 @@ export function pinLayer(
             class: "mp-icon",
             "data-icon": pin.kind,
             transform:
-              `translate(${round(x - ICON_SIZE / 2)},${round(y - ICON_SIZE / 2)}) ` +
+              `translate(${round(x - iconSize / 2)},${round(y - iconSize / 2)}) ` +
               `scale(${Math.round(scale * 1000) / 1000})`,
           },
           [el("path", { d: glyph })],
