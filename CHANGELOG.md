@@ -16,6 +16,34 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
+### The tool's own tests, in a document
+
+Everything about the tool that could be tested as data already was — the URL
+round trip, the mark encoder, the export sizes — and **both of the bugs a person
+found were in the part data cannot reach.** A `<label>` wrapping a `<select>`
+forwarded clicks to it, so a dropdown closed as soon as it opened and only
+stayed open while the mouse button was held. A rename handler rebuilt a pin as
+`{ at, label }`, so typing a name into a pin dropped with an airport on it
+turned it back into a plain mark. Neither is visible in a config object, and
+both are a few lines of DOM.
+
+So `test/dom` builds the real form in a real document and operates the real
+controls: what a click does, what appears when, and what survives an edit. Both
+bugs now have a test that fails without their fix, and so do the things that
+only exist as behaviour — the icon dropdown appearing only while pins are being
+dropped, an explanation closing when something else is clicked, Escape closing
+it *without* the map's own handler seeing the key.
+
+The environment is per-file rather than global: `happy-dom` for these, Node for
+everything else, because the library's tests must keep running where the library
+runs. And `test/dom` belongs to the tool's tsconfig rather than the library's —
+the same boundary 09e walked into from the other side, when a test importing the
+export module dragged `window` into a compile that has no DOM on purpose.
+
+What is still not covered, said plainly: the rasteriser, which needs a canvas
+happy-dom does not have, and the wiring in `main.ts`, which is a page rather
+than a function. Both are checked by driving a real browser.
+
 ### The "?" boxes escape the panel, and close when you click away
 
 Filed under 09f, the design pass, and done early because the boxes were
