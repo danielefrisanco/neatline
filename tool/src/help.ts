@@ -8,9 +8,19 @@
  * cannot be reasoned about gets used by trial and error, or not at all.
  *
  * Deliberately a `<details>` rather than a tooltip or a modal. It works without
- * JavaScript, it is reachable from a keyboard, it does not vanish when the
- * pointer moves, and its open state survives the form being rebuilt because
- * nothing here holds state — the browser does.
+ * JavaScript, it is reachable from a keyboard, and it does not vanish when the
+ * pointer moves.
+ *
+ * **It is positioned rather than laid out, and that is not decoration.** The
+ * panel it is anchored in scrolls, and a scrolling box clips anything inside it
+ * — so an explanation that sits in the flow is cropped by the sidebar and made
+ * as narrow as the sidebar is. Fixed to the viewport and opened *beside* the
+ * `?`, it lands over the map, where there is room to read a paragraph.
+ *
+ * Which brings the two things the browser then stops doing for you: a fixed box
+ * does not follow its anchor when the panel scrolls, and a popover nobody can
+ * dismiss by clicking away from it feels stuck. Both are handled once, at the
+ * document, however many `?`s the form is rebuilt with.
  */
 
 export interface HelpEntry {
@@ -145,6 +155,72 @@ export const HELP: Readonly<Record<string, readonly HelpEntry[]>> = {
   ],
 };
 
+/**
+ * Where the explanation goes: beside the `?`, over the map, on the screen.
+ *
+ * Measured rather than guessed at, because the answer changes with the width of
+ * the window and the height of the entry — the projection list is five
+ * paragraphs and would run off the bottom of a short window if it opened level
+ * with a control near the foot of the panel.
+ */
+function position(details: HTMLDetailsElement, body: HTMLElement): void {
+  const anchor = details.getBoundingClientRect();
+  const room = { width: window.innerWidth, height: window.innerHeight };
+
+  const width = Math.min(420, room.width - 24);
+  body.style.width = `${width}px`;
+  // Clear of the whole panel rather than just of the `?`, so every explanation
+  // opens at the same edge and none of them lies across the form it is about.
+  // On a narrow window the panel is the whole width and this clamps back to the
+  // left margin, which is the only place left to put it.
+  const panel = details.closest(".panel");
+  const clear = panel === null ? anchor.right : Math.max(anchor.right, panel.getBoundingClientRect().right);
+  body.style.left = `${Math.max(12, Math.min(clear + 10, room.width - 12 - width))}px`;
+
+  // Measured at its final width, since the width decides how many lines it is.
+  body.style.top = "0px";
+  const height = body.getBoundingClientRect().height;
+  body.style.top = `${Math.max(12, Math.min(anchor.top, room.height - 12 - height))}px`;
+}
+
+function closeAll(): void {
+  for (const open of document.querySelectorAll<HTMLDetailsElement>("details.help[open]")) {
+    open.open = false;
+  }
+}
+
+/** Registered once for the life of the page, not once per `?`. */
+let watching = false;
+
+function watchOnce(): void {
+  if (watching) return;
+  watching = true;
+
+  // A click anywhere that is not inside the open explanation closes it —
+  // including on another `?`, so two are never open at once.
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Node)) return;
+    for (const open of document.querySelectorAll<HTMLDetailsElement>("details.help[open]")) {
+      if (!open.contains(target)) open.open = false;
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    if (document.querySelector("details.help[open]") === null) return;
+    closeAll();
+    // Escape means "close this", not "abandon the arrow I was half way through
+    // drawing" — the map's own handler is on the window and must not also fire.
+    event.stopPropagation();
+  });
+
+  // A fixed box does not travel with its anchor, so a scrolled panel would
+  // leave the explanation behind, pointing at a control that has moved.
+  document.addEventListener("scroll", closeAll, true);
+  window.addEventListener("resize", closeAll);
+}
+
 /** A `?` that opens a short explanation. */
 export function helpFor(topic: string): HTMLElement | null {
   const entries = HELP[topic];
@@ -171,5 +247,10 @@ export function helpFor(topic: string): HTMLElement | null {
     body.append(term, text);
   }
   details.append(body);
+
+  details.addEventListener("toggle", () => {
+    if (details.open) position(details, body);
+  });
+  watchOnce();
   return details;
 }
