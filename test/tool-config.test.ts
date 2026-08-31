@@ -50,6 +50,7 @@ const CHOSEN: Config = {
   placeRank: 3,
   labelRank: 2,
   borderWidth: 2.5,
+  landEdgeWidth: 1.2,
   labelSize: 17,
   credit: "Made by someone",
 };

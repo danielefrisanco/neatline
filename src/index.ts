@@ -40,6 +40,7 @@ import { loadCover, loadOcean, loadWorld, type CountryFeature } from "./topology
 import type {
   BBox,
   Cover,
+  Detail,
   GeoJsonFeatureCollection,
   MapOptions,
   MapResult,
@@ -51,6 +52,35 @@ import type {
 } from "./types.js";
 
 export { isoTable, resolveId, type IsoEntry } from "./iso.js";
+
+/** A country that can be named in `region`, with the name it draws under. */
+export interface CountryName {
+  /** The ISO code `region` and `highlight` take. */
+  readonly code: string;
+  /** Natural Earth's own name for it, which is what a label would say. */
+  readonly name: string;
+}
+
+/**
+ * Every country the bundled data can draw, with its code and its name.
+ *
+ * `isoTable()` has been here since Phase 1 and answers a different question: it
+ * is the code-to-numeric-id map, and it carries no names, because a name is a
+ * fact about the *data* rather than about the standard. So a caller building a
+ * country picker had codes and nothing to show beside them.
+ *
+ * The two tiers do not hold the same countries — 177 at 110m against 241 at
+ * 50m, because the coarse tier drops the small ones — so the tier is part of
+ * the question rather than a detail. Sorted by name, which is the order a list
+ * of them wants to be read in.
+ */
+export async function countryTable(detail: Detail = "110m"): Promise<readonly CountryName[]> {
+  const world = await loadWorld(detail);
+  return world.countries
+    .filter((country) => country.id !== "" && country.name !== "")
+    .map((country) => ({ code: country.id, name: country.name }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
 export { FILL_COUNT, politicalFill } from "./political.js";
 export { PROJECTION_NAMES, isProjectionName } from "./projections.js";
 export { REGION_PRESETS, REGION_PRESET_NAMES, isRegionPreset } from "./regions.js";

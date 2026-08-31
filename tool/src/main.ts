@@ -1,10 +1,12 @@
 import {
+  countryTable,
   neatline,
   PALETTE_NAMES,
   PROJECTION_NAMES,
   REGION_PRESET_NAMES,
   THEME_NAMES,
   TYPEFACE_NAMES,
+  type CountryName,
 } from "../../src/index.js";
 import { decode, encode, toOptions, type Config, type Vocabulary } from "./config.js";
 import { buildForm } from "./controls.js";
@@ -29,6 +31,32 @@ const VOCABULARY: Vocabulary = {
   palettes: PALETTE_NAMES,
   typefaces: TYPEFACE_NAMES,
 };
+
+/**
+ * The country list, by tier, because the two tiers do not hold the same
+ * countries — 177 at 110m and 241 at 50m.
+ *
+ * Loaded beside the first render rather than before it, so the map is not
+ * waiting on a list only the picker needs. Cached per tier: `countryTable`
+ * reads the same file the map does, so the second call is free.
+ */
+const countryLists = new Map<string, readonly CountryName[]>();
+
+async function loadCountries(detail: string): Promise<void> {
+  if (countryLists.has(detail)) return;
+  try {
+    countryLists.set(detail, await countryTable(detail as "110m" | "50m"));
+    // The form was built with an empty list; rebuild it now there is one.
+    buildForm(formHost, config, vocabularyFor(config), apply);
+  } catch {
+    // A picker with no list is a degraded form, not a broken page — and the
+    // render's own error message will already be saying what went wrong.
+  }
+}
+
+function vocabularyFor(current: Config): Vocabulary & { countries: readonly CountryName[] } {
+  return { ...VOCABULARY, countries: countryLists.get(current.detail) ?? [] };
+}
 
 const mapHost = must<HTMLElement>("#map");
 const statusHost = must<HTMLElement>("#status");
@@ -65,7 +93,8 @@ function say(text: string, state: "" | "busy" | "error" = ""): void {
 
 function apply(patch: Partial<Config>): void {
   config = { ...config, ...patch };
-  buildForm(formHost, config, VOCABULARY, apply);
+  buildForm(formHost, config, vocabularyFor(config), apply);
+  void loadCountries(config.detail);
   writeUrl();
   schedule();
 }
@@ -120,6 +149,7 @@ async function render(): Promise<void> {
 
 linkHost.addEventListener("focus", () => linkHost.select());
 
-buildForm(formHost, config, VOCABULARY, apply);
+buildForm(formHost, config, vocabularyFor(config), apply);
 writeUrl();
 void render();
+void loadCountries(config.detail);
