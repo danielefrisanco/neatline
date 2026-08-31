@@ -12,6 +12,7 @@
   --ink-soft: #5a615a;
   --line: #dcdad2;
   --error: #8f2f22;
+  --note: #8a6410;
   color-scheme: light dark;
 }
 
@@ -23,6 +24,7 @@
     --ink-soft: #9aa39a;
     --line: #2c312c;
     --error: #e8907f;
+    --note: #d3a952;
   }
 }
 
@@ -607,4 +609,23 @@ input[type="search"] {
 
 .action:disabled:hover {
   border-color: var(--line);
+}
+
+/* ---- what the map had to say about a control ---- */
+
+/* Not an error colour. Nothing here is broken: the control was asked for
+   something this frame does not contain, which is information rather than a
+   fault, and painting it red would be crying wolf on every map of Spain with
+   the glaciers ticked. */
+.field-note {
+  margin: 0.15rem 0 0;
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: var(--note);
+}
+
+.check-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
