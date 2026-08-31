@@ -49,8 +49,10 @@ export interface Config extends Marks {
   gridLabels: boolean;
   neighbours: boolean;
   terrain: readonly Cover[];
-  placeRank: 1 | 2 | 3;
-  labelRank: 1 | 2 | 3;
+  /** How far down the settlement ranking to draw. 0 draws none. */
+  placeRank: 0 | 1 | 2 | 3;
+  /** How far down the same ranking to name what was drawn. 0 names none. */
+  labelRank: 0 | 1 | 2 | 3;
   /** `--border-width`, in user units. */
   borderWidth: number;
   /**
@@ -211,8 +213,8 @@ export function decode(search: string, vocabulary: Vocabulary): Config {
     if (raw === null) continue;
     const value = Number(raw);
     if (key === "placeRank" || key === "labelRank") {
-      const rank = clamp(Math.round(value), 1, 3, DEFAULTS[key]);
-      config[key] = rank as 1 | 2 | 3;
+      const rank = clamp(Math.round(value), 0, 3, DEFAULTS[key]);
+      config[key] = rank as 0 | 1 | 2 | 3;
     } else if (key === "width" || key === "height") {
       config[key] = clamp(Math.round(value), 200, 4000, DEFAULTS[key]);
     } else if (key === "borderWidth") {

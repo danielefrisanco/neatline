@@ -64,6 +64,8 @@ const CHOSEN: Config = {
   routes: [{ stops: [{ at: [23.73, 37.98] }, { at: [23.32, 42.7] }] }],
 };
 
+const round = (search: string): Config => decode(search, VOCABULARY);
+
 describe("the tool's URL", () => {
   it("is empty when nothing was chosen", () => {
     // A fresh page has a bare address, and a shared one carries exactly the
@@ -103,6 +105,12 @@ describe("the tool's URL", () => {
     expect(config.labelSize).toBe(6);
     expect(config.placeRank).toBe(3);
     expect(config.borderWidth).toBe(DEFAULTS.borderWidth);
+  });
+
+  it("carries a rank of none, and still refuses one that is not a rank", () => {
+    expect(round("placeRank=0&labelRank=0")).toMatchObject({ placeRank: 0, labelRank: 0 });
+    expect(round("placeRank=-2").placeRank).toBe(0);
+    expect(round("placeRank=9").placeRank).toBe(3);
   });
 
   it("keeps only the cover kinds that exist", () => {

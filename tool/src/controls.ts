@@ -159,6 +159,14 @@ export interface Vocabularies {
 
 const COVERS = ["desert", "mountain", "glacier"] as const;
 
+/** The settlement ranking, with a way out of it at the top. */
+const RANKS = (none: string): { value: string; label: string }[] => [
+  { value: "0", label: none },
+  { value: "1", label: "1 — capitals and the largest" },
+  { value: "2", label: "2 — and over a million" },
+  { value: "3", label: "3 — everything" },
+];
+
 /**
  * The pointer's state, which is the one thing on this form that is not in the
  * URL.
@@ -314,29 +322,24 @@ export function buildForm(
       ),
       field(
         "Cities shown",
-        select(
-          [
-            { value: "1", label: "1 — capitals and the largest" },
-            { value: "2", label: "2 — and over a million" },
-            { value: "3", label: "3 — everything" },
-          ],
-          String(config.placeRank),
-          (value) => onChange({ placeRank: Number(value) as 1 | 2 | 3 }),
+        select(RANKS("none — no city dots"), String(config.placeRank), (value) =>
+          onChange({ placeRank: Number(value) as Config["placeRank"] }),
         ),
       ),
-      field(
-        "Cities named",
-        select(
-          [
-            { value: "1", label: "1 — capitals and the largest" },
-            { value: "2", label: "2 — and over a million" },
-            { value: "3", label: "3 — everything" },
-          ],
-          String(config.labelRank),
-          (value) => onChange({ labelRank: Number(value) as 1 | 2 | 3 }),
-        ),
-        "Lower than the dots on purpose: words collide where dots merely crowd",
-      ),
+      // Offered only when there is something to name. With no dots on the map
+      // this control has nothing to act on — a name is given to a settlement
+      // that was drawn, so the ranking below the one above it is silent.
+      ...(config.placeRank === 0
+        ? []
+        : [
+            field(
+              "Cities named",
+              select(RANKS("none — dots without names"), String(config.labelRank), (value) =>
+                onChange({ labelRank: Number(value) as Config["labelRank"] }),
+              ),
+              "Lower than the dots on purpose: words collide where dots merely crowd",
+            ),
+          ]),
     ], "shows"),
 
     group("Marks", [
