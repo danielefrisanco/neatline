@@ -1,0 +1,79 @@
+# Open a pull request for a pushed branch, and merge it once the checks pass.
+#
+# What this replaces is a person: every branch here has been reviewed by reading
+# the commit message and clicking merge, and the click has never once been the
+# thing that caught a problem — CI has, twice. So the click is automated and the
+# gate is kept.
+#
+# **The gate is the whole point.** `check` is `ci.yml` called as a reusable
+# workflow rather than copied into this file, so there is exactly one definition
+# of "the checks passed" and this cannot drift away from it. `merge` needs
+# `check`, so a red branch stays open and waits for a human.
+#
+# Two ways out, because "every push merges" is a promise that will be wrong
+# eventually:
+#
+#   - push to `wip/**` and nothing here runs at all
+#   - put `[no-merge]` in the commit message and the branch is left open
+#
+# **One repository setting has to be on**: Settings → Actions → General →
+# Workflow permissions → "Allow GitHub Actions to create and approve pull
+# requests". Without it `gh pr create` fails with a 403 and the branch simply
+# stays open — which is the safe direction for this to fail in.
+#
+# One thing worth knowing rather than discovering: a pull request opened by
+# `GITHUB_TOKEN` does not itself trigger `pull_request` workflows. That is
+# exactly why the checks run *here*, on the push, rather than being waited for
+# on the pull request — a workflow that waited would wait for ever.
+name: auto-merge
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+      - "wip/**"
+
+# Cancel an in-flight run when the same branch is pushed again: an older commit
+# has nothing left to say about whether the newer one should merge.
+concurrency:
+  group: auto-merge-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check:
+    if: ${{ !contains(github.event.head_commit.message, '[no-merge]') }}
+    uses: ./.github/workflows/ci.yml
+
+  merge:
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      # `--fill` takes the title and body from the commits, which is where the
+      # reasoning already lives in this repository.
+      - name: Open a pull request unless one is already open
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh pr view "$GITHUB_REF_NAME" --json number >/dev/null 2>&1; then
+            echo "a pull request is already open for $GITHUB_REF_NAME"
+          else
+            gh pr create --base main --head "$GITHUB_REF_NAME" --fill
+          fi
+
+      # A merge commit rather than a squash, to match the history this
+      # repository already has — and because a branch here is usually one commit
+      # carrying one long explanation, which a squash would only repeat.
+      - name: Merge it
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge "$GITHUB_REF_NAME" --merge --delete-branch

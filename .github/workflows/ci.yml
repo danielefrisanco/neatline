@@ -4,6 +4,9 @@ on:
   push:
     branches: [main, master]
   pull_request:
+  # Callable, so `auto-merge` gates on this exact job rather than on a copy of
+  # it that can drift. One definition of "the checks passed".
+  workflow_call:
 
 jobs:
   check:
