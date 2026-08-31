@@ -16,6 +16,109 @@ signature — themes in the wild depend on those names.
 
 ## [Unreleased]
 
+### The "?" boxes escape the panel, and close when you click away
+
+Filed under 09f, the design pass, and done early because the boxes were
+unreadable rather than untidy. An explanation absolutely positioned inside the
+form was cropped to the width of the sidebar and clipped at its edge by the very
+thing that makes the form usable — it scrolls, and a scrolling box crops its
+contents. Fixed to the viewport and positioned by script now: clear of the whole
+panel rather than merely of the `?`, so every explanation opens at the same
+edge, over the map, at a width a paragraph can live in.
+
+Which is two things the browser then stops doing. A fixed box does not follow
+its anchor, so scrolling the panel would leave it behind pointing at a control
+that has moved — any scroll closes it. And a popover with no way out feels
+stuck, so a click anywhere outside closes it, including on another `?`, so two
+are never open at once. Escape closes it too, and stops there rather than also
+abandoning a half-drawn arrow.
+
+A group's `?` moved up beside its heading, where it annotates the heading,
+instead of floating alone on the line below where it reads as a control.
+
+### Taking the map away
+
+Phase 09e. SVG and PNG, both from the same `render()` — the flattened document,
+every computed value on a presentation attribute. That property has been there
+since Phase 3 and does real work here for the first time: an `<img>` holding an
+SVG is a sealed box that fetches nothing, so a map whose colours lived only in a
+`<style>` block would rasterise as black shapes, and one reaching for a webfont
+would rasterise without it or taint the canvas and refuse to be read back.
+
+**No server-side rasteriser.** `resvg` or `sharp` would be a dependency the
+library will not take and does not need, because every browser already ships
+one: draw the SVG into a canvas, ask for `toBlob()`.
+
+**The plan's rule about size belongs to one format, not both.** A poster and a
+preview are the same document twice — true of a PNG, and not of an SVG, which
+has no size at all. That is the whole advantage of the format, so naming a
+vector file `1920x1240` would be claiming something about it that is not true.
+The multiplier is the raster's; the SVG is written at the canvas it was drawn
+for.
+
+A second correction would have shipped a blank file. A canvas has a limit on
+each side *and* a separate one on its area: 8000 × 8000 clears the first while
+being a quarter of a gigabyte of RGBA before the encoder is asked for anything,
+and past either limit `toBlob` answers `null` with nothing said on the way in.
+Sizes that cannot be produced are left out of the menu rather than offered and
+then failed — except 1×, which is always offered, since refusing it would be
+refusing to save the map the tool has just drawn.
+
+**And the module split along the line 09c drew.** `tool/` needs DOM types and
+the library must not have them; `tsc --noEmit` compiles `src` *and* `test`, so
+a test importing a module full of `document` dragged that module into the
+library's own typecheck, where every browser global is an error. Adding `DOM`
+to the library's `lib` would have been the wrong fix for the reason 09c already
+gave. So `export.ts` decides what to export, at what size and what to call it,
+and is pure enough to test; `raster.ts` does the canvas work, is unreachable
+from any test, and says so in its own header.
+
+### The map as something you click
+
+Phase 09d. Four gestures, and not one of them draws anything new — pins,
+arrows, routes and `is-highlighted` have all been in the library since Phases 3
+and 5. What is new is that a pointer decides where they go: a pin is one click,
+an arrow is two, a route is a stop per click until it is finished, and
+highlighting is a click on a country rather than on the ground. That the three
+annotation primitives are exactly a one-, two- and n-point gesture is a
+coincidence, but it is the one the interface is built on.
+
+**Everything is stored as lon/lat, never as pixels.** `getScreenCTM()` undoes
+the viewBox and the CSS that scales the map into its column, so a map shown at
+any size is clicked accurately; `invert()` undoes the projection. A mark stored
+in pixels comes unstuck the moment the map is reframed, and a test holds the
+property directly: the same pin lands on two different pixels under mercator and
+albers, and on the same ground.
+
+**The far side of a globe is handled in the interface too.** Outside an
+orthographic disc there is no ground, `invert()` says so with `null`, and the
+page refuses the click out loud instead of doing nothing.
+
+Marks are the first state in the tool that is a *list*, so they carry their own
+encoder: `hl=FR,DE`, `pin=lon,lat,Label`, `arrow=lon,lat,lon,lat`,
+`route=lon,lat;lon,lat`. Coordinates are rounded to four decimal places — about
+eleven metres — at the moment they are made, so the map draws what the link
+says. A label shares the pin's parameter with the separators stripped out,
+because two parallel lists that can fall out of step is a worse failure than a
+lost comma. Every list is capped, since a URL is the one input to this tool that
+arrives from somewhere other than its own form.
+
+**`highlight` is the only mark the library rejects.** An unrecognised code
+throws and takes the whole render with it, so codes are resolved against the
+library's own table at decode time and dropped if it does not know them —
+sharper than the rule 09c set for everything else, and the same reasoning.
+
+Which country was clicked comes from `elementsFromPoint` rather than a
+point-in-polygon test: the browser has already decided what is under a pixel in
+order to paint it, and the topmost-first list steps past a city dot or a label
+instead of mistaking it for the country underneath. A neighbour carries an ISO
+code and cannot be highlighted — context must not compete with the subject — so
+clicking one says why.
+
+**The mode is deliberately not in the URL.** Marks are what somebody made; the
+gesture that placed them is not, and a shared link that dropped its reader into
+arrow-drawing mode would be sharing the tool rather than the map.
+
 Phase 09a — the library in a browser. No user interface: the one thing in the
 runtime path that could not work in a page, fixed where it is cheapest to test.
 
