@@ -110,3 +110,26 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
         run: gh pr merge "$GITHUB_REF_NAME" --merge --delete-branch
+
+      # And then deploy, by hand, because the merge above cannot.
+      #
+      # **A push made with `GITHUB_TOKEN` does not trigger workflows.** It is the
+      # loop guard that stops an action setting itself off for ever, and it is
+      # the right guard — but `pages.yml` triggers on a push to `main`, so
+      # automating the merge quietly turned the deploy off. Eight merges landed
+      # on main and the site stayed on the commit before them; the tool people
+      # were looking at was three phases behind the repository, and nothing
+      # anywhere was red.
+      #
+      # An explicit dispatch is not caught by that guard: it is this workflow
+      # asking for a run rather than a push implying one. `pages.yml` has had a
+      # `workflow_dispatch` trigger since 09b, added so the first deploy could be
+      # re-run by hand — which is exactly the door this needs.
+      #
+      # `--ref main` rather than the branch: the branch is deleted by the line
+      # above, and what wants deploying is the merge commit.
+      - name: Deploy the merged main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: gh workflow run pages.yml --ref main
