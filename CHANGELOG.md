@@ -14,7 +14,110 @@ applies.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
-## [Unreleased]
+## [0.15.0] — 2026-08-31
+
+**Phase 9 is complete.** There is a tool: a page over this library where you
+pick a region, a projection and a theme, click the map to mark it, and take the
+result away as a file. Everything runs in the reader's browser — the geometry,
+the stylesheet, the raster — so there is no server and no account.
+
+The library changed less than the tool did, which was the point. Three additions
+came out of using it, and every one of them was a gap the form made obvious.
+
+### Degree labels on the graticule, and the bug they found
+
+`graticule: { labels: true }` writes each line's latitude or longitude on the
+frame. Placement follows the rule the scale bar set — measure the drawn
+geometry, do not trust the projection's name. A number goes where its line meets
+the edge of the *drawn map*, which is not always the canvas: `fitExtent` leaves
+slack on one axis, and a world map in equal-earth sits inset by eighty units at
+the top.
+
+The edge is chosen once per axis, not once per line. Judged line by line, a
+conic's western meridians leave through the left while its central ones leave
+through the bottom, and the numbers scatter over two and a half sides of the
+frame with 55°N written across 25°W in the corner where the two rows meet.
+Longitudes along the bottom, latitudes down the left, unless the conventional
+edge carries less than two thirds of the grid. Numbers landing on each other are
+thinned first — every meridian on a globe ends at the same pole — and an axis
+with fewer than two left says nothing at all, because a reader counts *between*
+labels and a single number teaches none of the spacing.
+
+**The lines were not reaching the frame.** They were sampled across the region's
+bounds plus a quarter, which is not what the canvas shows: reaching the left
+edge of a west-europe conic at 50°N takes a longitude of 26°W, and the margin
+stopped at 19°W. Every conic ever drawn with a graticule had parallels ending a
+few units short of the edge, and nobody noticed, because a faint line stopping
+just inside the frame looks like a faint line. A number that refuses to be
+placed does not. The grid is sampled across the ground the canvas actually shows
+now, measured by inverting a grid of pixels through the projection with the same
+round-trip guard the annotations take.
+
+### A pin's size, as a token the geometry reads
+
+`--pin-size` sets the radius of a pin's mark — and, with it, the icon inside.
+It had to be a token rather than a CSS rule a caller writes: a pin is a circle
+*and* a glyph scaled to sit inside it, so a rule reaching only the circle grows
+the mark and leaves the icon rattling around in it. The geometry reads the value
+out of the resolved stylesheet, exactly as it already reads `--label-size`.
+
+Every bundled theme declares it. The class taxonomy is unchanged; the token
+vocabulary gains one name.
+
+### A map can have no cities on it
+
+`placeRank` and `labelRank` take `0` now, which is the convention `seaNames`
+already used: 0 is the absence of a rank rather than the lowest one. They are
+two switches, not one. `placeRank: 0` draws no settlements at all — the right
+map for borders, for terrain, for one carrying its own marks. `labelRank: 0`
+keeps the dots and names none of them, which is the other half of the sentence
+the defaults already make.
+
+No logic changed to allow it: `place.rank > maxRank` was already true of every
+rank at zero. Only the types said otherwise.
+
+### The tool
+
+**The form is a workflow**, not the order the controls were built in: Subject,
+Frame, What it shows, Marks, Look. The projection and the canvas decide one
+thing between them and sat in different groups for no reason but history; Look
+went last, being the only group whose answers do not change what the reader is
+being shown.
+
+**The last map comes back.** The query string is kept and a bare address reopens
+it — with one rule settling the conflict, which is that a shared link always
+wins. *Start over* is the way out, because a convenience with no way out is a
+trap.
+
+**The preview has a scale of its own.** Fit stays the default; 50%, 100% and
+200% are multiples of the canvas's own units, so 100% is the size the file will
+actually be.
+
+**The map answers back beside the control that asked.** Not errors — after the
+decoder there are almost none — but controls that asked for something the frame
+does not contain and look exactly as they do when they worked: glaciers over
+Spain, sea names where none fit, a numbered graticule on a globe. Read off the
+drawn SVG, never predicted.
+
+**The map takes a keyboard**: focusable, with a cross moved by the arrows and
+placed with Enter, held in the map's own units so it survives the zoom. And a
+phone layout tested at 390 × 840, where the map goes first.
+
+Pins carry an icon each — `kind` has doubled as a Maki name since Phase 8 and
+the tool never sent one — chosen before the click and stored on the pin, so a
+map can carry an airport, a hospital and three plain marks.
+
+### Fixed
+
+- **Naming a pin took its icon off.** The rename handler rebuilt the pin as
+  `{ at, label }` and dropped everything else on it. Both list edits are
+  functions now rather than object literals inside DOM listeners, which is the
+  other half of the fix: a transformation buried in an event handler cannot be
+  tested.
+- **The `?` explanations were unreadable**, cropped to the width of a sidebar
+  that scrolls. Fixed to the viewport, opened at the `?` that was clicked,
+  repositioned rather than closed when the panel scrolls, and dismissed by a
+  click anywhere else.
 
 ### The tool's own tests, in a document
 
@@ -1713,6 +1816,7 @@ something the tool needs and none is large alone. Routes split out of it because
 that one is gated on acquiring data, not on drawing it.
 
 [Unreleased]: https://github.com/danielefrisanco/neatline/compare/v0.14.0...HEAD
+[0.15.0]: https://github.com/danielefrisanco/neatline/compare/v0.14.0...v0.15.0
 [0.14.0]: https://github.com/danielefrisanco/neatline/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/danielefrisanco/neatline/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/danielefrisanco/neatline/compare/v0.11.0...v0.12.0
