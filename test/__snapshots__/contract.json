@@ -199,7 +199,23 @@
       "africa",
       "asia",
       "oceania",
-      "antarctica"
+      "antarctica",
+      "east-europe",
+      "nordics",
+      "balkans",
+      "mediterranean",
+      "central-america",
+      "caribbean",
+      "north-africa",
+      "west-africa",
+      "east-africa",
+      "southern-africa",
+      "middle-east",
+      "central-asia",
+      "south-asia",
+      "southeast-asia",
+      "east-asia",
+      "pacific"
     ]
   }
 }

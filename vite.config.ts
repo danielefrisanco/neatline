@@ -44,6 +44,23 @@ const BASE = "/neatline/";
 function dataPresent(): Plugin {
   return {
     name: "neatline-data-present",
+
+    /**
+     * Emit `.nojekyll`, because one of our own filenames is a Jekyll landmine.
+     *
+     * If GitHub Pages ever processes this output with Jekyll — which it does
+     * whenever the source is a branch rather than an action — Jekyll silently
+     * drops every file and directory whose name begins with an underscore. Vite
+     * names one of its chunks `__vite-browser-external-<hash>.js`, and that is
+     * the module standing in for `node:fs/promises`. It would go missing, the
+     * bundle would fail to load, and nothing anywhere would say why.
+     *
+     * An empty `.nojekyll` at the root turns the whole pass off. It costs
+     * nothing when the source is already an action.
+     */
+    generateBundle() {
+      this.emitFile({ type: "asset", fileName: ".nojekyll", source: "" });
+    },
     async buildStart() {
       let names: string[] = [];
       try {

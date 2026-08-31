@@ -1,4 +1,6 @@
+import type { CountryName } from "../../src/index.js";
 import type { Config } from "./config.js";
+import { buildPicker } from "./picker.js";
 
 /**
  * The form, built from the library's own name lists.
@@ -17,12 +19,40 @@ import type { Config } from "./config.js";
 
 type Change = (patch: Partial<Config>) => void;
 
+let nextId = 0;
+
+/**
+ * A labelled control — and the label is a sibling, never a parent.
+ *
+ * This wrapped the control in a `<label>` at first, which reads well and is
+ * wrong for a `<select>`. A label containing a form control forwards clicks to
+ * it, so a click that lands *on* the select fires twice: once natively, opening
+ * the menu, and once from the label, closing it again. The symptom is a
+ * dropdown that only stays open while the mouse button is held down, which is
+ * exactly what it looked like.
+ *
+ * So the label points at the control by `for` instead. Checkboxes keep their
+ * wrapping label, where the pattern is idiomatic and the double-click is
+ * harmless — a checkbox has no menu to close.
+ */
 function field(label: string, control: HTMLElement, hint?: string): HTMLElement {
-  const wrap = document.createElement("label");
+  const wrap = document.createElement("div");
   wrap.className = "field";
-  const name = document.createElement("span");
+
+  // `slider()` hands back a span around its input, so the thing to point at is
+  // not always the element passed in.
+  const target =
+    control instanceof HTMLSelectElement || control instanceof HTMLInputElement
+      ? control
+      : control.querySelector<HTMLElement>("select, input");
+  const name = document.createElement("label");
   name.className = "field-label";
   name.textContent = label;
+  if (target !== null) {
+    if (target.id === "") target.id = `f${(nextId += 1)}`;
+    name.htmlFor = target.id;
+  }
+
   wrap.append(name, control);
   if (hint !== undefined) {
     const note = document.createElement("span");
@@ -99,6 +129,12 @@ export interface Vocabularies {
   readonly themes: readonly string[];
   readonly palettes: readonly string[];
   readonly typefaces: readonly string[];
+  /**
+   * Every country the current detail can draw. Empty until the first render
+   * has loaded the data — the form is built before that, and a picker with
+   * nothing in it yet is better than a form that waits.
+   */
+  readonly countries: readonly CountryName[];
 }
 
 const COVERS = ["desert", "mountain", "glacier"] as const;
@@ -128,29 +164,26 @@ export function buildForm(
     return section;
   };
 
+  const isPreset = vocabulary.regions.includes(config.region);
   const regions = document.createElement("div");
   regions.className = "stack";
   regions.append(
     select(
-      [
-        ...named(vocabulary.regions),
-        { value: "__codes", label: "country codes…" },
-      ],
-      vocabulary.regions.includes(config.region) ? config.region : "__codes",
-      (value) => onChange({ region: value === "__codes" ? "FR,DE,IT" : value }),
+      [...named(vocabulary.regions), { value: "__pick", label: "pick countries…" }],
+      isPreset ? config.region : "__pick",
+      (value) => onChange({ region: value === "__pick" ? "FR,DE,IT" : value }),
     ),
   );
-  if (!vocabulary.regions.includes(config.region)) {
-    const codes = document.createElement("input");
-    codes.type = "text";
-    codes.value = config.region;
-    codes.spellcheck = false;
-    codes.placeholder = "FR, DE, IT";
-    codes.setAttribute("aria-label", "Country codes");
-    // On `change` rather than `input`: a half-typed list of codes is a
-    // different map, and redrawing one per keystroke is worse than waiting.
-    codes.addEventListener("change", () => onChange({ region: codes.value }));
-    regions.append(codes);
+  if (!isPreset) {
+    regions.append(
+      buildPicker({
+        countries: vocabulary.countries,
+        chosen: config.region.split(",").map((code) => code.trim().toUpperCase()),
+        // An empty selection would be a map of nothing, which the library
+        // refuses — so the last country cannot be removed into a broken state.
+        onChange: (codes) => onChange({ region: codes.length === 0 ? config.region : codes.join(",") }),
+      }),
+    );
   }
 
   host.append(
@@ -196,10 +229,19 @@ export function buildForm(
           (value) => onChange({ typeface: value }),
         ),
       ),
-      field("Border width", slider(config.borderWidth, [0, 4, 0.1], (value) =>
-        onChange({ borderWidth: value }),
-      )),
-      field("Label size", slider(config.labelSize, [8, 28, 1], (value) =>
+      field(
+        "Border width",
+        slider(config.borderWidth, [0, 4, 0.1], (value) => onChange({ borderWidth: value })),
+        "The boundary between two countries, drawn once",
+      ),
+      field(
+        "Country outline",
+        slider(config.landEdgeWidth, [-1, 3, 0.1], (value) =>
+          onChange({ landEdgeWidth: value }),
+        ),
+        "The edge of each country, including its coast. Below zero leaves it to the theme",
+      ),
+      field("Label size", slider(config.labelSize, [6, 28, 1], (value) =>
         onChange({ labelSize: value }),
       )),
     ]),

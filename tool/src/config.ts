@@ -45,6 +45,20 @@ export interface Config {
   labelRank: 1 | 2 | 3;
   /** `--border-width`, in user units. */
   borderWidth: number;
+  /**
+   * `--land-edge-width`, the outline every country carries, in user units.
+   *
+   * Separate from `borderWidth` because they are separate lines, and the
+   * difference is invisible until you try to turn one off: `--border-width` is
+   * the boundary *between* two countries, drawn once, and this is the edge of
+   * each country's own shape, drawn on every side including its coast. Setting
+   * the border to zero leaves the countries still outlined, which reads as the
+   * slider not working.
+   *
+   * `-1` means "whatever the theme says" — the themes disagree (0.5 to 2) and
+   * a number here would silently overwrite that choice on every map.
+   */
+  landEdgeWidth: number;
   /** `--label-size`, in user units. */
   labelSize: number;
   credit: string;
@@ -67,6 +81,7 @@ export const DEFAULTS: Config = {
   placeRank: 2,
   labelRank: 1,
   borderWidth: 0.8,
+  landEdgeWidth: -1,
   labelSize: 13,
   credit: "Natural Earth",
 };
@@ -74,7 +89,7 @@ export const DEFAULTS: Config = {
 const COVERS: readonly Cover[] = ["desert", "mountain", "glacier"];
 
 /** Which keys are numbers, so decoding does not have to guess. */
-const NUMBERS = ["width", "height", "placeRank", "labelRank", "borderWidth", "labelSize"] as const;
+const NUMBERS = ["width", "height", "placeRank", "labelRank", "borderWidth", "landEdgeWidth", "labelSize"] as const;
 const FLAGS = ["sea", "seaNames", "graticule", "neighbours"] as const;
 
 /**
@@ -165,6 +180,8 @@ export function decode(search: string, vocabulary: Vocabulary): Config {
       config[key] = clamp(Math.round(value), 200, 4000, DEFAULTS[key]);
     } else if (key === "borderWidth") {
       config[key] = clamp(value, 0, 6, DEFAULTS[key]);
+    } else if (key === "landEdgeWidth") {
+      config[key] = clamp(value, -1, 6, DEFAULTS[key]);
     } else {
       config[key] = clamp(value, 6, 40, DEFAULTS[key]);
     }
@@ -218,6 +235,11 @@ export function toOptions(config: Config): MapOptions {
   }
   if (config.labelSize !== DEFAULTS.labelSize) {
     tokens["--label-size"] = String(config.labelSize);
+  }
+  // Negative is the sentinel for "leave the theme alone", so it is the one
+  // value that must not reach the stylesheet.
+  if (config.landEdgeWidth >= 0) {
+    tokens["--land-edge-width"] = String(config.landEdgeWidth);
   }
 
   return {

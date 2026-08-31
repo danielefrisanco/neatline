@@ -42,13 +42,18 @@ versioned like a function signature and change only on a major.
 The root is `<svg class="mp">` — `mp` for *map*, not for the library, which is
 why the prefix survived the rename from `mapper` and will survive the next one.
 
-Inside it, a `.mp-bg` rectangle covers the canvas, then eight layer groups in
-**fixed paint order**, bottom to top:
+Inside it, a `.mp-bg` rectangle covers the canvas, then twelve layer groups in
+**fixed paint order**, bottom to top. Every slot is emitted on every map, empty
+or not: inserting one later would restack everything above it and break themes
+in the wild.
 
 | Layer group | Feature class | Data attributes | Carries |
 |---|---|---|---|
+| `.mp-ocean` | `.mp-sea` | — | The sea as a shape, under everything |
+| `.mp-graticule` | `.mp-grid` | `data-kind` | Parallels, meridians, the equator and tropics |
 | `.mp-neighbours` | `.mp-neighbour` | `data-iso`, `data-name` | Surrounding countries drawn as context |
 | `.mp-land` | `.mp-country` | `data-iso`, `data-name` | Filled land polygons, one node per country |
+| `.mp-terrain` | `.mp-cover` | `data-kind` | Desert, mountain and glacier, tinted over the land |
 | `.mp-hydro` | `.mp-water` | `data-kind` | Lakes and rivers, drawn over the land |
 | `.mp-borders` | `.mp-border` | `data-kind` | Shared boundaries, each drawn once |
 | `.mp-roads` | `.mp-road` | `data-kind` | *Reserved* · motorway, trunk, primary |
@@ -149,6 +154,40 @@ await map.toFile(p)  // render(), written to disk
 map.project([lon, lat]) // a coordinate as a point on the canvas
 map.invert([x, y])      // a point on the canvas as a coordinate
 ```
+
+### Regions
+
+Twenty-five presets, each a saved list of ISO codes — `"west-europe"` expands to
+exactly what you could have written by hand, which is why they are explicit
+rather than derived from a continent field the topology does not carry.
+
+| | |
+|---|---|
+| Whole world | `world` |
+| Europe | `europe`, `west-europe`, `east-europe`, `nordics`, `balkans`, `mediterranean` |
+| Americas | `north-america`, `central-america`, `caribbean`, `south-america` |
+| Africa | `africa`, `north-africa`, `west-africa`, `east-africa`, `southern-africa` |
+| Asia | `asia`, `middle-east`, `central-asia`, `south-asia`, `southeast-asia`, `east-asia` |
+| Elsewhere | `oceania`, `pacific`, `antarctica` |
+
+**They overlap on purpose.** Turkey is in `europe`, `balkans`, `middle-east` and
+`asia`; Egypt is in `africa`, `north-africa` and `middle-east`. A region is a
+frame somebody wants, not a partition of the planet — and every one of these is
+an editorial choice with a defensible alternative, which is why they are written
+down in one visible place rather than inferred.
+
+Anything not covered is a list of codes: `region: ["CH", "AT", "SI"]`. To build
+a picker over them, `countryTable()` returns every country the data can draw
+with its name:
+
+```ts
+const countries = await countryTable("110m");   // [{ code: "AF", name: "Afghanistan" }, …]
+```
+
+The tier is part of the question rather than a detail — **the two tiers do not
+hold the same countries**, 177 at 110m against 241 at 50m, because the coarse
+one drops the small ones. `isoTable()` answers a different question and carries
+no names: it is the code-to-numeric-id map the topology is keyed by.
 
 ### The presets
 

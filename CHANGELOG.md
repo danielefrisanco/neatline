@@ -38,6 +38,24 @@ The failure message follows the reader. On disk it still says
 telling someone who opened a web page to run a build script sends them
 somewhere they cannot go.
 
+### Sixteen more regions, and a picker that shows their names
+
+The continent list left most of the world unreachable without writing codes by
+hand. Twenty-five presets now: `east-europe`, `nordics`, `balkans`,
+`mediterranean`, `central-america`, `caribbean`, `north-africa`, `west-africa`,
+`east-africa`, `southern-africa`, `middle-east`, `central-asia`, `south-asia`,
+`southeast-asia`, `east-asia` and `pacific` join the nine that were there. All
+appended, none reordered, so no existing name moves.
+
+They overlap on purpose — Turkey is in four of them — because a region is a
+frame somebody wants rather than a partition of the planet.
+
+**`countryTable(detail)`** returns every country the data can draw, with its
+name. `isoTable()` has been here since Phase 1 and answers a different question:
+it is the code-to-numeric-id map and carries no names, so a caller building a
+picker had codes and nothing to show beside them. The tier is an argument
+because the tiers hold different countries — 177 at 110m, 241 at 50m.
+
 ### Every option as a control, and a link that rebuilds the map
 
 Phase 09c. A form over `MapOptions` — region as a preset or a list of ISO
@@ -67,6 +85,29 @@ express.
 **What a URL cannot carry, said rather than hidden:** a caller-supplied GeoJSON
 region has no short form. The library still takes one; the tool declines to
 encode it, and offers a preset or a list of codes.
+
+The country field is a searchable multi-select rather than a text box, with the
+name beside every code — nobody knows Switzerland is `CH` unless they have met
+the problem before. Its list comes from `countryTable()` at the current detail,
+so it can never offer a country that then fails to appear.
+
+**Two bugs found by someone using it.** A `<label>` wrapping a `<select>`
+forwards clicks to it, so a click landing on the dropdown fired twice — opening
+the menu and closing it again — and it only stayed open while the mouse button
+was held. The labels point at their controls by `for` now. And `--border-width:
+0` did remove the borders, but every country still carried its own outline from
+`--land-edge-width`, which reads as the slider not working; that token has a
+slider of its own, so both lines are reachable and either can be turned off.
+Type can go down to 6 now rather than stopping at 8.
+
+`.nojekyll` ships with the build. If Pages ever processes the output with
+Jekyll, it silently deletes files whose names begin with an underscore — and
+Vite names one of its chunks `__vite-browser-external-<hash>.js`, which is the
+module standing in for `node:fs/promises`. `npm run tool:build` also verifies
+the built site before it can be deployed: every asset the page names must
+exist, and all six data files must be present and the right size. Vite emitting
+a *reference* is not the same as the file arriving, and the difference only
+shows up as a 404 in somebody's browser.
 
 `tool/` is typechecked now, through a second tsconfig. It needs DOM types and
 the library must not have them — with `DOM` in the library's `lib`, a stray
