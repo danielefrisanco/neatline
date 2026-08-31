@@ -73,13 +73,15 @@ beforeEach(() => {
 describe("the form", () => {
   it("builds every group", () => {
     build();
+    // The order somebody works in: what am I mapping, how much of it, what do
+    // I want it to say, what am I marking on it — and only then what it looks
+    // like. Not the order the controls were built in.
     expect([...host.querySelectorAll("h2")].map((h) => h.textContent)).toEqual([
       "Subject",
-      "Look",
-      "Layers",
-      "Names",
+      "Frame",
+      "What it shows",
       "Marks",
-      "Canvas",
+      "Look",
     ]);
   });
 
