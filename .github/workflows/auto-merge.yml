@@ -45,18 +45,28 @@ permissions:
   pull-requests: write
 
 jobs:
-  check:
+  # Opened first and in parallel with the checks, not after them.
+  #
+  # The first version created the pull request inside the merge job, which waits
+  # on `check` — and `npm run check` downloads Natural Earth and runs on two
+  # versions of Node, so for several minutes after a push there was no pull
+  # request anywhere to look at. A branch that has been pushed and has nothing
+  # to show for it looks like a workflow that did not fire.
+  open:
     if: ${{ !contains(github.event.head_commit.message, '[no-merge]') }}
-    uses: ./.github/workflows/ci.yml
-
-  merge:
-    needs: check
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       pull-requests: write
     steps:
+      # Full history, and `--fill` is why. It writes the title and body from the
+      # commits on the branch, which means asking git what
+      # `origin/main...this-branch` contains — and the default shallow clone has
+      # neither `origin/main` nor any history to compare against, so it fails
+      # with "ambiguous argument" and no pull request is opened.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # `--fill` takes the title and body from the commits, which is where the
       # reasoning already lives in this repository.
@@ -69,6 +79,19 @@ jobs:
           else
             gh pr create --base main --head "$GITHUB_REF_NAME" --fill
           fi
+
+  check:
+    if: ${{ !contains(github.event.head_commit.message, '[no-merge]') }}
+    uses: ./.github/workflows/ci.yml
+
+  merge:
+    needs: [open, check]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
 
       # A merge commit rather than a squash, to match the history this
       # repository already has — and because a branch here is usually one commit
