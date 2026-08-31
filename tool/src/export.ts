@@ -1,26 +1,21 @@
 /**
- * Taking the map away — the step that makes the tool a tool.
+ * What to export, at what size, and what to call it.
  *
- * **The library emits a document; this is where it becomes a picture**, and
- * that sentence is the whole reason PNG lives here rather than in the library.
- * A rasteriser is a dependency the library will not take and does not need,
- * because every browser already ships one: an SVG drawn into a `<canvas>` and
- * handed back through `toBlob()`.
- *
- * It works only because of a property the library has had since Phase 3 and
- * which is doing real work for the first time here. `render()` produces a
- * *flattened* document — every computed value on a presentation attribute, no
- * external font reference, no external anything — and an `<img>` holding an SVG
- * is a sealed box that fetches nothing. A map whose colours lived only in a
- * `<style>` block would rasterise as black shapes; a map that reached for a
- * webfont would rasterise without it, or taint the canvas and refuse to be read
- * back at all.
+ * Deliberately free of the DOM, and not for tidiness. The library's own
+ * `tsconfig` compiles `src` and `test` with `lib: ["ES2022"]` and no DOM at
+ * all — which is right, because a map library that can only run in a browser is
+ * a different product. A test that reaches into a module holding `document`
+ * drags that module into the library's typecheck, where every browser global is
+ * an error. So the decisions live here, where they can be tested, and the
+ * browser work lives in `raster.ts`, where it cannot be.
  *
  * **Size belongs to the export, not to the screen.** A map re-renders at any
  * size because it is geometry rather than pixels, so a preview sized to a
- * browser column and a poster at 2000 pixels are the same document twice —
+ * browser column and a poster at 4000 pixels are the same document twice —
  * which makes offering both nearly free, and makes not offering it a waste of
- * the one advantage vector has.
+ * the one advantage vector has. It is also why the multiplier here is the
+ * *raster's* alone: an SVG has no size, and naming one `1920x1240` would be a
+ * claim about it that is not true.
  */
 
 /** How far past the canvas size a raster may go before a browser refuses it. */
@@ -80,66 +75,4 @@ export function fileName(region: string, size: ExportSize, extension: string): s
     .replace(/^-+|-+$/g, "")
     .slice(0, 48);
   return `neatline-${slug === "" ? "map" : slug}-${size.width}x${size.height}.${extension}`;
-}
-
-/**
- * A flattened SVG into a PNG blob, by way of a canvas.
- *
- * The image is loaded from a blob URL rather than a `data:` URI: a data URI has
- * to be percent-encoded or base64'd, which is a third again in size for a
- * document that can be a megabyte, and Safari has historically refused the long
- * ones outright.
- *
- * The canvas is sized in pixels and the image is drawn to fill it, which is
- * what makes this a *re-render* rather than an upscale — the browser rasterises
- * the vector at the size asked for, so a 4× export is four times the detail and
- * not four times the pixels.
- */
-export async function rasterise(svg: string, size: ExportSize): Promise<Blob> {
-  const source = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml;charset=utf-8" }));
-  try {
-    const image = new Image();
-    image.width = size.width;
-    image.height = size.height;
-    await new Promise<void>((resolve, reject) => {
-      image.addEventListener("load", () => resolve(), { once: true });
-      image.addEventListener(
-        "error",
-        () => reject(new Error("the browser could not read the map as an image")),
-        { once: true },
-      );
-      image.src = source;
-    });
-
-    const canvas = document.createElement("canvas");
-    canvas.width = size.width;
-    canvas.height = size.height;
-    const context = canvas.getContext("2d");
-    if (context === null) throw new Error("this browser has no 2D canvas");
-    context.drawImage(image, 0, 0, size.width, size.height);
-
-    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/png"));
-    // `toBlob` answers `null` when the canvas is tainted or too large for the
-    // browser to hold, and neither says anything on the way in.
-    if (blob === null) throw new Error(`a ${size.width} × ${size.height} canvas was too large to read back`);
-    return blob;
-  } finally {
-    URL.revokeObjectURL(source);
-  }
-}
-
-/** Hand a blob to the browser as a file. */
-export function save(blob: Blob, name: string): void {
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = name;
-  // Appended rather than clicked detached: Firefox ignores a click on a link
-  // that is not in the document.
-  document.body.append(link);
-  link.click();
-  link.remove();
-  // Revoked late, because revoking it in the same tick cancels the download in
-  // some browsers before it has started.
-  window.setTimeout(() => URL.revokeObjectURL(url), 10_000);
 }

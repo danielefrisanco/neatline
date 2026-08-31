@@ -12,7 +12,8 @@ import {
 } from "../../src/index.js";
 import { decode, encode, toOptions, type Config, type Vocabulary } from "./config.js";
 import { buildForm, type Editing } from "./controls.js";
-import { exportSizes, fileName, rasterise, save, type ExportSize } from "./export.js";
+import { exportSizes, fileName, type ExportSize } from "./export.js";
+import { rasterise, save } from "./raster.js";
 import { place, type Mode } from "./marks.js";
 
 /**
