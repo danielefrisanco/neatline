@@ -1,27 +1,32 @@
 name: check
 
+# No `pull_request` trigger, and that is the fix rather than an omission.
+#
+# Every pull request here is opened by `auto-merge` using `GITHUB_TOKEN`, and
+# **GitHub will not let a token-opened pull request trigger workflows** — it is
+# the loop guard that stops an action from setting itself off for ever. What it
+# does instead of skipping is create a run and fail it before any job starts, so
+# each of these arrived with a red cross, zero jobs, and no log to read. Six of
+# them in a row, next to the same commits whose real checks were green.
+#
+# A job-level `if:` cannot help: the run dies before it is evaluated. So the
+# trigger goes. Nothing is lost, because `auto-merge` runs this exact workflow on
+# every push to every branch — the same job, the same matrix, on the same commit
+# — and the pull request it opens carries those results.
+#
+# **Bring it back for the first outside contribution.** A pull request from a
+# fork pushes nothing to this repository, so `auto-merge` never sees it and it
+# would arrive unchecked. That is the case this trigger was for, and there has
+# not been one yet.
 on:
   push:
     branches: [main, master]
-  pull_request:
   # Callable, so `auto-merge` gates on this exact job rather than on a copy of
   # it that can drift. One definition of "the checks passed".
   workflow_call:
 
 jobs:
   check:
-    # Not twice for the same commit.
-    #
-    # `auto-merge` runs these checks on the push and opens the pull request
-    # afterwards — so a pull request opened by the bot arrives with its commit
-    # already checked, and the `pull_request` trigger would run the whole matrix
-    # again on exactly the same tree. Worse than wasteful: GitHub holds a run
-    # from a bot-authored pull request for a maintainer's approval, so the
-    # duplicate sat there and eventually expired, which reads like a failure.
-    #
-    # A pull request opened by a person still gets checked, which is the case
-    # this trigger exists for.
-    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.user.login != 'github-actions[bot]' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
