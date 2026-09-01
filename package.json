@@ -1,5 +1,5 @@
 {
-  "name": "neatline",
+  "name": "@neatline/map",
   "version": "0.15.0",
   "description": "Generate standalone, CSS-themeable SVG maps from a region and a stylesheet.",
   "keywords": [
