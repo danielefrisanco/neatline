@@ -6,7 +6,7 @@ No tile server, no fonts pipeline, no API key, no runtime model call.
 Same input, byte-identical output.
 
 ```ts
-import { neatline } from "neatline";
+import { neatline } from "@neatline/map";
 
 const map = await neatline({
   region: "west-europe",
@@ -65,10 +65,20 @@ The package builds under both ESM and CJS, resolves real geometry, emits the
 frozen document shape below, themes it, and carries lakes, rivers, cities,
 names, the sea, land cover, a graticule and four kinds of annotation.
 
-**Not published to npm yet, and not on a schedule to be.** Install it from the
-repository. The class taxonomy below is the part that is meant to be stable; it
-is what a `1.0.0` would be promising, and it wants to sit still for a while
-before that promise is made.
+```sh
+npm i @neatline/map
+```
+
+**Scoped, for two reasons.** npm refuses the bare name `neatline` as too close
+to `readline` — and `neatline` is a project rather than a single library, so the
+org is where a second one would go. This is the map; `@neatline/graph` is the
+kind of thing that would sit beside it. The repository, the site and the `mp-`
+class prefix are unchanged.
+
+**`0.x` is doing real work here.** The class taxonomy below is what a `1.0.0`
+would be promising to hold still, and it has not been in enough hands yet to
+know which of its names are wrong. Publishing before that promise is how it gets
+into those hands; the version number is the disclaimer.
 
 Eleven of the twelve layer slots carry something. **Roads is the last one still
 empty**, and it is waiting on data rather than on code: of the roads Natural
@@ -134,7 +144,7 @@ cost about thirty bytes and buy a stable stack for the life of v1.
 The taxonomy is also readable at runtime, so tooling never has to hard-code it:
 
 ```ts
-import { LAYERS } from "neatline";
+import { LAYERS } from "@neatline/map";
 
 LAYERS.map((layer) => layer.className);
 // ["mp-neighbours", "mp-land", "mp-hydro", "mp-borders", ...]
@@ -1024,7 +1034,7 @@ decision, not a packing problem.
 ### Icons
 
 ```ts
-import { ICON_NAMES } from "neatline";
+import { ICON_NAMES } from "@neatline/map";
 
 await neatline({
   region: "west-europe",
