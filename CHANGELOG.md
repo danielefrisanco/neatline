@@ -7,8 +7,10 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 **Pre-1.0 policy.** While on `0.x`, the minor bump carries breaking changes and
 the patch bump carries everything else — the public API is not yet stable.
-`1.0.0` is the publish, which is not scheduled; from there normal semver
-applies.
+`1.0.0` is the taxonomy freeze, which is not scheduled; from there normal semver
+applies. **Being on npm is not that promise.** `0.15.0` is the first published
+version, and it is published precisely to find out which of these names are
+wrong while the version number still says they may be.
 
 **The class taxonomy is public API.** Renaming or reordering a class, a data
 attribute, or a token is a breaking change, exactly like changing a function
@@ -391,6 +393,22 @@ outright with `Could not resolve "fs/promises"`. Two things were wrong:
 `npm run check` now bundles `dist/` for a browser and fails if a live `node:`
 import comes back. It is checked there rather than in the test suite because it
 is a fact about `dist/`, which is what a bundler sees.
+
+### Published, as `@neatline/map`
+
+This is the version that went to npm, and it went under a scoped name. npm
+refuses the bare `neatline` as too close to `readline` — a typosquat guard, and
+not one worth arguing with. The scope turned out to be the better shape anyway:
+`neatline` is a project rather than a single library, so the org is where a
+second one would go, and `@neatline/graph` is the kind of thing that would sit
+beside this. Nothing else moved — the repository, the site and the `mp-` class
+prefix are unchanged.
+
+Publishing is a release, not a push. `.github/workflows/publish.yml` runs on
+`release: published` and authenticates over OIDC through npm's Trusted
+Publishers, so there is no `NPM_TOKEN` in this repository to leak or rotate. It
+runs `npm publish` and nothing else on purpose: `prepublishOnly` is
+`npm run check`, so the gate is the same one a person gets locally.
 
 ## [0.14.0] — 2026-08-30
 

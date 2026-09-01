@@ -1,5 +1,8 @@
 # neatline
 
+[![npm](https://img.shields.io/npm/v/@neatline/map)](https://www.npmjs.com/package/@neatline/map)
+[![license](https://img.shields.io/npm/l/@neatline/map)](LICENSE)
+
 Generate standalone, CSS-themeable SVG maps from a region and a stylesheet.
 
 No tile server, no fonts pipeline, no API key, no runtime model call.
@@ -58,12 +61,13 @@ it over.
 
 ## Status
 
-Early, but complete enough to use. **Phases 0–8e are done and the tool is
-live** — 9a–9e, which is everything from bundled data to a map you can click and
-take away as a file. A design pass over the tool is what is left of Phase 9.
-The package builds under both ESM and CJS, resolves real geometry, emits the
-frozen document shape below, themes it, and carries lakes, rivers, cities,
-names, the sea, land cover, a graticule and four kinds of annotation.
+Early, but complete enough to use, and **on npm**. Phases 0–9 are done: the
+library, and [a tool over it](https://danielefrisanco.github.io/neatline/) where
+you pick a region, a projection and a theme, click the map to mark it, and take
+the result away as a file. The package builds under both ESM and CJS, resolves
+real geometry, emits the frozen document shape below, themes it, and carries
+lakes, rivers, cities, names, the sea, land cover, a graticule and four kinds of
+annotation.
 
 ```sh
 npm i @neatline/map
@@ -77,8 +81,8 @@ class prefix are unchanged.
 
 **`0.x` is doing real work here.** The class taxonomy below is what a `1.0.0`
 would be promising to hold still, and it has not been in enough hands yet to
-know which of its names are wrong. Publishing before that promise is how it gets
-into those hands; the version number is the disclaimer.
+know which of its names are wrong. Being on npm before that promise is how it
+gets into those hands; the version number is the disclaimer.
 
 Eleven of the twelve layer slots carry something. **Roads is the last one still
 empty**, and it is waiting on data rather than on code: of the roads Natural
