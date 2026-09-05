@@ -16,6 +16,104 @@ wrong while the version number still says they may be.
 attribute, or a token is a breaking change, exactly like changing a function
 signature — themes in the wild depend on those names.
 
+## [0.15.1] — 2026-09-05
+
+Three regions that had no name, a frame the size of Russia, and a layer that
+was drawn and could not be seen. All three arrived from using the tool rather
+than from reading the code, which is now the third release running where that
+has been the source.
+
+### Three new region presets
+
+`caucasus`, `baltics` and `central-africa`. A preset is a saved list of ISO
+codes and nothing more, so these cost no machinery — and the tool picked all
+three up without being told, because its form reads `REGION_PRESET_NAMES` off
+the library.
+
+**Central Africa was a genuine hole rather than a missing convenience.** North,
+west, east and southern *look* like a complete partition of the continent and
+are not: the middle was never named, so the DRC — the second largest country in
+Africa — belonged to no regional preset at all, and the neighbours had taken
+the edges of it, Chad into `north-africa` and Angola into `southern-africa`. It
+takes the UN's Middle Africa grouping, which has the merit of being somebody
+else's editorial decision rather than this file's.
+
+`caucasus` was reachable only through `asia` — a frame eleven time zones wide
+for three countries that fit inside one. It is the three South Caucasus states,
+and it stops there for a data reason rather than a political one: the North
+Caucasus is a set of Russian republics, and Natural Earth draws Russia whole at
+country level, so asking for it means asking for Russia.
+
+`baltics` is the mildest of the three. Estonia, Latvia and Lithuania were
+always inside `east-europe`, which is a usable frame — it just tells a
+different story at four times the scale.
+
+**`ST` is in `central-africa` and is absent from the 110m tier**, which carries
+177 countries against 241 at 50m. That is safe here in a way it was not for
+`GF`: São Tomé is an island, so at 110m it is simply not drawn, where French
+Guiana was part of a shape Natural Earth draws as France and omitting it opened
+a hole in the coastline.
+
+### `east-europe` no longer contains Russia
+
+**This changes what an existing preset draws.** Natural Earth has one Russia
+and draws it whole, so including it framed the camera from Kaliningrad to
+Kamchatka: Siberia took two thirds of the canvas and every country the preset
+is named for — Poland, Ukraine, the Baltics, all of them — was crushed into the
+left quarter with the labels overlapping each other.
+
+The file had already made this decision everywhere else and only missed it
+here. `europe` carries no `RU` either, and `east-europe` was the sole preset in
+the file containing it. Russia is still perfectly reachable: `region: ["RU"]`
+is a map of Russia, and `neighbours: true` now puts it along this frame's
+eastern edge as context, which is where a reader expects to find it rather than
+instead of the subject.
+
+### `contrast` drew neighbours in the colour of its own ground
+
+`--neighbour` was `#E8E8E8` against an `#E8E8E8` background in light and
+`#171717` against `#171717` in dark — **byte-identical in both schemes**, and
+so since the layer shipped. Turning neighbours on put Poland and Czechia in the
+markup and nothing on the map, and west-europe stopped dead at the German
+border, which is precisely the failure Phase 8b built the layer to fix.
+
+This is the sixth defect of exactly that shape, and the theme's own comment two
+tokens above records the fifth, where `--glacier` was `#FFFFFF` on `#FFFFFF`
+land. `--neighbour` is `#C8C8C8` in light and `#3A3A3A` in dark now.
+
+**The test had been excusing it, which is the more useful half.** The contrast
+floor already listed `--neighbour` among the fills it checks, with a comment
+saying that a neighbour nobody can see is not context. But the assertion was
+`Math.max(fill, outline)` — either half will do — and `contrast` draws a black
+coastline at ΔE 92, so every fill in that theme passed on the strength of an
+outline `--neighbour` never receives: **`structure.ts` draws neighbours with
+`stroke: none`**, alone among the fills being checked. The compound rule was
+handing the one strokeless fill an outline it does not have.
+
+**And the first fix for that was wrong too.** Judging `--neighbour` at the same
+floor as a country fill failed 24 of 30 presets, which is a rule mis-set rather
+than a library-wide defect: context is *meant* to be faint, and Phase 8b's rule
+for the layer is that it must not compete with the subject. The spread said so —
+`contrast` at 0.0 and every other preset between 2.7 and 11 — and rendering
+west-europe across that range settled which of those are real. Blueprint at 3.5
+and minimal/slate at 2.9 draw Poland quietly and legibly; contrast draws
+nothing. So the line sits between *quiet* and *absent* rather than between quiet
+and loud, and the floor for this one token is 2, judged on its fill alone.
+
+### The tool
+
+None of this ships in the package — `files` carries `dist`, `themes`,
+`palettes`, `typefaces` and `data` — but it is where the release came from.
+
+A **Feedback button** beside the downloads, sending a message and the map that
+prompted it to whoever built this, with no account asked of anyone and nothing
+landing in public. The plan had specified a pre-filled GitHub issue; that was
+dropped before it was built, because an issue demands a login before a reader
+is allowed to say anything.
+
+The tool now carries **the house style of the site that links to it**, and the
+**header stays put** while the form beside it scrolls.
+
 ## [0.15.0] — 2026-08-31
 
 **Phase 9 is complete.** There is a tool: a page over this library where you
@@ -1833,7 +1931,8 @@ and grew to carry the legend, the ocean layer and a brighter palette — each is
 something the tool needs and none is large alone. Routes split out of it because
 that one is gated on acquiring data, not on drawing it.
 
-[Unreleased]: https://github.com/danielefrisanco/neatline/compare/v0.14.0...HEAD
+[Unreleased]: https://github.com/danielefrisanco/neatline/compare/v0.15.1...HEAD
+[0.15.1]: https://github.com/danielefrisanco/neatline/compare/v0.15.0...v0.15.1
 [0.15.0]: https://github.com/danielefrisanco/neatline/compare/v0.14.0...v0.15.0
 [0.14.0]: https://github.com/danielefrisanco/neatline/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/danielefrisanco/neatline/compare/v0.12.0...v0.13.0
