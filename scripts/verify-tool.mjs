@@ -59,6 +59,31 @@ for (const name of WANTED) {
   console.log(`  ✓ assets/${found}  ${(size / 1024).toFixed(0)} KB`);
 }
 
+/**
+ * The gallery, which the header links to and this script would otherwise miss.
+ *
+ * The link is `<a href="./gallery.html">` and the sweep above only sees the
+ * asset URLs Vite rewrote — Vite does not touch anchors, which is the whole
+ * reason a relative link works here and also the reason nothing else would
+ * notice it going missing. A broken link out of the tool's own header is
+ * exactly the shape of failure this file exists for.
+ *
+ * The size floor is generous but not nothing: an empty snapshot directory
+ * still produces a valid page, headings and all, with no maps on it.
+ */
+const gallery = await stat(join(root, "gallery.html")).catch(() => {
+  throw new Error(
+    "neatline: the header links to gallery.html and the build does not contain one — " +
+      "`npm run gallery -- tool/dist/gallery.html` is part of `tool:build`",
+  );
+});
+assert.ok(
+  gallery.size > 500_000,
+  `neatline: gallery.html is only ${(gallery.size / 1024).toFixed(0)} KB, which means it was ` +
+    "built from an empty test/__snapshots__/gallery",
+);
+console.log(`  ✓ gallery.html  ${(gallery.size / 1024 / 1024).toFixed(1)} MB`);
+
 await stat(join(root, ".nojekyll")).catch(() => {
   throw new Error(
     "neatline: no .nojekyll in the build. Jekyll silently deletes files whose names begin with " +

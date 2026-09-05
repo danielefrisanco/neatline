@@ -25,6 +25,10 @@ await map.toFile("europe.svg", { theme: "minimal" });
 
 **→ [danielefrisanco.github.io/neatline](https://danielefrisanco.github.io/neatline/)**
 
+**Or see what it draws first: [the gallery](https://danielefrisanco.github.io/neatline/gallery.html)** —
+every committed snapshot on one page, sixty of them, which is faster than
+reading any of what follows.
+
 A page over this library: pick a region, a projection, a theme, the layers you
 want, and it draws. **Everything runs in your browser** — the geometry, the
 stylesheet, the file — so there is no server, no account and nothing sent
