@@ -23,16 +23,20 @@ await map.toFile("europe.svg", { theme: "minimal" });
 
 ## Make a map without installing anything
 
-[![The tool: a map of Europe with neighbours drawn behind it, a pin dropped in
-central Europe, and the whole configuration sitting in a link underneath](https://raw.githubusercontent.com/danielefrisanco/neatline/main/media/poster.png)](https://danielefrisanco.github.io/neatline/)
+[![The tool being used: a region chosen, the detail raised, neighbours turned
+on, the stylesheet swapped, and a pin dropped on the map — with the link
+underneath changing as it lands](https://raw.githubusercontent.com/danielefrisanco/neatline/main/media/demo.gif)](https://danielefrisanco.github.io/neatline/)
 
 **→ [danielefrisanco.github.io/neatline](https://danielefrisanco.github.io/neatline/)**
 
-**[Twenty-five seconds of it being used](https://raw.githubusercontent.com/danielefrisanco/neatline/main/media/demo.mp4)**
-— a region, a level of detail, neighbours, a different stylesheet, and a pin.
-No narration. It is recorded by a script (`npm run demo`) that drives the
-deployed page, so it is remade when the interface moves rather than left to go
-quietly out of date.
+Twenty-six seconds of it being used — a region, a level of detail, neighbours,
+a different stylesheet, and a pin. No narration. Sharper as
+[MP4](https://raw.githubusercontent.com/danielefrisanco/neatline/main/media/demo.mp4)
+or [WebM](https://raw.githubusercontent.com/danielefrisanco/neatline/main/media/demo.webm),
+and there is a [still](https://raw.githubusercontent.com/danielefrisanco/neatline/main/media/poster.png)
+for the places that show a card rather than play a video. All four are made by
+`npm run demo`, which drives the deployed page — so they are remade when the
+interface moves rather than left to go quietly out of date.
 
 **Or see what it draws first: [the gallery](https://danielefrisanco.github.io/neatline/gallery.html)** —
 every committed snapshot on one page, sixty of them, which is faster than
