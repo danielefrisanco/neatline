@@ -1,10 +1,19 @@
 # Publish to npm when a release is published.
 #
 # **No token.** Authentication is OIDC — npm's Trusted Publishers — so there is
-# no `NPM_TOKEN` in this repository's secrets to leak, rotate or forget. Two
-# things make it work and both are easy to leave out: `id-token: write` on this
-# job, and `registry-url` on `setup-node`, which is what writes the `.npmrc`
-# that the exchange needs.
+# no `NPM_TOKEN` in this repository's secrets to leak, rotate or forget. Three
+# things make it work and all three are easy to leave out: `id-token: write` on
+# this job, `registry-url` on `setup-node`, which is what writes the `.npmrc`
+# that the exchange needs, and **an npm new enough to do the exchange at all**.
+#
+# That third one is what failed the first time this ran, on 0.15.1, and it
+# failed in a way that reads like something else entirely: `setup-node` with
+# `node-version: 22` hands you the npm Node bundles, which is **10.9.x**, and
+# OIDC publishing landed in **npm 11.5.1**. So npm never attempted the
+# exchange, published anonymously, and the registry answered an anonymous
+# `PUT` to a scoped package with **404 Not Found** rather than 401 — npm hides
+# whether a private scope exists, so "not found" is what "not allowed" looks
+# like. The package was there the whole time.
 #
 # **It has to be configured on npm's side once**, under the package's settings:
 # a trusted publisher naming this repository and this workflow file. Until that
@@ -31,8 +40,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      # The half of Trusted Publishers that lives here. Without it npm has no
-      # identity to check and the publish is refused.
+      # The first of the three, and the only one that lives in this file's
+      # permissions. Without it npm has no identity to check.
       id-token: write
     steps:
       - uses: actions/checkout@v4
@@ -41,9 +50,14 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-          # The other half: this is what writes the .npmrc pointing at the
+          # The second of the three: this writes the .npmrc pointing at the
           # public registry, which the OIDC exchange reads.
           registry-url: "https://registry.npmjs.org"
+
+      # Node 22 bundles npm 10, which cannot do OIDC. Pinned to a floor rather
+      # than to `@latest` so a future npm release cannot change what a publish
+      # does without somebody choosing it.
+      - run: npm install -g npm@^11.5.1
 
       - run: npm ci
 
