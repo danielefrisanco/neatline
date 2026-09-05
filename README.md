@@ -23,7 +23,16 @@ await map.toFile("europe.svg", { theme: "minimal" });
 
 ## Make a map without installing anything
 
+[![The tool: a map of Europe with neighbours drawn behind it, a pin dropped in
+central Europe, and the whole configuration sitting in a link underneath](https://raw.githubusercontent.com/danielefrisanco/neatline/main/media/poster.png)](https://danielefrisanco.github.io/neatline/)
+
 **→ [danielefrisanco.github.io/neatline](https://danielefrisanco.github.io/neatline/)**
+
+**[Twenty-five seconds of it being used](https://raw.githubusercontent.com/danielefrisanco/neatline/main/media/demo.mp4)**
+— a region, a level of detail, neighbours, a different stylesheet, and a pin.
+No narration. It is recorded by a script (`npm run demo`) that drives the
+deployed page, so it is remade when the interface moves rather than left to go
+quietly out of date.
 
 **Or see what it draws first: [the gallery](https://danielefrisanco.github.io/neatline/gallery.html)** —
 every committed snapshot on one page, sixty of them, which is faster than

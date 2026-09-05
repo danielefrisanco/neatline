@@ -41,3 +41,7 @@ test/ideas/
 # The tool's build output. Same bargain as dist/ — generated, deployed by
 # an action, never committed.
 /tool/dist/
+
+# The screencast frames, between capture and encode. `npm run demo` removes
+# them itself; this is here for the run that does not get that far.
+/.demo-frames/

@@ -68,6 +68,7 @@
     "tool:build": "vite build && npm run gallery -- tool/dist/gallery.html && node scripts/verify-tool.mjs",
     "tool:preview": "vite preview",
     "gallery": "node scripts/build-gallery.mjs",
+    "demo": "node scripts/record-demo.mjs",
     "build:icons": "node scripts/build-icons.mjs"
   },
   "dependencies": {
