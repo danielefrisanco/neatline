@@ -5,26 +5,61 @@
  * nothing here may reach inside `.mp`. Every rule below stops at the figure.
  */
 
+/*
+ * The neutrals are the ones from danielefrisanco.github.io, and they are warm
+ * where these used to be faintly green. The two pages link to each other — the
+ * site lists this tool, this tool's header links back — and two pages that do
+ * that while looking like different authors is a small credibility cost, paid
+ * exactly where Phase 11 asks a newsroom whether this can be trusted on a
+ * deadline.
+ *
+ * **What did not come across matters more than what did.** The site's shadows,
+ * its cards that lift when pointed at, its 14px corners, its gradient button
+ * and its reveal-on-scroll are right for a page whose job is to make an
+ * impression in five seconds. This page's job is the opposite: to disappear
+ * behind the map. Anything that moves under the pointer competes with the one
+ * thing on screen that is supposed to hold attention, and a form of thirty
+ * controls at a 14px radius reads as bubbly rather than calm. The identity
+ * carried across; the decoration did not.
+ */
 :root {
-  --page: #f7f6f2;
+  --page: #fbfaf8;
   --panel: #ffffff;
-  --ink: #1b1d1a;
-  --ink-soft: #5a615a;
-  --line: #dcdad2;
+  --ink: #1c1b19;
+  --ink-soft: #5c574f;
+  --line: #e6e2da;
   --error: #8f2f22;
   --note: #8a6410;
+  /*
+   * The tool had no accent at all until now — only an error red and a warning
+   * amber, both of which mean something is wrong. There was no colour for
+   * saying *this is the thing you are using*.
+   *
+   * **The collision is worth naming rather than discovering.** `--note` is
+   * amber and this accent is orange: neighbours on the wheel. They stay apart
+   * because they never take the same shape — a note is a sentence underneath a
+   * control, and the accent is never text. It is a ring, a border, a fill. That
+   * is the rule which keeps them legible: if the accent ever ends up colouring
+   * words, it has started impersonating a warning.
+   */
+  --accent: #f97316;
+  --accent-soft: rgb(245 158 11 / 0.14);
   color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --page: #141614;
-    --panel: #1b1e1b;
-    --ink: #e6e8e4;
-    --ink-soft: #9aa39a;
-    --line: #2c312c;
+    --page: #0f0e0d;
+    --panel: #1b1916;
+    --ink: #f3f1ec;
+    --ink-soft: #a8a298;
+    --line: #2c2924;
     --error: #e8907f;
     --note: #d3a952;
+    /* Amber rather than orange on a dark ground: the orange goes muddy against
+       #0f0e0d, which is the site's own reason for carrying two accent stops. */
+    --accent: #f59e0b;
+    --accent-soft: rgb(245 158 11 / 0.18);
   }
 }
 
@@ -78,16 +113,23 @@ body {
   gap: 1rem;
 }
 
+/* Pills, as they are on the site these two links point at. The hover is a
+   softened accent fill rather than the site's lift: nothing on this page rises
+   to meet a pointer, because the map is the only thing that should move. */
 .by a {
   color: var(--ink-soft);
   text-decoration: none;
-  border-bottom: 1px solid var(--line);
+  padding: 0.2rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
 }
 
 .by a:hover,
 .by a:focus-visible {
-  color: var(--ink);
-  border-bottom-color: currentColor;
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 main {
@@ -239,6 +281,26 @@ main {
   color: var(--ink-soft);
 }
 
+/*
+ * The site's one real signature: a short accent rule under a section heading.
+ * It is carried because without it the accent appears nowhere at rest — every
+ * other use is a hover or a focus ring, so a screenshot of this page had no
+ * colour in it at all and the family resemblance went with it.
+ *
+ * Static, and deliberately so. This is the version of the site's flourish that
+ * survives being put next to a map: a fixed mark that never moves, where the
+ * original grows a gradient on a heading nobody is looking at twice.
+ */
+.group h2::after {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-top: 0.3rem;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
 .field {
   display: flex;
   flex-direction: column;
@@ -301,8 +363,12 @@ input[type="number"] {
   color: var(--ink-soft);
 }
 
+/* `currentColor` meant the focus ring was whatever the focused thing happened
+   to be — grey on a hint, near-black on an input, and all but invisible against
+   a border of the same weight. One colour now, and it is the accent, because
+   "where am I" is exactly the question an accent exists to answer. */
 :focus-visible {
-  outline: 2px solid currentColor;
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -363,7 +429,9 @@ input[type="number"] {
 
 .chip:hover,
 .chip:focus-visible {
-  border-color: currentColor;
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 input[type="search"] {
@@ -591,7 +659,8 @@ input[type="search"] {
 
 .action:hover,
 .action:focus-visible {
-  border-color: currentColor;
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* ---- taking the map away ---- */
