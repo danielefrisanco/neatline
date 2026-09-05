@@ -12,14 +12,22 @@
  * viewBox, and what each map demonstrates is read back off the markup. So the
  * page can never claim a map contains something the file does not.
  *
- * Output is untracked on purpose, the same bargain the plan gets: three
- * megabytes of inline SVG makes a diff nobody can read. Run it when you want
- * to look.
+ * Output is untracked on purpose, the same bargain the plan gets: several
+ * megabytes of inline SVG makes a diff nobody can read. It is built rather
+ * than stored — by `npm run gallery` locally, and by the Pages workflow, which
+ * copies it into `tool/dist/gallery.html` so the published site carries it at
+ * `/neatline/gallery.html`.
+ *
+ * That publish is why there is no webfont here any more; the reason is written
+ * where the fonts used to be.
  */
 import { readdir, readFile, writeFile } from "node:fs/promises";
 
 const DIR = "test/__snapshots__/gallery";
-const OUT = "gallery.html";
+// Default for a person running `npm run gallery` to go and look; the site build
+// passes `tool/dist/gallery.html` so the deployed page comes out of this one
+// script rather than out of a copy step in a workflow file nobody reads.
+const OUT = process.argv[2] ?? "gallery.html";
 
 /** What a map demonstrates, read back off the file rather than off its options. */
 const FEATURES = [
@@ -84,26 +92,35 @@ const page = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>neatline gallery — ${files.length} maps</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Serif:wght@400&display=swap">
 <style>
+  /*
+   * No webfont, and no <link> to one. This page used to load three IBM Plex
+   * families from Google Fonts, which was defensible while it was a local file
+   * nobody but its author opened. It is published now, beside the tool, on the
+   * same domain — and the tool turned Inter down for exactly this reason: the
+   * README promises a map that asks nothing of the network, and a sibling page
+   * that phones a third party on load breaks that promise in the one place a
+   * sceptical reader would check it.
+   *
+   * The colours are the tool's, for the same reason. Two pages one click apart
+   * that look like different authors cost more than a typeface buys.
+   */
   :root {
-    --ground: #EFF1EC; --panel: #FBFCF9; --plate: #FFFFFF;
-    --ink: #1E2426; --ink-soft: #59636A; --line: #D5DAD2; --accent: #35607A;
-    --f-head: "IBM Plex Sans Condensed", "Helvetica Neue", Arial, sans-serif;
-    --f-body: "IBM Plex Serif", Georgia, serif;
-    --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    --ground: #fbfaf8; --panel: #ffffff; --plate: #ffffff;
+    --ink: #1c1b19; --ink-soft: #5c574f; --line: #e6e2da; --accent: #f97316;
+    --f-head: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --f-body: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --f-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --ground: #11151A; --panel: #191F25; --plate: #E9EBE6;
-      --ink: #E7EAE5; --ink-soft: #96A1A9; --line: #28313A; --accent: #7FB3D1;
+      --ground: #0f0e0d; --panel: #1b1916; --plate: #ebe8e2;
+      --ink: #f3f1ec; --ink-soft: #a8a298; --line: #2c2924; --accent: #f59e0b;
     }
   }
   :root[data-theme="dark"] {
-    --ground: #11151A; --panel: #191F25; --plate: #E9EBE6;
-    --ink: #E7EAE5; --ink-soft: #96A1A9; --line: #28313A; --accent: #7FB3D1;
+    --ground: #0f0e0d; --panel: #1b1916; --plate: #ebe8e2;
+    --ink: #f3f1ec; --ink-soft: #a8a298; --line: #2c2924; --accent: #f59e0b;
   }
   * { box-sizing: border-box; }
   body {
@@ -125,9 +142,22 @@ const page = `<!doctype html>
   .grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
   @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
   .card { margin: 0; display: flex; flex-direction: column; gap: .7rem; scroll-margin-top: 1rem; }
+  /*
+   * No padding, which is a fix rather than a preference. Every snapshot paints
+   * its own ground edge to edge, and roughly half of them carry a dark block
+   * of their own — so in the dark scheme a half-rem gutter drew a pale ring
+   * around exactly those maps, and the ring read as the defect. There is no
+   * plate colour that suits both halves; the answer is not to show one.
+   * The plate colour survives as the fallback for a map that ever paints less
+   * than its whole viewBox.
+   *
+   * (No backticks in here. This whole page is one template literal, and a
+   * backtick in a comment ends it — which is a build error two hundred lines
+   * from the thing that caused it.)
+   */
   .plate {
     background: var(--plate); border: 1px solid var(--line); border-radius: 2px;
-    padding: .5rem; overflow: hidden; line-height: 0;
+    overflow: hidden; line-height: 0;
   }
   .plate svg { width: 100%; height: auto; display: block; }
   figcaption { display: flex; flex-direction: column; gap: .3rem; }
@@ -143,14 +173,31 @@ const page = `<!doctype html>
   }
   .file { margin: 0; font-size: .72rem; color: var(--ink-soft); }
   .file code { font-family: var(--f-mono); font-size: .95em; }
+  /* The tool's pills, rule for rule. Someone arriving here from the tool should
+     not have to work out that it is the same project. */
+  .by { display: flex; gap: 1rem; margin-top: 1.2rem; }
+  .by a {
+    color: var(--ink-soft); text-decoration: none; font-size: .85rem;
+    padding: .2rem .65rem; border: 1px solid var(--line); border-radius: 999px;
+    transition: color .15s, border-color .15s, background .15s;
+  }
+  .by a:hover, .by a:focus-visible {
+    color: var(--accent); border-color: var(--accent); background: rgb(245 158 11 / .14);
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <p class="eyebrow">neatline · npm run gallery</p>
+    <p class="eyebrow">neatline · gallery</p>
     <h1>${files.length} maps, as files someone can open</h1>
     <p class="stand">Every committed snapshot in <code>${DIR}</code>, exactly as it renders. What each map is said to demonstrate is read back off the markup rather than off the test that wrote it, so nothing here can claim a feature the file does not contain.</p>
+    <!-- A relative link, so this page works from the built site, from a local
+         preview, and from a file:// open of the untracked build. -->
+    <nav class="by">
+      <a href="./">Open the tool</a>
+      <a href="https://github.com/danielefrisanco/neatline" rel="noopener" target="_blank">Source</a>
+    </nav>
   </header>
   <div class="grid">
 ${cards.join("\n")}
