@@ -692,6 +692,115 @@ input[type="search"] {
   width: 21px;
 }
 
+/* ---- saying what was missing ---- */
+
+/* A native `<dialog>` rather than the fixed-position popover the `?` boxes use.
+   That one had to be built by hand because it is anchored to the control that
+   opened it and must survive the panel scrolling underneath. This is a modal
+   about the whole map, so the platform's own element is the right one: it
+   traps focus, closes on Escape, and paints its own backdrop, and every one of
+   those is a thing not to get wrong by hand. */
+.feedback {
+  width: min(34rem, calc(100vw - 2rem));
+  padding: 0;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.feedback::backdrop {
+  background: rgb(0 0 0 / 0.4);
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.1rem 1.2rem 1.2rem;
+}
+
+.feedback h2 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.feedback-blurb,
+.feedback-link,
+.feedback-say {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.feedback textarea,
+.feedback input[type="email"] {
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--ink);
+  background: var(--page);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.feedback textarea {
+  resize: vertical;
+}
+
+/* The link to the map, shown rather than merely promised. Somebody about to
+   send a stranger the state of what they were doing is owed a look at it —
+   and it is long, so it wraps rather than stretching the dialog. */
+.feedback-link {
+  overflow-wrap: anywhere;
+  padding-top: 0.15rem;
+  border-top: 1px solid var(--line);
+}
+
+.feedback-say:empty {
+  display: none;
+}
+
+.feedback-say.is-error {
+  color: var(--error);
+}
+
+/* Sent. Loud enough to be the answer to "did that work?" without a colour the
+   rest of the tool does not use — this is the same accent the map's own status
+   line takes, at the weight a confirmation earns. */
+.feedback-say.is-sent {
+  padding: 0.5rem 0.6rem;
+  color: var(--ink);
+  background: var(--page);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--note);
+  border-radius: 0 4px 4px 0;
+  font-weight: 600;
+}
+
+/* Once it is sent the dialog is a receipt, not a form: the boxes that took the
+   message are gone, so nobody is left wondering whether an empty field means
+   it failed. The link stays — it is part of what was sent. */
+.feedback-form.is-sent .field,
+.feedback-form.is-sent .feedback-blurb {
+  display: none;
+}
+
+.feedback-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Hidden from people and from screen readers both, and left in the document
+   for the one visitor it is meant for. `display: none` alone would be enough
+   to hide it; it is the `aria-hidden` and the negative tabindex on the element
+   that keep it from being announced or tabbed into. */
+.feedback-bot {
+  display: none;
+}
+
 /* ---- one column, on a phone ---- */
 
 @media (max-width: 60rem) {

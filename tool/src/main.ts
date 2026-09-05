@@ -19,6 +19,7 @@ import { rasterise, save } from "./raster.js";
 import { place, readCoordinate, type Mode } from "./marks.js";
 import { forget, recall, recallZoom, remember, rememberZoom } from "./memory.js";
 import { notesFor, type Notes } from "./notes.js";
+import { mountFeedback } from "./feedback.js";
 
 /**
  * The tool: a form over `MapOptions`, and a URL that rebuilds what it made.
@@ -77,6 +78,7 @@ const pngButton = must<HTMLButtonElement>("#save-png");
 const scaleHost = must<HTMLSelectElement>("#export-scale");
 const zoomHost = must<HTMLSelectElement>("#zoom");
 const startOver = must<HTMLButtonElement>("#start-over");
+const feedbackButton = must<HTMLButtonElement>("#feedback");
 const whereHost = must<HTMLElement>("#where");
 
 function must<T extends Element>(selector: string): T {
@@ -644,6 +646,22 @@ startOver.addEventListener("click", () => {
 });
 
 linkHost.addEventListener("focus", () => linkHost.select());
+
+/**
+ * The map's own link is the payload, so the feedback form is handed the same
+ * value the share box shows rather than building one of its own — one place
+ * writes that URL, and this reads it. Passed as a function because the map
+ * changes underneath: opening the dialog, thinking again, moving the region and
+ * coming back has to send the map they ended up with.
+ */
+mountFeedback(
+  feedbackButton,
+  () => linkHost.value,
+  // Repeated on the page's own status line, so the confirmation survives the
+  // dialog being closed. Otherwise the only evidence a message went anywhere
+  // disappears with the box it was shown in.
+  (text) => say(text),
+);
 
 refreshForm();
 writeUrl();
