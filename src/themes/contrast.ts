@@ -74,7 +74,14 @@ export const contrast = compose({
   --glacier: #D8D8D8;
   --sea-ink: #000000;
   --road: #000000;
-  --neighbour: #E8E8E8;
+  /* Was #E8E8E8 — the background exactly, so turning neighbours on put Poland
+     and Czechia in the markup and nothing on the map, and west-europe stopped
+     dead at the German border. The same defect the note above records for
+     --glacier, which was #FFFFFF against #FFFFFF land. Neighbours are the one
+     fill drawn with no stroke at all, so unlike a country there is no
+     coastline to carry them and the fill has to do it alone. Grey enough to be
+     found, and far short of the white the subject keeps. */
+  --neighbour: #C8C8C8;
   --anno: #4A4A4A;
   --anno-ink: #FFFFFF;
   --pin-size: 7;
@@ -115,7 +122,9 @@ export const contrast = compose({
      a route drawn in the colour of the ground it crosses. Light enough to read
      on black, and short of the white the water uses, so a road is not a river. */
   --road: #C8C8C8;
-  --neighbour: #171717;
+  /* Inherited the light block's failure into the dark one: #171717 is this
+     scheme's ground, so the layer was invisible in both. */
+  --neighbour: #3A3A3A;
   --anno: #B8B8B8;
   --anno-ink: #000000;
   --stripe: #FFFFFF;

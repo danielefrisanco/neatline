@@ -32,6 +32,29 @@ import { neatline, PALETTE_NAMES, THEME_NAMES } from "../src/index.js";
 /** Perceptual difference below which a coastline stops being findable. */
 const FLOOR = 10;
 
+/**
+ * The same question asked of `--neighbour`, and answered with a different
+ * number — because context is *meant* to be faint. 08b's rule for the layer is
+ * that it "must not compete with the subject", so holding it to the floor a
+ * country fill has to clear would be demanding it break its own brief.
+ *
+ * **Measured, then looked at, because the first attempt got this wrong.** Reusing
+ * FLOOR here failed 24 of 30 presets, which is a rule mis-set rather than a
+ * library-wide defect. The spread says so plainly: `contrast` is **0.0** in
+ * both schemes, and every other preset lands between **2.7** and **11**.
+ * Rendering west-europe with `neighbours` across that range settles which of
+ * those are real — blueprint at 3.5 and minimal/slate at 2.9 both draw Poland
+ * and Czechia quietly and legibly, while contrast draws nothing at all and the
+ * map stops dead at the German border, which is precisely the failure the
+ * layer was built to fix.
+ *
+ * So the line sits between "quiet" and "absent" rather than between "quiet" and
+ * "loud", and at that point the honest description of this check is *the
+ * context layer may not be the colour of the ground it is drawn on*. Two is
+ * under every preset that renders and over the one that does not.
+ */
+const NEIGHBOUR_FLOOR = 2;
+
 /** Every colour a country's interior can take. */
 const FILLS = [
   "--land",
@@ -143,17 +166,34 @@ describe("every preset keeps its coastlines findable", () => {
       for (const name of FILLS) {
         const fill = rgb(tokens[name]);
         expect(fill, `${theme}/${palette} ${scheme}: ${name} is not a colour`).not.toBeNull();
-        // Either half will do. A country reads against the sea if its own
-        // colour differs from the water, *or* if the line drawn round it
-        // does — which is why a pale choropleth band is legal on a theme
-        // with a real coastline and illegal on one without.
-        const apart = Math.max(difference(ground, fill as Rgb), outline);
+        // Either half will do — for everything that *has* both halves. A
+        // country reads against the sea if its own colour differs from the
+        // water, *or* if the line drawn round it does, which is why a pale
+        // choropleth band is legal on a theme with a real coastline and
+        // illegal on one without.
+        //
+        // **`--neighbour` is the exception, and the compound rule was quietly
+        // excusing it.** `structure.ts` draws neighbours with `stroke: none` —
+        // alone among the fills here, a neighbour has no outline at all. So
+        // `Math.max(fill, outline)` handed it an outline it does not get, and
+        // `contrast` passed for eleven versions with `--neighbour` set to the
+        // background colour *exactly*: drawn, present in the markup, and
+        // invisible. Same defect the theme's own comment describes two tokens
+        // above, where `--glacier` was `--land`. The fill carries it alone.
+        const separable = difference(ground, fill as Rgb);
+        const context = name === "--neighbour";
+        const floor = context ? NEIGHBOUR_FLOOR : FLOOR;
+        const apart = context ? separable : Math.max(separable, outline);
         expect(
           apart,
-          `${theme}/${palette} ${scheme}: ${name} is ${apart.toFixed(1)} from --bg ` +
-            `and its outline is ${outline.toFixed(1)} — below ${FLOOR} nothing separates ` +
-            `a country of that colour from the sea`,
-        ).toBeGreaterThanOrEqual(FLOOR);
+          `${theme}/${palette} ${scheme}: ${name} is ${separable.toFixed(1)} from --bg` +
+            (context
+              ? ` — a neighbour is drawn with no outline at all, so its fill is the only` +
+                ` thing that can separate it from the ground, and below ${floor} it is in` +
+                ` the markup and not on the map`
+              : ` and its outline is ${outline.toFixed(1)} — below ${floor} nothing separates ` +
+                `a country of that colour from the sea`),
+        ).toBeGreaterThanOrEqual(floor);
       }
     }
   });

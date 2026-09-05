@@ -44,6 +44,12 @@
    */
   --accent: #f97316;
   --accent-soft: rgb(245 158 11 / 0.14);
+  /* How tall the sticky header is. The panel reads it to stick underneath the
+     bar rather than under the top of the window.
+     Measured rather than guessed, because the first guess was 3.6rem and the
+     bar is 63.9px — so the panel was tucking 6px under the header's shadow
+     line instead of clearing it. */
+  --bar-h: 4rem;
   color-scheme: light dark;
 }
 
@@ -74,13 +80,39 @@ body {
   font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
+/*
+ * The header stays put, which needed one number written down rather than
+ * discovered: the panel beside the map was *already* sticky, at `top: 1.5rem`,
+ * so a header pinned at the top of the viewport would have had the form slide
+ * underneath it and the group headings disappear behind the wordmark.
+ *
+ * `--bar-h` is that number, and it is read off the rendered bar rather than
+ * reasoned about — the first attempt reasoned about it, said 3.6rem, and was
+ * 6px short. The panel offsets its own `top` by it and takes it out of its
+ * `max-height`, so the two stick to each other rather than to the same edge.
+ * One number is safe here because on any screen wide enough for the panel to
+ * be sticky at all, this bar does not wrap — and below that width the phone
+ * rules unstick both, where a pinned header would be spending a fifth of a
+ * small screen on a wordmark.
+ *
+ * An explicit background matters as much as the position: the bar was
+ * transparent over the page colour, and a transparent sticky header is one the
+ * map scrolls through.
+ */
 .bar {
   display: flex;
   align-items: baseline;
   gap: 0.9rem;
   flex-wrap: wrap;
   padding: 1rem 1.5rem;
+  background: var(--page);
   border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  /* Above the panel's own level, which is 2. The `?` explanations are fixed at
+     5 and stay above both, which is right: an explanation is opened on purpose
+     and is the thing being read. */
+  z-index: 3;
 }
 
 .bar h1 {
@@ -244,8 +276,8 @@ main {
   border: 1px solid var(--line);
   border-radius: 6px;
   position: sticky;
-  top: 1.5rem;
-  max-height: calc(100vh - 3rem);
+  top: calc(var(--bar-h) + 1.5rem);
+  max-height: calc(100vh - var(--bar-h) - 3rem);
   overflow-y: auto;
   /* Above the map, and the reason is two rules meeting.
      `position: sticky` creates a stacking context, so the explanation's own
@@ -886,6 +918,13 @@ input[type="search"] {
     position: static;
     max-height: none;
     overflow-y: visible;
+  }
+
+  /* And neither does the header. On a phone a pinned bar spends a fifth of the
+     screen on a wordmark, and the map went first here for exactly the reason
+     that space is the scarce thing. */
+  .bar {
+    position: static;
   }
 
   .layout,

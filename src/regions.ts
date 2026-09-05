@@ -72,11 +72,32 @@ export const REGION_PRESETS: Readonly<Record<Exclude<RegionPreset, "world">, rea
   // Middle East and Asia; Egypt is in Africa, North Africa and the Middle
   // East. A region is a frame someone wants, not a partition of the planet.
 
+  // `RU` was in this list and had to come out, which changes what this preset
+  // draws. Natural Earth has one Russia and draws it whole, so including it
+  // framed the camera from Kaliningrad to Kamchatka: Siberia took two thirds of
+  // the canvas and every country this preset is actually named for — Poland,
+  // Ukraine, the Baltics, the lot — was crushed into the left quarter with the
+  // labels overlapping each other. A map of Eastern Europe that is mostly
+  // Siberia is not a map of Eastern Europe.
+  //
+  // The file had already decided this everywhere else and only missed it here:
+  // `europe` carries no `RU` either, and after this neither does any preset.
+  // Russia is still perfectly reachable — `region: ["RU"]` is a map of Russia,
+  // and `neighbours: true` puts it along this frame's eastern edge as context,
+  // which is where a reader expects to find it rather than instead of the
+  // subject.
   "east-europe": [
     "PL", "CZ", "SK", "HU", "RO", "BG", "MD", "UA", "BY", "LT", "LV", "EE",
-    "RU",
   ],
   nordics: ["NO", "SE", "FI", "DK", "IS", "FO", "AX", "GL"],
+  // The three, and only the three. They are already inside `east-europe`,
+  // which is why this is a framing rather than a gap: that preset also carries
+  // Ukraine, Belarus and western Russia, so a Baltic map drawn from it is
+  // telling a different story at four times the scale. Finland and Kaliningrad
+  // are context rather than members, and `neighbours` draws context better
+  // than membership does — it puts them on the map without letting them into
+  // the camera.
+  baltics: ["EE", "LV", "LT"],
   // The former Yugoslavia plus its neighbours on the peninsula. Greece and
   // Turkey's European portion are in, because a Balkan map that stops at the
   // Greek border frames a shape no atlas draws.
@@ -114,6 +135,23 @@ export const REGION_PRESETS: Readonly<Record<Exclude<RegionPreset, "world">, rea
   "east-africa": [
     "SD", "SS", "ER", "DJ", "ET", "SO", "KE", "UG", "RW", "BI", "TZ", "XS",
   ],
+  // The hole the other four left. North, west, east and southern *look* like a
+  // complete partition of the continent and are not: the middle was never
+  // named, so the DRC — the second largest country in Africa — belonged to no
+  // regional preset at all, and the neighbours had quietly taken the edges of
+  // it, Chad into `north-africa` and Angola into `southern-africa`. Both stay
+  // there and are listed here too; overlap is the normal state of these lists,
+  // since Estonia has always been in `europe` and `east-europe` at once.
+  //
+  // The UN's "Middle Africa" grouping, which has the advantage of being
+  // somebody else's editorial decision rather than this file's.
+  //
+  // `ST` is in and is absent from the 110m tier, which carries 177 countries
+  // against 241 at 50m. That is safe here in a way it was not for `GF`: São
+  // Tomé is an island, so at 110m it is simply not drawn, where French Guiana
+  // was a piece of a shape Natural Earth draws as France and leaving it out
+  // opened a hole in the coastline.
+  "central-africa": ["CD", "CG", "CF", "CM", "GA", "GQ", "TD", "AO", "ST"],
   "southern-africa": ["ZA", "NA", "BW", "ZW", "MZ", "ZM", "MW", "AO", "LS", "SZ", "MG"],
 
   // Israel and Palestine are both listed because the topology carries both,
@@ -124,6 +162,15 @@ export const REGION_PRESETS: Readonly<Record<Exclude<RegionPreset, "world">, rea
     "QA", "BH", "KW", "CY", "EG",
   ],
   "central-asia": ["KZ", "UZ", "TM", "TJ", "KG", "AF", "MN"],
+  // The three South Caucasus states, which were reachable only through `asia`
+  // — a frame eleven time zones wide for three countries that fit in one.
+  //
+  // The North Caucasus is not here and cannot be: it is a set of Russian
+  // republics, and Natural Earth draws Russia whole at country level, so
+  // asking for it means asking for Russia and framing the map from Kaliningrad
+  // to Kamchatka. Turkey and Iran are out for the same reason at a smaller
+  // scale. `neighbours` is how all three appear without entering the camera.
+  caucasus: ["AM", "AZ", "GE"],
   "south-asia": ["IN", "PK", "BD", "NP", "BT", "LK", "MV", "AF"],
   "southeast-asia": [
     "MM", "TH", "LA", "KH", "VN", "MY", "SG", "ID", "BN", "PH", "TL",
@@ -173,6 +220,7 @@ const PRESET_LABELS: Readonly<Record<RegionPreset, string>> = {
   antarctica: "Antarctica",
   "east-europe": "Eastern Europe",
   nordics: "the Nordic countries",
+  baltics: "the Baltic states",
   balkans: "the Balkans",
   mediterranean: "the Mediterranean",
   "central-america": "Central America",
@@ -180,9 +228,11 @@ const PRESET_LABELS: Readonly<Record<RegionPreset, string>> = {
   "north-africa": "North Africa",
   "west-africa": "West Africa",
   "east-africa": "East Africa",
+  "central-africa": "Central Africa",
   "southern-africa": "Southern Africa",
   "middle-east": "the Middle East",
   "central-asia": "Central Asia",
+  caucasus: "the Caucasus",
   "south-asia": "South Asia",
   "southeast-asia": "Southeast Asia",
   "east-asia": "East Asia",
